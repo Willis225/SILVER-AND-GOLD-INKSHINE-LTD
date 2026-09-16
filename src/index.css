@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+@keyframes goldSilverShimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.gold-silver-shimmer {
+  background: linear-gradient(
+    105deg,
+    #b88728 0%,
+    #deb853 12%,
+    #fcf6ba 24%,
+    #d6dcde 36%,
+    #ffffff 48%,
+    #b0b9c0 58%,
+    #fdf4b8 70%,
+    #d4af37 84%,
+    #996915 100%
+  );
+  background-size: 260% 100%;
+  animation: goldSilverShimmer 9s ease-in-out infinite;
+}

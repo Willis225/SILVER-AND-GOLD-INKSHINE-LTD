@@ -1,0 +1,70 @@
+<svg viewBox="0 0 1000 1050" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="silver-face-grad" x1="100" y1="100" x2="600" y2="900" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#d8dde3" />
+      <stop offset="22%" stop-color="#f8fafc" />
+      <stop offset="38%" stop-color="#cbd5e1" />
+      <stop offset="55%" stop-color="#94a3b8" />
+      <stop offset="72%" stop-color="#e2e8f0" />
+      <stop offset="88%" stop-color="#f1f5f9" />
+      <stop offset="100%" stop-color="#94a3b8" />
+    </linearGradient>
+
+    <linearGradient id="silver-bevel-grad" x1="400" y1="700" x2="670" y2="950" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#94a3b8" />
+      <stop offset="45%" stop-color="#64748b" />
+      <stop offset="85%" stop-color="#475569" />
+      <stop offset="100%" stop-color="#334155" />
+    </linearGradient>
+
+    <linearGradient id="gold-face-grad" x1="380" y1="50" x2="980" y2="920" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#fde68a" />
+      <stop offset="18%" stop-color="#fef08a" />
+      <stop offset="35%" stop-color="#facc15" />
+      <stop offset="52%" stop-color="#eab308" />
+      <stop offset="75%" stop-color="#fef08a" />
+      <stop offset="90%" stop-color="#ca8a04" />
+      <stop offset="100%" stop-color="#eab308" />
+    </linearGradient>
+
+    <linearGradient id="gold-bevel-grad" x1="700" y1="800" x2="770" y2="970" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#a16207" />
+      <stop offset="40%" stop-color="#854d0e" />
+      <stop offset="75%" stop-color="#713f12" />
+      <stop offset="100%" stop-color="#452308" />
+    </linearGradient>
+
+    <filter id="logo-depth-shadow" x="-8%" y="-8%" width="120%" height="120%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="3" dy="12" stdDeviation="15" flood-opacity="0.18" flood-color="#0f172a" />
+    </filter>
+  </defs>
+
+  <g filter="url(#logo-depth-shadow)">
+    <!-- Silver 3D Extrusion Bevel Underlayer -->
+    <path
+      d="M 390,990 C 490,985 580,930 655,835 C 670,810 670,760 635,715 C 610,680 550,600 480,520 L 510,545 C 580,630 645,710 665,765 C 690,830 650,900 580,950 C 510,995 430,1005 385,995 Z"
+      fill="url(#silver-bevel-grad)"
+      opacity="0.95"
+    />
+
+    <!-- Silver Main Metallic Face -->
+    <path
+      d="M 272,58 C 272,58 135,160 48,340 C 0,440 2,570 35,675 C 75,800 142,888 144,888 L 142,670 C 142,670 178,670 180,670 C 182,720 200,810 240,885 C 300,980 410,1000 535,975 C 625,950 675,870 660,780 C 645,720 570,620 485,530 C 380,420 215,310 215,220 C 215,165 245,105 272,58 Z"
+      fill="url(#silver-face-grad)"
+    />
+
+    <!-- Gold 3D Extrusion Bevel Underlayer -->
+    <path
+      d="M 760,970 L 700,815 L 735,805 L 775,935 Z"
+      fill="url(#gold-bevel-grad)"
+    />
+
+    <!-- Gold Main Metallic Face with Eye Aperture -->
+    <path
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M 470,2 C 410,2 355,50 360,135 C 365,190 415,225 440,240 C 520,290 620,380 690,470 C 760,560 765,680 725,785 C 715,810 700,815 700,815 L 760,970 C 830,860 920,720 970,550 C 1010,400 980,240 910,130 L 790,80 L 735,155 C 715,130 670,70 600,30 C 560,8 510,2 470,2 Z M 760,255 A 36,36 0 1,0 760,254.99 Z"
+      fill="url(#gold-face-grad)"
+    />
+  </g>
+</svg>
