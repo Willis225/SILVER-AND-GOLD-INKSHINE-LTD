@@ -11,6 +11,8 @@ import { TrustedCompanyFeatureSection } from './components/storefront/TrustedCom
 import { PackagingLabelsSection } from './components/storefront/PackagingLabelsSection';
 import { EventExhibitionSection } from './components/storefront/EventExhibitionSection';
 import { SignageCompanySection } from './components/storefront/SignageCompanySection';
+import { WhyChooseUsSection } from './components/storefront/WhyChooseUsSection';
+import { CustomAwardsSection } from './components/storefront/CustomAwardsSection';
 import { SocialProofSection } from './components/storefront/SocialProofSection';
 import { Footer } from './components/layout/Footer';
 import { ProductQuickViewModal } from './components/storefront/ProductQuickViewModal';
@@ -345,6 +347,20 @@ export default function App() {
 
             {/* Signage Making Company in Lagos, Nigeria (Matching Reference) */}
             <SignageCompanySection
+              onViewProducts={scrollToCatalog}
+              onSelectItem={(item) => {
+                if (item.category) {
+                  setSelectedCategory(item.category as ProductCategory);
+                }
+                scrollToCatalog();
+              }}
+            />
+
+            {/* Why Businesses in Lagos Choose Rollupbanners.ng (Matching Reference) */}
+            <WhyChooseUsSection />
+
+            {/* Custom Award Plaques and Trophies Printing (Matching Reference) */}
+            <CustomAwardsSection
               onViewProducts={scrollToCatalog}
               onSelectItem={(item) => {
                 if (item.category) {
