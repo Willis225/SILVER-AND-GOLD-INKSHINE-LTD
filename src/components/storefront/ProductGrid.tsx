@@ -148,7 +148,7 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
               We may still print it! Contact our custom quote desk for bespoke corporate orders and large-format architectural billboards.
             </p>
             <a
-              href="https://wa.me/2348031234567?text=Hello%20RollUpPrints%2C%20I%20need%20a%20custom%20quote"
+              href="https://wa.me/2347030372539?text=Hello%20Silver%20%26%20Gold%20Inkshine%2C%20I%20need%20a%20custom%20quote"
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-1 text-xs font-bold text-emerald-700 hover:underline"

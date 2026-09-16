@@ -136,7 +136,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
 
           <div className="flex items-center gap-3">
             <a
-              href={`https://wa.me/2348031234567?text=Hello%20RollUpPrints%2C%20I%20am%20inquiring%20about%20${encodeURIComponent(product.name)}`}
+              href={`https://wa.me/2347030372539?text=Hello%20Silver%20%26%20Gold%20Inkshine%2C%20I%20am%20inquiring%20about%20${encodeURIComponent(product.name)}`}
               target="_blank"
               rel="noreferrer"
               className="hidden sm:inline-flex items-center gap-1 text-xs font-semibold text-emerald-800 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-lg hover:bg-emerald-100 transition-colors"
@@ -538,7 +538,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
 
               <div className="text-center pt-1">
                 <a
-                  href="https://wa.me/2348031234567?text=Hello%20RollUpPrints%2C%20I%20need%20a%20bulk%20corporate%20quote%20for%20100%2B%20units"
+                  href="https://wa.me/2347030372539?text=Hello%20Silver%20%26%20Gold%20Inkshine%2C%20I%20need%20a%20bulk%20corporate%20quote%20for%20100%2B%20units"
                   target="_blank"
                   rel="noreferrer"
                   className="text-xs text-stone-400 hover:text-amber-400 inline-flex items-center gap-1 font-medium transition-colors"

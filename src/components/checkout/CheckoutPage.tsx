@@ -266,7 +266,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
               </div>
 
               <a
-                href={`https://wa.me/2349028694908?text=Hello%20Silver%20%26%20Gold%20Inkshine%2C%20I%20am%20tracking%20my%20order%20${confirmedOrder.orderNumber}`}
+                href={`https://wa.me/2347030372539?text=Hello%20Silver%20%26%20Gold%20Inkshine%2C%20I%20am%20tracking%20my%20order%20${confirmedOrder.orderNumber}`}
                 target="_blank"
                 rel="noreferrer"
                 className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold whitespace-nowrap shadow-xs flex items-center gap-2"

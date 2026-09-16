@@ -62,7 +62,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             <div className="flex flex-wrap items-center gap-3.5 pt-1">
               {/* WhatsApp Button: Light Gold with WhatsApp speech bubble icon */}
               <a
-                href="https://wa.me/2349028694908?text=Hello%20Silver%20%26%20Gold%20Inkshine%20Ltd%2C%20I%20would%20like%20to%20inquire%20about%20printing%20services"
+                href="https://wa.me/2347030372539?text=Hello%20Silver%20%26%20Gold%20Inkshine%20Ltd%2C%20I%20would%20like%20to%20inquire%20about%20printing%20services"
                 target="_blank"
                 rel="noreferrer"
                 id="hero-whatsapp-btn"

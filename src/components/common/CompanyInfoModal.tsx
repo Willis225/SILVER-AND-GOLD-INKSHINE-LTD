@@ -688,8 +688,8 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
                       </div>
                       <div>
                         <strong className="block text-stone-900">Direct Telephone Desk:</strong>
-                        <a href="tel:+2349028694908" className="text-[#035440] font-bold hover:underline">
-                          +234 (0) 902 869 4908
+                        <a href="tel:+2347030372539" className="text-[#035440] font-bold hover:underline">
+                          +234 (0) 703 037 2539
                         </a>
                       </div>
                     </div>
@@ -721,12 +721,12 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
 
                   {/* WhatsApp Direct Chat Button */}
                   <a
-                    href="https://wa.me/2349028694908?text=Hello%20Silver%20%26%20Gold%20Inkshine%2C%20I%20would%20like%20to%20make%20an%20inquiry%20regarding%20a%20commercial%20print%20job"
+                    href="https://wa.me/2347030372539?text=Hello%20Silver%20%26%20Gold%20Inkshine%2C%20I%20would%20like%20to%20make%20an%20inquiry%20regarding%20a%20commercial%20print%20job"
                     target="_blank"
                     rel="noreferrer"
                     className="w-full py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-xs transition-colors"
                   >
-                    <span>Chat on WhatsApp Directly (+234 902 869 4908)</span>
+                    <span>Chat on WhatsApp Directly (+234 703 037 2539)</span>
                     <ExternalLink className="w-4 h-4" />
                   </a>
                 </div>

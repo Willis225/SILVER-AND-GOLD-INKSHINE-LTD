@@ -5,7 +5,12 @@ import { BrandIntroSection } from './components/storefront/BrandIntroSection';
 import { ServicesShowcaseSection } from './components/storefront/ServicesShowcaseSection';
 import { BusinessStationerySection } from './components/storefront/BusinessStationerySection';
 import { BannersDisplayStandsSection } from './components/storefront/BannersDisplayStandsSection';
-import { ProductGrid } from './components/storefront/ProductGrid';
+import { GoogleReviewsSection } from './components/storefront/GoogleReviewsSection';
+import { BrandedGiftsSection } from './components/storefront/BrandedGiftsSection';
+import { TrustedCompanyFeatureSection } from './components/storefront/TrustedCompanyFeatureSection';
+import { PackagingLabelsSection } from './components/storefront/PackagingLabelsSection';
+import { EventExhibitionSection } from './components/storefront/EventExhibitionSection';
+import { SignageCompanySection } from './components/storefront/SignageCompanySection';
 import { SocialProofSection } from './components/storefront/SocialProofSection';
 import { Footer } from './components/layout/Footer';
 import { ProductQuickViewModal } from './components/storefront/ProductQuickViewModal';
@@ -299,13 +304,54 @@ export default function App() {
               }}
             />
 
-            {/* Featured Product Grid */}
-            <ProductGrid
-              products={products}
-              selectedCategory={selectedCategory}
-              onSelectCategory={setSelectedCategory}
-              searchQuery={searchQuery}
-              onOpenQuickView={(prod) => handleOpenProductDetailPage(prod)}
+            {/* Happy Customer Reviews on Google (Matching Reference) */}
+            <GoogleReviewsSection />
+
+            {/* Branded Corporate Gifts & Promotional Items (Matching Reference) */}
+            <BrandedGiftsSection
+              onViewProducts={scrollToCatalog}
+              onSelectItem={(item) => {
+                if (item.category) {
+                  setSelectedCategory(item.category as ProductCategory);
+                }
+                scrollToCatalog();
+              }}
+            />
+
+            {/* Nigeria's Trusted Online Printing Company Feature (Matching Reference) */}
+            <TrustedCompanyFeatureSection />
+
+            {/* Packaging, Labels & Stickers Printing Carousel (Matching Reference) */}
+            <PackagingLabelsSection
+              onViewProducts={scrollToCatalog}
+              onSelectItem={(item) => {
+                if (item.category) {
+                  setSelectedCategory(item.category as ProductCategory);
+                }
+                scrollToCatalog();
+              }}
+            />
+
+            {/* Event, Exhibition and Activation Branding Materials (Matching Reference) */}
+            <EventExhibitionSection
+              onViewProducts={scrollToCatalog}
+              onSelectItem={(item) => {
+                if (item.category) {
+                  setSelectedCategory(item.category as ProductCategory);
+                }
+                scrollToCatalog();
+              }}
+            />
+
+            {/* Signage Making Company in Lagos, Nigeria (Matching Reference) */}
+            <SignageCompanySection
+              onViewProducts={scrollToCatalog}
+              onSelectItem={(item) => {
+                if (item.category) {
+                  setSelectedCategory(item.category as ProductCategory);
+                }
+                scrollToCatalog();
+              }}
             />
 
             {/* Trust & Social Proof (Reviews, Client Logos, Completed Jobs) */}

@@ -118,10 +118,10 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Right Section: Call Button + Social Icons */}
           <div className="flex items-center gap-3 sm:gap-4">
             <a
-              href="tel:+2349028694908"
+              href="tel:+2347030372539"
               className="bg-[#0b0c10] hover:bg-[#181a20] text-[#fbf5b7] hover:text-white font-bold text-[11px] sm:text-xs px-3 sm:px-3.5 py-1 rounded-md transition-all shadow-sm border border-amber-400/40 flex items-center gap-1.5"
             >
-              <span>Call: +2349028694908</span>
+              <span>Call: +2347030372539</span>
             </a>
 
             {/* Social Icons */}
@@ -969,10 +969,10 @@ export const Header: React.FC<HeaderProps> = ({
 
           <div className="pt-2 border-t border-white/10 flex items-center justify-between text-xs">
             <a
-              href="tel:+2349028694908"
+              href="tel:+2347030372539"
               className="text-emerald-400 font-bold"
             >
-              📞 +234 902 869 4908
+              📞 +234 703 037 2539
             </a>
             {onOpenAdmin && (
               <button
@@ -987,7 +987,7 @@ export const Header: React.FC<HeaderProps> = ({
               </button>
             )}
             <a
-              href="https://wa.me/2349028694908"
+              href="https://wa.me/2347030372539"
               target="_blank"
               rel="noreferrer"
               className="text-[#65b32e] font-bold"
