@@ -70,13 +70,13 @@ export const BusinessStationerySection: React.FC<BusinessStationerySectionProps>
             </h2>
 
             <p className="text-xs sm:text-[13px] text-stone-600 leading-relaxed font-normal">
-              Leave a strong impression on every client, partner and stakeholder with professionally printed business stationery from Rollupbanners.ng. From branded letterheads and complimentary cards to customised envelopes, notepads and presentation folders, we help your business communicate with clarity, consistency and professionalism at every touchpoint.
+              Leave a strong impression on every client, partner and stakeholder with professionally printed business stationery from SILVER &amp; GOLD INKSHINE LTD. From branded letterheads and complimentary cards to customised envelopes, notepads and presentation folders, we help your business communicate with clarity, consistency and professionalism at every touchpoint.
             </p>
 
             <div>
               <button
                 onClick={onViewProducts}
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#009b72] hover:bg-[#00875a] active:scale-98 text-white font-bold text-xs sm:text-sm rounded-md shadow-sm transition-all group"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#b8860b] hover:bg-[#996515] active:scale-98 text-white font-bold text-xs sm:text-sm rounded-md shadow-sm transition-all group"
               >
                 <span>View Products</span>
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -123,8 +123,8 @@ export const BusinessStationerySection: React.FC<BusinessStationerySectionProps>
                     {item.id === 'stationery-business-cards' && (
                       <div className="w-full h-full p-3 flex items-center justify-center bg-[#1c1c1e]">
                         <div className="relative w-40 h-28 flex items-center justify-center">
-                          {/* Stack of green cards */}
-                          <div className="absolute top-1 right-2 w-28 h-18 bg-[#65b32e] rounded-xs shadow-md border border-green-600/40 p-2 flex flex-col justify-between transform rotate-12">
+                          {/* Stack of gold cards */}
+                          <div className="absolute top-1 right-2 w-28 h-18 bg-[#b8860b] rounded-xs shadow-md border border-amber-600/40 p-2 flex flex-col justify-between transform rotate-12">
                             <div className="w-4 h-4 rounded-xs border-2 border-white/80" />
                             <div className="text-[5px] font-bold text-white tracking-widest uppercase">
                               COMPANY NAME
@@ -134,14 +134,14 @@ export const BusinessStationerySection: React.FC<BusinessStationerySectionProps>
                           {/* Front facing card on dark surface */}
                           <div className="absolute bottom-1 left-2 w-30 h-20 bg-white rounded-xs shadow-xl p-2 flex flex-col justify-between border border-stone-200 transform -rotate-12 group-hover:rotate-0 transition-transform duration-300">
                             <div className="flex items-center justify-between">
-                              <div className="w-4 h-4 bg-[#65b32e] rounded-xs" />
+                              <div className="w-4 h-4 bg-[#b8860b] rounded-xs" />
                               <div className="text-[5px] text-stone-400">000 123 4567</div>
                             </div>
                             <div className="border-t border-stone-100 pt-1">
                               <div className="text-[7.5px] font-black text-stone-900 leading-tight">
                                 JOHN DOE
                               </div>
-                              <div className="text-[5px] text-[#65b32e] font-semibold">
+                              <div className="text-[5px] text-[#b8860b] font-semibold">
                                 CREATIVE DIRECTOR
                               </div>
                             </div>
@@ -266,12 +266,12 @@ export const BusinessStationerySection: React.FC<BusinessStationerySectionProps>
 
                   {/* Title */}
                   <div className="pt-3 text-center">
-                    <h3 className="text-xs sm:text-[13px] font-bold text-stone-900 line-clamp-2 leading-tight group-hover:text-[#009b72] transition-colors">
+                    <h3 className="text-xs sm:text-[13px] font-bold text-stone-900 line-clamp-2 leading-tight group-hover:text-[#b8860b] transition-colors">
                       {item.title}
                     </h3>
                     
-                    {/* Teal Price */}
-                    <div className="text-xs sm:text-[13.5px] font-bold text-[#009b72] mt-1.5">
+                    {/* Gold Price */}
+                    <div className="text-xs sm:text-[13.5px] font-bold text-[#b8860b] mt-1.5">
                       {item.price}
                     </div>
                   </div>

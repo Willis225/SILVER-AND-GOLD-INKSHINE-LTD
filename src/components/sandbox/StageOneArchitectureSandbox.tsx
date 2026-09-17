@@ -246,7 +246,7 @@ export const StageOneArchitectureSandbox: React.FC<StageOneSandboxProps> = ({ on
                 </div>
                 <div className="flex justify-between text-stone-300">
                   <span>Bulk Discount Tier:</span>
-                  <span className="font-mono text-emerald-400">
+                  <span className="font-mono text-amber-400">
                     {pricingResult.discountPercentage}% Off
                   </span>
                 </div>
@@ -258,7 +258,7 @@ export const StageOneArchitectureSandbox: React.FC<StageOneSandboxProps> = ({ on
                 </div>
                 <div className="flex justify-between text-stone-300">
                   <span>Total Savings:</span>
-                  <span className="font-mono text-emerald-400">
+                  <span className="font-mono text-amber-400">
                     -{formatNaira(pricingResult.savingsNgn)}
                   </span>
                 </div>
@@ -291,7 +291,7 @@ export const StageOneArchitectureSandbox: React.FC<StageOneSandboxProps> = ({ on
               onClick={copySqlToClipboard}
               className="px-3 py-1 rounded-lg bg-stone-800 hover:bg-stone-700 text-xs font-semibold text-stone-200 flex items-center gap-1"
             >
-              {copiedSql ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+              {copiedSql ? <Check className="w-3.5 h-3.5 text-amber-400" /> : <Copy className="w-3.5 h-3.5" />}
               <span>{copiedSql ? 'Copied' : 'Copy DDL SQL'}</span>
             </button>
           </div>

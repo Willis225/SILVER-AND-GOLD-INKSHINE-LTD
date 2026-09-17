@@ -99,13 +99,13 @@ export const ServicesShowcaseSection: React.FC<ServicesShowcaseSectionProps> = (
             </h2>
 
             <p className="text-xs sm:text-[13px] text-stone-600 leading-relaxed font-normal">
-              From flyers, business cards, banners and packaging to branded items, signage, apparel printing and corporate stationery, Rollupbanners.ng delivers fast, affordable and professional printing services for businesses across Nigeria.
+              From flyers, business cards, banners and packaging to branded items, signage, apparel printing and corporate stationery, SILVER &amp; GOLD INKSHINE LTD delivers fast, affordable and professional printing services for businesses across Nigeria.
             </p>
 
             <div>
               <button
                 onClick={onOrderNow}
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#009b72] hover:bg-[#00875a] active:scale-98 text-white font-bold text-xs sm:text-sm rounded-md shadow-sm transition-all group"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#b8860b] hover:bg-[#996515] active:scale-98 text-white font-bold text-xs sm:text-sm rounded-md shadow-sm transition-all group"
               >
                 <span>Order Now</span>
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -180,11 +180,11 @@ export const ServicesShowcaseSection: React.FC<ServicesShowcaseSectionProps> = (
                             <rect x="20" y="125" width="160" height="20" rx="4" fill="#64748b" />
                             <rect x="30" y="140" width="20" height="15" fill="#334155" />
                             <rect x="150" y="140" width="20" height="15" fill="#334155" />
-                            {/* Green Main Body Column */}
-                            <rect x="30" y="30" width="35" height="100" rx="3" fill="#22c55e" />
-                            <rect x="135" y="30" width="35" height="100" rx="3" fill="#22c55e" />
-                            {/* Top bridge green */}
-                            <rect x="25" y="20" width="150" height="20" rx="4" fill="#16a34a" />
+                            {/* Gold Main Body Column */}
+                            <rect x="30" y="30" width="35" height="100" rx="3" fill="#d4af37" />
+                            <rect x="135" y="30" width="35" height="100" rx="3" fill="#d4af37" />
+                            {/* Top bridge gold */}
+                            <rect x="25" y="20" width="150" height="20" rx="4" fill="#b8860b" />
                             {/* Rollers and central print press cylinder units */}
                             <circle cx="100" cy="55" r="14" fill="#cbd5e1" stroke="#94a3b8" strokeWidth="2" />
                             <circle cx="100" cy="85" r="14" fill="#e2e8f0" stroke="#94a3b8" strokeWidth="2" />
@@ -194,7 +194,7 @@ export const ServicesShowcaseSection: React.FC<ServicesShowcaseSectionProps> = (
                             {/* Control Screen */}
                             <rect x="140" y="50" width="25" height="35" fill="#1e293b" rx="2" />
                             <circle cx="148" cy="60" r="2.5" fill="#ef4444" />
-                            <circle cx="156" cy="60" r="2.5" fill="#22c55e" />
+                            <circle cx="156" cy="60" r="2.5" fill="#d4af37" />
                             <circle cx="148" cy="70" r="2.5" fill="#3b82f6" />
                             <circle cx="156" cy="70" r="2.5" fill="#eab308" />
                           </svg>
@@ -244,7 +244,7 @@ export const ServicesShowcaseSection: React.FC<ServicesShowcaseSectionProps> = (
                       </div>
                     ) : item.id === 'showcase-souvenir-bags' ? (
                       /* Maroon photo souvenir tote bag */
-                      <div className="w-full h-full p-2 flex items-center justify-center bg-[#15803d]/15">
+                      <div className="w-full h-full p-2 flex items-center justify-center bg-[#b8860b]/15">
                         <div className="relative w-36 h-44 bg-[#881337] rounded-md shadow-lg p-2 flex flex-col justify-between border-2 border-[#701a35]">
                           {/* Handles */}
                           <div className="w-12 h-6 border-2 border-[#581c87] rounded-t-full mx-auto -mt-4 bg-transparent" />
@@ -283,12 +283,12 @@ export const ServicesShowcaseSection: React.FC<ServicesShowcaseSectionProps> = (
 
                   {/* Title */}
                   <div className="pt-3 text-center">
-                    <h3 className="text-xs sm:text-[13px] font-bold text-stone-900 line-clamp-2 leading-tight group-hover:text-[#009b72] transition-colors">
+                    <h3 className="text-xs sm:text-[13px] font-bold text-stone-900 line-clamp-2 leading-tight group-hover:text-[#b8860b] transition-colors">
                       {item.title}
                     </h3>
                     
-                    {/* Teal Price */}
-                    <div className="text-xs sm:text-[13.5px] font-bold text-[#009b72] mt-1.5">
+                    {/* Gold Price */}
+                    <div className="text-xs sm:text-[13.5px] font-bold text-[#b8860b] mt-1.5">
                       {item.price}
                     </div>
                   </div>

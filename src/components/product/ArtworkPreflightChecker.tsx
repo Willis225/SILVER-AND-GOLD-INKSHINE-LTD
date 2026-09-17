@@ -186,12 +186,12 @@ export const ArtworkPreflightChecker: React.FC<ArtworkPreflightCheckerProps> = (
               </div>
 
               {/* Safe Text & Logo Zone */}
-              <div className="bg-emerald-950/40 border-2 border-dashed border-emerald-500/80 rounded-sm p-3 sm:p-4 text-center">
-                <div className="text-[10px] font-mono text-emerald-400 font-bold uppercase tracking-wider">
+              <div className="bg-amber-950/40 border-2 border-dashed border-amber-500/80 rounded-sm p-3 sm:p-4 text-center">
+                <div className="text-[10px] font-mono text-amber-400 font-bold uppercase tracking-wider">
                   ✓ SAFE TEXT & LOGO ZONE
                 </div>
                 <p className="text-[11px] text-stone-300 mt-1 max-w-sm mx-auto">
-                  Keep all company logos, contact phone numbers, and slogans strictly within this green boundary to prevent accidental cut-off or obscuration in rollup cassettes.
+                  Keep all company logos, contact phone numbers, and slogans strictly within this gold boundary to prevent accidental cut-off or obscuration in rollup cassettes.
                 </p>
               </div>
             </div>
@@ -312,7 +312,7 @@ export const ArtworkPreflightChecker: React.FC<ArtworkPreflightCheckerProps> = (
                 </div>
                 <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
                   preflight.isFormatValid && preflight.isSizeValid
-                    ? 'bg-emerald-100 text-emerald-800'
+                    ? 'bg-amber-100 text-amber-800'
                     : 'bg-red-100 text-red-800'
                 }`}>
                   {preflight.isFormatValid && preflight.isSizeValid ? 'Ready for Press' : 'Attention Needed'}
@@ -329,7 +329,7 @@ export const ArtworkPreflightChecker: React.FC<ArtworkPreflightCheckerProps> = (
 
                 <div className="p-2 rounded-lg bg-stone-50 border border-stone-200 flex items-center justify-between">
                   <span className="text-stone-500">Resolution:</span>
-                  <span className="font-mono font-bold text-emerald-700">
+                  <span className="font-mono font-bold text-[#b8860b]">
                     {preflight.simulatedDpi} DPI {preflight.isDpiOptimal ? '✓' : '(Review)'}
                   </span>
                 </div>
@@ -430,7 +430,7 @@ export const ArtworkPreflightChecker: React.FC<ArtworkPreflightCheckerProps> = (
             </div>
           </div>
 
-          <div className="text-[11px] text-emerald-800 bg-emerald-50 border border-emerald-200 rounded-xl p-3 flex items-center justify-between">
+          <div className="text-[11px] text-amber-900 bg-amber-50 border border-amber-200 rounded-xl p-3 flex items-center justify-between">
             <span>Design Proof turnaround: <strong>Under 4 hours</strong> via WhatsApp / Email</span>
             <span className="font-mono font-bold">+₦{designerFeeNgn.toLocaleString('en-NG')}</span>
           </div>
@@ -441,7 +441,7 @@ export const ArtworkPreflightChecker: React.FC<ArtworkPreflightCheckerProps> = (
       {submissionMode === 'send_later' && (
         <div className="bg-white rounded-2xl p-5 border border-stone-200 space-y-3">
           <div className="flex items-start gap-3">
-            <div className="p-2 rounded-xl bg-emerald-100 text-emerald-800 shrink-0">
+            <div className="p-2 rounded-xl bg-amber-100 text-amber-800 shrink-0">
               <CheckCircle2 className="w-5 h-5" />
             </div>
             <div>
@@ -457,11 +457,11 @@ export const ArtworkPreflightChecker: React.FC<ArtworkPreflightCheckerProps> = (
           <div className="bg-stone-50 rounded-xl p-3 border border-stone-200 text-xs space-y-1.5 text-stone-700">
             <div className="flex items-center justify-between">
               <span>📧 Pre-Press Direct Email:</span>
-              <span className="font-mono font-bold text-stone-900">artwork@rollupprints.ng</span>
+              <span className="font-mono font-bold text-stone-900">artwork@inkshine.ng</span>
             </div>
             <div className="flex items-center justify-between">
               <span>💬 Instant WhatsApp Despatch:</span>
-              <span className="font-mono font-bold text-emerald-700">+234 (0) 803 123 4567</span>
+              <span className="font-mono font-bold text-[#b8860b]">+234 (0) 803 123 4567</span>
             </div>
           </div>
         </div>

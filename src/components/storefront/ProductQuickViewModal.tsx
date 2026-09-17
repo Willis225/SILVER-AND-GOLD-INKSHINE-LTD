@@ -131,7 +131,7 @@ export const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-stone-500 font-medium">Resolution Required:</span>
-                <span className="font-bold text-emerald-700">
+                <span className="font-bold text-[#b8860b]">
                   {product.artworkRequirements.recommendedDpi} DPI (CMYK)
                 </span>
               </div>
@@ -159,7 +159,7 @@ export const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
                     key={idx}
                     className={`text-xs px-2.5 py-1.5 rounded-lg flex items-center justify-between transition-colors ${
                       isActive
-                        ? 'bg-emerald-100 text-emerald-900 font-bold border border-emerald-300'
+                        ? 'bg-[#b8860b] text-white font-bold shadow-xs'
                         : 'bg-stone-100 text-stone-600'
                     }`}
                   >
@@ -223,7 +223,7 @@ export const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
                           </div>
                           {opt.priceModifierValue !== 0 && (
                             <span className={`text-[10px] mt-1 font-mono ${
-                              opt.priceModifierValue > 0 ? 'text-amber-800' : 'text-emerald-700'
+                              opt.priceModifierValue > 0 ? 'text-amber-800' : 'text-[#b8860b]'
                             }`}>
                               {opt.priceModifierValue > 0 ? `+${formatNaira(opt.priceModifierValue)}` : formatNaira(opt.priceModifierValue)}
                             </span>
@@ -353,10 +353,10 @@ export const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
 
               {/* Send Later Notice */}
               {artworkType === 'send_later' && (
-                <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-xs text-emerald-900 flex items-start gap-2">
-                  <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 text-xs text-amber-900 flex items-start gap-2">
+                  <ShieldCheck className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
                   <div>
-                    <strong>Checkout First:</strong> You can forward large print files to <code>artwork@rollupprints.ng</code> or WhatsApp after placing your order.
+                    <strong>Checkout First:</strong> You can forward large print files to <code>artwork@inkshine.ng</code> or WhatsApp after placing your order.
                   </div>
                 </div>
               )}
@@ -382,7 +382,7 @@ export const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
 
               {pricing.bulkDiscountPercentage > 0 && (
                 <div className="text-right">
-                  <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-700 bg-emerald-100 px-2.5 py-1 rounded-lg">
+                  <span className="inline-flex items-center gap-1 text-xs font-bold text-amber-800 bg-amber-100 px-2.5 py-1 rounded-lg">
                     <Percent className="w-3 h-3" />
                     Saved {formatNaira(pricing.savingsNgn)} ({pricing.bulkDiscountPercentage}% off)
                   </span>
@@ -395,7 +395,7 @@ export const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
               type="button"
               onClick={handleAdd}
               disabled={addedNotice}
-              className="w-full py-3.5 px-6 rounded-2xl bg-amber-600 hover:bg-amber-500 active:scale-98 text-white font-bold text-sm sm:text-base flex items-center justify-center gap-2 shadow-lg shadow-amber-600/20 transition-all"
+              className="w-full py-3.5 px-6 rounded-2xl bg-[#b8860b] hover:bg-[#996515] active:scale-98 text-white font-bold text-sm sm:text-base flex items-center justify-center gap-2 shadow-lg shadow-[#b8860b]/20 transition-all"
             >
               {addedNotice ? (
                 <>

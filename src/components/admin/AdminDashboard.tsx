@@ -210,7 +210,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               <span className="text-xl font-mono font-extrabold text-stone-900 mt-1 block">
                 ₦{totalGrossRevenueNgn.toLocaleString()}
               </span>
-              <span className="text-[11px] text-emerald-700 font-semibold flex items-center gap-1 mt-0.5">
+              <span className="text-[11px] text-[#b8860b] font-semibold flex items-center gap-1 mt-0.5">
                 <TrendingUp className="w-3 h-3" />
                 Paystack & Wire Confirmed
               </span>
@@ -403,8 +403,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                               <span
                                 className={`inline-block px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
                                   ord.paymentStatus === 'paid'
-                                    ? 'bg-emerald-100 text-emerald-800'
-                                    : 'bg-amber-100 text-amber-800'
+                                    ? 'bg-[#b8860b] text-white shadow-2xs'
+                                    : 'bg-stone-100 text-stone-700 border border-stone-200'
                                 }`}
                               >
                                 {ord.paymentStatus === 'paid' ? 'PAID' : 'PENDING WIRE'}

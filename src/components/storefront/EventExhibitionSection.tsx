@@ -71,16 +71,16 @@ export const EventExhibitionSection: React.FC<EventExhibitionSectionProps> = ({
 
             <p className="text-xs sm:text-[13px] text-stone-600 leading-relaxed font-normal">
               Make every occasion memorable with tailored{' '}
-              <span className="text-[#009b72] font-semibold underline cursor-pointer hover:text-[#00875a]">
+              <span className="text-[#b8860b] font-semibold underline cursor-pointer hover:text-[#996515]">
                 event
               </span>{' '}
-              printing solutions from Rollupbanners.ng. We design and print wedding invitations, event programmes, birthday souvenirs, aso-ebi tags, table cards, backdrop banners, gazebo tents, promotional tables and branded display materials for weddings, corporate events, conferences, product launches and social gatherings across Nigeria.
+              printing solutions from SILVER &amp; GOLD INKSHINE LTD. We design and print wedding invitations, event programmes, birthday souvenirs, aso-ebi tags, table cards, backdrop banners, gazebo tents, promotional tables and branded display materials for weddings, corporate events, conferences, product launches and social gatherings across Nigeria.
             </p>
 
             <div>
               <button
                 onClick={onViewProducts}
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#009b72] hover:bg-[#00875a] active:scale-98 text-white font-bold text-xs sm:text-sm rounded-md shadow-sm transition-all group"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#b8860b] hover:bg-[#996515] active:scale-98 text-white font-bold text-xs sm:text-sm rounded-md shadow-sm transition-all group"
               >
                 <span>View Products</span>
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -188,7 +188,7 @@ export const EventExhibitionSection: React.FC<EventExhibitionSectionProps> = ({
                           {/* POS Machine & Naira banknotes illustration */}
                           <div className="flex items-center justify-center gap-1 my-0.5">
                             <div className="w-8 h-12 bg-stone-900 rounded-2xs border border-stone-700 p-0.5 flex flex-col justify-between">
-                              <div className="w-full h-4 bg-emerald-500 rounded-2xs flex items-center justify-center text-[3.5px] font-bold text-white">
+                              <div className="w-full h-4 bg-[#b8860b] rounded-2xs flex items-center justify-center text-[3.5px] font-bold text-white">
                                 READY
                               </div>
                               <div className="grid grid-cols-3 gap-0.5">
@@ -197,9 +197,9 @@ export const EventExhibitionSection: React.FC<EventExhibitionSectionProps> = ({
                                 ))}
                               </div>
                             </div>
-                            <div className="w-12 h-8 bg-emerald-600 rounded-2xs border border-emerald-400 p-0.5 flex flex-col justify-center items-center shadow-xs">
+                            <div className="w-12 h-8 bg-[#b8860b] rounded-2xs border border-amber-300 p-0.5 flex flex-col justify-center items-center shadow-xs">
                               <div className="text-[6px] font-black text-white">₦1000</div>
-                              <div className="text-[3px] text-emerald-100">CENTRAL BANK</div>
+                              <div className="text-[3px] text-amber-100">CENTRAL BANK</div>
                             </div>
                           </div>
 
@@ -257,9 +257,9 @@ export const EventExhibitionSection: React.FC<EventExhibitionSectionProps> = ({
                       <div className="w-full h-full p-2 flex items-center justify-center bg-stone-100">
                         <div className="relative w-36 h-46 flex flex-col items-center justify-between">
                           {/* Top Prize Wheel with colorful wedges */}
-                          <div className="relative w-24 h-24 rounded-full border-4 border-[#009b72] shadow-xl overflow-hidden flex items-center justify-center bg-white group-hover:rotate-45 transition-transform duration-700">
+                          <div className="relative w-24 h-24 rounded-full border-4 border-[#b8860b] shadow-xl overflow-hidden flex items-center justify-center bg-white group-hover:rotate-45 transition-transform duration-700">
                             {/* Conic wedge simulation */}
-                            <div className="absolute inset-0 bg-[conic-gradient(#34d399_0deg_45deg,#f59e0b_45deg_90deg,#ef4444_90deg_135deg,#3b82f6_135deg_180deg,#8b5cf6_180deg_225deg,#ec4899_225deg_270deg,#10b981_270deg_315deg,#eab308_315deg_360deg)] opacity-80" />
+                            <div className="absolute inset-0 bg-[conic-gradient(#f59e0b_0deg_45deg,#d4af37_45deg_90deg,#ef4444_90deg_135deg,#3b82f6_135deg_180deg,#8b5cf6_180deg_225deg,#ec4899_225deg_270deg,#b8860b_270deg_315deg,#eab308_315deg_360deg)] opacity-80" />
                             {/* Wheel center hub */}
                             <div className="w-6 h-6 rounded-full bg-white border-2 border-stone-800 shadow-md flex items-center justify-center text-[5px] font-black z-10 text-stone-900">
                               WIN
@@ -269,7 +269,7 @@ export const EventExhibitionSection: React.FC<EventExhibitionSectionProps> = ({
                           </div>
 
                           {/* Standing Upright Pedestal Stand */}
-                          <div className="w-20 h-16 bg-[#00875a] rounded-t-md p-1.5 flex flex-col justify-between items-center text-center shadow-md -mt-1 border border-emerald-700">
+                          <div className="w-20 h-16 bg-[#b8860b] rounded-t-md p-1.5 flex flex-col justify-between items-center text-center shadow-md -mt-1 border border-amber-700">
                             <div className="text-[6.5px] font-black text-white leading-tight uppercase">
                               TAKE A<br />SPIN
                             </div>
@@ -291,12 +291,12 @@ export const EventExhibitionSection: React.FC<EventExhibitionSectionProps> = ({
 
                   {/* Title */}
                   <div className="pt-3 text-center">
-                    <h3 className="text-xs sm:text-[13px] font-bold text-stone-900 line-clamp-2 leading-tight group-hover:text-[#009b72] transition-colors">
+                    <h3 className="text-xs sm:text-[13px] font-bold text-stone-900 line-clamp-2 leading-tight group-hover:text-[#b8860b] transition-colors">
                       {item.title}
                     </h3>
                     
-                    {/* Teal Price */}
-                    <div className="text-xs sm:text-[13.5px] font-bold text-[#009b72] mt-1.5">
+                    {/* Gold Price */}
+                    <div className="text-xs sm:text-[13.5px] font-bold text-[#b8860b] mt-1.5">
                       {item.price}
                     </div>
                   </div>

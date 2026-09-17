@@ -310,7 +310,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategory, onOpenAdmin, o
               </div>
             </div>
 
-            <div className="pt-2 flex items-center gap-1.5 text-emerald-400 text-[11px]">
+            <div className="pt-2 flex items-center gap-1.5 text-amber-400 text-[11px]">
               <ShieldCheck className="w-4 h-4" />
               <span>256-Bit SSL Encrypted Checkout</span>
             </div>

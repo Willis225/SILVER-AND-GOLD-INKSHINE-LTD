@@ -201,14 +201,14 @@ export const FlutterwaveModal: React.FC<FlutterwaveModalProps> = ({
                       onClick={copyAccount}
                       className="p-1 rounded bg-white border border-amber-300 text-stone-700 hover:text-amber-800"
                     >
-                      {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+                      {copied ? <Check className="w-3.5 h-3.5 text-amber-600" /> : <Copy className="w-3.5 h-3.5" />}
                     </button>
                   </div>
                 </div>
 
                 <div className="flex justify-between text-xs">
                   <span className="text-stone-500">Account Name:</span>
-                  <strong className="text-stone-900">Flutterwave / RollUp Prints NG</strong>
+                  <strong className="text-stone-900">Flutterwave / SILVER &amp; GOLD INKSHINE LTD</strong>
                 </div>
               </div>
             </div>
@@ -246,7 +246,7 @@ export const FlutterwaveModal: React.FC<FlutterwaveModalProps> = ({
           </button>
 
           <div className="flex items-center justify-center gap-2 text-[10px] text-stone-400">
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+            <ShieldCheck className="w-3.5 h-3.5 text-amber-600" />
             <span>Regulated by Central Bank of Nigeria (CBN) • ISO 27001</span>
           </div>
         </div>

@@ -77,7 +77,7 @@ export const CustomAwardsSection: React.FC<CustomAwardsSectionProps> = ({
             </h2>
 
             <p className="text-xs sm:text-[13px] text-stone-600 leading-relaxed font-normal">
-              Celebrate excellence with beautifully custom award plaques, trophies and decorative items from Rollupbanners.ng. We produce acrylic plaques, crystal glass awards, wooden shields, engraved medals and customised recognition items for schools, corporate organisations, sports competitions, graduations and community events across Nigeria.
+              Celebrate excellence with beautifully custom award plaques, trophies and decorative items from SILVER &amp; GOLD INKSHINE LTD. We produce acrylic plaques, crystal glass awards, wooden shields, engraved medals and customised recognition items for schools, corporate organisations, sports competitions, graduations and community events across Nigeria.
             </p>
 
             <div>

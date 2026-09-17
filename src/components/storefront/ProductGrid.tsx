@@ -151,7 +151,7 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
               href="https://wa.me/2347030372539?text=Hello%20Silver%20%26%20Gold%20Inkshine%2C%20I%20need%20a%20custom%20quote"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1 text-xs font-bold text-emerald-700 hover:underline"
+              className="inline-flex items-center gap-1 text-xs font-bold text-[#b8860b] hover:text-[#996515] hover:underline"
             >
               Request Custom Quote via WhatsApp
             </a>
@@ -185,7 +185,7 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
                           </span>
                         )}
                         {maxDiscount > 0 && (
-                          <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-emerald-700 text-white shadow-xs flex items-center gap-1">
+                          <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-[#b8860b] text-white shadow-xs flex items-center gap-1">
                             <Percent className="w-2.5 h-2.5" />
                             Up to {maxDiscount}% bulk off
                           </span>

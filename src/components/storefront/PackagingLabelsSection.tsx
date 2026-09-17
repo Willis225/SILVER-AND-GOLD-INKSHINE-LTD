@@ -70,13 +70,13 @@ export const PackagingLabelsSection: React.FC<PackagingLabelsSectionProps> = ({
             </h2>
 
             <p className="text-xs sm:text-[13px] text-stone-600 leading-relaxed font-normal">
-              Protect your products and strengthen your brand identity with custom packaging solutions from Rollupbanners.ng. We produce product labels, stickers, food packaging, paper bags, cartons, shipping boxes and custom printed packaging for small businesses, e-commerce stores and manufacturers across Nigeria. Great packaging builds trust and influences buying decisions.
+              Protect your products and strengthen your brand identity with custom packaging solutions from SILVER &amp; GOLD INKSHINE LTD. We produce product labels, stickers, food packaging, paper bags, cartons, shipping boxes and custom printed packaging for small businesses, e-commerce stores and manufacturers across Nigeria. Great packaging builds trust and influences buying decisions.
             </p>
 
             <div>
               <button
                 onClick={onViewProducts}
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#009b72] hover:bg-[#00875a] active:scale-98 text-white font-bold text-xs sm:text-sm rounded-md shadow-sm transition-all group"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#b8860b] hover:bg-[#996515] active:scale-98 text-white font-bold text-xs sm:text-sm rounded-md shadow-sm transition-all group"
               >
                 <span>View Products</span>
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -154,29 +154,29 @@ export const PackagingLabelsSection: React.FC<PackagingLabelsSectionProps> = ({
                       </div>
                     )}
 
-                    {/* Item 2: Custom Woven Labels (Stack of green woven clothing tags) */}
+                    {/* Item 2: Custom Woven Labels (Stack of gold woven clothing tags) */}
                     {item.id === 'pkg-woven-labels' && (
                       <div className="w-full h-full p-2 flex items-center justify-center bg-stone-100">
                         <div className="relative w-40 h-36 flex items-center justify-center">
-                          {/* Fan of green labels underneath */}
-                          <div className="absolute top-2 left-3 w-28 h-12 bg-[#16a34a] rounded-xs shadow-sm transform -rotate-12 border border-green-700/40" />
-                          <div className="absolute bottom-2 right-3 w-28 h-12 bg-[#15803d] rounded-xs shadow-sm transform rotate-12 border border-green-800/40" />
+                          {/* Fan of gold labels underneath */}
+                          <div className="absolute top-2 left-3 w-28 h-12 bg-[#b8860b] rounded-xs shadow-sm transform -rotate-12 border border-amber-700/40" />
+                          <div className="absolute bottom-2 right-3 w-28 h-12 bg-[#996515] rounded-xs shadow-sm transform rotate-12 border border-amber-800/40" />
 
                           {/* Front facing woven label with NGO text */}
-                          <div className="relative z-10 w-32 h-14 bg-[#16a34a] rounded-xs shadow-xl border border-emerald-700 p-2 flex flex-col justify-between items-center transform group-hover:scale-105 transition-transform duration-300">
+                          <div className="relative z-10 w-32 h-14 bg-[#b8860b] rounded-xs shadow-xl border border-amber-700 p-2 flex flex-col justify-between items-center transform group-hover:scale-105 transition-transform duration-300">
                             {/* Woven fabric grain effect */}
                             <div className="flex items-center justify-center gap-1">
                               <span className="text-white font-black text-xs tracking-wider">
-                                N • G • O
+                                S • G • I
                               </span>
                               <div className="w-3 h-3 rounded-full border border-white flex items-center justify-center text-[6px] text-white">
                                 🌐
                               </div>
                             </div>
-                            <div className="text-[5.5px] text-emerald-100 font-bold tracking-widest uppercase">
-                              NOTHING GROWS OVERNIGHT
+                            <div className="text-[5.5px] text-amber-100 font-bold tracking-widest uppercase">
+                              PREMIUM CRAFTED QUALITY
                             </div>
-                            <div className="w-full flex items-center justify-between text-[4.5px] text-emerald-200">
+                            <div className="w-full flex items-center justify-between text-[4.5px] text-amber-200">
                               <span>MADE IN NIGERIA</span>
                               <span>100% COTTON</span>
                             </div>
@@ -250,12 +250,12 @@ export const PackagingLabelsSection: React.FC<PackagingLabelsSectionProps> = ({
 
                   {/* Title */}
                   <div className="pt-3 text-center">
-                    <h3 className="text-xs sm:text-[13px] font-bold text-stone-900 line-clamp-2 leading-tight group-hover:text-[#009b72] transition-colors">
+                    <h3 className="text-xs sm:text-[13px] font-bold text-stone-900 line-clamp-2 leading-tight group-hover:text-[#b8860b] transition-colors">
                       {item.title}
                     </h3>
                     
-                    {/* Teal Price */}
-                    <div className="text-xs sm:text-[13.5px] font-bold text-[#009b72] mt-1.5">
+                    {/* Gold Price */}
+                    <div className="text-xs sm:text-[13.5px] font-bold text-[#b8860b] mt-1.5">
                       {item.price}
                     </div>
                   </div>

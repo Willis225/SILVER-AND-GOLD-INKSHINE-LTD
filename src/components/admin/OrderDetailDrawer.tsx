@@ -59,9 +59,9 @@ const ORDER_STATUS_CONFIG: Record<OrderStatus, { label: string; color: string; b
   },
   ready_for_dispatch: {
     label: 'Ready for Dispatch / QC Passed',
-    color: 'text-emerald-800',
-    bg: 'bg-emerald-50',
-    border: 'border-emerald-200',
+    color: 'text-amber-800',
+    bg: 'bg-amber-50',
+    border: 'border-amber-200',
     icon: Package,
   },
   out_for_delivery: {
@@ -140,7 +140,7 @@ export const OrderDetailDrawer: React.FC<OrderDetailDrawerProps> = ({
     const customerFirstName = order.customer.fullName.split(' ')[0] || 'Valued Client';
     const currentStatusText = ORDER_STATUS_CONFIG[order.orderStatus]?.label || order.orderStatus;
     
-    let message = `Hello ${customerFirstName}! This is RollUp Banners NG regarding your order *${order.orderNumber}* (${order.items.map(i => `${i.quantity}x ${i.productName}`).join(', ')}).\n\n`;
+    let message = `Hello ${customerFirstName}! This is SILVER & GOLD INKSHINE LTD regarding your order *${order.orderNumber}* (${order.items.map(i => `${i.quantity}x ${i.productName}`).join(', ')}).\n\n`;
     
     if (order.orderStatus === 'artwork_review') {
       message += `🔍 *Pre-Press Update*: Our pre-press graphics team has audited your artwork file. Resolution: 300 DPI CMYK verified. Everything looks great for the wide-format press!`;
@@ -151,7 +151,7 @@ export const OrderDetailDrawer: React.FC<OrderDetailDrawerProps> = ({
     } else if (order.orderStatus === 'out_for_delivery') {
       message += `🚚 *Dispatch Notice*: Your order is out for delivery with ${selectedCourier}. Waybill/Tracking: *${order.trackingNumber || 'Pending'}*. Estimated arrival: Today.`;
     } else if (order.orderStatus === 'delivered') {
-      message += `🎉 *Delivery Confirmed*: Your order has been successfully delivered to ${order.customer.deliveryAddress}. Thank you for choosing RollUp Banners NG!`;
+      message += `🎉 *Delivery Confirmed*: Your order has been successfully delivered to ${order.customer.deliveryAddress}. Thank you for choosing SILVER & GOLD INKSHINE LTD!`;
     } else {
       message += `Current Status: *${currentStatusText}*.`;
     }
@@ -164,7 +164,7 @@ export const OrderDetailDrawer: React.FC<OrderDetailDrawerProps> = ({
   // Flag issue WhatsApp
   const handleFlagArtworkIssue = () => {
     const customerFirstName = order.customer.fullName.split(' ')[0] || 'Client';
-    const message = `Hello ${customerFirstName}, this is the Pre-Press Quality Desk at RollUp Banners NG regarding order *${order.orderNumber}*.\n\n⚠️ We noticed an artwork specification issue with your uploaded design:\n- Please provide the file with a minimum of 50mm cassette bottom bleed or CMYK color profile.\n\nCould you kindly reply with an updated high-resolution PDF or AI file here so we can proceed to print without delay? Thank you!`;
+    const message = `Hello ${customerFirstName}, this is the Pre-Press Quality Desk at SILVER & GOLD INKSHINE LTD regarding order *${order.orderNumber}*.\n\n⚠️ We noticed an artwork specification issue with your uploaded design:\n- Please provide the file with a minimum of 50mm cassette bottom bleed or CMYK color profile.\n\nCould you kindly reply with an updated high-resolution PDF or AI file here so we can proceed to print without delay? Thank you!`;
     const cleanPhone = order.customer.phone.replace(/[^0-9]/g, '');
     window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`, '_blank');
   };
@@ -226,7 +226,7 @@ export const OrderDetailDrawer: React.FC<OrderDetailDrawerProps> = ({
             <div className="flex items-center gap-2">
               <button
                 onClick={generateWhatsAppMessage}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-lg shadow-xs transition-colors"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#b8860b] hover:bg-[#996515] text-white text-xs font-semibold rounded-lg shadow-xs transition-colors"
               >
                 <Send className="w-3.5 h-3.5" />
                 <span>Notify Client on WhatsApp</span>
@@ -251,14 +251,14 @@ export const OrderDetailDrawer: React.FC<OrderDetailDrawerProps> = ({
                       isCurrent
                         ? 'bg-amber-50 border-amber-500 text-amber-900 font-bold ring-2 ring-amber-400/20'
                         : isPassed
-                        ? 'bg-emerald-50 border-emerald-300 text-emerald-800 hover:bg-emerald-100/60'
+                        ? 'bg-amber-50 border-amber-300 text-amber-800 hover:bg-amber-100/60'
                         : 'bg-stone-50 border-stone-200 text-stone-500 hover:bg-stone-100'
                     }`}
                   >
                     <span className="text-[10px] mb-1 font-mono">Step {idx + 1}</span>
                     <span className="leading-tight">{conf.label.split('/')[0]}</span>
                     {isCurrent && <span className="mt-1 w-1.5 h-1.5 rounded-full bg-amber-500" />}
-                    {isPassed && <Check className="w-3 h-3 text-emerald-600 mt-1" />}
+                    {isPassed && <Check className="w-3 h-3 text-amber-600 mt-1" />}
                   </button>
                 );
               })}
@@ -461,7 +461,7 @@ export const OrderDetailDrawer: React.FC<OrderDetailDrawerProps> = ({
                               onUpdateOrderStatus(order.id, 'in_production');
                               alert('Artwork approved! Order moved to In Production (Printing Press Queue).');
                             }}
-                            className="mt-3 w-full py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded text-xs font-semibold flex items-center justify-center gap-1.5 shadow-xs transition-colors"
+                            className="mt-3 w-full py-1.5 bg-[#b8860b] hover:bg-[#996515] text-white rounded text-xs font-semibold flex items-center justify-center gap-1.5 shadow-xs transition-colors"
                           >
                             <ShieldCheck className="w-3.5 h-3.5" />
                             <span>Approve Proof & Release to Press Floor</span>
@@ -488,7 +488,7 @@ export const OrderDetailDrawer: React.FC<OrderDetailDrawerProps> = ({
                 <span className="font-mono">₦{order.shippingFeeNgn.toLocaleString()}</span>
               </div>
               {order.discountNgn > 0 && (
-                <div className="flex justify-between text-emerald-600 font-medium">
+                <div className="flex justify-between text-[#b8860b] font-medium">
                   <span>Corporate Discount:</span>
                   <span className="font-mono">-₦{order.discountNgn.toLocaleString()}</span>
                 </div>
@@ -512,7 +512,7 @@ export const OrderDetailDrawer: React.FC<OrderDetailDrawerProps> = ({
                   {order.paymentGateway}
                 </span>
                 <span className={`px-2 py-0.5 rounded text-xs font-semibold ${
-                  order.paymentStatus === 'paid' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'
+                  order.paymentStatus === 'paid' ? 'bg-amber-100 text-amber-800' : 'bg-amber-100 text-amber-800'
                 }`}>
                   {order.paymentStatus === 'paid' ? 'PAID / SETTLED' : 'PENDING WIRE'}
                 </span>
@@ -521,7 +521,7 @@ export const OrderDetailDrawer: React.FC<OrderDetailDrawerProps> = ({
               {order.paymentStatus === 'pending' && (
                 <button
                   onClick={() => onUpdatePaymentStatus(order.id, 'paid')}
-                  className="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded text-xs font-semibold shadow-xs"
+                  className="px-2.5 py-1 bg-[#b8860b] hover:bg-[#996515] text-white rounded text-xs font-semibold shadow-xs"
                 >
                   Mark Wire Confirmed
                 </button>
@@ -535,7 +535,7 @@ export const OrderDetailDrawer: React.FC<OrderDetailDrawerProps> = ({
                     className="p-1 hover:text-stone-800"
                     title="Copy Reference"
                   >
-                    {copiedRef ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
+                    {copiedRef ? <Check className="w-3 h-3 text-amber-600" /> : <Copy className="w-3 h-3" />}
                   </button>
                 </div>
               )}
@@ -612,7 +612,7 @@ export const OrderDetailDrawer: React.FC<OrderDetailDrawerProps> = ({
               ) : (
                 <button
                   onClick={handleSaveNotes}
-                  className="text-xs text-emerald-700 hover:text-emerald-800 font-semibold flex items-center gap-1"
+                  className="text-xs text-amber-700 hover:text-amber-800 font-semibold flex items-center gap-1"
                 >
                   <Check className="w-3 h-3" />
                   Save Notes

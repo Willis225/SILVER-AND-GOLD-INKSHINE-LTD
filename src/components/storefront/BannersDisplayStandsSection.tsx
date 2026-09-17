@@ -70,8 +70,8 @@ export const BannersDisplayStandsSection: React.FC<BannersDisplayStandsSectionPr
             </h2>
 
             <p className="text-xs sm:text-[13px] text-stone-600 leading-relaxed font-normal">
-              Get noticed everywhere with high-impact banners, display stands and advertising materials from Rollupbanners.ng. Whether you are setting up at a trade fair, running a street activation, decorating an office or promoting an event, we produce roll-up banners, backdrop stands, feather flags,{' '}
-              <span className="text-[#009b72] font-semibold underline cursor-pointer hover:text-[#00875a]">
+              Get noticed everywhere with high-impact banners, display stands and advertising materials from SILVER &amp; GOLD INKSHINE LTD. Whether you are setting up at a trade fair, running a street activation, decorating an office or promoting an event, we produce roll-up banners, backdrop stands, feather flags,{' '}
+              <span className="text-[#b8860b] font-semibold underline cursor-pointer hover:text-[#996515]">
                 gazebo tent
               </span>
               , flex banners and outdoor signage that make your brand impossible to ignore.
@@ -80,7 +80,7 @@ export const BannersDisplayStandsSection: React.FC<BannersDisplayStandsSectionPr
             <div>
               <button
                 onClick={onViewProducts}
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#009b72] hover:bg-[#00875a] active:scale-98 text-white font-bold text-xs sm:text-sm rounded-md shadow-sm transition-all group"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#b8860b] hover:bg-[#996515] active:scale-98 text-white font-bold text-xs sm:text-sm rounded-md shadow-sm transition-all group"
               >
                 <span>View Products</span>
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -294,23 +294,23 @@ export const BannersDisplayStandsSection: React.FC<BannersDisplayStandsSectionPr
                           <div className="w-full flex items-center justify-between text-[5.5px] font-black tracking-tight text-stone-900 px-1">
                             <div>
                               <span>Advertisement</span>
-                              <div className="text-[7.5px] text-[#00875a]">Backdrop Banner</div>
+                              <div className="text-[7.5px] text-[#b8860b]">Backdrop Banner</div>
                             </div>
                             <div className="text-[4px] text-stone-400 text-right">
                               Ideal for Events, Promotions<br />&amp; Photo Backdrops
                             </div>
                           </div>
 
-                          {/* Telescopic stand with green brand graphic */}
+                          {/* Telescopic stand with gold brand graphic */}
                           <div className="relative w-36 h-28 border-2 border-stone-400 bg-stone-900 rounded-xs shadow-xl p-2 flex flex-col justify-between overflow-hidden">
                             {/* Graphic inside */}
-                            <div className="absolute inset-0 bg-gradient-to-br from-[#023b2a] via-[#041e17] to-black p-2 flex flex-col justify-between">
+                            <div className="absolute inset-0 bg-gradient-to-br from-[#2a2205] via-[#1a1403] to-black p-2 flex flex-col justify-between">
                               <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-0.5">
-                                  <div className="w-2 h-2 rounded-full bg-[#22c55e]" />
+                                  <div className="w-2 h-2 rounded-full bg-[#d4af37]" />
                                   <span className="text-[4px] font-bold text-white">NEXT LEVEL</span>
                                 </div>
-                                <span className="text-[3.5px] text-emerald-300 font-semibold">CREATIVE AGENCY</span>
+                                <span className="text-[3.5px] text-[#ebd07f] font-semibold">CREATIVE AGENCY</span>
                               </div>
 
                               <div className="my-auto">
@@ -320,7 +320,7 @@ export const BannersDisplayStandsSection: React.FC<BannersDisplayStandsSectionPr
                                 </div>
                               </div>
 
-                              <div className="w-full h-0.5 bg-[#22c55e] rounded-full" />
+                              <div className="w-full h-0.5 bg-[#d4af37] rounded-full" />
                             </div>
 
                             {/* Corner metal screw/bracket graphics */}
@@ -351,12 +351,12 @@ export const BannersDisplayStandsSection: React.FC<BannersDisplayStandsSectionPr
 
                   {/* Title */}
                   <div className="pt-3 text-center">
-                    <h3 className="text-xs sm:text-[13px] font-bold text-stone-900 line-clamp-2 leading-tight group-hover:text-[#009b72] transition-colors">
+                    <h3 className="text-xs sm:text-[13px] font-bold text-stone-900 line-clamp-2 leading-tight group-hover:text-[#b8860b] transition-colors">
                       {item.title}
                     </h3>
                     
-                    {/* Teal Price */}
-                    <div className="text-xs sm:text-[13.5px] font-bold text-[#009b72] mt-1.5">
+                    {/* Gold Price */}
+                    <div className="text-xs sm:text-[13.5px] font-bold text-[#b8860b] mt-1.5">
                       {item.price}
                     </div>
                   </div>

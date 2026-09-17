@@ -78,7 +78,7 @@ export const SignageCompanySection: React.FC<SignageCompanySectionProps> = ({
             <div>
               <button
                 onClick={onViewProducts}
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#009b72] hover:bg-[#00875a] active:scale-98 text-white font-bold text-xs sm:text-sm rounded-md shadow-sm transition-all group"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#b8860b] hover:bg-[#996515] active:scale-98 text-white font-bold text-xs sm:text-sm rounded-md shadow-sm transition-all group"
               >
                 <span>View Products</span>
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -206,25 +206,25 @@ export const SignageCompanySection: React.FC<SignageCompanySectionProps> = ({
                     {item.id === 'signage-directional' && (
                       <div className="w-full h-full p-2 flex items-center justify-center bg-stone-100">
                         <div className="relative w-42 h-42 flex flex-col justify-between items-center">
-                          {/* Overhead green gantry signs */}
+                          {/* Overhead gold gantry signs */}
                           <div className="w-full flex items-center justify-between gap-1">
-                            {/* Highway Green Board with Arrow */}
-                            <div className="bg-[#15803d] border-2 border-white text-white rounded-2xs px-1.5 py-0.5 text-[5px] font-bold flex items-center gap-1 shadow-md">
+                            {/* Highway Gold Board with Arrow */}
+                            <div className="bg-[#b8860b] border-2 border-white text-white rounded-2xs px-1.5 py-0.5 text-[5px] font-bold flex items-center gap-1 shadow-md">
                               <span>AIRPORT</span>
                               <span>➡</span>
                             </div>
                             {/* Up Arrow Board */}
-                            <div className="bg-[#15803d] border-2 border-white text-white rounded-2xs px-1.5 py-0.5 text-[5px] font-bold flex items-center gap-1 shadow-md">
+                            <div className="bg-[#b8860b] border-2 border-white text-white rounded-2xs px-1.5 py-0.5 text-[5px] font-bold flex items-center gap-1 shadow-md">
                               <span>⬆ LEKKI - EPE</span>
                             </div>
                             {/* Turn right board */}
-                            <div className="bg-[#15803d] border-2 border-white text-white rounded-2xs px-1 py-0.5 text-[5px] font-bold shadow-md">
+                            <div className="bg-[#b8860b] border-2 border-white text-white rounded-2xs px-1 py-0.5 text-[5px] font-bold shadow-md">
                               <span>VI ↩</span>
                             </div>
                           </div>
 
-                          {/* Green street name hanging sign */}
-                          <div className="w-32 bg-[#166534] border-2 border-white text-white py-1 px-2 rounded-2xs text-center shadow-lg my-1">
+                          {/* Gold street name hanging sign */}
+                          <div className="w-32 bg-[#996515] border-2 border-white text-white py-1 px-2 rounded-2xs text-center shadow-lg my-1">
                             <div className="text-[6.5px] font-black tracking-wider uppercase">
                               BROAD STREET
                             </div>
@@ -327,12 +327,12 @@ export const SignageCompanySection: React.FC<SignageCompanySectionProps> = ({
 
                   {/* Title */}
                   <div className="pt-3 text-center">
-                    <h3 className="text-xs sm:text-[13px] font-bold text-stone-900 line-clamp-2 leading-tight group-hover:text-[#009b72] transition-colors">
+                    <h3 className="text-xs sm:text-[13px] font-bold text-stone-900 line-clamp-2 leading-tight group-hover:text-[#b8860b] transition-colors">
                       {item.title}
                     </h3>
                     
-                    {/* Teal Price */}
-                    <div className="text-xs sm:text-[13.5px] font-bold text-[#009b72] mt-1.5">
+                    {/* Gold Price */}
+                    <div className="text-xs sm:text-[13.5px] font-bold text-[#b8860b] mt-1.5">
                       {item.price}
                     </div>
                   </div>

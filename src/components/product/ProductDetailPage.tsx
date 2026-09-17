@@ -139,7 +139,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
               href={`https://wa.me/2347030372539?text=Hello%20Silver%20%26%20Gold%20Inkshine%2C%20I%20am%20inquiring%20about%20${encodeURIComponent(product.name)}`}
               target="_blank"
               rel="noreferrer"
-              className="hidden sm:inline-flex items-center gap-1 text-xs font-semibold text-emerald-800 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-lg hover:bg-emerald-100 transition-colors"
+              className="hidden sm:inline-flex items-center gap-1 text-xs font-semibold text-[#b8860b] bg-amber-50/80 border border-amber-300 px-3 py-1.5 rounded-lg hover:bg-amber-100 transition-colors"
             >
               <MessageSquare className="w-3.5 h-3.5" />
               <span>WhatsApp Inquiries</span>
@@ -233,7 +233,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                 </div>
 
                 {currentZone.expressAvailable && (
-                  <div className="text-[11px] text-emerald-800 bg-emerald-50 border border-emerald-200 p-2.5 rounded-xl flex items-center justify-between">
+                  <div className="text-[11px] text-amber-900 bg-amber-50 border border-amber-200 p-2.5 rounded-xl flex items-center justify-between">
                     <span>⚡ Same-Day Express Logistics available for {currentZone.name}</span>
                     <span className="font-mono font-bold">{formatNaira(currentZone.expressFeeNgn!)}</span>
                   </div>
@@ -244,7 +244,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
             {/* Pre-Press Trust Guarantees */}
             <div className="grid grid-cols-2 gap-3 text-xs">
               <div className="bg-white p-3.5 rounded-xl border border-stone-200 flex items-start gap-2.5">
-                <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                <ShieldCheck className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
                 <div>
                   <div className="font-bold text-stone-900">Pre-Press Bleed Guarantee</div>
                   <div className="text-[10px] text-stone-500">Every file is inspected by an expert before press.</div>
@@ -315,7 +315,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                             </div>
                             {opt.priceModifierValue !== 0 && (
                               <span className={`text-[10px] mt-1 font-mono font-semibold ${
-                                opt.priceModifierValue > 0 ? 'text-amber-800' : 'text-emerald-700'
+                                opt.priceModifierValue > 0 ? 'text-amber-800' : 'text-[#b8860b]'
                               }`}>
                                 {opt.priceModifierValue > 0 ? `+${formatNaira(opt.priceModifierValue)}` : formatNaira(opt.priceModifierValue)}
                               </span>
@@ -390,7 +390,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
               <div className="pt-2 border-t border-stone-100 space-y-2">
                 <div className="flex items-center justify-between text-xs">
                   <span className="font-bold text-stone-800 flex items-center gap-1">
-                    <Percent className="w-3.5 h-3.5 text-emerald-600" />
+                    <Percent className="w-3.5 h-3.5 text-amber-600" />
                     <span>Tiered Bulk Volume Discount Matrix</span>
                   </span>
                   <span className="text-[10px] text-stone-500">Live Tier Applied</span>
@@ -422,12 +422,12 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                             key={idx}
                             className={`transition-colors ${
                               isTierActive
-                                ? 'bg-emerald-50/80 font-bold text-emerald-950'
+                                ? 'bg-amber-50/80 font-bold text-amber-950'
                                 : 'text-stone-700'
                             }`}
                           >
                             <td className="p-2.5">{tier.label}</td>
-                            <td className="p-2.5 font-mono text-emerald-700">
+                            <td className="p-2.5 font-mono text-[#b8860b]">
                               {tier.discountPercentage > 0 ? `${tier.discountPercentage}% OFF` : 'Base Price'}
                             </td>
                             <td className="p-2.5 text-right font-mono">
@@ -435,7 +435,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                             </td>
                             <td className="p-2.5 text-right">
                               {isTierActive ? (
-                                <span className="inline-flex items-center gap-1 text-[10px] bg-emerald-600 text-white px-2 py-0.5 rounded-full uppercase">
+                                <span className="inline-flex items-center gap-1 text-[10px] bg-[#b8860b] text-white px-2 py-0.5 rounded-full uppercase">
                                   <Check className="w-2.5 h-2.5" />
                                   Active
                                 </span>
@@ -482,7 +482,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                 </div>
 
                 {pricing.bulkDiscountPercentage > 0 && (
-                  <div className="flex justify-between text-emerald-400 font-bold">
+                  <div className="flex justify-between text-amber-400 font-bold">
                     <span>Bulk Tier Savings ({pricing.bulkDiscountPercentage}% Off):</span>
                     <span className="font-mono">-{formatNaira(pricing.savingsNgn)}</span>
                   </div>
@@ -530,7 +530,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
               </button>
 
               {addedToast && (
-                <div className="text-center text-xs text-emerald-400 font-bold flex items-center justify-center gap-1.5 animate-in fade-in">
+                <div className="text-center text-xs text-amber-400 font-bold flex items-center justify-center gap-1.5 animate-in fade-in">
                   <Check className="w-4 h-4" />
                   <span>Item added to your order cart!</span>
                 </div>
@@ -635,7 +635,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                   </div>
                   <div className="flex justify-between border-b border-stone-100 py-1.5">
                     <span className="text-stone-500">Print Resolution:</span>
-                    <span className="font-bold text-emerald-700">1440 DPI High-Definition Photo Quality</span>
+                    <span className="font-bold text-[#b8860b]">1440 DPI High-Definition Photo Quality</span>
                   </div>
                   <div className="flex justify-between border-b border-stone-100 py-1.5">
                     <span className="text-stone-500">Bleed Requirement:</span>

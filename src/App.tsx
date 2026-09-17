@@ -356,7 +356,7 @@ export default function App() {
               }}
             />
 
-            {/* Why Businesses in Lagos Choose Rollupbanners.ng (Matching Reference) */}
+            {/* Why Businesses Choose SILVER & GOLD INKSHINE LTD */}
             <WhyChooseUsSection />
 
             {/* Custom Award Plaques and Trophies Printing (Matching Reference) */}

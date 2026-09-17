@@ -138,7 +138,7 @@ export const PressFloorQueue: React.FC<PressFloorQueueProps> = ({
         <div className="flex items-center gap-3">
           <div className="bg-stone-800/80 px-4 py-2.5 rounded-xl border border-stone-700 text-center">
             <span className="text-xs text-stone-400 block">Active Running Presses</span>
-            <span className="text-lg font-mono font-bold text-emerald-400">
+            <span className="text-lg font-mono font-bold text-amber-400">
               {machines.filter((m) => m.status === 'printing').length} / {machines.length} Online
             </span>
           </div>
@@ -173,13 +173,13 @@ export const PressFloorQueue: React.FC<PressFloorQueueProps> = ({
                 <span
                   className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold ${
                     isPrinting
-                      ? 'bg-emerald-100 text-emerald-800 border border-emerald-300 animate-pulse'
+                      ? 'bg-amber-100 text-amber-900 border border-amber-300 animate-pulse'
                       : mach.status === 'idle'
                       ? 'bg-stone-100 text-stone-600 border border-stone-200'
                       : 'bg-amber-100 text-amber-800'
                   }`}
                 >
-                  <span className={`w-2 h-2 rounded-full ${isPrinting ? 'bg-emerald-500' : 'bg-stone-400'}`} />
+                  <span className={`w-2 h-2 rounded-full ${isPrinting ? 'bg-[#b8860b]' : 'bg-stone-400'}`} />
                   {isPrinting ? 'Printing (Active)' : 'Idle / Standby'}
                 </span>
               </div>
@@ -279,7 +279,7 @@ export const PressFloorQueue: React.FC<PressFloorQueueProps> = ({
                   className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-colors ${
                     isPrinting
                       ? 'bg-stone-100 hover:bg-stone-200 text-stone-700'
-                      : 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs'
+                      : 'bg-[#b8860b] hover:bg-[#996515] text-white shadow-xs'
                   }`}
                 >
                   {isPrinting ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
@@ -351,8 +351,8 @@ export const PressFloorQueue: React.FC<PressFloorQueueProps> = ({
                           Reorder Soon (Min: {item.minThreshold})
                         </span>
                       ) : (
-                        <span className="px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded font-semibold text-[11px] inline-flex items-center gap-1">
-                          <CheckCircle2 className="w-3 h-3" />
+                        <span className="px-2 py-0.5 bg-amber-50 text-[#b8860b] border border-amber-200 rounded font-semibold text-[11px] inline-flex items-center gap-1">
+                          <CheckCircle2 className="w-3 h-3 text-[#b8860b]" />
                           Optimal Supply
                         </span>
                       )}

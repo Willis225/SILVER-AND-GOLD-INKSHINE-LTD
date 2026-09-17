@@ -133,7 +133,7 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
                 onClick={() => setActiveTab(tab.id)}
                 className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all flex items-center gap-2 ${
                   isActive
-                    ? 'bg-[#035440] text-white shadow-xs'
+                    ? 'bg-[#b8860b] text-white shadow-xs'
                     : 'text-stone-600 hover:text-stone-900 hover:bg-stone-200/70'
                 }`}
               >
@@ -149,10 +149,10 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
           {/* TAB 1: INFO */}
           {activeTab === 'info' && (
             <div className="space-y-6 animate-in fade-in-50 duration-150">
-              <div className="bg-emerald-50/70 border border-emerald-200/80 rounded-2xl p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="bg-amber-50/70 border border-amber-200/80 rounded-2xl p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div className="space-y-1">
-                  <div className="flex items-center gap-2 text-xs font-bold text-[#035440] uppercase tracking-wider">
-                    <ShieldCheck className="w-4 h-4 text-[#035440]" />
+                  <div className="flex items-center gap-2 text-xs font-bold text-[#b8860b] uppercase tracking-wider">
+                    <ShieldCheck className="w-4 h-4 text-[#b8860b]" />
                     <span>Corporate Registry &amp; Credentials</span>
                   </div>
                   <h3 className="text-lg sm:text-xl font-black text-stone-900">
@@ -162,9 +162,9 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
                     Incorporated under the Companies and Allied Matters Act (CAC Nigeria) with Registration Number <strong>RC 1892044</strong>. Full-spectrum digital offset printing, industrial signage, corporate apparel and commercial packaging.
                   </p>
                 </div>
-                <div className="shrink-0 bg-white border border-emerald-200 px-4 py-2.5 rounded-xl text-center shadow-2xs">
+                <div className="shrink-0 bg-white border border-amber-200 px-4 py-2.5 rounded-xl text-center shadow-2xs">
                   <div className="text-[10px] uppercase tracking-wider text-stone-500 font-bold">Standard Turnaround</div>
-                  <div className="text-base font-black text-[#035440]">24 – 48 Hours</div>
+                  <div className="text-base font-black text-[#b8860b]">24 – 48 Hours</div>
                 </div>
               </div>
 
@@ -180,7 +180,7 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
                 </div>
 
                 <div className="p-4 rounded-2xl border border-stone-200 bg-stone-50/60 space-y-2">
-                  <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center">
+                  <div className="w-8 h-8 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center">
                     <Truck className="w-4 h-4" />
                   </div>
                   <h4 className="font-bold text-sm text-stone-900">Nationwide Logistics</h4>
@@ -244,7 +244,7 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-2">
                 <div className="p-5 rounded-2xl bg-stone-50 border border-stone-200 space-y-2">
-                  <div className="text-xs font-bold uppercase text-[#035440] flex items-center gap-2">
+                  <div className="text-xs font-bold uppercase text-[#b8860b] flex items-center gap-2">
                     <Sparkles className="w-4 h-4" />
                     <span>Our Mission</span>
                   </div>
@@ -268,21 +268,21 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
                 <h4 className="font-bold text-sm text-stone-900 mb-3">Why Leading Brands Choose Us</h4>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
                   <div className="flex items-start gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-[#035440] shrink-0 mt-0.5" />
+                    <CheckCircle2 className="w-4 h-4 text-[#b8860b] shrink-0 mt-0.5" />
                     <div>
                       <strong className="block text-stone-900">Direct Factory Pricing:</strong>
                       <span className="text-stone-600">No middleman markups on roll-up stands or substrates.</span>
                     </div>
                   </div>
                   <div className="flex items-start gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-[#035440] shrink-0 mt-0.5" />
+                    <CheckCircle2 className="w-4 h-4 text-[#b8860b] shrink-0 mt-0.5" />
                     <div>
                       <strong className="block text-stone-900">Free Artwork Pre-Flight:</strong>
                       <span className="text-stone-600">Automated file sanity checking for bleeds, DPI, and safe areas.</span>
                     </div>
                   </div>
                   <div className="flex items-start gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-[#035440] shrink-0 mt-0.5" />
+                    <CheckCircle2 className="w-4 h-4 text-[#b8860b] shrink-0 mt-0.5" />
                     <div>
                       <strong className="block text-stone-900">Strict SLA Delivery:</strong>
                       <span className="text-stone-600">Guaranteed turnaround backed by real-time order tracking.</span>
@@ -308,12 +308,12 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="p-4 rounded-2xl border border-stone-200 bg-white hover:border-[#035440] transition-colors group">
+                <div className="p-4 rounded-2xl border border-stone-200 bg-white hover:border-[#b8860b] transition-colors group">
                   <div className="flex items-center gap-3 mb-2">
-                    <div className="w-8 h-8 rounded-lg bg-emerald-50 text-[#035440] flex items-center justify-center font-bold">
+                    <div className="w-8 h-8 rounded-lg bg-amber-50 text-[#b8860b] flex items-center justify-center font-bold">
                       01
                     </div>
-                    <h4 className="font-bold text-sm text-stone-900 group-hover:text-[#035440] transition-colors">
+                    <h4 className="font-bold text-sm text-stone-900 group-hover:text-[#b8860b] transition-colors">
                       Large Format &amp; Display Systems
                     </h4>
                   </div>
@@ -328,7 +328,7 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
                   </div>
                 </div>
 
-                <div className="p-4 rounded-2xl border border-stone-200 bg-white hover:border-[#035440] transition-colors group">
+                <div className="p-4 rounded-2xl border border-stone-200 bg-white hover:border-[#b8860b] transition-colors group">
                   <div className="flex items-center gap-3 mb-2">
                     <div className="w-8 h-8 rounded-lg bg-amber-50 text-amber-800 flex items-center justify-center font-bold">
                       02
@@ -348,7 +348,7 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
                   </div>
                 </div>
 
-                <div className="p-4 rounded-2xl border border-stone-200 bg-white hover:border-[#035440] transition-colors group">
+                <div className="p-4 rounded-2xl border border-stone-200 bg-white hover:border-[#b8860b] transition-colors group">
                   <div className="flex items-center gap-3 mb-2">
                     <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-800 flex items-center justify-center font-bold">
                       03
@@ -368,7 +368,7 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
                   </div>
                 </div>
 
-                <div className="p-4 rounded-2xl border border-stone-200 bg-white hover:border-[#035440] transition-colors group">
+                <div className="p-4 rounded-2xl border border-stone-200 bg-white hover:border-[#b8860b] transition-colors group">
                   <div className="flex items-center gap-3 mb-2">
                     <div className="w-8 h-8 rounded-lg bg-purple-50 text-purple-800 flex items-center justify-center font-bold">
                       04
@@ -388,7 +388,7 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
                   </div>
                 </div>
 
-                <div className="p-4 rounded-2xl border border-stone-200 bg-white hover:border-[#035440] transition-colors group">
+                <div className="p-4 rounded-2xl border border-stone-200 bg-white hover:border-[#b8860b] transition-colors group">
                   <div className="flex items-center gap-3 mb-2">
                     <div className="w-8 h-8 rounded-lg bg-rose-50 text-rose-800 flex items-center justify-center font-bold">
                       05
@@ -407,7 +407,7 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
                   </div>
                 </div>
 
-                <div className="p-4 rounded-2xl border border-stone-200 bg-white hover:border-[#035440] transition-colors group">
+                <div className="p-4 rounded-2xl border border-stone-200 bg-white hover:border-[#b8860b] transition-colors group">
                   <div className="flex items-center gap-3 mb-2">
                     <div className="w-8 h-8 rounded-lg bg-teal-50 text-teal-800 flex items-center justify-center font-bold">
                       06
@@ -461,7 +461,7 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
                     <p className="text-[11px] text-stone-500 line-clamp-2">
                       50 Luxury Teardrop Roll-up Banners, 8m x 3m Media Stage Backdrop, and VIP Delegate Lanyards.
                     </p>
-                    <div className="text-[10px] text-emerald-700 font-semibold pt-1">Completed &amp; Dispatched in 48h</div>
+                    <div className="text-[10px] text-[#b8860b] font-semibold pt-1">Completed &amp; Dispatched in 48h</div>
                   </div>
                 </div>
 
@@ -481,7 +481,7 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
                     <p className="text-[11px] text-stone-500 line-clamp-2">
                       Full cast vinyl bubble-free wrap on 12 delivery vans with perforated one-way vision rear glass.
                     </p>
-                    <div className="text-[10px] text-emerald-700 font-semibold pt-1">UV Laminated 3-Year Durability</div>
+                    <div className="text-[10px] text-[#b8860b] font-semibold pt-1">UV Laminated 3-Year Durability</div>
                   </div>
                 </div>
 
@@ -501,7 +501,7 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
                     <p className="text-[11px] text-stone-500 line-clamp-2">
                       250 Heavyweight 220gsm pique cotton polo shirts with matched 3D embossed baseball caps.
                     </p>
-                    <div className="text-[10px] text-emerald-700 font-semibold pt-1">Colorfast Embroidered Quality</div>
+                    <div className="text-[10px] text-[#b8860b] font-semibold pt-1">Colorfast Embroidered Quality</div>
                   </div>
                 </div>
 
@@ -521,7 +521,7 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
                     <p className="text-[11px] text-stone-500 line-clamp-2">
                       5,000 Custom gold foil stamped kraft paper carrier bags with reinforced bases and braided rope handles.
                     </p>
-                    <div className="text-[10px] text-emerald-700 font-semibold pt-1">Premium High-End Retail</div>
+                    <div className="text-[10px] text-[#b8860b] font-semibold pt-1">Premium High-End Retail</div>
                   </div>
                 </div>
 
@@ -541,7 +541,7 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
                     <p className="text-[11px] text-stone-500 line-clamp-2">
                       Front &amp; backlit LED channel lettering on brushed aluminum composite panel cladding.
                     </p>
-                    <div className="text-[10px] text-emerald-700 font-semibold pt-1">Weatherproof IP67 Lighting</div>
+                    <div className="text-[10px] text-[#b8860b] font-semibold pt-1">Weatherproof IP67 Lighting</div>
                   </div>
                 </div>
 
@@ -561,7 +561,7 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
                     <p className="text-[11px] text-stone-500 line-clamp-2">
                       Temperature-display vacuum flasks and ceramic mugs in luxury silk-lined magnetic presentation boxes.
                     </p>
-                    <div className="text-[10px] text-emerald-700 font-semibold pt-1">Delivered to 150 VIP Clients</div>
+                    <div className="text-[10px] text-[#b8860b] font-semibold pt-1">Delivered to 150 VIP Clients</div>
                   </div>
                 </div>
               </div>
@@ -572,7 +572,7 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
           {activeTab === 'faq' && (
             <div className="space-y-6 animate-in fade-in-50 duration-150">
               <div>
-                <div className="text-xs font-bold text-[#035440] uppercase tracking-wider">
+                <div className="text-xs font-bold text-[#b8860b] uppercase tracking-wider">
                   Seamless Ordering Process
                 </div>
                 <h3 className="text-lg sm:text-xl font-black text-stone-900 tracking-tight">
@@ -583,7 +583,7 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
               {/* 4-Step Interactive Flow */}
               <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
                 <div className="p-4 rounded-2xl bg-stone-50 border border-stone-200 space-y-1 relative">
-                  <div className="w-7 h-7 rounded-full bg-[#035440] text-white flex items-center justify-center text-xs font-bold mb-2">
+                  <div className="w-7 h-7 rounded-full bg-[#b8860b] text-white flex items-center justify-center text-xs font-bold mb-2">
                     1
                   </div>
                   <h4 className="font-bold text-xs text-stone-900">Choose &amp; Configure</h4>
@@ -593,7 +593,7 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
                 </div>
 
                 <div className="p-4 rounded-2xl bg-stone-50 border border-stone-200 space-y-1 relative">
-                  <div className="w-7 h-7 rounded-full bg-[#035440] text-white flex items-center justify-center text-xs font-bold mb-2">
+                  <div className="w-7 h-7 rounded-full bg-[#b8860b] text-white flex items-center justify-center text-xs font-bold mb-2">
                     2
                   </div>
                   <h4 className="font-bold text-xs text-stone-900">Upload or Hire</h4>
@@ -603,7 +603,7 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
                 </div>
 
                 <div className="p-4 rounded-2xl bg-stone-50 border border-stone-200 space-y-1 relative">
-                  <div className="w-7 h-7 rounded-full bg-[#035440] text-white flex items-center justify-center text-xs font-bold mb-2">
+                  <div className="w-7 h-7 rounded-full bg-[#b8860b] text-white flex items-center justify-center text-xs font-bold mb-2">
                     3
                   </div>
                   <h4 className="font-bold text-xs text-stone-900">Pre-Flight Proof</h4>
@@ -636,7 +636,7 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
                       >
                         <button
                           onClick={() => setOpenFaqIdx(isOpen ? null : idx)}
-                          className="w-full p-3.5 text-left flex items-center justify-between gap-3 text-stone-800 hover:text-[#035440] font-medium text-xs sm:text-sm"
+                          className="w-full p-3.5 text-left flex items-center justify-between gap-3 text-stone-800 hover:text-[#b8860b] font-medium text-xs sm:text-sm"
                         >
                           <span className="font-semibold">{faq.question}</span>
                           <span className="text-stone-400 font-bold shrink-0">{isOpen ? '−' : '+'}</span>
@@ -658,7 +658,7 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
           {activeTab === 'contact' && (
             <div className="space-y-6 animate-in fade-in-50 duration-150">
               <div>
-                <div className="text-xs font-bold text-[#035440] uppercase tracking-wider">
+                <div className="text-xs font-bold text-[#b8860b] uppercase tracking-wider">
                   Bayelsa Central Print Hub &amp; Customer Support
                 </div>
                 <h3 className="text-lg sm:text-xl font-black text-stone-900 tracking-tight">
@@ -671,7 +671,7 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
                 <div className="space-y-4">
                   <div className="p-4 rounded-2xl bg-stone-50 border border-stone-200 space-y-3 text-xs">
                     <div className="flex items-start gap-3">
-                      <div className="w-8 h-8 rounded-lg bg-emerald-100 text-[#035440] flex items-center justify-center shrink-0">
+                      <div className="w-8 h-8 rounded-lg bg-amber-100 text-[#b8860b] flex items-center justify-center shrink-0">
                         <MapPin className="w-4 h-4" />
                       </div>
                       <div>
@@ -688,7 +688,7 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
                       </div>
                       <div>
                         <strong className="block text-stone-900">Direct Telephone Desk:</strong>
-                        <a href="tel:+2347030372539" className="text-[#035440] font-bold hover:underline">
+                        <a href="tel:+2347030372539" className="text-[#b8860b] font-bold hover:underline">
                           +234 (0) 703 037 2539
                         </a>
                       </div>
@@ -700,7 +700,7 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
                       </div>
                       <div>
                         <strong className="block text-stone-900">Official Electronic Mail:</strong>
-                        <a href="mailto:orders@silverandgold.ng" className="text-stone-600 hover:text-[#035440]">
+                        <a href="mailto:orders@silverandgold.ng" className="text-stone-600 hover:text-[#b8860b]">
                           orders@silverandgold.ng / support@silverandgold.ng
                         </a>
                       </div>
@@ -724,7 +724,7 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
                     href="https://wa.me/2347030372539?text=Hello%20Silver%20%26%20Gold%20Inkshine%2C%20I%20would%20like%20to%20make%20an%20inquiry%20regarding%20a%20commercial%20print%20job"
                     target="_blank"
                     rel="noreferrer"
-                    className="w-full py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-xs transition-colors"
+                    className="w-full py-3 px-4 rounded-xl bg-[#b8860b] hover:bg-[#996515] text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-xs transition-colors"
                   >
                     <span>Chat on WhatsApp Directly (+234 703 037 2539)</span>
                     <ExternalLink className="w-4 h-4" />
@@ -737,15 +737,15 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
                     Send Instant Job Inquiry
                   </h4>
                   {contactFormSubmitted ? (
-                    <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-center space-y-2 py-8">
-                      <CheckCircle2 className="w-8 h-8 text-emerald-600 mx-auto" />
-                      <div className="font-bold text-sm text-emerald-900">Inquiry Sent Successfully!</div>
-                      <p className="text-xs text-emerald-700">
+                    <div className="p-4 rounded-xl bg-amber-50 border border-amber-200 text-center space-y-2 py-8">
+                      <CheckCircle2 className="w-8 h-8 text-[#b8860b] mx-auto" />
+                      <div className="font-bold text-sm text-amber-900">Inquiry Sent Successfully!</div>
+                      <p className="text-xs text-amber-800">
                         Our commercial print production manager will review your specifications and contact you shortly via phone or WhatsApp.
                       </p>
                       <button
                         onClick={() => setContactFormSubmitted(false)}
-                        className="mt-2 text-xs font-bold text-[#035440] underline"
+                        className="mt-2 text-xs font-bold text-[#b8860b] underline"
                       >
                         Send another message
                       </button>
@@ -760,7 +760,7 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
                           value={contactName}
                           onChange={(e) => setContactName(e.target.value)}
                           placeholder="e.g. Chief Ebikeme Briggs / Shell Contractors Ltd"
-                          className="w-full bg-stone-50 border border-stone-200 rounded-xl px-3 py-2 text-stone-900 focus:outline-hidden focus:ring-2 focus:ring-[#035440]"
+                          className="w-full bg-stone-50 border border-stone-200 rounded-xl px-3 py-2 text-stone-900 focus:outline-hidden focus:ring-2 focus:ring-[#b8860b]"
                         />
                       </div>
 
@@ -772,7 +772,7 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
                           value={contactPhone}
                           onChange={(e) => setContactPhone(e.target.value)}
                           placeholder="e.g. 0803 123 4567"
-                          className="w-full bg-stone-50 border border-stone-200 rounded-xl px-3 py-2 text-stone-900 focus:outline-hidden focus:ring-2 focus:ring-[#035440]"
+                          className="w-full bg-stone-50 border border-stone-200 rounded-xl px-3 py-2 text-stone-900 focus:outline-hidden focus:ring-2 focus:ring-[#b8860b]"
                         />
                       </div>
 
@@ -784,7 +784,7 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
                           value={contactMessage}
                           onChange={(e) => setContactMessage(e.target.value)}
                           placeholder="Provide details on roll-up banners, uniform quantities, paper bags, or delivery timeline needed..."
-                          className="w-full bg-stone-50 border border-stone-200 rounded-xl px-3 py-2 text-stone-900 focus:outline-hidden focus:ring-2 focus:ring-[#035440]"
+                          className="w-full bg-stone-50 border border-stone-200 rounded-xl px-3 py-2 text-stone-900 focus:outline-hidden focus:ring-2 focus:ring-[#b8860b]"
                         />
                       </div>
 

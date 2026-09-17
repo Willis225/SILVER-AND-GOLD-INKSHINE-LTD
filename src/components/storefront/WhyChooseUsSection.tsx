@@ -22,23 +22,23 @@ export const WhyChooseUsSection: React.FC<WhyChooseUsSectionProps> = ({ onSendFi
           >
             {/* Eyebrow in Gold */}
             <div className="text-[#b8860b] font-bold text-sm sm:text-base tracking-tight">
-              Why Businesses in Lagos Choose Rollupbanners.ng
+              Why Businesses Choose SILVER &amp; GOLD INKSHINE LTD
             </div>
 
             {/* Title */}
             <h2 className="text-xl sm:text-2xl font-bold text-stone-900 tracking-tight leading-snug">
-              Lagos’s Fast, Affordable, and Reliable Online Printing Company
+              Bayelsa &amp; Nigeria’s Fast, Affordable, and Reliable Online Printing Company
             </h2>
 
             {/* Paragraph */}
             <p className="text-xs sm:text-[13px] text-stone-600 leading-relaxed font-normal">
-              Choose Rollupbanners.ng because we make printing simple, affordable and reliable for businesses, schools, churches, event planners, product owners and corporate organisations in Lagos and across Nigeria. We understand that customers want quality work without wasting money, delaying their events or struggling with poor finishing — and that is exactly what we deliver.
+              Choose SILVER &amp; GOLD INKSHINE LTD because we make printing simple, affordable and reliable for businesses, schools, churches, event planners, product owners and corporate organisations across Nigeria. We understand that customers want quality work without wasting money, delaying their events or struggling with poor finishing — and that is exactly what we deliver.
             </p>
 
             {/* Send Print Ready File Button in Gold with White Writing */}
             <div className="pt-1">
               <a
-                href="https://wa.me/2347030372539?text=Hello%20Rollupbanners.ng%2C%20I%20have%20a%20print-ready%20file%20to%20send%20for%20production"
+                href="https://wa.me/2347030372539?text=Hello%20SILVER%20%26%20GOLD%20INKSHINE%20LTD%2C%20I%20have%20a%20print-ready%20file%20to%20send%20for%20production"
                 target="_blank"
                 rel="noreferrer"
                 onClick={onSendFile}
@@ -64,7 +64,7 @@ export const WhyChooseUsSection: React.FC<WhyChooseUsSectionProps> = ({ onSendFi
                 1. High-Quality Printing Standards
               </h3>
               <p className="text-xs sm:text-[13px] text-stone-600 leading-relaxed font-normal">
-                At Rollupbanners.ng, we maintain high-quality printing standards that give your brand a sharp, professional finish every time. Using modern equipment, premium materials and strict quality checks, we produce banners, business cards, packaging and branded items that look impressive, last longer and help your business stand out confidently across Nigeria.
+                At SILVER &amp; GOLD INKSHINE LTD, we maintain high-quality printing standards that give your brand a sharp, professional finish every time. Using modern equipment, premium materials and strict quality checks, we produce banners, business cards, packaging and branded items that look impressive, last longer and help your business stand out confidently across Nigeria.
               </p>
             </div>
 
@@ -74,7 +74,7 @@ export const WhyChooseUsSection: React.FC<WhyChooseUsSectionProps> = ({ onSendFi
                 2. Same-Day &amp; Urgent Printing Available
               </h3>
               <p className="text-xs sm:text-[13px] text-stone-600 leading-relaxed font-normal">
-                When deadlines matter, Rollupbanners.ng delivers with speed and accuracy. Our streamlined production process, skilled team and efficient workflow help us complete both small and bulk orders on time without compromising quality. Whether for business promotions, events or urgent campaigns, we help you get your printed materials ready fast.
+                When deadlines matter, SILVER &amp; GOLD INKSHINE LTD delivers with speed and accuracy. Our streamlined production process, skilled team and efficient workflow help us complete both small and bulk orders on time without compromising quality. Whether for business promotions, events or urgent campaigns, we help you get your printed materials ready fast.
               </p>
             </div>
           </motion.div>
@@ -93,7 +93,7 @@ export const WhyChooseUsSection: React.FC<WhyChooseUsSectionProps> = ({ onSendFi
                 3. Wide Range of Printing Services
               </h3>
               <p className="text-xs sm:text-[13px] text-stone-600 leading-relaxed font-normal">
-                From everyday office stationery to promotional materials, event branding, packaging, signage and custom gift items, Rollupbanners.ng offers a wide range of printing services to meet your business needs. No matter your industry or order size, we provide creative, reliable and professional print solutions that help you market, sell and grow.
+                From everyday office stationery to promotional materials, event branding, packaging, signage and custom gift items, SILVER &amp; GOLD INKSHINE LTD offers a wide range of printing services to meet your business needs. No matter your industry or order size, we provide creative, reliable and professional print solutions that help you market, sell and grow.
               </p>
             </div>
 
@@ -103,7 +103,7 @@ export const WhyChooseUsSection: React.FC<WhyChooseUsSectionProps> = ({ onSendFi
                 4. Nationwide Delivery in 3–5 Business Days
               </h3>
               <p className="text-xs sm:text-[13px] text-stone-600 leading-relaxed font-normal">
-                Rollupbanners.ng makes it easy to get your printed materials delivered quickly anywhere in Nigeria. From Lagos to Abuja, Port Harcourt and beyond, our fast nationwide delivery service ensures your banners, business cards, souvenirs, packaging and promotional items reach you safely and on time.
+                SILVER &amp; GOLD INKSHINE LTD makes it easy to get your printed materials delivered quickly anywhere in Nigeria. From Bayelsa and Lagos to Abuja, Port Harcourt and beyond, our fast nationwide delivery service ensures your banners, business cards, souvenirs, packaging and promotional items reach you safely and on time.
               </p>
             </div>
           </motion.div>

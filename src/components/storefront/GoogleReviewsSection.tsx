@@ -75,7 +75,7 @@ export const GoogleReviewsSection: React.FC = () => {
         
         {/* Section Headers */}
         <div className="text-center mb-8 sm:mb-10 space-y-1.5">
-          <div className="text-[#009b72] font-bold text-sm sm:text-base tracking-wide">
+          <div className="text-[#b8860b] font-bold text-sm sm:text-base tracking-wide">
             Read Our Happy Customer Reviews on Google
           </div>
           <h2 className="text-xl sm:text-2xl font-black text-stone-900 tracking-tight">
@@ -90,9 +90,9 @@ export const GoogleReviewsSection: React.FC = () => {
           <div className="lg:w-[280px] shrink-0 p-5 rounded-2xl border border-stone-200 bg-stone-50/70 flex flex-col justify-between items-center text-center shadow-xs">
             <div className="flex flex-col items-center gap-3">
               {/* Profile Avatar / Logo */}
-              <div className="w-14 h-14 rounded-full bg-[#00875a] flex items-center justify-center text-white shadow-sm overflow-hidden p-1">
-                <div className="w-full h-full rounded-full border border-white/40 flex flex-col items-center justify-center text-[8px] font-black leading-none bg-[#035440]">
-                  <span>ROLLUP</span>
+              <div className="w-14 h-14 rounded-full bg-[#b8860b] flex items-center justify-center text-white shadow-sm overflow-hidden p-1">
+                <div className="w-full h-full rounded-full border border-white/40 flex flex-col items-center justify-center text-[8px] font-black leading-none bg-[#78350f]">
+                  <span>INKSHINE</span>
                   <span className="text-[6px] text-amber-300">PRINT</span>
                 </div>
               </div>
@@ -100,7 +100,7 @@ export const GoogleReviewsSection: React.FC = () => {
               {/* Business Name */}
               <div className="space-y-1">
                 <h3 className="text-sm font-bold text-stone-900 leading-snug">
-                  Roll-up banner– Printing Company in Lagos
+                  SILVER &amp; GOLD INKSHINE LTD – Printing Company in Nigeria
                 </h3>
 
                 {/* Rating Stars & Count */}
@@ -134,7 +134,7 @@ export const GoogleReviewsSection: React.FC = () => {
               </div>
 
               <a
-                href="https://www.google.com/search?q=rollupbanners+ng+lagos"
+                href="https://www.google.com/search?q=silver+and+gold+inkshine+ltd+bayelsa"
                 target="_blank"
                 rel="noreferrer"
                 className="w-full py-2 px-3.5 rounded-lg bg-[#1a73e8] hover:bg-[#1557b0] text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm transition-colors"
@@ -253,12 +253,12 @@ export const GoogleReviewsSection: React.FC = () => {
             <div className="flex items-center justify-center gap-1.5 mt-5">
               <button
                 onClick={() => handleScroll('left')}
-                className={`w-2 h-2 rounded-full transition-all ${activeDot === 0 ? 'bg-[#009b72] w-4' : 'bg-stone-300'}`}
+                className={`w-2 h-2 rounded-full transition-all ${activeDot === 0 ? 'bg-[#b8860b] w-4' : 'bg-stone-300'}`}
                 aria-label="Page 1"
               />
               <button
                 onClick={() => handleScroll('right')}
-                className={`w-2 h-2 rounded-full transition-all ${activeDot === 1 ? 'bg-[#009b72] w-4' : 'bg-stone-300'}`}
+                className={`w-2 h-2 rounded-full transition-all ${activeDot === 1 ? 'bg-[#b8860b] w-4' : 'bg-stone-300'}`}
                 aria-label="Page 2"
               />
             </div>

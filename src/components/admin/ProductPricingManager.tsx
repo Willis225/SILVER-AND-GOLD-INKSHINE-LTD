@@ -55,7 +55,7 @@ export const ProductPricingManager: React.FC<ProductPricingManagerProps> = ({
       <div className="bg-stone-900 text-stone-100 rounded-2xl p-6 border border-stone-800 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-bold uppercase tracking-wider">
+            <span className="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30 text-xs font-bold uppercase tracking-wider">
               Catalog & Margin Control
             </span>
             <span className="text-xs text-stone-400 font-mono">Real-time Nigerian Naira (₦) Pricing Engine</span>
@@ -181,7 +181,7 @@ export const ProductPricingManager: React.FC<ProductPricingManagerProps> = ({
                       {isEditing ? (
                         <button
                           onClick={() => handleSaveEdit(product.id)}
-                          className="px-3 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded font-semibold text-xs inline-flex items-center gap-1 shadow-xs transition-colors"
+                          className="px-3 py-1 bg-[#b8860b] hover:bg-[#996515] text-white rounded font-semibold text-xs inline-flex items-center gap-1 shadow-xs transition-colors"
                         >
                           <Check className="w-3 h-3" />
                           Save

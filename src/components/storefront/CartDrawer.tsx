@@ -277,7 +277,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
             </button>
 
             <div className="flex items-center justify-center gap-2 text-[10px] text-stone-400 text-center">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+              <ShieldCheck className="w-3.5 h-3.5 text-amber-600" />
               <span>Secured by Paystack & Flutterwave • Lagos Somolu Production</span>
             </div>
           </div>

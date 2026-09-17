@@ -171,8 +171,8 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           
           {/* Success Banner */}
-          <div className="bg-emerald-900 text-white rounded-3xl p-6 sm:p-8 shadow-xl text-center space-y-4 border border-emerald-700">
-            <div className="w-16 h-16 bg-emerald-500 text-stone-950 rounded-full flex items-center justify-center mx-auto shadow-lg shadow-emerald-500/30">
+          <div className="bg-stone-900 text-white rounded-3xl p-6 sm:p-8 shadow-xl text-center space-y-4 border border-amber-500/40">
+            <div className="w-16 h-16 bg-[#b8860b] text-white rounded-full flex items-center justify-center mx-auto shadow-lg shadow-[#b8860b]/30">
               <CheckCircle2 className="w-10 h-10" />
             </div>
 
@@ -180,21 +180,21 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
               <h1 className="text-2xl sm:text-3xl font-black tracking-tight">
                 Commercial Print Order Received & Queued!
               </h1>
-              <p className="text-xs sm:text-sm text-emerald-100 max-w-xl mx-auto mt-2">
+              <p className="text-xs sm:text-sm text-amber-100/90 max-w-xl mx-auto mt-2">
                 Your order is being routed to our central Somolu & Ikeja Graphic Arts production press. An official confirmation email with payment receipt has been dispatched to <strong>{confirmedOrder.customer.email}</strong>.
               </p>
             </div>
 
-            <div className="inline-flex items-center gap-3 bg-emerald-950/60 border border-emerald-700 px-4 py-2 rounded-2xl">
-              <span className="text-xs text-emerald-200">Official Order No:</span>
+            <div className="inline-flex items-center gap-3 bg-stone-950/80 border border-amber-600/40 px-4 py-2 rounded-2xl">
+              <span className="text-xs text-stone-300">Official Order No:</span>
               <span className="font-mono text-sm sm:text-base font-black text-amber-400">
                 {confirmedOrder.orderNumber}
               </span>
               <button
                 onClick={copyOrderRef}
-                className="p-1 rounded hover:bg-emerald-800 text-emerald-200"
+                className="p-1 rounded hover:bg-amber-900/60 text-amber-300"
               >
-                {copiedRef ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+                {copiedRef ? <Check className="w-4 h-4 text-amber-400" /> : <Copy className="w-4 h-4" />}
               </button>
             </div>
           </div>
@@ -229,7 +229,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
                   key={st.step} 
                   className={`p-3 rounded-2xl border text-left transition-all ${
                     st.done
-                      ? 'bg-emerald-50 border-emerald-200 text-emerald-950'
+                      ? 'bg-amber-50 border-amber-200 text-amber-950'
                       : st.current
                       ? 'bg-amber-50 border-amber-500 text-amber-950 ring-2 ring-amber-500/20'
                       : 'bg-stone-50 border-stone-200 text-stone-400'
@@ -238,7 +238,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
                   <div className="flex items-center justify-between text-xs font-bold">
                     <span>Stage 0{st.step}</span>
                     {st.done ? (
-                      <Check className="w-4 h-4 text-emerald-600" />
+                      <Check className="w-4 h-4 text-amber-600" />
                     ) : st.current ? (
                       <span className="h-2 w-2 rounded-full bg-amber-500 animate-ping" />
                     ) : null}
@@ -250,9 +250,9 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
             </div>
 
             {/* Direct WhatsApp Despatch Link */}
-            <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="bg-amber-50/70 border border-amber-200/80 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="flex items-center gap-3">
-                <div className="p-2.5 rounded-xl bg-emerald-600 text-white shrink-0">
+                <div className="p-2.5 rounded-xl bg-[#b8860b] text-white shrink-0">
                   <MessageSquare className="w-5 h-5" />
                 </div>
                 <div>
@@ -269,7 +269,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
                 href={`https://wa.me/2347030372539?text=Hello%20Silver%20%26%20Gold%20Inkshine%2C%20I%20am%20tracking%20my%20order%20${confirmedOrder.orderNumber}`}
                 target="_blank"
                 rel="noreferrer"
-                className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold whitespace-nowrap shadow-xs flex items-center gap-2"
+                className="px-4 py-2.5 rounded-xl bg-[#b8860b] hover:bg-[#996515] text-white text-xs font-bold whitespace-nowrap shadow-xs flex items-center gap-2"
               >
                 <span>Chat with Pressmaster</span>
                 <ChevronRight className="w-3.5 h-3.5" />
@@ -374,7 +374,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
                 <span className="font-mono text-stone-900">{formatNaira(confirmedOrder.subtotalNgn)}</span>
               </div>
               {confirmedOrder.discountNgn > 0 && (
-                <div className="flex justify-between text-emerald-700 font-bold">
+                <div className="flex justify-between text-[#b8860b] font-bold">
                   <span>Corporate Discount:</span>
                   <span className="font-mono">-{formatNaira(confirmedOrder.discountNgn)}</span>
                 </div>
@@ -438,9 +438,9 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
 
           {/* Stepper Indicator */}
           <div className="flex items-center gap-3 text-xs font-bold">
-            <div className={`flex items-center gap-1.5 ${currentStep === 1 ? 'text-amber-700' : 'text-emerald-700'}`}>
+            <div className={`flex items-center gap-1.5 ${currentStep === 1 ? 'text-amber-700' : 'text-[#b8860b]'}`}>
               <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs ${
-                currentStep === 1 ? 'bg-amber-600 text-white' : 'bg-emerald-600 text-white'
+                currentStep === 1 ? 'bg-amber-600 text-white' : 'bg-[#b8860b] text-white'
               }`}>
                 {currentStep === 1 ? '1' : '✓'}
               </span>
@@ -854,7 +854,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
                 </div>
 
                 {appliedDiscountPercent > 0 && (
-                  <div className="text-[11px] text-emerald-700 font-bold flex items-center gap-1">
+                  <div className="text-[11px] text-[#b8860b] font-bold flex items-center gap-1">
                     <Check className="w-3.5 h-3.5" />
                     <span>Corporate discount applied ({appliedDiscountPercent}% OFF)!</span>
                   </div>
@@ -876,7 +876,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
                 </div>
 
                 {discountNgn > 0 && (
-                  <div className="flex justify-between text-emerald-700 font-bold">
+                  <div className="flex justify-between text-[#b8860b] font-bold">
                     <span>Promo Code Discount:</span>
                     <span className="font-mono">-{formatNaira(discountNgn)}</span>
                   </div>
@@ -905,7 +905,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
               {/* Trust Badges */}
               <div className="pt-3 border-t border-stone-100 flex items-center justify-around text-[10px] text-stone-500">
                 <span className="flex items-center gap-1">
-                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                  <ShieldCheck className="w-3.5 h-3.5 text-amber-600" />
                   <span>Verified Press</span>
                 </span>
                 <span className="flex items-center gap-1">

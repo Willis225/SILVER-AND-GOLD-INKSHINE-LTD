@@ -70,7 +70,7 @@ export const PrePressAuditDesk: React.FC<PrePressAuditDeskProps> = ({
               {orders.filter((o) => o.orderStatus === 'artwork_review').length} Orders
             </span>
           </div>
-          <ShieldCheck className="w-8 h-8 text-emerald-400 ml-2" />
+          <ShieldCheck className="w-8 h-8 text-[#b8860b] ml-2" />
         </div>
       </div>
 
@@ -164,7 +164,7 @@ export const PrePressAuditDesk: React.FC<PrePressAuditDeskProps> = ({
                     <h3 className="font-mono text-lg font-bold text-stone-900">
                       {activeOrder.orderNumber}
                     </h3>
-                    <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-semibold">
+                    <span className="text-xs px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300 font-semibold">
                       Payment Verified
                     </span>
                   </div>
@@ -183,7 +183,7 @@ export const PrePressAuditDesk: React.FC<PrePressAuditDeskProps> = ({
 
                   <button
                     onClick={() => onApproveArtwork(activeOrder.id)}
-                    className="px-4 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg shadow-xs flex items-center gap-1.5 transition-colors"
+                    className="px-4 py-1.5 bg-[#b8860b] hover:bg-[#996515] text-white text-xs font-bold rounded-lg shadow-xs flex items-center gap-1.5 transition-colors"
                   >
                     <CheckCircle2 className="w-3.5 h-3.5" />
                     <span>Approve & Release to Press</span>
@@ -226,11 +226,11 @@ export const PrePressAuditDesk: React.FC<PrePressAuditDeskProps> = ({
 
                     {/* Safe Text Zone Box */}
                     {showSafeZone && (
-                      <div className="absolute inset-x-3 inset-y-6 border border-emerald-400/80 rounded-xs pointer-events-none flex flex-col justify-between p-1">
-                        <span className="text-[7px] font-mono text-emerald-300 uppercase">
+                      <div className="absolute inset-x-3 inset-y-6 border border-amber-400/80 rounded-xs pointer-events-none flex flex-col justify-between p-1">
+                        <span className="text-[7px] font-mono text-amber-300 uppercase">
                           Safe Text Zone
                         </span>
-                        <span className="text-[7px] font-mono text-emerald-300 uppercase self-end">
+                        <span className="text-[7px] font-mono text-amber-300 uppercase self-end">
                           Safe Text Zone
                         </span>
                       </div>
@@ -270,7 +270,7 @@ export const PrePressAuditDesk: React.FC<PrePressAuditDeskProps> = ({
                         type="checkbox"
                         checked={showSafeZone}
                         onChange={(e) => setShowSafeZone(e.target.checked)}
-                        className="rounded text-emerald-500 focus:ring-0"
+                        className="rounded text-[#b8860b] focus:ring-0"
                       />
                       <span>Safe Zone</span>
                     </label>
@@ -285,41 +285,41 @@ export const PrePressAuditDesk: React.FC<PrePressAuditDeskProps> = ({
                     </h4>
 
                     <div className="space-y-2.5 text-xs">
-                      <div className="flex items-start gap-2.5 p-2 bg-emerald-50 border border-emerald-200 rounded-lg">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                      <div className="flex items-start gap-2.5 p-2 bg-amber-50 border border-amber-200 rounded-lg">
+                        <CheckCircle2 className="w-4 h-4 text-[#b8860b] shrink-0 mt-0.5" />
                         <div>
-                          <p className="font-bold text-emerald-900">Raster Image Resolution (300 DPI)</p>
-                          <p className="text-[11px] text-emerald-800">
+                          <p className="font-bold text-amber-950">Raster Image Resolution (300 DPI)</p>
+                          <p className="text-[11px] text-amber-800">
                             Verified at 300 DPI native at 850mm x 2050mm. No low-res pixilation detected.
                           </p>
                         </div>
                       </div>
 
-                      <div className="flex items-start gap-2.5 p-2 bg-emerald-50 border border-emerald-200 rounded-lg">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                      <div className="flex items-start gap-2.5 p-2 bg-amber-50 border border-amber-200 rounded-lg">
+                        <CheckCircle2 className="w-4 h-4 text-[#b8860b] shrink-0 mt-0.5" />
                         <div>
-                          <p className="font-bold text-emerald-900">Color Separation & Profile (CMYK)</p>
-                          <p className="text-[11px] text-emerald-800">
+                          <p className="font-bold text-amber-950">Color Separation & Profile (CMYK)</p>
+                          <p className="text-[11px] text-amber-800">
                             Embedded profile U.S. Web Coated (SWOP) v2. Zero RGB out-of-gamut banding.
                           </p>
                         </div>
                       </div>
 
-                      <div className="flex items-start gap-2.5 p-2 bg-emerald-50 border border-emerald-200 rounded-lg">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                      <div className="flex items-start gap-2.5 p-2 bg-amber-50 border border-amber-200 rounded-lg">
+                        <CheckCircle2 className="w-4 h-4 text-[#b8860b] shrink-0 mt-0.5" />
                         <div>
-                          <p className="font-bold text-emerald-900">Cassette Mechanical Bleed (+50mm)</p>
-                          <p className="text-[11px] text-emerald-800">
+                          <p className="font-bold text-amber-950">Cassette Mechanical Bleed (+50mm)</p>
+                          <p className="text-[11px] text-amber-800">
                             Correct bottom bleed included to anchor artwork securely onto the inner roller drum.
                           </p>
                         </div>
                       </div>
 
-                      <div className="flex items-start gap-2.5 p-2 bg-emerald-50 border border-emerald-200 rounded-lg">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                      <div className="flex items-start gap-2.5 p-2 bg-amber-50 border border-amber-200 rounded-lg">
+                        <CheckCircle2 className="w-4 h-4 text-[#b8860b] shrink-0 mt-0.5" />
                         <div>
-                          <p className="font-bold text-emerald-900">Typography Outlines</p>
-                          <p className="text-[11px] text-emerald-800">
+                          <p className="font-bold text-amber-950">Typography Outlines</p>
+                          <p className="text-[11px] text-amber-800">
                             All vector fonts converted to curves. No missing glyphs or substitution risk.
                           </p>
                         </div>
@@ -394,7 +394,7 @@ export const PrePressAuditDesk: React.FC<PrePressAuditDeskProps> = ({
                       )}`}
                       target="_blank"
                       rel="noreferrer"
-                      className="px-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-lg flex items-center gap-1.5 shadow-xs"
+                      className="px-3 py-2 bg-[#b8860b] hover:bg-[#996515] text-white text-xs font-semibold rounded-lg flex items-center gap-1.5 shadow-xs"
                     >
                       <Send className="w-3.5 h-3.5" />
                       <span>Send Client Proof PDF via WhatsApp</span>

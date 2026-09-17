@@ -201,14 +201,14 @@ export const PaystackModal: React.FC<PaystackModalProps> = ({
                       onClick={copyAccount}
                       className="p-1 rounded bg-white border border-sky-300 text-stone-700 hover:text-sky-700"
                     >
-                      {copiedAccount ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+                      {copiedAccount ? <Check className="w-3.5 h-3.5 text-amber-600" /> : <Copy className="w-3.5 h-3.5" />}
                     </button>
                   </div>
                 </div>
 
                 <div className="flex justify-between text-xs">
                   <span className="text-stone-500">Beneficiary:</span>
-                  <strong className="text-stone-900">RollUpPrints NG / Paystack</strong>
+                  <strong className="text-stone-900">SILVER &amp; GOLD INKSHINE LTD / Paystack</strong>
                 </div>
               </div>
 
@@ -271,7 +271,7 @@ export const PaystackModal: React.FC<PaystackModalProps> = ({
           </button>
 
           <div className="flex items-center justify-center gap-2 text-[10px] text-stone-400">
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+            <ShieldCheck className="w-3.5 h-3.5 text-amber-600" />
             <span>PCI-DSS Certified Level 1 • 256-Bit SSL Encryption</span>
           </div>
         </div>
