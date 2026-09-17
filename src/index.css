@@ -28,3 +28,32 @@
   background-size: 260% 100%;
   animation: goldSilverShimmer 9s ease-in-out infinite;
 }
+
+@keyframes goldShimmerFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.gold-shimmer-text {
+  background: linear-gradient(
+    90deg,
+    #fef08a 0%,
+    #f5be38 22%,
+    #fff8db 45%,
+    #ffffff 50%,
+    #fff8db 55%,
+    #f5be38 78%,
+    #d4af37 100%
+  );
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: goldShimmerFlow 5s ease-in-out infinite;
+}

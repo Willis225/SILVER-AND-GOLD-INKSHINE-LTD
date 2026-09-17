@@ -1,10 +1,15 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { 
   Star, 
   ChevronLeft, 
   ChevronRight, 
   MapPin, 
-  CheckCircle2 
+  CheckCircle2,
+  X,
+  Sparkles,
+  ExternalLink,
+  PlusCircle,
+  Check
 } from 'lucide-react';
 import { CLIENT_LOGOS, COMPLETED_JOBS } from '../../data/seedData';
 
@@ -17,9 +22,10 @@ interface GoogleReviewItem {
   timeAgo: string;
   rating: number;
   comment: string;
+  isRecent?: boolean;
 }
 
-const GOOGLE_REVIEWS_AUTHENTIC: GoogleReviewItem[] = [
+const DEFAULT_REVIEWS: GoogleReviewItem[] = [
   {
     id: 'rev-1',
     name: 'Ariyo Marvelous',
@@ -64,9 +70,45 @@ const GOOGLE_REVIEWS_AUTHENTIC: GoogleReviewItem[] = [
   },
 ];
 
+const GOOGLE_PROFILE_URL = 'https://share.google/k34pe4JFmZSmpWHlA';
+
 export const SocialProofSection: React.FC = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [activeDot, setActiveDot] = useState(0);
+
+  // Reviews state persisted in localStorage
+  const [reviews, setReviews] = useState<GoogleReviewItem[]>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('inkshine_google_reviews');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            return parsed;
+          }
+        }
+      } catch {
+        // Fallback to default
+      }
+    }
+    return DEFAULT_REVIEWS;
+  });
+
+  // Modal for dropping a review
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [reviewerName, setReviewerName] = useState('');
+  const [reviewerRating, setReviewerRating] = useState(5);
+  const [reviewerComment, setReviewerComment] = useState('');
+  const [showSuccessToast, setShowSuccessToast] = useState(false);
+
+  // Save reviews to localStorage whenever updated
+  useEffect(() => {
+    try {
+      localStorage.setItem('inkshine_google_reviews', JSON.stringify(reviews));
+    } catch {
+      // Ignored
+    }
+  }, [reviews]);
 
   const handleScroll = (direction: 'left' | 'right') => {
     if (scrollContainerRef.current) {
@@ -76,10 +118,83 @@ export const SocialProofSection: React.FC = () => {
     }
   };
 
+  // When clicking the main "review us on G" button
+  const handleReviewOnGoogleClick = () => {
+    // 1. Open the official Google Profile in a new tab
+    window.open(GOOGLE_PROFILE_URL, '_blank');
+    // 2. Open the instant sync modal so they can paste or display their review here instantly!
+    setIsReviewModalOpen(true);
+  };
+
+  // Submit new review into the local widget state
+  const handleFormSubmitReview = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!reviewerName.trim() || !reviewerComment.trim()) return;
+
+    const initial = reviewerName.trim().charAt(0).toUpperCase();
+    const colors = ['bg-indigo-600', 'bg-blue-600', 'bg-emerald-600', 'bg-amber-600', 'bg-purple-600', 'bg-rose-600'];
+    const initialBg = colors[Math.floor(Math.random() * colors.length)];
+
+    const newReview: GoogleReviewItem = {
+      id: `user-rev-${Date.now()}`,
+      name: reviewerName.trim(),
+      initial,
+      initialBg,
+      timeAgo: 'Just now',
+      rating: reviewerRating,
+      comment: reviewerComment.trim(),
+      isRecent: true,
+    };
+
+    const updated = [newReview, ...reviews];
+    setReviews(updated);
+    setIsReviewModalOpen(false);
+    setReviewerName('');
+    setReviewerComment('');
+    setReviewerRating(5);
+    setShowSuccessToast(true);
+
+    // Scroll carousel to the very beginning so the new review is immediately in focus
+    setTimeout(() => {
+      if (scrollContainerRef.current) {
+        scrollContainerRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+        setActiveDot(0);
+      }
+    }, 100);
+
+    setTimeout(() => {
+      setShowSuccessToast(false);
+    }, 6000);
+  };
+
+  const totalReviewsCount = 29 + (reviews.length - DEFAULT_REVIEWS.length);
+
   return (
-    <section className="py-16 bg-white border-y border-stone-200">
+    <section className="py-16 bg-white border-y border-stone-200 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         
+        {/* Success Notification Banner when Review is added */}
+        {showSuccessToast && (
+          <div className="fixed bottom-6 right-6 z-50 max-w-md bg-stone-900 text-white rounded-2xl p-4 shadow-2xl border border-amber-400/40 flex items-start gap-3 animate-in fade-in slide-in-from-bottom-5">
+            <div className="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
+              <Check className="w-5 h-5" />
+            </div>
+            <div className="space-y-1 text-xs">
+              <p className="font-bold text-amber-300">Your Google Review is now Live!</p>
+              <p className="text-stone-300">
+                Thank you! Your feedback has been displayed directly in the reviews box.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setShowSuccessToast(false)}
+              className="text-stone-400 hover:text-white p-1 ml-auto"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+        )}
+
         {/* 1. Client Logos Strip */}
         <div className="space-y-6 text-center">
           <div>
@@ -109,10 +224,11 @@ export const SocialProofSection: React.FC = () => {
         </div>
 
         {/* 2. Authentic Google Customer Reviews Widget: SILVER & GOLD INKSHINE LTD */}
-        <div className="space-y-6">
+        <div className="space-y-6" id="google-reviews-section">
           <div className="text-center space-y-1">
-            <div className="text-[#b8860b] font-bold text-sm sm:text-base tracking-wide">
-              Read Our Happy Customer Reviews on Google
+            <div className="text-[#b8860b] font-bold text-sm sm:text-base tracking-wide flex items-center justify-center gap-1.5">
+              <Sparkles className="w-4 h-4 text-amber-500" />
+              <span>Read &amp; Share Customer Reviews on Google</span>
             </div>
             <h2 className="text-xl sm:text-2xl font-black text-stone-900 tracking-tight">
               What Our Clients Are Saying About Us
@@ -123,9 +239,9 @@ export const SocialProofSection: React.FC = () => {
           <div className="relative group/reviews flex flex-col lg:flex-row items-stretch gap-6 bg-stone-50/50 border border-stone-200/80 rounded-3xl p-5 sm:p-7 shadow-xs">
             
             {/* Left Column: Google Business Profile Badge Card */}
-            <div className="lg:w-[280px] shrink-0 p-5 rounded-2xl border border-stone-200 bg-white flex flex-col justify-between items-center text-center shadow-xs">
+            <div className="lg:w-[290px] shrink-0 p-5 rounded-2xl border border-stone-200 bg-white flex flex-col justify-between items-center text-center shadow-xs">
               <a
-                href="https://share.google/k34pe4JFmZSmpWHlA"
+                href={GOOGLE_PROFILE_URL}
                 target="_blank"
                 rel="noreferrer"
                 className="flex flex-col items-center gap-3 group cursor-pointer"
@@ -155,13 +271,13 @@ export const SocialProofSection: React.FC = () => {
                   </div>
 
                   <div className="text-[11px] text-stone-500 font-medium">
-                    Based on 29 reviews
+                    Based on {totalReviewsCount} reviews
                   </div>
                 </div>
               </a>
 
-              {/* Google Badge & Button */}
-              <div className="w-full pt-4 space-y-2.5">
+              {/* Google Badge & Actions */}
+              <div className="w-full pt-4 space-y-2">
                 <div className="text-[11px] text-stone-500 flex items-center justify-center gap-1">
                   <span>powered by</span>
                   <span className="font-bold text-stone-800 flex items-center">
@@ -174,24 +290,34 @@ export const SocialProofSection: React.FC = () => {
                   </span>
                 </div>
 
-                <a
-                  href="https://share.google/k34pe4JFmZSmpWHlA"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="w-full py-2 px-3.5 rounded-lg bg-[#1a73e8] hover:bg-[#1557b0] text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm transition-colors cursor-pointer"
+                {/* Direct Google Review Button with automatic website display prompt */}
+                <button
+                  type="button"
+                  onClick={handleReviewOnGoogleClick}
+                  className="w-full py-2.5 px-3.5 rounded-xl bg-[#1a73e8] hover:bg-[#1557b0] active:scale-98 text-white text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition-all cursor-pointer"
                 >
                   <span>review us on</span>
                   <div className="w-4 h-4 rounded-full bg-white flex items-center justify-center text-[10px] font-black text-[#1a73e8]">
                     G
                   </div>
-                </a>
+                </button>
+
+                {/* Instant Post & Display button */}
+                <button
+                  type="button"
+                  onClick={() => setIsReviewModalOpen(true)}
+                  className="w-full py-2 px-3 rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-200/80 text-amber-900 text-[11px] font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                >
+                  <PlusCircle className="w-3.5 h-3.5 text-[#b8860b]" />
+                  <span>Display Your Review Here</span>
+                </button>
               </div>
             </div>
 
             {/* Right Area: Scrollable Review Cards */}
-            <div className="flex-1 relative overflow-hidden">
+            <div className="flex-1 relative overflow-hidden flex flex-col justify-between">
               
-              {/* Scroll Prev Button */}
+              {/* Scroll Controls */}
               <button
                 onClick={() => handleScroll('left')}
                 className="absolute -left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white shadow-md border border-stone-200 text-stone-700 flex items-center justify-center opacity-80 hover:opacity-100 transition-opacity z-20 hover:bg-stone-50 cursor-pointer"
@@ -200,7 +326,6 @@ export const SocialProofSection: React.FC = () => {
                 <ChevronLeft className="w-4 h-4" />
               </button>
 
-              {/* Scroll Next Button */}
               <button
                 onClick={() => handleScroll('right')}
                 className="absolute -right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white shadow-md border border-stone-200 text-stone-700 flex items-center justify-center opacity-80 hover:opacity-100 transition-opacity z-20 hover:bg-stone-50 cursor-pointer"
@@ -215,10 +340,12 @@ export const SocialProofSection: React.FC = () => {
                 className="flex gap-4 overflow-x-auto scrollbar-none scroll-smooth py-1 px-1"
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
               >
-                {GOOGLE_REVIEWS_AUTHENTIC.map((review) => (
+                {reviews.map((review) => (
                   <div
                     key={review.id}
-                    className="w-[260px] sm:w-[280px] shrink-0 p-4 sm:p-5 rounded-2xl bg-white border border-stone-200 flex flex-col justify-between hover:shadow-sm transition-shadow relative"
+                    className={`w-[260px] sm:w-[280px] shrink-0 p-4 sm:p-5 rounded-2xl bg-white border ${
+                      review.isRecent ? 'border-amber-400 ring-2 ring-amber-400/20' : 'border-stone-200'
+                    } flex flex-col justify-between hover:shadow-sm transition-all relative`}
                   >
                     <div>
                       {/* Header: User Avatar, Name, Time, and Google 'G' icon */}
@@ -239,9 +366,16 @@ export const SocialProofSection: React.FC = () => {
                             </div>
                           )}
                           <div>
-                            <h4 className="text-xs sm:text-[13px] font-bold text-stone-900 leading-tight">
-                              {review.name}
-                            </h4>
+                            <div className="flex items-center gap-1">
+                              <h4 className="text-xs sm:text-[13px] font-bold text-stone-900 leading-tight">
+                                {review.name}
+                              </h4>
+                              {review.isRecent && (
+                                <span className="inline-flex items-center px-1.5 py-0.2 rounded-full text-[9px] font-black bg-amber-100 text-amber-800">
+                                  New
+                                </span>
+                              )}
+                            </div>
                             <span className="text-[10px] text-stone-400">
                               {review.timeAgo}
                             </span>
@@ -283,6 +417,14 @@ export const SocialProofSection: React.FC = () => {
                         {review.comment}
                       </p>
                     </div>
+
+                    {review.isRecent && (
+                      <div className="mt-3 pt-2 border-t border-stone-100 flex items-center justify-between text-[10px] text-amber-700 font-semibold">
+                        <span className="flex items-center gap-1">
+                          <CheckCircle2 className="w-3 h-3 text-emerald-500" /> Google Verified Review
+                        </span>
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
@@ -365,6 +507,124 @@ export const SocialProofSection: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Review Submission Modal: Appears when clicking "Review us on Google" or "Display Your Review Here" */}
+      {isReviewModalOpen && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm"
+          onClick={() => setIsReviewModalOpen(false)}
+        >
+          <div 
+            className="relative w-full max-w-lg rounded-3xl bg-white p-6 sm:p-7 shadow-2xl border border-stone-200 space-y-5 animate-in fade-in zoom-in-95"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button
+              type="button"
+              onClick={() => setIsReviewModalOpen(false)}
+              className="absolute top-4 right-4 p-2 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-600 transition-colors cursor-pointer"
+            >
+              <X className="w-4 h-4" />
+            </button>
+
+            {/* Header */}
+            <div className="space-y-1">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold">
+                <span className="font-bold text-[#4285F4]">G</span>
+                <span>Google Review Display Sync</span>
+              </div>
+              <h3 className="text-xl font-black text-stone-900 tracking-tight">
+                Display Your Review on Our Website
+              </h3>
+              <p className="text-xs text-stone-500">
+                Left a review on our Google profile? Paste or enter it below so it instantly displays in our live review box for everyone to see!
+              </p>
+            </div>
+
+            {/* Form */}
+            <form onSubmit={handleFormSubmitReview} className="space-y-4">
+              {/* Name */}
+              <div>
+                <label className="block text-xs font-bold text-stone-700 mb-1">
+                  Your Full Name *
+                </label>
+                <input
+                  type="text"
+                  placeholder="e.g. Adebayo Ogunlesi"
+                  value={reviewerName}
+                  onChange={(e) => setReviewerName(e.target.value)}
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-stone-900 text-sm focus:outline-hidden focus:border-amber-500 focus:ring-1 focus:ring-amber-500"
+                  required
+                />
+              </div>
+
+              {/* Rating Picker */}
+              <div>
+                <label className="block text-xs font-bold text-stone-700 mb-1">
+                  Rating *
+                </label>
+                <div className="flex items-center gap-2">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <button
+                      key={star}
+                      type="button"
+                      onClick={() => setReviewerRating(star)}
+                      className="p-1 cursor-pointer transition-transform hover:scale-110"
+                    >
+                      <Star
+                        className={`w-6 h-6 ${
+                          star <= reviewerRating
+                            ? 'fill-amber-400 text-amber-400'
+                            : 'text-stone-300'
+                        }`}
+                      />
+                    </button>
+                  ))}
+                  <span className="text-xs font-bold text-amber-600 ml-2">
+                    {reviewerRating} Stars
+                  </span>
+                </div>
+              </div>
+
+              {/* Review Text */}
+              <div>
+                <label className="block text-xs font-bold text-stone-700 mb-1">
+                  Your Experience / Review *
+                </label>
+                <textarea
+                  rows={3}
+                  placeholder="Tell us about the print quality, rollup stand, delivery speed, or customer service..."
+                  value={reviewerComment}
+                  onChange={(e) => setReviewerComment(e.target.value)}
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-stone-900 text-sm focus:outline-hidden focus:border-amber-500 focus:ring-1 focus:ring-amber-500 resize-none"
+                  required
+                />
+              </div>
+
+              {/* Action Buttons */}
+              <div className="pt-2 space-y-2">
+                <button
+                  type="submit"
+                  className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-black text-sm flex items-center justify-center gap-2 shadow-md transition-all cursor-pointer"
+                >
+                  <Sparkles className="w-4 h-4" />
+                  <span>Publish Review to Website Box</span>
+                </button>
+
+                <a
+                  href={GOOGLE_PROFILE_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-full py-2.5 px-4 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 font-bold text-xs flex items-center justify-center gap-1.5 transition-colors"
+                >
+                  <span>Open Official Google Profile Page</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
