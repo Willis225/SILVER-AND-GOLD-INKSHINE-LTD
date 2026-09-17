@@ -162,11 +162,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 <span className="text-white">Chat on WhatsApp Now</span>
               </a>
 
-              {/* View Our Services: Deep Metallic Gold Button with Crisp White Text */}
+              {/* View Our Services: Transparent Button with White Border */}
               <button
                 onClick={onExploreProducts}
                 id="hero-view-services-btn"
-                className="relative overflow-hidden bg-gradient-to-r from-[#b8860b] via-[#c59b27] to-[#8c6d1f] hover:from-[#c59b27] hover:to-[#b8860b] active:scale-98 border border-[#fae8aa]/40 text-white font-bold text-xs sm:text-sm px-5 py-3.5 rounded-md transition-all shadow-md shadow-black/40 flex items-center gap-1.5 group"
+                className="relative bg-transparent hover:bg-white/10 active:scale-98 border-2 border-white text-white font-bold text-xs sm:text-sm px-5 py-3.5 rounded-md transition-all shadow-md shadow-black/30 flex items-center gap-2 group backdrop-blur-xs"
               >
                 <span className="text-white">View Our Services</span>
                 <ArrowRight className="w-4 h-4 text-white transition-transform group-hover:translate-x-1" />
