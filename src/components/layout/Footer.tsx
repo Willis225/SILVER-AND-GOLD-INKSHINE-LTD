@@ -10,7 +10,9 @@ import {
   ShieldCheck, 
   ArrowRight,
   HelpCircle,
-  Search
+  Search,
+  ExternalLink,
+  Star
 } from 'lucide-react';
 import { PRINT_FAQS } from '../../data/seedData';
 import { ProductCategory } from '../../types/schema';
@@ -136,6 +138,18 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategory, onOpenAdmin, o
                 <div>
                   <strong className="text-stone-200 block">Bayelsa Central Press Hub:</strong>
                   <span>Mbiama-Yenagoa Road, Graphic Arts Complex, Yenagoa, Bayelsa State, Nigeria.</span>
+                  <div className="mt-1.5">
+                    <a
+                      href="https://share.google/k34pe4JFmZSmpWHlA"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-1.5 text-[11px] text-amber-400 hover:text-amber-300 font-medium transition-colors"
+                    >
+                      <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
+                      <span>View Google Profile (4.8 ★ / 29 Reviews)</span>
+                      <ExternalLink className="w-3 h-3 ml-0.5" />
+                    </a>
+                  </div>
                 </div>
               </div>
 

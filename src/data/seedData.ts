@@ -1620,52 +1620,68 @@ export const CLIENT_LOGOS: ClientLogo[] = [
 export interface GoogleReview {
   id: string;
   author: string;
-  role: string;
-  company: string;
-  avatarText: string;
+  avatar?: string;
+  initial?: string;
+  initialBg?: string;
   rating: number;
   date: string;
   review: string;
-  verifiedOrder: string;
-  city: string;
+  verifiedOrder?: string;
+  city?: string;
 }
 
 export const GOOGLE_REVIEWS: GoogleReview[] = [
   {
     id: 'rev-1',
-    author: 'Engr. Babatunde Alabi',
-    role: 'Head of Brand & Communications',
-    company: 'Fintech Hub Lagos',
-    avatarText: 'BA',
+    author: 'Ariyo Marvelous',
+    avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&q=80',
     rating: 5,
-    date: '3 days ago',
-    review: 'Ordered 14 Luxury Broad Base Roll-up Banners for our Africa Tech Summit at Eko Hotel. Delivered in Ikeja within 48 hours flat! The Solite matte finish has zero reflection under harsh stage spotlights. 10/10 print craftsmanship.',
-    verifiedOrder: 'Luxury Rollup Banners (14 units)',
-    city: 'Lagos Island',
+    date: '5 months ago',
+    review: 'I printed a rollup banner for my office campaign and the result was excellent. The design was clear, the stand was solid, and delivery was right on schedule without any delays.',
+    verifiedOrder: 'Roll-Up Banner Stand',
+    city: 'Nigeria',
   },
   {
     id: 'rev-2',
-    author: 'Mrs. Folashade Adeyemi',
-    role: 'Lead Procurement Manager',
-    company: 'Apex Healthcare Abuja',
-    avatarText: 'FA',
+    author: 'Olumide Tos',
+    initial: 'O',
+    initialBg: 'bg-[#5b21b6]',
     rating: 5,
-    date: '1 week ago',
-    review: 'Our custom-embossed business cards and branded Kraft gift bags arrived at our Maitama office via GIG Logistics in pristine condition. Their online dynamic pricing calculator was spot-on—no hidden surprises or phantom quotes!',
-    verifiedOrder: 'Matte Business Cards + Kraft Bags',
-    city: 'Abuja FCT',
+    date: '2 years ago',
+    review: 'The establishment offered impeccably maintained merchandise. The layout was thoughtfully organized, customer care was top-notch and print output exceeded our expectations.',
+    verifiedOrder: 'Corporate Merchandise & Print',
+    city: 'Nigeria',
   },
   {
     id: 'rev-3',
-    author: 'Chinedu Eze',
-    role: 'Creative Director',
-    company: 'Vanguard Media Group',
-    avatarText: 'CE',
+    author: 'John Success',
+    avatar: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=100&q=80',
     rating: 5,
-    date: '2 weeks ago',
-    review: 'We were skeptical about uploading high-res 80MB CorelDraw files online, but their drag-and-drop system handled it seamlessly. The pre-flight bleed check caught a 5mm margin flaw that would have ruined our cut. True printing experts.',
-    verifiedOrder: 'Teardrop Flying Flags & 3D Signage',
-    city: 'Port Harcourt',
+    date: '3 years ago',
+    review: 'I ordered for Flex Banner material, SAV sticker material and ABS. I received free shipping because it was my first large order and everything was in perfect condition.',
+    verifiedOrder: 'Flex Banner, SAV Sticker & ABS',
+    city: 'Nigeria',
+  },
+  {
+    id: 'rev-4',
+    author: 'Micheal Johnson',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80',
+    rating: 5,
+    date: '3 years ago',
+    review: '"I had a wonderful experience got my Promotional/promo table in time and I would highly recommend this business to anyone looking for reliable branding in Lagos."',
+    verifiedOrder: 'Promotional / Promo Table',
+    city: 'Lagos, Nigeria',
+  },
+  {
+    id: 'rev-5',
+    author: 'Mack Charmness',
+    initial: 'M',
+    initialBg: 'bg-[#166534]',
+    rating: 5,
+    date: '4 years ago',
+    review: '"I was skeptical because their prices were so much cheaper than the other printers I looked at, but I got my Gazebo canopy tent delivered in 3 days and the quality blew me away."',
+    verifiedOrder: 'Gazebo Canopy Tent',
+    city: 'Nigeria',
   },
 ];
 

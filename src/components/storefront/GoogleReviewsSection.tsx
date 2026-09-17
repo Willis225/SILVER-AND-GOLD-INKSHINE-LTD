@@ -134,7 +134,7 @@ export const GoogleReviewsSection: React.FC = () => {
               </div>
 
               <a
-                href="https://www.google.com/search?q=silver+and+gold+inkshine+ltd+bayelsa"
+                href="https://share.google/k34pe4JFmZSmpWHlA"
                 target="_blank"
                 rel="noreferrer"
                 className="w-full py-2 px-3.5 rounded-lg bg-[#1a73e8] hover:bg-[#1557b0] text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm transition-colors"

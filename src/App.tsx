@@ -5,7 +5,6 @@ import { BrandIntroSection } from './components/storefront/BrandIntroSection';
 import { ServicesShowcaseSection } from './components/storefront/ServicesShowcaseSection';
 import { BusinessStationerySection } from './components/storefront/BusinessStationerySection';
 import { BannersDisplayStandsSection } from './components/storefront/BannersDisplayStandsSection';
-import { GoogleReviewsSection } from './components/storefront/GoogleReviewsSection';
 import { BrandedGiftsSection } from './components/storefront/BrandedGiftsSection';
 import { TrustedCompanyFeatureSection } from './components/storefront/TrustedCompanyFeatureSection';
 import { PackagingLabelsSection } from './components/storefront/PackagingLabelsSection';
@@ -319,9 +318,6 @@ export default function App() {
                 scrollToCatalog();
               }}
             />
-
-            {/* Happy Customer Reviews on Google (Matching Reference) */}
-            <GoogleReviewsSection />
 
             {/* Branded Corporate Gifts & Promotional Items (Matching Reference) */}
             <BrandedGiftsSection
