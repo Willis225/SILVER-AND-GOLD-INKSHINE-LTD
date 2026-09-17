@@ -199,12 +199,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             initial={{ opacity: 0, y: 24, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.7, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-6 xl:col-span-6 flex flex-col items-center lg:items-end w-full"
+            className="lg:col-span-6 xl:col-span-6 flex flex-col items-center lg:items-end"
           >
             <div className="w-full max-w-xl relative">
               
               {/* Product Visual Presentation Scene Card */}
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-b from-[#14151b]/95 via-[#0a0a0d]/98 to-[#040406] border border-[#ebd07f]/25 p-1.5 sm:p-2.5 backdrop-blur-md ring-1 ring-[#ebd07f]/10 w-full">
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-b from-[#14151b]/95 via-[#0a0a0d]/98 to-[#040406] border border-[#ebd07f]/25 p-2 sm:p-2.5 backdrop-blur-md ring-1 ring-[#ebd07f]/10">
                 {/* Pure Interactive Animated Sliding Image Showcase */}
                 <HeroImageSlider />
               </div>

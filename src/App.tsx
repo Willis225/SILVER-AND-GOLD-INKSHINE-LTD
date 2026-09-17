@@ -22,6 +22,9 @@ import { ProductDetailPage } from './components/product/ProductDetailPage';
 import { CheckoutPage } from './components/checkout/CheckoutPage';
 import { AdminDashboard } from './components/admin/AdminDashboard';
 import { CompanyInfoModal, InfoModalTab } from './components/common/CompanyInfoModal';
+import { GlassBottomDock } from './components/navigation/GlassBottomDock';
+import { BookOnlineModal } from './components/modals/BookOnlineModal';
+import { CatalogModal } from './components/modals/CatalogModal';
 import { SAMPLE_PRODUCTS, NIGERIAN_SHIPPING_ZONES } from './data/seedData';
 import { INITIAL_ORDERS } from './data/seedOrders';
 import { Product, ProductCategory, Order, OrderStatus, PaymentStatus, calculateDynamicPrice } from './types/schema';
@@ -63,6 +66,16 @@ export default function App() {
   const handleOpenInfoModal = (tab: InfoModalTab = 'info') => {
     setCompanyInfoTab(tab);
     setIsCompanyInfoOpen(true);
+  };
+
+  // Glass Bottom Dock Modal States (Book Online, Info, Catalog)
+  const [isBookOnlineOpen, setIsBookOnlineOpen] = useState(false);
+  const [isCatalogOpen, setIsCatalogOpen] = useState(false);
+  const [bookOnlineService, setBookOnlineService] = useState('');
+
+  const handleOpenBookOnline = (service: string = '') => {
+    setBookOnlineService(service);
+    setIsBookOnlineOpen(true);
   };
 
   // Mode toggle between Live Storefront, PDP, Checkout, Architecture Sandbox, and Admin Dashboard
@@ -211,7 +224,7 @@ export default function App() {
       )}
 
       {/* Main View Router */}
-      <main className="flex-1">
+      <main className="flex-1 pb-24 sm:pb-20">
         {viewMode === 'admin' && (
           <AdminDashboard
             orders={orders}
@@ -420,6 +433,36 @@ export default function App() {
           setSelectedCategory(cat);
           setViewMode('storefront');
           scrollToCatalog();
+        }}
+      />
+
+      {/* iPhone 17-Style Frosted Glass Floating Bottom Dock (Mobile + Desktop) */}
+      <GlassBottomDock
+        onOpenBookOnline={() => handleOpenBookOnline()}
+        onOpenInfo={() => handleOpenInfoModal('info')}
+        onOpenCatalog={() => setIsCatalogOpen(true)}
+        activeModal={isBookOnlineOpen ? 'book' : isCompanyInfoOpen ? 'info' : isCatalogOpen ? 'catalog' : null}
+      />
+
+      {/* Book Online Modal */}
+      <BookOnlineModal
+        isOpen={isBookOnlineOpen}
+        onClose={() => setIsBookOnlineOpen(false)}
+        preselectedService={bookOnlineService}
+      />
+
+      {/* Paintings, Artworks & Product Samples Catalog Modal */}
+      <CatalogModal
+        isOpen={isCatalogOpen}
+        onClose={() => setIsCatalogOpen(false)}
+        products={products}
+        onSelectProduct={(prod) => {
+          setIsCatalogOpen(false);
+          setQuickViewProduct(prod);
+        }}
+        onBookSample={(sampleTitle) => {
+          setIsCatalogOpen(false);
+          handleOpenBookOnline(sampleTitle);
         }}
       />
     </div>
