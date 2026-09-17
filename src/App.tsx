@@ -220,11 +220,12 @@ export default function App() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
           onOpenInfoModal={handleOpenInfoModal}
+          onOpenBookOnline={() => handleOpenBookOnline()}
         />
       )}
 
       {/* Main View Router */}
-      <main className="flex-1 pb-24 sm:pb-20">
+      <main className="flex-1 pb-24 md:pb-0">
         {viewMode === 'admin' && (
           <AdminDashboard
             orders={orders}

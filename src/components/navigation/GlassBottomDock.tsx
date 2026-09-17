@@ -16,8 +16,8 @@ export const GlassBottomDock: React.FC<GlassBottomDockProps> = ({
 }) => {
   return (
     <aside 
-      aria-label="Quick action navigation dock"
-      className="fixed bottom-4 inset-x-3 sm:inset-x-auto sm:left-1/2 sm:-translate-x-1/2 z-40 max-w-sm sm:max-w-md mx-auto pointer-events-none"
+      aria-label="Mobile quick action navigation dock"
+      className="md:hidden fixed bottom-4 inset-x-3 z-40 max-w-sm mx-auto pointer-events-none"
     >
       {/* iPhone 17-inspired Ultra-Glass Floating Capsule Dock */}
       <nav 

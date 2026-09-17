@@ -54,6 +54,7 @@ interface HeaderProps {
   onNavigateHome: () => void;
   onOpenAdmin?: () => void;
   onOpenInfoModal?: (tab?: InfoModalTab) => void;
+  onOpenBookOnline?: () => void;
 }
 
 export const CATEGORIES: { id: ProductCategory; label: string }[] = [
@@ -96,6 +97,7 @@ export const Header: React.FC<HeaderProps> = ({
   onNavigateHome,
   onOpenAdmin,
   onOpenInfoModal,
+  onOpenBookOnline,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -827,6 +829,19 @@ export const Header: React.FC<HeaderProps> = ({
                 </div>
               )}
             </div>
+
+            {/* Book Online Action Button */}
+            <button
+              id="desktop-header-book-online-btn"
+              type="button"
+              onClick={onOpenBookOnline}
+              className="relative px-3.5 py-1.5 rounded-full bg-gradient-to-r from-[#d4af37] via-[#e5c158] to-[#b8860b] hover:from-[#e5c158] hover:to-[#d4af37] text-black font-extrabold text-xs tracking-tight shadow-md shadow-[#d4af37]/25 flex items-center gap-1.5 active:scale-95 transition-all cursor-pointer group"
+              title="Book your print and design order online"
+            >
+              <Calendar className="w-3.5 h-3.5 stroke-[2.4]" />
+              <span className="whitespace-nowrap">Book Online</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-black/70 animate-pulse" />
+            </button>
           </nav>
 
           {/* Right Action Icons: Search + Cart */}
