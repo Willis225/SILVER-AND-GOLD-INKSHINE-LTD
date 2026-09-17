@@ -92,42 +92,39 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               <Sparkles className="w-3.5 h-3.5 text-[#f5be38] opacity-90" />
             </motion.div>
 
-            {/* Headline and Shimmering Sub-headline Container */}
-            <motion.div variants={itemVariants} className="space-y-1">
+            {/* Headline, Sub-headline, Gold Divider, and Subtitle in tightly composed typographic hierarchy */}
+            <motion.div variants={itemVariants} className="space-y-2">
               {/* Primary Headline: Bold Large White Font */}
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[45px] xl:text-[52px] font-black tracking-tight text-white leading-[1.08] drop-shadow-[0_2px_20px_rgba(245,190,56,0.2)]">
                 #1 Online Printing Company in Bayelsa
               </h1>
 
               {/* Sub-headline: Shimmering Vibrant Gold Font */}
-              <div className="text-2xl sm:text-3xl md:text-4xl lg:text-[38px] xl:text-[45px] font-black tracking-tight leading-[1.12] pt-1">
+              <div className="text-2xl sm:text-3xl md:text-4xl lg:text-[38px] xl:text-[45px] font-black tracking-tight leading-[1.12]">
                 <span className="gold-shimmer-text drop-shadow-[0_0_24px_rgba(245,190,56,0.4)] inline-block">
                   Banners • Branding • Digital Printing
                 </span>
               </div>
-            </motion.div>
 
-            {/* Subtle glowing gold light effects beam & constellation divider (Matching Reference) */}
-            <motion.div variants={itemVariants} className="relative py-2 max-w-xl">
-              {/* Radiant gold lens flare in center */}
-              <div className="absolute left-1/4 sm:left-1/3 top-1/2 -translate-y-1/2 w-48 sm:w-72 h-3 bg-[radial-gradient(ellipse_at_center,rgba(255,245,210,1)_0%,rgba(245,190,56,0.8)_35%,transparent_75%)] blur-[2px] pointer-events-none" />
-              {/* Horizontal hairline light beam */}
-              <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-[#f5be38]/85 to-transparent shadow-[0_0_12px_rgba(245,190,56,0.6)]" />
-              {/* Dotted constellation accent with gold diamond */}
-              <div className="absolute inset-0 flex items-center justify-center gap-1.5 text-[#f5be38]/80 text-[8px] pointer-events-none select-none tracking-[0.28em]">
-                <span>• • • • • •</span>
-                <span className="text-[#fff2b2] text-xs font-serif shadow-xs">✧</span>
-                <span>• • • • • •</span>
+              {/* Subtle glowing gold light effects beam & constellation divider (Tight Spacing) */}
+              <div className="relative py-1 pt-1 max-w-xl">
+                {/* Radiant gold lens flare in center */}
+                <div className="absolute left-1/4 sm:left-1/3 top-1/2 -translate-y-1/2 w-48 sm:w-72 h-3 bg-[radial-gradient(ellipse_at_center,rgba(255,245,210,1)_0%,rgba(245,190,56,0.8)_35%,transparent_75%)] blur-[2px] pointer-events-none" />
+                {/* Horizontal hairline light beam */}
+                <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-[#f5be38]/85 to-transparent shadow-[0_0_12px_rgba(245,190,56,0.6)]" />
+                {/* Dotted constellation accent with gold diamond (Tighter Dot Gap) */}
+                <div className="absolute inset-0 flex items-center justify-center gap-1.5 text-[#f5be38]/85 text-[7px] pointer-events-none select-none tracking-[0.14em]">
+                  <span>••••••</span>
+                  <span className="text-[#fff2b2] text-[11px] font-serif px-0.5">✧</span>
+                  <span>••••••</span>
+                </div>
               </div>
-            </motion.div>
 
-            {/* Subtitle text: Modern clean sans-serif typography */}
-            <motion.p 
-              variants={itemVariants}
-              className="text-stone-300 text-sm sm:text-base leading-relaxed max-w-xl font-normal"
-            >
-              Select from top print collections, guaranteeing precision color matching and pre-press audit. Need custom specs or large volume? Fast turnaround and nationwide doorstep delivery across Nigeria!
-            </motion.p>
+              {/* Subtitle text: Modern clean sans-serif typography (Tight gap below gold line) */}
+              <p className="text-stone-300 text-sm sm:text-base leading-relaxed max-w-xl font-normal pt-0.5">
+                Select from top print collections, guaranteeing precision color matching and pre-press audit. Need custom specs or large volume? Fast turnaround and nationwide doorstep delivery across Nigeria!
+              </p>
+            </motion.div>
 
             {/* Action Buttons: WhatsApp Gold Button & White-Bordered Services Button */}
             <motion.div 
