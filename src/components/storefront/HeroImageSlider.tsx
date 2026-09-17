@@ -4,96 +4,46 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export interface SlideItem {
   id: string;
-  filename: string;
+  imageUrl: string;
   alt: string;
-  fallbackUrl: string;
 }
 
-// All 14 authentic images provided by Silver & Gold Inkshine Ltd
+// Exactly and exclusively the 7 images specified by the user
 const SLIDES: SlideItem[] = [
   {
-    id: 'slide-storefront-main',
-    filename: 'WhatsApp Image 2026-09-17 at 2.13.06 AM (10).jpeg',
-    alt: 'Silver & Gold Inkshine Ltd Commercial Storefront - RC 9350634',
-    fallbackUrl: 'https://images.unsplash.com/photo-1542744094-24638eff58bb?w=1400&auto=format&fit=crop&q=85',
+    id: 'slide-1',
+    imageUrl: 'https://cdn.hstockplus.org/uploads/public/img-1789638023483-0654f1a516c4673a.webp',
+    alt: 'Silver & Gold Inkshine Ltd - Showcase 1',
   },
   {
-    id: 'slide-storefront-angle',
-    filename: 'WhatsApp Image 2026-09-17 at 2.13.06 AM (5).jpeg',
-    alt: 'Silver & Gold Inkshine Ltd Exterior Billboard and Entrance',
-    fallbackUrl: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?w=1400&auto=format&fit=crop&q=85',
+    id: 'slide-2',
+    imageUrl: 'https://cdn.hstockplus.org/uploads/public/img-1789638121027-6ecd906745a42aaa.webp',
+    alt: 'Silver & Gold Inkshine Ltd - Showcase 2',
   },
   {
-    id: 'slide-press-room',
-    filename: 'WhatsApp Image 2026-09-17 at 2.13.04 AM.jpeg',
-    alt: 'Silver & Gold Inkshine Production Showroom and Large Format Printer',
-    fallbackUrl: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=1400&auto=format&fit=crop&q=85',
+    id: 'slide-3',
+    imageUrl: 'https://cdn.hstockplus.org/uploads/public/img-1789638161792-fdf550c93a995761.webp',
+    alt: 'Silver & Gold Inkshine Ltd - Showcase 3',
   },
   {
-    id: 'slide-workshop-rolls',
-    filename: 'WhatsApp Image 2026-09-17 at 2.13.05 AM.jpeg',
-    alt: 'Silver & Gold Inkshine Printing Press and Media Roll Racks',
-    fallbackUrl: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=1400&auto=format&fit=crop&q=85',
+    id: 'slide-4',
+    imageUrl: 'https://cdn.hstockplus.org/uploads/public/img-1789638184148-5858e68459451c46.webp',
+    alt: 'Silver & Gold Inkshine Ltd - Showcase 4',
   },
   {
-    id: 'slide-ncdmb-tower',
-    filename: 'WhatsApp Image 2026-09-17 at 2.13.06 AM (4).jpeg',
-    alt: 'Nigerian Content Tower Landmark, Swali Yenagoa Bayelsa State',
-    fallbackUrl: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1400&auto=format&fit=crop&q=85',
+    id: 'slide-5',
+    imageUrl: 'https://cdn.hstockplus.org/uploads/public/img-1789638210286-d54286b63f154e3c.webp',
+    alt: 'Silver & Gold Inkshine Ltd - Showcase 5',
   },
   {
-    id: 'slide-gov-house-gate',
-    filename: 'WhatsApp Image 2026-09-17 at 2.13.06 AM.jpeg',
-    alt: 'Government House Yenagoa Gate and Flagpoles',
-    fallbackUrl: 'https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=1400&auto=format&fit=crop&q=85',
+    id: 'slide-6',
+    imageUrl: 'https://cdn.hstockplus.org/uploads/public/img-1789638255572-4a3ec89bf3a4c4fa.webp',
+    alt: 'Silver & Gold Inkshine Ltd - Showcase 6',
   },
   {
-    id: 'slide-gov-house-monument',
-    filename: 'WhatsApp Image 2026-09-17 at 2.13.06 AM (1).jpeg',
-    alt: 'Welcome to Government House Yenagoa Monument Plinth',
-    fallbackUrl: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1400&auto=format&fit=crop&q=85',
-  },
-  {
-    id: 'slide-roundabout-aerial',
-    filename: 'WhatsApp Image 2026-09-17 at 2.13.06 AM (2).jpeg',
-    alt: 'Yenagoa City Roundabout Monument Aerial View',
-    fallbackUrl: 'https://images.unsplash.com/photo-1511578314322-379afb476865?w=1400&auto=format&fit=crop&q=85',
-  },
-  {
-    id: 'slide-city-commercial-aerial',
-    filename: 'WhatsApp Image 2026-09-17 at 2.13.05 AM (1).jpeg',
-    alt: 'Yenagoa Commercial Center and Market Aerial Landscape',
-    fallbackUrl: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1400&auto=format&fit=crop&q=85',
-  },
-  {
-    id: 'slide-park-canopy',
-    filename: 'WhatsApp Image 2026-09-17 at 2.13.06 AM (3).jpeg',
-    alt: 'Bayelsa Recreation Center Tensile Canopy Pavilion',
-    fallbackUrl: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=1400&auto=format&fit=crop&q=85',
-  },
-  {
-    id: 'slide-commercial-street',
-    filename: 'WhatsApp Image 2026-09-17 at 2.13.06 AM (9).jpeg',
-    alt: 'Commercial Street Yenagoa',
-    fallbackUrl: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=1400&auto=format&fit=crop&q=85',
-  },
-  {
-    id: 'slide-booth-sunlight',
-    filename: 'WhatsApp Image 2026-09-17 at 2.13.06 AM (8).jpeg',
-    alt: 'Commercial Avenue Yenagoa',
-    fallbackUrl: 'https://images.unsplash.com/photo-1513151233558-d860c5398176?w=1400&auto=format&fit=crop&q=85',
-  },
-  {
-    id: 'slide-street-pharmacy',
-    filename: 'WhatsApp Image 2026-09-17 at 2.13.06 AM (6).jpeg',
-    alt: 'Yenagoa Street View',
-    fallbackUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?w=1400&auto=format&fit=crop&q=85',
-  },
-  {
-    id: 'slide-highway-view',
-    filename: 'WhatsApp Image 2026-09-17 at 2.13.06 AM (7).jpeg',
-    alt: 'Mbiama-Yenagoa Roadside View',
-    fallbackUrl: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1400&auto=format&fit=crop&q=85',
+    id: 'slide-7',
+    imageUrl: 'https://cdn.hstockplus.org/uploads/public/img-1789638283912-8e755036c7f5a300.webp',
+    alt: 'Silver & Gold Inkshine Ltd - Showcase 7',
   },
 ];
 
@@ -135,7 +85,6 @@ export const HeroImageSlider: React.FC = () => {
   }, [isHovered, nextSlide]);
 
   const currentSlide = SLIDES[currentIndex];
-  const primarySrc = `/${currentSlide.filename}`;
 
   return (
     <div 
@@ -144,7 +93,7 @@ export const HeroImageSlider: React.FC = () => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={nextSlide}
-      title="Tap anywhere to see next picture"
+      title="Tap anywhere to view next picture"
     >
       {/* Sliding Viewport with Framer Motion AnimatePresence */}
       <div className="relative w-full h-full overflow-hidden flex items-center justify-center">
@@ -185,20 +134,14 @@ export const HeroImageSlider: React.FC = () => {
           >
             {/* Pure full-bleed image display without any write-ups or labels */}
             <img 
-              src={primarySrc}
+              src={currentSlide.imageUrl}
               alt={currentSlide.alt}
               className="w-full h-full object-cover object-center pointer-events-none"
               loading="eager"
               referrerPolicy="no-referrer"
-              onError={(e) => {
-                const target = e.currentTarget;
-                if (target.src !== currentSlide.fallbackUrl) {
-                  target.src = currentSlide.fallbackUrl;
-                }
-              }}
             />
             {/* Subtle aesthetic gradient vignette framing */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-black/20 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-black/20 pointer-events-none" />
           </motion.div>
         </AnimatePresence>
 
@@ -231,7 +174,7 @@ export const HeroImageSlider: React.FC = () => {
         </button>
       </div>
 
-      {/* Minimal Animated Dot Indicators (Tap to jump directly to any picture) */}
+      {/* Minimal Animated Dot Indicators (Tap to jump directly to any of the 7 pictures) */}
       <div 
         className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/50 backdrop-blur-md border border-white/10"
         onClick={(e) => e.stopPropagation()}
