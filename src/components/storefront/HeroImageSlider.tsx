@@ -84,16 +84,47 @@ export const HeroImageSlider: React.FC = () => {
     };
   }, [isHovered, nextSlide]);
 
+  // Touch swipe handling for smartphones and tablets
+  const touchStartXRef = useRef<number | null>(null);
+  const touchEndXRef = useRef<number | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartXRef.current = e.targetTouches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndXRef.current = e.targetTouches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStartXRef.current || !touchEndXRef.current) return;
+    const distance = touchStartXRef.current - touchEndXRef.current;
+    const isLeftSwipe = distance > 40;
+    const isRightSwipe = distance < -40;
+
+    if (isLeftSwipe) {
+      nextSlide();
+    } else if (isRightSwipe) {
+      prevSlide();
+    }
+
+    touchStartXRef.current = null;
+    touchEndXRef.current = null;
+  };
+
   const currentSlide = SLIDES[currentIndex];
 
   return (
     <div 
       id="hero-image-slider-container"
-      className="relative w-full h-[320px] sm:h-[370px] md:h-[430px] overflow-hidden rounded-xl bg-[#08080a] select-none group cursor-pointer"
+      className="relative w-full h-[240px] xs:h-[280px] sm:h-[360px] md:h-[430px] overflow-hidden rounded-xl bg-[#08080a] select-none group cursor-pointer"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
       onClick={nextSlide}
-      title="Tap anywhere to view next picture"
+      title="Tap anywhere or swipe to view next picture"
     >
       {/* Sliding Viewport with Framer Motion AnimatePresence */}
       <div className="relative w-full h-full overflow-hidden flex items-center justify-center">

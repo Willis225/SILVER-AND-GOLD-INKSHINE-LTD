@@ -157,8 +157,8 @@ export const BrandIntroSection: React.FC<BrandIntroSectionProps> = ({ onExploreP
                 </div>
 
                 {/* Right Side: Visual Display of Mockups (Rollup Banners, Shirt, Mug, Bag, Signage, Flyers) */}
-                <div className="md:col-span-7 flex justify-center items-end">
-                  <div className="relative w-full max-w-[380px] sm:max-w-[420px] h-[210px] sm:h-[240px]">
+                <div className="md:col-span-7 flex justify-center items-end overflow-hidden pt-4">
+                  <div className="relative w-full max-w-[380px] sm:max-w-[420px] h-[210px] sm:h-[240px] scale-[0.82] xs:scale-[0.92] sm:scale-100 origin-bottom mx-auto">
                     
                     {/* 1. Large Format Rollup Banner 1 (INNOVATIVE SOLUTIONS - White/Gold theme) */}
                     <div className="absolute left-2 bottom-0 w-24 sm:w-28 h-44 sm:h-52 bg-white rounded-t-sm shadow-xl border border-stone-300 flex flex-col justify-between overflow-hidden z-20">

@@ -157,7 +157,7 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
             </a>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
             {filteredProducts.map((product) => {
               const maxDiscount = Math.max(
                 0,
@@ -201,7 +201,7 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
                     </div>
 
                     {/* Card Content */}
-                    <div className="p-4 sm:p-5 space-y-2">
+                    <div className="p-3.5 sm:p-5 space-y-2">
                       <div className="flex items-center justify-between text-[11px] text-stone-500 font-medium">
                         <span>{product.categoryLabel}</span>
                         <span className="font-mono text-stone-400">{product.sku}</span>
@@ -230,7 +230,7 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
                   </div>
 
                   {/* Card Footer: Pricing & CTAs */}
-                  <div className="p-4 sm:p-5 pt-0 border-t border-stone-100 mt-2">
+                  <div className="p-3.5 sm:p-5 pt-0 border-t border-stone-100 mt-2">
                     <div className="flex items-baseline justify-between py-2">
                       <div>
                         <span className="text-[10px] text-stone-400 uppercase font-medium block">
@@ -260,9 +260,9 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
 
                       <button
                         onClick={() => onOpenQuickView(product)}
-                        className="py-2 px-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold flex items-center justify-center gap-1 shadow-xs transition-colors"
+                        className="py-2 px-2.5 rounded-xl bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white text-xs font-bold flex items-center justify-center gap-1 shadow-xs transition-colors cursor-pointer"
                       >
-                        <span>Configure</span>
+                        <span>Order Now</span>
                         <ArrowRight className="w-3.5 h-3.5" />
                       </button>
                     </div>

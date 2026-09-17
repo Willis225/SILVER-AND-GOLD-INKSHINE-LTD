@@ -55,6 +55,7 @@ interface HeaderProps {
   onOpenAdmin?: () => void;
   onOpenInfoModal?: (tab?: InfoModalTab) => void;
   onOpenBookOnline?: () => void;
+  onOpenCatalog?: () => void;
 }
 
 export const CATEGORIES: { id: ProductCategory; label: string }[] = [
@@ -98,6 +99,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenAdmin,
   onOpenInfoModal,
   onOpenBookOnline,
+  onOpenCatalog,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -110,20 +112,21 @@ export const Header: React.FC<HeaderProps> = ({
         {/* Subtle glossy sheen sweep */}
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/25 via-transparent to-black/5" />
 
-        <div className="relative max-w-7xl mx-auto flex items-center justify-between">
+        <div className="relative max-w-7xl mx-auto flex items-center justify-between gap-2">
           {/* Left Text */}
-          <div className="font-extrabold text-xs sm:text-sm tracking-wide text-stone-900 flex items-center gap-1.5 drop-shadow-[0_1px_0_rgba(255,255,255,0.7)]">
+          <div className="font-extrabold text-[11px] sm:text-xs md:text-sm tracking-wide text-stone-900 flex items-center gap-1.5 drop-shadow-[0_1px_0_rgba(255,255,255,0.7)] shrink-0">
             <span className="w-2 h-2 rounded-full bg-amber-600 shadow-[0_0_8px_rgba(217,119,6,0.8)] animate-pulse" />
-            <span>Fast Nationwide Delivery</span>
+            <span className="hidden xs:inline">Fast Nationwide Delivery</span>
+            <span className="xs:hidden">Fast Delivery</span>
           </div>
 
           {/* Right Section: Call Button + Social Icons */}
-          <div className="flex items-center gap-3 sm:gap-4">
+          <div className="flex items-center gap-2 sm:gap-4 shrink-0">
             <a
               href="tel:+2347030372539"
-              className="bg-[#0b0c10] hover:bg-[#181a20] text-[#fbf5b7] hover:text-white font-bold text-[11px] sm:text-xs px-3 sm:px-3.5 py-1 rounded-md transition-all shadow-sm border border-amber-400/40 flex items-center gap-1.5"
+              className="bg-[#0b0c10] hover:bg-[#181a20] text-[#fbf5b7] hover:text-white font-bold text-[10px] sm:text-xs px-2.5 sm:px-3.5 py-1 rounded-md transition-all shadow-xs border border-amber-400/40 flex items-center gap-1 shrink-0"
             >
-              <span>Call: +2347030372539</span>
+              <span>+234 703 037 2539</span>
             </a>
 
             {/* Social Icons */}
@@ -916,6 +919,28 @@ export const Header: React.FC<HeaderProps> = ({
       {/* Mobile Menu Drawer */}
       {mobileMenuOpen && (
         <div className="md:hidden bg-[#0a0b0e] border-b border-white/15 px-4 py-3 space-y-3">
+          {/* Mobile Direct Action Buttons */}
+          <div className="grid grid-cols-2 gap-2 pt-1">
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                onOpenBookOnline?.();
+              }}
+              className="py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#d4af37] via-[#e5c158] to-[#b8860b] text-black font-extrabold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-[#d4af37]/20 active:scale-95 transition-all"
+            >
+              <span>📅 Book Online Slot</span>
+            </button>
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                onOpenCatalog?.();
+              }}
+              className="py-2.5 px-3 rounded-xl bg-white/10 hover:bg-white/15 text-[#ebd07f] border border-[#dfbc5e]/30 font-bold text-xs flex items-center justify-center gap-1.5 active:scale-95 transition-all"
+            >
+              <span>✨ Sample Catalog</span>
+            </button>
+          </div>
+
           <div className="text-xs font-bold text-stone-400 uppercase tracking-wider">
             Explore Categories
           </div>

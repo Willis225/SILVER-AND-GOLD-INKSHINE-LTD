@@ -59,8 +59,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       </div>
 
       {/* Subtle warm gold ambient atmospheric light blooms */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[radial-gradient(circle,rgba(235,208,127,0.14)_0%,rgba(212,175,55,0.05)_45%,transparent_70%)] blur-3xl pointer-events-none" />
-      <div className="absolute top-1/3 right-1/4 w-[400px] h-[400px] rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.06)_0%,rgba(223,188,94,0.04)_50%,transparent_70%)] blur-2xl pointer-events-none" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] sm:w-[500px] lg:w-[600px] h-[300px] sm:h-[500px] lg:h-[600px] rounded-full bg-[radial-gradient(circle,rgba(235,208,127,0.14)_0%,rgba(212,175,55,0.05)_45%,transparent_70%)] blur-3xl pointer-events-none" />
+      <div className="absolute top-1/3 right-1/4 w-[250px] sm:w-[380px] h-[250px] sm:h-[380px] rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.06)_0%,rgba(223,188,94,0.04)_50%,transparent_70%)] blur-2xl pointer-events-none" />
 
       {/* Subtle glowing gold light effects at the bottom */}
       <div className="absolute inset-x-0 bottom-0 h-28 bg-[radial-gradient(ellipse_at_bottom,rgba(245,190,56,0.18)_0%,rgba(212,175,55,0.05)_45%,transparent_75%)] pointer-events-none z-10" />
@@ -75,32 +75,32 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="lg:col-span-6 xl:col-span-6 space-y-6 relative"
+            className="lg:col-span-6 xl:col-span-6 space-y-5 sm:space-y-6 relative"
           >
             {/* Soft gold glow behind text */}
-            <div className="absolute -top-12 -left-12 w-[520px] h-[520px] rounded-full bg-[radial-gradient(circle,rgba(245,190,56,0.15)_0%,rgba(212,175,55,0.05)_45%,transparent_70%)] blur-3xl pointer-events-none -z-10" />
+            <div className="absolute -top-12 -left-12 w-[300px] sm:w-[480px] h-[300px] sm:h-[480px] rounded-full bg-[radial-gradient(circle,rgba(245,190,56,0.15)_0%,rgba(212,175,55,0.05)_45%,transparent_70%)] blur-3xl pointer-events-none -z-10" />
 
             {/* Eyebrow Pill Badge with Gold Accent (Matching Reference) */}
             <motion.div 
               variants={itemVariants}
-              className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-[#ebd07f]/40 bg-[#16140f]/90 text-xs text-stone-200 backdrop-blur-md shadow-[0_2px_12px_rgba(0,0,0,0.4)] group"
+              className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full border border-[#ebd07f]/40 bg-[#16140f]/90 text-xs text-stone-200 backdrop-blur-md shadow-[0_2px_12px_rgba(0,0,0,0.4)] group"
             >
-              <span className="w-2 h-2 rounded-full bg-[#f5be38] shadow-[0_0_8px_#f5be38] animate-pulse" />
-              <span className="tracking-wide text-[12.5px] font-medium text-stone-100">
+              <span className="w-2 h-2 rounded-full bg-[#f5be38] shadow-[0_0_8px_#f5be38] animate-pulse shrink-0" />
+              <span className="tracking-wide text-[11.5px] sm:text-[12.5px] font-medium text-stone-100">
                 Bring your business to the best scale
               </span>
-              <Sparkles className="w-3.5 h-3.5 text-[#f5be38] opacity-90" />
+              <Sparkles className="w-3.5 h-3.5 text-[#f5be38] opacity-90 shrink-0" />
             </motion.div>
 
             {/* Headline, Sub-headline, Gold Divider, and Subtitle in tightly composed typographic hierarchy */}
             <motion.div variants={itemVariants} className="space-y-2">
               {/* Primary Headline: Bold Large White Font */}
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[45px] xl:text-[52px] font-black tracking-tight text-white leading-[1.08] drop-shadow-[0_2px_20px_rgba(245,190,56,0.2)]">
+              <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-[45px] xl:text-[52px] font-black tracking-tight text-white leading-[1.1] sm:leading-[1.08] drop-shadow-[0_2px_20px_rgba(245,190,56,0.2)]">
                 #1 Online Printing Company in Bayelsa
               </h1>
 
               {/* Sub-headline: Shimmering Vibrant Gold Font */}
-              <div className="text-2xl sm:text-3xl md:text-4xl lg:text-[38px] xl:text-[45px] font-black tracking-tight leading-[1.12]">
+              <div className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-[38px] xl:text-[45px] font-black tracking-tight leading-[1.14] sm:leading-[1.12]">
                 <span className="gold-shimmer-text drop-shadow-[0_0_24px_rgba(245,190,56,0.4)] inline-block">
                   Banners • Branding • Digital Printing
                 </span>
@@ -121,7 +121,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               </div>
 
               {/* Subtitle text: Modern clean sans-serif typography (Tight gap below gold line) */}
-              <p className="text-stone-300 text-sm sm:text-base leading-relaxed max-w-xl font-normal pt-0.5">
+              <p className="text-stone-300 text-xs sm:text-sm md:text-base leading-relaxed max-w-xl font-normal pt-0.5">
                 Select from top print collections, guaranteeing precision color matching and pre-press audit. Need custom specs or large volume? Fast turnaround and nationwide doorstep delivery across Nigeria!
               </p>
             </motion.div>
@@ -129,7 +129,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             {/* Action Buttons: WhatsApp Gold Button & White-Bordered Services Button */}
             <motion.div 
               variants={itemVariants}
-              className="flex flex-wrap items-center gap-3.5 pt-1"
+              className="flex flex-col xs:flex-row items-stretch xs:items-center gap-3 pt-1 w-full xs:w-auto"
             >
               {/* WhatsApp Button: Vibrant Gold with Crisp White Typography */}
               <a
@@ -137,7 +137,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 target="_blank"
                 rel="noreferrer"
                 id="hero-whatsapp-btn"
-                className="relative overflow-hidden bg-gradient-to-r from-[#d4af37] via-[#f5be38] to-[#b8860b] hover:from-[#f5be38] hover:via-[#fff1a8] hover:to-[#d4af37] active:scale-98 text-white font-extrabold text-xs sm:text-sm px-6 py-3.5 rounded-lg flex items-center gap-2.5 shadow-[0_8px_24px_rgba(212,175,55,0.4)] border border-[#fae8aa]/60 transition-all group cursor-pointer"
+                className="relative overflow-hidden bg-gradient-to-r from-[#d4af37] via-[#f5be38] to-[#b8860b] hover:from-[#f5be38] hover:via-[#fff1a8] hover:to-[#d4af37] active:scale-98 text-white font-extrabold text-xs sm:text-sm px-6 py-3.5 rounded-lg flex items-center justify-center gap-2.5 shadow-[0_8px_24px_rgba(212,175,55,0.4)] border border-[#fae8aa]/60 transition-all group cursor-pointer text-center"
               >
                 {/* Continuous subtle metallic light sweep */}
                 <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform pointer-events-none" />
@@ -156,7 +156,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               <button
                 onClick={onExploreProducts}
                 id="hero-view-services-btn"
-                className="relative bg-transparent hover:bg-white/10 active:scale-98 border-2 border-white text-white font-bold text-xs sm:text-sm px-5 py-3.5 rounded-lg transition-all shadow-md shadow-black/30 flex items-center gap-2 group backdrop-blur-xs cursor-pointer"
+                className="relative bg-transparent hover:bg-white/10 active:scale-98 border-2 border-white text-white font-bold text-xs sm:text-sm px-5 py-3.5 rounded-lg transition-all shadow-md shadow-black/30 flex items-center justify-center gap-2 group backdrop-blur-xs cursor-pointer text-center"
               >
                 <span className="text-white">View Our Services</span>
                 <ArrowRight className="w-4 h-4 text-white transition-transform group-hover:translate-x-1" />

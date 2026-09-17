@@ -177,7 +177,7 @@ export const GoogleReviewsSection: React.FC = () => {
               {GOOGLE_REVIEWS.map((review) => (
                 <div
                   key={review.id}
-                  className="w-[260px] sm:w-[280px] shrink-0 p-4 sm:p-5 rounded-2xl bg-stone-50/60 border border-stone-200 flex flex-col justify-between hover:shadow-sm transition-shadow relative"
+                  className="w-[82vw] xs:w-[260px] sm:w-[280px] max-w-xs shrink-0 p-4 sm:p-5 rounded-2xl bg-stone-50/60 border border-stone-200 flex flex-col justify-between hover:shadow-sm transition-shadow relative"
                 >
                   <div>
                     {/* Header: User Avatar, Name, Time, and Google 'G' icon */}

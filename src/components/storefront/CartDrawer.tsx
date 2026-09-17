@@ -242,7 +242,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
 
         {/* Drawer Footer Checkout Summary */}
         {items.length > 0 && (
-          <div className="p-5 border-t border-stone-200 bg-stone-50 space-y-3">
+          <div className="p-4 sm:p-5 border-t border-stone-200 bg-stone-50 space-y-3 pb-8 sm:pb-5 shrink-0">
             <div className="space-y-1.5 text-xs">
               <div className="flex justify-between text-stone-600">
                 <span>Items Subtotal:</span>

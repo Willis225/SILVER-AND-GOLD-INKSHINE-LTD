@@ -41,7 +41,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategory, onOpenAdmin, o
   );
 
   return (
-    <footer className="bg-stone-950 text-stone-300 pt-16 pb-12 border-t border-stone-800">
+    <footer className="bg-stone-950 text-stone-300 pt-12 sm:pt-16 pb-28 sm:pb-12 border-t border-stone-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         {/* Interactive FAQ Accordion Section */}
         <div id="faq-section" className="bg-stone-900/90 border border-stone-800 rounded-3xl p-6 sm:p-10 space-y-6">

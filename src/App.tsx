@@ -24,6 +24,7 @@ import { CompanyInfoModal, InfoModalTab } from './components/common/CompanyInfoM
 import { GlassBottomDock } from './components/navigation/GlassBottomDock';
 import { BookOnlineModal } from './components/modals/BookOnlineModal';
 import { CatalogModal } from './components/modals/CatalogModal';
+import { ProductGrid } from './components/storefront/ProductGrid';
 import { SAMPLE_PRODUCTS, NIGERIAN_SHIPPING_ZONES } from './data/seedData';
 import { INITIAL_ORDERS } from './data/seedOrders';
 import { Product, ProductCategory, Order, OrderStatus, PaymentStatus, calculateDynamicPrice } from './types/schema';
@@ -220,6 +221,7 @@ export default function App() {
           }}
           onOpenInfoModal={handleOpenInfoModal}
           onOpenBookOnline={() => handleOpenBookOnline()}
+          onOpenCatalog={() => setIsCatalogOpen(true)}
         />
       )}
 
@@ -288,13 +290,26 @@ export default function App() {
 
             {/* Top-Quality Printing Services Showcase Carousel (Matching Reference) */}
             <ServicesShowcaseSection
-              onOrderNow={scrollToCatalog}
-              onSelectItem={(item) => {
-                if (item.category) {
-                  setSelectedCategory(item.category as ProductCategory);
-                }
-                scrollToCatalog();
+              onOrderNow={() => {
+                setIsCatalogOpen(true);
               }}
+              onSelectItem={(item) => {
+                const prod = products.find((p) => p.id === item.id || p.category === item.category);
+                if (prod) {
+                  setQuickViewProduct(prod);
+                } else {
+                  setIsCatalogOpen(true);
+                }
+              }}
+            />
+
+            {/* Commercial Print & Design Catalog Grid */}
+            <ProductGrid
+              products={products}
+              selectedCategory={selectedCategory}
+              onSelectCategory={setSelectedCategory}
+              searchQuery={searchQuery}
+              onOpenQuickView={(prod) => setQuickViewProduct(prod)}
             />
 
             {/* Business Stationery & Office Printing Carousel (Matching Reference) */}
@@ -460,6 +475,10 @@ export default function App() {
         onBookSample={(sampleTitle) => {
           setIsCatalogOpen(false);
           handleOpenBookOnline(sampleTitle);
+        }}
+        onScrollToPageCatalog={() => {
+          setIsCatalogOpen(false);
+          scrollToCatalog();
         }}
       />
     </div>

@@ -91,11 +91,11 @@ export const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-stone-950/70 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
-      <div className="bg-white w-full max-w-4xl rounded-3xl shadow-2xl border border-stone-200 overflow-hidden flex flex-col md:flex-row max-h-[92vh] animate-in fade-in zoom-in-95 duration-200">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-stone-950/70 backdrop-blur-xs flex items-center justify-center p-2 xs:p-3 sm:p-4">
+      <div className="bg-white w-full max-w-4xl rounded-2xl sm:rounded-3xl shadow-2xl border border-stone-200 overflow-hidden flex flex-col md:flex-row max-h-[94vh] animate-in fade-in zoom-in-95 duration-200">
         
         {/* Left Column: Product Visual & Print Specs Guide */}
-        <div className="md:w-5/12 bg-stone-50 border-r border-stone-200 p-6 flex flex-col justify-between overflow-y-auto">
+        <div className="md:w-5/12 bg-stone-50 border-b md:border-b-0 md:border-r border-stone-200 p-4 sm:p-6 flex flex-col justify-between overflow-y-auto shrink-0 md:shrink">
           <div className="space-y-4">
             <div className="relative aspect-4/3 rounded-2xl overflow-hidden bg-stone-200 shadow-xs">
               <img

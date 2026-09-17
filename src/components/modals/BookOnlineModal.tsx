@@ -473,11 +473,11 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/85 backdrop-blur-xl overflow-y-auto"
+      className="fixed inset-0 z-50 flex items-center justify-center p-2 xs:p-4 sm:p-5 bg-black/85 backdrop-blur-xl overflow-y-auto"
       onClick={onClose}
     >
       <div 
-        className="relative w-full max-w-4xl my-auto rounded-3xl bg-[#0b0c11] border border-[#dfbc5e]/35 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)] text-white overflow-hidden"
+        className="relative w-full max-w-4xl max-h-[94vh] flex flex-col my-auto rounded-2xl sm:rounded-3xl bg-[#0b0c11] border border-[#dfbc5e]/35 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)] text-white overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Glow ambient background accents */}
@@ -486,7 +486,7 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#d4af37]/5 rounded-full blur-[120px] pointer-events-none" />
 
         {/* Modal Top Bar */}
-        <div className="relative border-b border-white/10 px-5 sm:px-7 py-4 flex items-center justify-between bg-white/[0.02]">
+        <div className="relative border-b border-white/10 px-5 sm:px-7 py-4 flex items-center justify-between bg-white/[0.02] shrink-0">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-xl bg-[#dfbc5e]/15 border border-[#dfbc5e]/40 flex items-center justify-center text-[#dfbc5e]">
               <Printer className="w-5 h-5" />
@@ -517,7 +517,7 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
         </div>
 
         {!isSubmitted ? (
-          <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[500px]">
+          <div className="grid grid-cols-1 lg:grid-cols-12 overflow-y-auto flex-1">
             
             {/* LEFT COLUMN: Confidence-Building Real-Time Live Job Ticket (Visible on lg, compact on mobile) */}
             <div className="lg:col-span-5 bg-[#10121a]/80 border-b lg:border-b-0 lg:border-r border-white/10 p-5 sm:p-6 flex flex-col justify-between">

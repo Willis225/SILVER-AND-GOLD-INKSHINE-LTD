@@ -104,8 +104,11 @@ export const ServicesShowcaseSection: React.FC<ServicesShowcaseSectionProps> = (
 
             <div>
               <button
+                type="button"
+                id="services-section-order-now-btn"
                 onClick={onOrderNow}
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#b8860b] hover:bg-[#996515] active:scale-98 text-white font-bold text-xs sm:text-sm rounded-md shadow-sm transition-all group"
+                className="inline-flex items-center gap-2.5 px-6 py-3 bg-gradient-to-r from-[#d4af37] via-[#c59b27] to-[#b8860b] hover:from-[#e5c158] hover:to-[#c59b27] active:scale-95 text-stone-950 font-extrabold text-xs sm:text-sm rounded-xl shadow-md shadow-[#d4af37]/25 transition-all group cursor-pointer"
+                title="Browse our complete design and print catalog to order instantly"
               >
                 <span>Order Now</span>
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
