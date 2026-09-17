@@ -16,7 +16,15 @@ import {
   Check,
   ExternalLink,
   Edit3,
-  Layers
+  Layers,
+  Zap,
+  Printer,
+  ChevronRight,
+  ArrowLeft,
+  ArrowRight,
+  BadgeCheck,
+  Building2,
+  HelpCircle
 } from 'lucide-react';
 
 interface BookOnlineModalProps {
@@ -24,6 +32,17 @@ interface BookOnlineModalProps {
   onClose: () => void;
   preselectedService?: string;
 }
+
+const SERVICE_CATEGORIES = [
+  { id: 'banners', label: 'Banners & Flex', example: 'Large Format Flex Banner (10x4 ft)' },
+  { id: 'signage', label: '3D Signage', example: '3D Backlight Channel Letter Sign' },
+  { id: 'murals', label: 'Art & Murals', example: 'Textured Canvas Painting (4x3 ft)' },
+  { id: 'stands', label: 'Rollup Stands', example: 'Luxury Teardrop / Roll-up Stand' },
+  { id: 'awards', label: 'Award Plaques', example: 'Crystal & Cast Bronze Award Plaque' },
+  { id: 'packaging', label: 'Packaging', example: 'Rigid Gift Box with Gold Foil' },
+  { id: 'stationery', label: 'Stationery', example: '600gsm Triplex Gold Foil Cards' },
+  { id: 'custom', label: 'Custom Job', example: 'Custom Architectural / Event Print' },
+];
 
 const SERVICE_OPTIONS = [
   'Large Format Printing & Banners',
@@ -52,7 +71,11 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
   onClose,
   preselectedService = '',
 }) => {
-  const [service, setService] = useState(preselectedService || SERVICE_OPTIONS[0]);
+  // Wizard step state: 1 = Service & Specs, 2 = Contact & Confirmation
+  const [currentStep, setCurrentStep] = useState<1 | 2>(1);
+
+  // Form states
+  const [service, setService] = useState(preselectedService || 'Large Format Printing & Banners');
   const [urgency, setUrgency] = useState<'24hr' | 'standard' | 'flexible'>('24hr');
   const [quantity, setQuantity] = useState('1');
   const [dimensions, setDimensions] = useState('');
@@ -60,6 +83,8 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
   const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState('');
   const [location, setLocation] = useState('Yenagoa, Bayelsa State');
+
+  // Submission & Slip states
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [bookingRef, setBookingRef] = useState('');
   const [orderImageUrl, setOrderImageUrl] = useState<string | null>(null);
@@ -68,22 +93,32 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
   const [isGeneratingSlip, setIsGeneratingSlip] = useState(false);
   const [canWebShareFile, setCanWebShareFile] = useState(false);
 
-  // Hidden canvas ref for generating high-res order slip
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-
-  // Sync preselectedService whenever it changes
+  // Sync preselectedService
   useEffect(() => {
     if (preselectedService) {
       setService(preselectedService);
     }
   }, [preselectedService, isOpen]);
 
-  // Check if browser supports Web Share with files
+  // Check Web Share file support
   useEffect(() => {
     if (typeof navigator !== 'undefined' && 'canShare' in navigator && 'share' in navigator) {
       setCanWebShareFile(true);
     }
   }, []);
+
+  // Compute estimated delivery text
+  const getEstimatedCompletion = () => {
+    const now = new Date();
+    if (urgency === '24hr') {
+      const tomorrow = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+      return `Tomorrow by ${tomorrow.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+    } else if (urgency === 'standard') {
+      const inTwoDays = new Date(now.getTime() + 48 * 60 * 60 * 1000);
+      return `${inTwoDays.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' })}`;
+    }
+    return 'Project Schedule / As Agreed';
+  };
 
   if (!isOpen) return null;
 
@@ -120,7 +155,7 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
     return new Promise((resolve) => {
       const canvas = document.createElement('canvas');
       canvas.width = 800;
-      canvas.height = 980;
+      canvas.height = 1000;
       const ctx = canvas.getContext('2d');
 
       if (!ctx) {
@@ -129,61 +164,61 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
       }
 
       // 1. Background
-      const bgGrad = ctx.createLinearGradient(0, 0, 800, 980);
-      bgGrad.addColorStop(0, '#0c0d12');
-      bgGrad.addColorStop(0.5, '#12141c');
-      bgGrad.addColorStop(1, '#08090d');
+      const bgGrad = ctx.createLinearGradient(0, 0, 800, 1000);
+      bgGrad.addColorStop(0, '#090a0f');
+      bgGrad.addColorStop(0.5, '#12141d');
+      bgGrad.addColorStop(1, '#06070a');
       ctx.fillStyle = bgGrad;
-      ctx.fillRect(0, 0, 800, 980);
+      ctx.fillRect(0, 0, 800, 1000);
 
-      // Ambient gold glow at top right
-      const glowGrad = ctx.createRadialGradient(720, 80, 10, 720, 80, 260);
-      glowGrad.addColorStop(0, 'rgba(212, 175, 55, 0.18)');
+      // Ambient gold glow
+      const glowGrad = ctx.createRadialGradient(720, 90, 10, 720, 90, 300);
+      glowGrad.addColorStop(0, 'rgba(212, 175, 55, 0.22)');
       glowGrad.addColorStop(1, 'rgba(212, 175, 55, 0)');
       ctx.fillStyle = glowGrad;
-      ctx.fillRect(0, 0, 800, 400);
+      ctx.fillRect(0, 0, 800, 450);
 
       // 2. Gold Border Frame
       ctx.strokeStyle = '#d4af37';
       ctx.lineWidth = 3;
-      ctx.strokeRect(20, 20, 760, 940);
+      ctx.strokeRect(20, 20, 760, 960);
 
-      ctx.strokeStyle = 'rgba(212, 175, 55, 0.3)';
+      ctx.strokeStyle = 'rgba(212, 175, 55, 0.35)';
       ctx.lineWidth = 1;
-      ctx.strokeRect(26, 26, 748, 928);
+      ctx.strokeRect(26, 26, 748, 948);
 
-      // Corner gold accents
+      // Corner gold squares
       const drawCorner = (x: number, y: number) => {
         ctx.fillStyle = '#d4af37';
         ctx.fillRect(x - 5, y - 5, 10, 10);
       };
       drawCorner(20, 20);
       drawCorner(780, 20);
-      drawCorner(20, 960);
-      drawCorner(780, 960);
+      drawCorner(20, 980);
+      drawCorner(780, 980);
 
       // 3. Header: Brand & Registration
       ctx.fillStyle = '#dfbc5e';
-      ctx.font = 'bold 28px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+      ctx.font = 'bold 30px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText('SILVER & GOLD INKSHINE LTD', 400, 75);
+      ctx.fillText('SILVER & GOLD INKSHINE LTD', 400, 78);
 
       ctx.fillStyle = '#a8a29e';
       ctx.font = '600 13px -apple-system, BlinkMacSystemFont, sans-serif';
-      ctx.fillText('RC 9350634 • ULTRA-FINISH PRINTING & BRANDING FACTORY', 400, 100);
+      ctx.fillText('RC 9350634 • ULTRA-FINISH PRINTING & BRANDING FACTORY', 400, 104);
 
       // Divider
-      ctx.strokeStyle = 'rgba(223, 188, 94, 0.4)';
+      ctx.strokeStyle = 'rgba(223, 188, 94, 0.45)';
       ctx.lineWidth = 1.5;
       ctx.beginPath();
-      ctx.moveTo(60, 120);
-      ctx.lineTo(740, 120);
+      ctx.moveTo(55, 124);
+      ctx.lineTo(745, 124);
       ctx.stroke();
 
       // Official Badge Banner
       ctx.fillStyle = '#221c0e';
       ctx.beginPath();
-      ctx.roundRect(220, 135, 360, 36, 18);
+      ctx.roundRect(200, 138, 400, 38, 19);
       ctx.fill();
       ctx.strokeStyle = '#dfbc5e';
       ctx.lineWidth = 1.5;
@@ -192,22 +227,22 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
       ctx.fillStyle = '#ffd700';
       ctx.font = 'bold 14px -apple-system, BlinkMacSystemFont, sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText('★ OFFICIAL PRODUCTION ORDER SLIP ★', 400, 158);
+      ctx.fillText('★ OFFICIAL PRODUCTION JOB TICKET ★', 400, 162);
 
       // 4. Booking Reference Bar
       ctx.fillStyle = '#ffffff';
-      ctx.font = 'bold 22px -apple-system, BlinkMacSystemFont, monospace';
-      ctx.fillText(`JOB REF: ${refCode}`, 400, 205);
+      ctx.font = 'bold 24px -apple-system, BlinkMacSystemFont, monospace';
+      ctx.fillText(`JOB REF: ${refCode}`, 400, 212);
 
       ctx.fillStyle = '#9ca3af';
       ctx.font = '12px -apple-system, BlinkMacSystemFont, sans-serif';
-      ctx.fillText(`Logged: ${dateStr} • Status: RESERVED FOR PRODUCTION`, 400, 226);
+      ctx.fillText(`Date Logged: ${dateStr} • Status: RESERVED FOR PRODUCTION`, 400, 234);
 
       // 5. Order Table Section
-      const startY = 260;
+      const startY = 265;
       ctx.fillStyle = '#141722';
       ctx.beginPath();
-      ctx.roundRect(50, startY, 700, 560, 16);
+      ctx.roundRect(45, startY, 710, 580, 16);
       ctx.fill();
       ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
       ctx.lineWidth = 1;
@@ -215,16 +250,17 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
 
       // Field items
       const urgencyLabel = urgency === '24hr' 
-        ? '⚡ 24-Hour Express Turnaround' 
+        ? '⚡ 24-Hour Priority Express Turnaround' 
         : urgency === 'standard' 
-        ? 'Standard 2-3 Days' 
-        : 'Project / Flexible Schedule';
+        ? 'Standard Production (2-3 Business Days)' 
+        : 'Project / Flexible Timeline';
 
       const fields = [
-        { label: 'CUSTOMER NAME', value: fullName || 'Valued Customer' },
+        { label: 'CLIENT NAME', value: fullName || 'Valued Customer' },
         { label: 'WHATSAPP NUMBER', value: phone || 'Provided on chat' },
         { label: 'REQUIRED SERVICE / ITEM', value: service },
         { label: 'PRODUCTION SPEED', value: urgencyLabel },
+        { label: 'ESTIMATED READINESS', value: getEstimatedCompletion() },
         { label: 'QUANTITY / UNITS', value: `${quantity} ${Number(quantity) > 1 ? 'copies / units' : 'copy / unit'}` },
         { label: 'DIMENSIONS / SPECS', value: dimensions || 'Standard factory spec / to be confirmed on proof' },
         { label: 'DELIVERY / PICKUP', value: location || 'Swali, Yenagoa Workshop' },
@@ -238,7 +274,7 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
         // Label
         ctx.fillStyle = '#dfbc5e';
         ctx.font = 'bold 12px -apple-system, BlinkMacSystemFont, sans-serif';
-        ctx.fillText(`• ${field.label}`, 75, rowY);
+        ctx.fillText(`• ${field.label}`, 70, rowY);
 
         // Value
         ctx.fillStyle = field.label === 'REQUIRED SERVICE / ITEM' ? '#ffffff' : '#f3f4f6';
@@ -246,23 +282,23 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
           ? 'bold 15px -apple-system, BlinkMacSystemFont, sans-serif' 
           : '14px -apple-system, BlinkMacSystemFont, sans-serif';
         
-        rowY = renderWrappedText(ctx, field.value, 75, rowY + 20, 650, 20);
-        rowY += 12;
+        rowY = renderWrappedText(ctx, field.value, 70, rowY + 20, 660, 20);
+        rowY += 10;
 
         // Divider except last
-        if (i < fields.length - 1 && rowY < startY + 540) {
+        if (i < fields.length - 1 && rowY < startY + 560) {
           ctx.strokeStyle = 'rgba(255, 255, 255, 0.06)';
           ctx.beginPath();
-          ctx.moveTo(75, rowY - 4);
-          ctx.lineTo(725, rowY - 4);
+          ctx.moveTo(70, rowY - 3);
+          ctx.lineTo(730, rowY - 3);
           ctx.stroke();
         }
       });
 
-      // 6. Security Seal & Production Watermark Stamp
+      // 6. Security Seal & Production Stamp
       ctx.save();
-      ctx.translate(620, 750);
-      ctx.rotate(-0.14);
+      ctx.translate(635, 765);
+      ctx.rotate(-0.12);
       ctx.strokeStyle = '#22c55e';
       ctx.lineWidth = 2.5;
       ctx.beginPath();
@@ -281,15 +317,15 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
       ctx.textAlign = 'center';
       ctx.fillStyle = '#dfbc5e';
       ctx.font = 'bold 13px -apple-system, BlinkMacSystemFont, sans-serif';
-      ctx.fillText('Silver & Gold Inkshine Ltd • Swali, Yenagoa, Bayelsa State', 400, 860);
+      ctx.fillText('Silver & Gold Inkshine Ltd • Swali, Yenagoa, Bayelsa State', 400, 880);
 
       ctx.fillStyle = '#9ca3af';
       ctx.font = '12px -apple-system, BlinkMacSystemFont, sans-serif';
-      ctx.fillText('Direct WhatsApp Hotline: +234 703 037 2539 • High Precision Digital Press', 400, 882);
+      ctx.fillText('WhatsApp Hotline: +234 703 037 2539 • High Precision Heidelberg & Roland Press', 400, 902);
 
       // Simulated Job Ticket Barcode
       ctx.fillStyle = '#ffffff';
-      const barcodeY = 910;
+      const barcodeY = 925;
       for (let b = 180; b < 620; b += 6) {
         const barWidth = (b % 4 === 0) ? 4 : (b % 3 === 0) ? 2 : 1;
         ctx.fillRect(b, barcodeY, barWidth, 22);
@@ -318,7 +354,7 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
       `👤 *Client Name:* ${fullName}\n` +
       `📞 *Client Phone:* ${phone}\n` +
       `🛠️ *Required Service / Item:* ${service}\n` +
-      `⚡ *Timeline:* ${urgencyText}\n` +
+      `⚡ *Timeline:* ${urgencyText} (${getEstimatedCompletion()})\n` +
       `🔢 *Quantity:* ${quantity} ${Number(quantity) > 1 ? 'copies / units' : 'copy / unit'}\n` +
       `📐 *Dimensions / Specs:* ${dimensions || 'Standard Factory Spec / To discuss'}\n` +
       `📍 *Location:* ${location}\n` +
@@ -330,7 +366,7 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
     );
   };
 
-  // Primary Action: Submit, Generate Slip Image, and send directly to WhatsApp!
+  // Primary Action: Submit, Generate Slip Image, and send directly to WhatsApp
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!service.trim() || !fullName.trim() || !phone.trim()) return;
@@ -351,7 +387,7 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
     setOrderImageUrl(dataUrl);
     setOrderImageBlob(blob);
 
-    // 2. Try copying image to clipboard for instantaneous paste (Ctrl+V) into WhatsApp
+    // 2. Try copying image to clipboard for instant pasting (Ctrl+V) into WhatsApp
     if (typeof navigator !== 'undefined' && navigator.clipboard && typeof ClipboardItem !== 'undefined' && blob) {
       try {
         await navigator.clipboard.write([
@@ -359,7 +395,7 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
         ]);
         setCopiedImage(true);
       } catch {
-        // Clipboard write can be restricted in some browsers; handle gracefully
+        // Fallback gracefully if clipboard permission restricted
       }
     }
 
@@ -399,7 +435,7 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
     }
   };
 
-  // Web Share image directly to WhatsApp or phone apps
+  // Web Share image directly to WhatsApp or apps
   const handleShareSlipImage = async () => {
     if (!orderImageBlob) return;
     try {
@@ -414,7 +450,7 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
         handleDownloadImage();
       }
     } catch {
-      // User cancelled or unsupported
+      // User cancelled
     }
   };
 
@@ -427,6 +463,7 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
 
   const handleReset = () => {
     setIsSubmitted(false);
+    setCurrentStep(1);
     setBookingRef('');
     setOrderImageUrl(null);
     setOrderImageBlob(null);
@@ -436,324 +473,526 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md overflow-y-auto"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/85 backdrop-blur-xl overflow-y-auto"
       onClick={onClose}
     >
       <div 
-        className="relative w-full max-w-lg my-auto rounded-3xl bg-[#0e0f14] border border-[#dfbc5e]/40 shadow-2xl p-5 sm:p-7 text-white overflow-hidden"
+        className="relative w-full max-w-4xl my-auto rounded-3xl bg-[#0b0c11] border border-[#dfbc5e]/35 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)] text-white overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Glow ambient background accents */}
-        <div className="absolute -top-24 -right-24 w-52 h-52 bg-[#dfbc5e]/15 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-24 -left-24 w-52 h-52 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -top-32 -right-32 w-80 h-80 bg-[#dfbc5e]/15 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute -bottom-32 -left-32 w-80 h-80 bg-amber-600/10 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#d4af37]/5 rounded-full blur-[120px] pointer-events-none" />
 
-        {/* Close Button */}
-        <button
-          type="button"
-          onClick={onClose}
-          className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 text-stone-300 hover:text-white transition-all active:scale-95 cursor-pointer z-10"
-          aria-label="Close booking modal"
-        >
-          <X className="w-5 h-5" />
-        </button>
-
-        {!isSubmitted ? (
-          <div>
-            {/* Header */}
-            <div className="mb-4 pr-8">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#dfbc5e]/15 border border-[#dfbc5e]/30 text-[#dfbc5e] text-xs font-bold mb-2">
-                <Calendar className="w-3.5 h-3.5" />
-                <span>Instant Production Booking</span>
+        {/* Modal Top Bar */}
+        <div className="relative border-b border-white/10 px-5 sm:px-7 py-4 flex items-center justify-between bg-white/[0.02]">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl bg-[#dfbc5e]/15 border border-[#dfbc5e]/40 flex items-center justify-center text-[#dfbc5e]">
+              <Printer className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h3 className="text-base sm:text-lg font-black tracking-tight text-white">
+                  Silver &amp; Gold Inkshine
+                </h3>
+                <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#dfbc5e]/15 text-[#dfbc5e] text-[10px] font-extrabold tracking-wider uppercase border border-[#dfbc5e]/30">
+                  <BadgeCheck className="w-3 h-3" /> RC 9350634
+                </span>
               </div>
-              <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight">
-                Book Your Print or Painting Order
-              </h2>
-              <p className="text-stone-400 text-xs sm:text-sm mt-1">
-                Fill out your job details below. When you confirm, everything is instantly formatted and sent directly to our official WhatsApp with a digital order slip!
+              <p className="text-[11px] sm:text-xs text-stone-400">
+                Official Factory Production Reservation &bull; Swali, Yenagoa
               </p>
             </div>
+          </div>
 
-            {/* Booking Form */}
-            <form onSubmit={handleSubmit} className="space-y-3.5">
+          <button
+            type="button"
+            onClick={onClose}
+            className="p-2 rounded-full bg-white/5 hover:bg-white/15 text-stone-300 hover:text-white transition-all active:scale-95 cursor-pointer"
+            aria-label="Close booking modal"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        {!isSubmitted ? (
+          <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[500px]">
+            
+            {/* LEFT COLUMN: Confidence-Building Real-Time Live Job Ticket (Visible on lg, compact on mobile) */}
+            <div className="lg:col-span-5 bg-[#10121a]/80 border-b lg:border-b-0 lg:border-r border-white/10 p-5 sm:p-6 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#dfbc5e]/10 border border-[#dfbc5e]/30 text-[#dfbc5e] text-[11px] font-bold">
+                    <Sparkles className="w-3 h-3" />
+                    <span>Live Job Ticket Preview</span>
+                  </div>
+                  <span className="text-[11px] font-mono text-stone-400">
+                    STATUS: DRAFTING
+                  </span>
+                </div>
+
+                {/* Ticket Card Container */}
+                <div className="rounded-2xl bg-[#161822] border border-[#dfbc5e]/25 p-4 space-y-3.5 shadow-inner">
+                  {/* Ticket Header */}
+                  <div className="border-b border-white/10 pb-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] uppercase tracking-widest text-[#dfbc5e] font-bold">
+                        Job Ticket
+                      </span>
+                      <span className="text-[11px] font-mono font-bold text-white/90">
+                        SG-RESERVE
+                      </span>
+                    </div>
+                    <h4 className="text-sm font-bold text-white mt-1 line-clamp-2">
+                      {service || 'Select or enter your service'}
+                    </h4>
+                  </div>
+
+                  {/* Dynamic Ticket Attributes */}
+                  <div className="space-y-2 text-xs">
+                    <div className="flex justify-between items-center">
+                      <span className="text-stone-400">Quantity</span>
+                      <span className="font-semibold text-white">
+                        {quantity || 1} {Number(quantity) > 1 ? 'copies / units' : 'copy / unit'}
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between items-center">
+                      <span className="text-stone-400">Dimensions</span>
+                      <span className="font-semibold text-white truncate max-w-[140px]">
+                        {dimensions || 'Standard Factory Spec'}
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between items-center">
+                      <span className="text-stone-400">Speed</span>
+                      <span className="font-bold text-amber-400 flex items-center gap-1">
+                        {urgency === '24hr' && <Zap className="w-3 h-3 text-[#dfbc5e]" />}
+                        {urgency === '24hr' ? '⚡ 24hr Express' : urgency === 'standard' ? 'Standard 2-3 Days' : 'Project Schedule'}
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between items-center">
+                      <span className="text-stone-400">Estimated Ready</span>
+                      <span className="font-semibold text-emerald-400">
+                        {getEstimatedCompletion()}
+                      </span>
+                    </div>
+
+                    {fullName && (
+                      <div className="flex justify-between items-center pt-1 border-t border-white/5">
+                        <span className="text-stone-400">Client</span>
+                        <span className="font-semibold text-white truncate max-w-[140px]">
+                          {fullName}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Trust Guarantee Badges */}
+                <div className="mt-4 space-y-2 text-xs text-stone-300">
+                  <div className="flex items-center gap-2 text-[11px] text-stone-300">
+                    <ShieldCheck className="w-4 h-4 text-[#dfbc5e] shrink-0" />
+                    <span>Direct Factory Price &bull; No middleman markups</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-[11px] text-stone-300">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Free Proof Review via WhatsApp before printing</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-[11px] text-stone-300">
+                    <Clock className="w-4 h-4 text-[#dfbc5e] shrink-0" />
+                    <span>24/7 Production line ready for urgent rush orders</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Assistance Callout */}
+              <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-[11px] text-stone-400">
+                <span className="flex items-center gap-1">
+                  <Building2 className="w-3.5 h-3.5 text-[#dfbc5e]" /> Swali Workshop
+                </span>
+                <span className="font-mono text-stone-300">
+                  +234 703 037 2539
+                </span>
+              </div>
+            </div>
+
+            {/* RIGHT COLUMN: Easy-to-use Form with Clear Visual Hierarchy */}
+            <div className="lg:col-span-7 p-5 sm:p-7 flex flex-col justify-between">
               
-              {/* Editable Service Selection */}
-              <div>
-                <div className="flex items-center justify-between mb-1.5">
-                  <label htmlFor="service-custom-input" className="block text-xs font-semibold text-stone-200">
-                    Select Required Service / Print Item * <span className="text-[#dfbc5e] font-normal">(Editable)</span>
-                  </label>
-                  <span className="text-[11px] text-stone-400 flex items-center gap-1">
-                    <Edit3 className="w-3 h-3 text-[#dfbc5e]" /> Type anything or pick
-                  </span>
+              {/* Step indicator on mobile/tablet */}
+              <div className="flex items-center justify-between mb-5">
+                <div>
+                  <h3 className="text-lg sm:text-xl font-black text-white">
+                    {currentStep === 1 ? '1. What Are We Printing?' : '2. Contact & Confirm'}
+                  </h3>
+                  <p className="text-xs text-stone-400 mt-0.5">
+                    {currentStep === 1 
+                      ? 'Select or type your exact project requirements below' 
+                      : 'Provide your WhatsApp details so we can dispatch your job ticket'}
+                  </p>
                 </div>
 
-                {/* Direct Editable Text Input */}
-                <div className="relative">
-                  <input
-                    id="service-custom-input"
-                    type="text"
-                    list="services-datalist"
-                    value={service}
-                    onChange={(e) => setService(e.target.value)}
-                    placeholder="e.g. 3D Backlight Signage, Custom Oil Canvas Painting, Banners..."
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/20 text-white text-xs sm:text-sm focus:outline-hidden focus:border-[#dfbc5e] focus:ring-1 focus:ring-[#dfbc5e] transition-all"
-                    required
-                  />
-                  <datalist id="services-datalist">
-                    {SERVICE_OPTIONS.map((opt) => (
-                      <option key={opt} value={opt} />
-                    ))}
-                  </datalist>
-                </div>
-
-                {/* Quick-Pick Suggestion Chips */}
-                <div className="mt-2 flex flex-wrap items-center gap-1.5">
-                  <span className="text-[10px] text-stone-400 font-semibold flex items-center gap-1">
-                    <Layers className="w-2.5 h-2.5 text-[#dfbc5e]" /> Popular:
-                  </span>
-                  {QUICK_SUGGESTIONS.map((suggestion) => (
-                    <button
-                      key={suggestion}
-                      type="button"
-                      onClick={() => setService(suggestion)}
-                      className={`px-2 py-0.5 rounded-md text-[11px] transition-all cursor-pointer ${
-                        service === suggestion
-                          ? 'bg-[#dfbc5e] text-black font-extrabold shadow-sm'
-                          : 'bg-white/10 hover:bg-white/20 text-stone-300'
-                      }`}
-                    >
-                      {suggestion}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Urgency Pill Selector */}
-              <div>
-                <label className="block text-xs font-semibold text-stone-300 mb-1.5">
-                  Target Completion Timeline
-                </label>
-                <div className="grid grid-cols-3 gap-2">
+                {/* Step Pill Switcher */}
+                <div className="flex items-center gap-1.5 p-1 rounded-xl bg-white/5 border border-white/10">
                   <button
                     type="button"
-                    onClick={() => setUrgency('24hr')}
-                    className={`py-2 px-2.5 rounded-xl border text-xs font-bold transition-all text-center flex flex-col items-center justify-center cursor-pointer ${
-                      urgency === '24hr'
-                        ? 'border-[#dfbc5e] bg-[#dfbc5e]/20 text-[#ebd07f] shadow-sm'
-                        : 'border-white/10 bg-white/5 text-stone-300 hover:border-white/20'
+                    onClick={() => setCurrentStep(1)}
+                    className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                      currentStep === 1 
+                        ? 'bg-[#dfbc5e] text-black shadow-sm' 
+                        : 'text-stone-400 hover:text-white'
                     }`}
                   >
-                    <span className="flex items-center gap-1">
-                      <Clock className="w-3 h-3 text-[#dfbc5e]" /> 24hr Express
-                    </span>
-                    <span className="text-[10px] text-stone-400 font-normal mt-0.5">Priority Press</span>
+                    Specs
                   </button>
-
                   <button
                     type="button"
-                    onClick={() => setUrgency('standard')}
-                    className={`py-2 px-2.5 rounded-xl border text-xs font-bold transition-all text-center flex flex-col items-center justify-center cursor-pointer ${
-                      urgency === 'standard'
-                        ? 'border-[#dfbc5e] bg-[#dfbc5e]/20 text-[#ebd07f] shadow-sm'
-                        : 'border-white/10 bg-white/5 text-stone-300 hover:border-white/20'
+                    onClick={() => {
+                      if (service.trim()) setCurrentStep(2);
+                    }}
+                    className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                      currentStep === 2 
+                        ? 'bg-[#dfbc5e] text-black shadow-sm' 
+                        : 'text-stone-400 hover:text-white'
                     }`}
                   >
-                    <span>2 - 3 Days</span>
-                    <span className="text-[10px] text-stone-400 font-normal mt-0.5">Standard</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setUrgency('flexible')}
-                    className={`py-2 px-2.5 rounded-xl border text-xs font-bold transition-all text-center flex flex-col items-center justify-center cursor-pointer ${
-                      urgency === 'flexible'
-                        ? 'border-[#dfbc5e] bg-[#dfbc5e]/20 text-[#ebd07f] shadow-sm'
-                        : 'border-white/10 bg-white/5 text-stone-300 hover:border-white/20'
-                    }`}
-                  >
-                    <span>Bulk / Project</span>
-                    <span className="text-[10px] text-stone-400 font-normal mt-0.5">Custom timeline</span>
+                    Contact
                   </button>
                 </div>
               </div>
 
-              {/* Quantity & Dimensions */}
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-xs font-semibold text-stone-300 mb-1">
-                    Quantity / Copies *
-                  </label>
-                  <input
-                    type="number"
-                    min="1"
-                    value={quantity}
-                    onChange={(e) => setQuantity(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/15 text-white text-xs sm:text-sm focus:outline-hidden focus:border-[#dfbc5e]"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-stone-300 mb-1">
-                    Dimensions (e.g. 5x7 ft, A4)
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="e.g. 33x81 in, 10x4 ft"
-                    value={dimensions}
-                    onChange={(e) => setDimensions(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/15 text-white text-xs sm:text-sm focus:outline-hidden focus:border-[#dfbc5e]"
-                  />
-                </div>
-              </div>
+              {/* Form Content */}
+              <form onSubmit={handleSubmit} className="space-y-4">
+                {currentStep === 1 ? (
+                  <div className="space-y-4 animate-in fade-in duration-200">
+                    {/* Service / Item Input */}
+                    <div>
+                      <div className="flex items-center justify-between mb-1.5">
+                        <label htmlFor="service-custom-input" className="block text-xs font-bold text-stone-200 uppercase tracking-wide">
+                          Service or Print Item *
+                        </label>
+                        <span className="text-[11px] text-[#dfbc5e] flex items-center gap-1 font-medium">
+                          <Edit3 className="w-3 h-3" /> Fully Editable
+                        </span>
+                      </div>
 
-              {/* Contact Information */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-0.5">
-                <div>
-                  <label className="block text-xs font-semibold text-stone-300 mb-1">
-                    Your Full Name *
-                  </label>
-                  <div className="relative">
-                    <User className="w-3.5 h-3.5 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2" />
-                    <input
-                      type="text"
-                      placeholder="e.g. Praise Brown"
-                      value={fullName}
-                      onChange={(e) => setFullName(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2 rounded-xl bg-white/5 border border-white/15 text-white text-xs sm:text-sm focus:outline-hidden focus:border-[#dfbc5e]"
-                      required
-                    />
+                      {/* Open Text Field with Datalist */}
+                      <div className="relative">
+                        <input
+                          id="service-custom-input"
+                          type="text"
+                          list="services-datalist"
+                          value={service}
+                          onChange={(e) => setService(e.target.value)}
+                          placeholder="e.g. 3D Backlight Signage, Custom Oil Canvas Painting, Flex Banners..."
+                          className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/20 text-white text-sm focus:outline-hidden focus:border-[#dfbc5e] focus:ring-2 focus:ring-[#dfbc5e]/20 transition-all font-medium placeholder:text-stone-500"
+                          required
+                        />
+                        <datalist id="services-datalist">
+                          {SERVICE_OPTIONS.map((opt) => (
+                            <option key={opt} value={opt} />
+                          ))}
+                        </datalist>
+                      </div>
+
+                      {/* Quick-Pick Tags */}
+                      <div className="mt-2 flex flex-wrap items-center gap-1.5">
+                        <span className="text-[10px] text-stone-400 font-semibold flex items-center gap-1">
+                          <Layers className="w-2.5 h-2.5 text-[#dfbc5e]" /> Quick Picks:
+                        </span>
+                        {QUICK_SUGGESTIONS.map((suggestion) => (
+                          <button
+                            key={suggestion}
+                            type="button"
+                            onClick={() => setService(suggestion)}
+                            className={`px-2.5 py-1 rounded-lg text-xs transition-all cursor-pointer ${
+                              service === suggestion
+                                ? 'bg-[#dfbc5e] text-black font-extrabold shadow-sm'
+                                : 'bg-white/10 hover:bg-white/20 text-stone-300'
+                            }`}
+                          >
+                            {suggestion}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Urgency & Timeline Selection */}
+                    <div>
+                      <label className="block text-xs font-bold text-stone-200 uppercase tracking-wide mb-1.5">
+                        Production Turnaround Speed
+                      </label>
+                      <div className="grid grid-cols-3 gap-2">
+                        <button
+                          type="button"
+                          onClick={() => setUrgency('24hr')}
+                          className={`p-2.5 rounded-xl border text-xs font-bold transition-all text-center flex flex-col items-center justify-center cursor-pointer ${
+                            urgency === '24hr'
+                              ? 'border-[#dfbc5e] bg-[#dfbc5e]/20 text-[#ebd07f] shadow-md shadow-[#dfbc5e]/15 ring-1 ring-[#dfbc5e]'
+                              : 'border-white/10 bg-white/5 text-stone-300 hover:border-white/20'
+                          }`}
+                        >
+                          <span className="flex items-center gap-1 text-sm font-extrabold">
+                            <Zap className="w-3.5 h-3.5 text-[#dfbc5e]" /> 24hr Express
+                          </span>
+                          <span className="text-[10px] text-stone-300 font-normal mt-0.5">Priority Press</span>
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => setUrgency('standard')}
+                          className={`p-2.5 rounded-xl border text-xs font-bold transition-all text-center flex flex-col items-center justify-center cursor-pointer ${
+                            urgency === 'standard'
+                              ? 'border-[#dfbc5e] bg-[#dfbc5e]/20 text-[#ebd07f] shadow-md shadow-[#dfbc5e]/15 ring-1 ring-[#dfbc5e]'
+                              : 'border-white/10 bg-white/5 text-stone-300 hover:border-white/20'
+                          }`}
+                        >
+                          <span className="text-sm font-extrabold">2 - 3 Days</span>
+                          <span className="text-[10px] text-stone-300 font-normal mt-0.5">Standard Factory</span>
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => setUrgency('flexible')}
+                          className={`p-2.5 rounded-xl border text-xs font-bold transition-all text-center flex flex-col items-center justify-center cursor-pointer ${
+                            urgency === 'flexible'
+                              ? 'border-[#dfbc5e] bg-[#dfbc5e]/20 text-[#ebd07f] shadow-md shadow-[#dfbc5e]/15 ring-1 ring-[#dfbc5e]'
+                              : 'border-white/10 bg-white/5 text-stone-300 hover:border-white/20'
+                          }`}
+                        >
+                          <span className="text-sm font-extrabold">Bulk Project</span>
+                          <span className="text-[10px] text-stone-300 font-normal mt-0.5">Custom Timeline</span>
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Quantity & Dimensions */}
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-xs font-bold text-stone-200 uppercase tracking-wide mb-1">
+                          Quantity / Copies *
+                        </label>
+                        <div className="flex items-center">
+                          <button
+                            type="button"
+                            onClick={() => setQuantity(Math.max(1, Number(quantity || 1) - 1).toString())}
+                            className="px-3 py-2.5 rounded-l-xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm border border-r-0 border-white/20 active:scale-95"
+                          >
+                            -
+                          </button>
+                          <input
+                            type="number"
+                            min="1"
+                            value={quantity}
+                            onChange={(e) => setQuantity(e.target.value)}
+                            className="w-full py-2.5 text-center bg-white/5 border-y border-white/20 text-white text-sm font-bold focus:outline-hidden focus:border-[#dfbc5e]"
+                            required
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setQuantity((Number(quantity || 1) + 1).toString())}
+                            className="px-3 py-2.5 rounded-r-xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm border border-l-0 border-white/20 active:scale-95"
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-bold text-stone-200 uppercase tracking-wide mb-1">
+                          Dimensions / Specs
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="e.g. 5x7 ft, A4, 33x81 in"
+                          value={dimensions}
+                          onChange={(e) => setDimensions(e.target.value)}
+                          className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/20 text-white text-sm focus:outline-hidden focus:border-[#dfbc5e]"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Next Button for Step 1 */}
+                    <div className="pt-2">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (!service.trim()) return;
+                          setCurrentStep(2);
+                        }}
+                        className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-[#d4af37] via-[#e5c158] to-[#b8860b] hover:from-[#e5c158] hover:to-[#d4af37] active:scale-98 text-black font-black text-sm tracking-wide shadow-lg shadow-[#d4af37]/25 flex items-center justify-center gap-2 cursor-pointer transition-all"
+                      >
+                        <span>Continue to Contact &amp; Dispatch</span>
+                        <ArrowRight className="w-4 h-4 stroke-[2.5]" />
+                      </button>
+                    </div>
                   </div>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-semibold text-stone-300 mb-1">
-                    WhatsApp Phone Number *
-                  </label>
-                  <div className="relative">
-                    <Phone className="w-3.5 h-3.5 text-[#dfbc5e] absolute left-3 top-1/2 -translate-y-1/2" />
-                    <input
-                      type="tel"
-                      placeholder="080 1234 5678"
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2 rounded-xl bg-white/5 border border-white/15 text-white text-xs sm:text-sm focus:outline-hidden focus:border-[#dfbc5e]"
-                      required
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Delivery / Pickup Location */}
-              <div>
-                <label className="block text-xs font-semibold text-stone-300 mb-1">
-                  Delivery City / Pickup Location
-                </label>
-                <div className="relative">
-                  <MapPin className="w-3.5 h-3.5 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2" />
-                  <input
-                    type="text"
-                    value={location}
-                    onChange={(e) => setLocation(e.target.value)}
-                    placeholder="e.g. Swali, Yenagoa, Bayelsa State"
-                    className="w-full pl-9 pr-3 py-2 rounded-xl bg-white/5 border border-white/15 text-white text-xs sm:text-sm focus:outline-hidden focus:border-[#dfbc5e]"
-                  />
-                </div>
-              </div>
-
-              {/* Project Specifics / Artwork Notes */}
-              <div>
-                <label className="block text-xs font-semibold text-stone-300 mb-1">
-                  Artwork &amp; Finishing Instructions
-                </label>
-                <div className="relative">
-                  <FileText className="w-3.5 h-3.5 text-stone-400 absolute left-3 top-3" />
-                  <textarea
-                    rows={2}
-                    placeholder="Mention custom colors, eyelets, lamination, or if you need design help..."
-                    value={notes}
-                    onChange={(e) => setNotes(e.target.value)}
-                    className="w-full pl-9 pr-3 py-2 rounded-xl bg-white/5 border border-white/15 text-white text-xs sm:text-sm focus:outline-hidden focus:border-[#dfbc5e] resize-none"
-                  />
-                </div>
-              </div>
-
-              {/* Direct Submit & WhatsApp Launcher Button */}
-              <button
-                type="submit"
-                id="submit-online-booking-btn"
-                disabled={isGeneratingSlip}
-                className="w-full mt-2 py-3.5 px-4 rounded-xl bg-gradient-to-r from-[#d4af37] via-[#e5c158] to-[#b8860b] hover:from-[#e5c158] hover:to-[#d4af37] active:scale-98 text-black font-black text-sm tracking-wide shadow-lg shadow-[#d4af37]/25 flex items-center justify-center gap-2 cursor-pointer transition-all disabled:opacity-75"
-              >
-                {isGeneratingSlip ? (
-                  <>
-                    <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
-                    <span>Preparing Order Slip &amp; WhatsApp...</span>
-                  </>
                 ) : (
-                  <>
-                    <Sparkles className="w-4 h-4 fill-black" />
-                    <span>Confirm &amp; Reserve Production Slot</span>
-                  </>
-                )}
-              </button>
+                  /* STEP 2: Contact Information & WhatsApp Confirmation */
+                  <div className="space-y-4 animate-in fade-in duration-200">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-xs font-bold text-stone-200 uppercase tracking-wide mb-1">
+                          Your Full Name *
+                        </label>
+                        <div className="relative">
+                          <User className="w-4 h-4 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                          <input
+                            type="text"
+                            placeholder="e.g. Praise Brown"
+                            value={fullName}
+                            onChange={(e) => setFullName(e.target.value)}
+                            className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-white/5 border border-white/20 text-white text-sm focus:outline-hidden focus:border-[#dfbc5e]"
+                            required
+                          />
+                        </div>
+                      </div>
 
-              <div className="flex items-center justify-center gap-1.5 text-[11px] text-stone-400 text-center">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#dfbc5e]" />
-                <span>Picks up all filled details &bull; Sends directly to official WhatsApp</span>
-              </div>
-            </form>
+                      <div>
+                        <label className="block text-xs font-bold text-stone-200 uppercase tracking-wide mb-1">
+                          WhatsApp Phone *
+                        </label>
+                        <div className="relative">
+                          <Phone className="w-4 h-4 text-[#dfbc5e] absolute left-3.5 top-1/2 -translate-y-1/2" />
+                          <input
+                            type="tel"
+                            placeholder="080 1234 5678"
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
+                            className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-white/5 border border-white/20 text-white text-sm focus:outline-hidden focus:border-[#dfbc5e]"
+                            required
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Delivery / Workshop Pickup */}
+                    <div>
+                      <label className="block text-xs font-bold text-stone-200 uppercase tracking-wide mb-1">
+                        Delivery City / Pickup Location
+                      </label>
+                      <div className="relative">
+                        <MapPin className="w-4 h-4 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                        <input
+                          type="text"
+                          value={location}
+                          onChange={(e) => setLocation(e.target.value)}
+                          placeholder="e.g. Swali, Yenagoa, Bayelsa State"
+                          className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-white/5 border border-white/20 text-white text-sm focus:outline-hidden focus:border-[#dfbc5e]"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Artwork & Finishing Notes */}
+                    <div>
+                      <label className="block text-xs font-bold text-stone-200 uppercase tracking-wide mb-1">
+                        Artwork &amp; Finishing Instructions (Optional)
+                      </label>
+                      <div className="relative">
+                        <FileText className="w-4 h-4 text-stone-400 absolute left-3.5 top-3" />
+                        <textarea
+                          rows={2}
+                          placeholder="Mention custom colors, eyelets, gloss/matte lamination, or if you already have artwork ready..."
+                          value={notes}
+                          onChange={(e) => setNotes(e.target.value)}
+                          className="w-full pl-10 pr-3.5 py-2 rounded-xl bg-white/5 border border-white/20 text-white text-xs sm:text-sm focus:outline-hidden focus:border-[#dfbc5e] resize-none"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Step 2 Action Buttons */}
+                    <div className="pt-2 space-y-2">
+                      <button
+                        type="submit"
+                        id="submit-online-booking-btn"
+                        disabled={isGeneratingSlip || !fullName.trim() || !phone.trim()}
+                        className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-[#d4af37] via-[#e5c158] to-[#b8860b] hover:from-[#e5c158] hover:to-[#d4af37] active:scale-98 text-black font-black text-sm tracking-wide shadow-xl shadow-[#d4af37]/30 flex items-center justify-center gap-2 cursor-pointer transition-all disabled:opacity-50"
+                      >
+                        {isGeneratingSlip ? (
+                          <>
+                            <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
+                            <span>Formatting Order Slip &amp; Opening WhatsApp...</span>
+                          </>
+                        ) : (
+                          <>
+                            <Sparkles className="w-4 h-4 fill-black" />
+                            <span>Confirm &amp; Reserve Production Slot</span>
+                          </>
+                        )}
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => setCurrentStep(1)}
+                        className="w-full py-2 text-xs text-stone-400 hover:text-white flex items-center justify-center gap-1 cursor-pointer transition-colors"
+                      >
+                        <ArrowLeft className="w-3.5 h-3.5" /> Back to Specs
+                      </button>
+                    </div>
+
+                    <div className="flex items-center justify-center gap-1.5 text-[11px] text-stone-400 text-center">
+                      <ShieldCheck className="w-3.5 h-3.5 text-[#dfbc5e]" />
+                      <span>Transfers all details directly to WhatsApp with digital order slip</span>
+                    </div>
+                  </div>
+                )}
+              </form>
+            </div>
           </div>
         ) : (
           /* Confirmation Screen: Order Placed with Digital Order Slip Image */
-          <div className="py-2 space-y-4 max-h-[82vh] overflow-y-auto pr-1">
+          <div className="p-6 sm:p-8 space-y-5 max-h-[85vh] overflow-y-auto">
             <div className="text-center">
-              <div className="w-14 h-14 rounded-full bg-[#25D366]/20 border border-[#25D366] flex items-center justify-center mx-auto text-[#25D366]">
-                <CheckCircle2 className="w-8 h-8" />
+              <div className="w-16 h-16 rounded-full bg-[#25D366]/20 border border-[#25D366] flex items-center justify-center mx-auto text-[#25D366] shadow-lg shadow-green-950/40">
+                <CheckCircle2 className="w-9 h-9" />
               </div>
 
-              <div className="mt-2.5">
-                <span className="px-3 py-1 rounded-full bg-[#dfbc5e]/20 border border-[#dfbc5e]/40 text-xs font-mono font-bold text-[#dfbc5e] uppercase tracking-wider">
+              <div className="mt-3">
+                <span className="px-3.5 py-1 rounded-full bg-[#dfbc5e]/20 border border-[#dfbc5e]/40 text-xs font-mono font-bold text-[#dfbc5e] uppercase tracking-wider">
                   Booking Ref: {bookingRef}
                 </span>
-                <h3 className="text-2xl font-black text-white mt-2">
-                  Order Placed &amp; Sent to WhatsApp!
+                <h3 className="text-2xl sm:text-3xl font-black text-white mt-2">
+                  Order Placed &amp; Dispatched!
                 </h3>
-                <p className="text-stone-300 text-xs sm:text-sm max-w-sm mx-auto mt-1">
-                  We have picked up everything you filled out and opened WhatsApp for you. Below is your official <span className="text-[#dfbc5e] font-semibold">Production Order Slip Image</span>.
+                <p className="text-stone-300 text-xs sm:text-sm max-w-md mx-auto mt-1.5">
+                  We have picked up all details and opened WhatsApp. Your official <span className="text-[#dfbc5e] font-bold">Production Job Slip</span> has been generated below.
                 </p>
               </div>
             </div>
 
             {/* Generated Order Slip Image Card */}
             {orderImageUrl && (
-              <div className="rounded-2xl border border-[#dfbc5e]/40 bg-[#12131a] p-3 text-center space-y-2.5 shadow-xl">
+              <div className="rounded-2xl border border-[#dfbc5e]/40 bg-[#12141f] p-4 text-center space-y-3 shadow-2xl max-w-xl mx-auto">
                 <div className="flex items-center justify-between px-1">
                   <div className="flex items-center gap-1.5 text-xs text-[#dfbc5e] font-bold">
                     <Sparkles className="w-3.5 h-3.5" />
-                    <span>Official Order Slip Image</span>
+                    <span>Official Production Job Slip (PNG)</span>
                   </div>
                   {copiedImage && (
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-bold">
-                      <Check className="w-3 h-3" /> Copied to Clipboard!
+                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[11px] font-bold">
+                      <Check className="w-3.5 h-3.5" /> Copied to Clipboard!
                     </span>
                   )}
                 </div>
 
-                {/* Image Preview with Aspect Ratio Container */}
-                <div className="relative rounded-xl overflow-hidden border border-white/10 max-h-60 sm:max-h-72 bg-black/60 flex items-center justify-center">
+                {/* High-definition Image Preview */}
+                <div className="relative rounded-xl overflow-hidden border border-white/10 max-h-72 sm:max-h-80 bg-black/80 flex items-center justify-center p-2">
                   <img 
                     src={orderImageUrl} 
                     alt={`Order Slip ${bookingRef}`} 
-                    className="w-full h-auto object-contain max-h-60 sm:max-h-72"
+                    className="w-full h-auto object-contain max-h-72 sm:max-h-80 rounded-lg shadow-md"
                   />
                 </div>
 
-                {/* Slip Action Buttons */}
-                <div className="grid grid-cols-2 gap-2 pt-1">
+                {/* Actions */}
+                <div className="grid grid-cols-2 gap-2.5 pt-1">
                   <button
                     type="button"
                     onClick={handleDownloadImage}
-                    className="py-2 px-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                    className="py-2.5 px-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
                   >
                     <Download className="w-3.5 h-3.5 text-[#dfbc5e]" />
                     <span>Download Image</span>
@@ -762,17 +1001,17 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
                   <button
                     type="button"
                     onClick={handleCopyImageToClipboard}
-                    className="py-2 px-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                    className="py-2.5 px-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
                   >
                     {copiedImage ? (
                       <>
                         <Check className="w-3.5 h-3.5 text-emerald-400" />
-                        <span className="text-emerald-400">Copied!</span>
+                        <span className="text-emerald-400">Copied to Clipboard!</span>
                       </>
                     ) : (
                       <>
                         <Copy className="w-3.5 h-3.5 text-[#dfbc5e]" />
-                        <span>Copy Image</span>
+                        <span>Copy Image (Ctrl+V)</span>
                       </>
                     )}
                   </button>
@@ -782,7 +1021,7 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
                   <button
                     type="button"
                     onClick={handleShareSlipImage}
-                    className="w-full py-2 px-3 rounded-xl bg-[#dfbc5e]/20 hover:bg-[#dfbc5e]/30 border border-[#dfbc5e]/40 text-[#dfbc5e] font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                    className="w-full py-2.5 px-3 rounded-xl bg-[#dfbc5e]/20 hover:bg-[#dfbc5e]/30 border border-[#dfbc5e]/40 text-[#dfbc5e] font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
                   >
                     <Share2 className="w-3.5 h-3.5" />
                     <span>Share Slip Image Directly to WhatsApp</span>
@@ -791,11 +1030,11 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
               </div>
             )}
 
-            {/* Quick summary recap */}
-            <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 text-left text-xs space-y-1.5 text-stone-300">
+            {/* Structured Summary Recap */}
+            <div className="max-w-xl mx-auto p-4 rounded-2xl bg-white/5 border border-white/10 text-xs space-y-2 text-stone-300">
               <div className="flex justify-between">
-                <span className="text-stone-400">Service / Item:</span>
-                <span className="font-semibold text-[#dfbc5e] text-right max-w-[200px] truncate">{service}</span>
+                <span className="text-stone-400">Print Item / Service:</span>
+                <span className="font-bold text-[#dfbc5e] text-right max-w-[240px] truncate">{service}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-stone-400">Quantity &amp; Specs:</span>
@@ -803,23 +1042,23 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
               </div>
               <div className="flex justify-between">
                 <span className="text-stone-400">Turnaround Speed:</span>
-                <span className="font-semibold text-emerald-400">{urgency === '24hr' ? '⚡ 24hr Express' : 'Standard 2-3 Days'}</span>
+                <span className="font-bold text-emerald-400">{urgency === '24hr' ? '⚡ 24hr Express' : 'Standard 2-3 Days'} ({getEstimatedCompletion()})</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-stone-400">Client / Phone:</span>
+                <span className="text-stone-400">Client Contact:</span>
                 <span className="font-semibold text-white">{fullName} &bull; {phone}</span>
               </div>
             </div>
 
-            {/* WhatsApp & Close Controls */}
-            <div className="pt-1 space-y-2">
+            {/* Primary Action Buttons */}
+            <div className="max-w-xl mx-auto space-y-2 pt-2">
               <button
                 type="button"
                 onClick={handleOpenWhatsAppAgain}
-                className="w-full py-3 px-4 rounded-xl bg-[#25D366] hover:bg-[#20ba59] active:scale-98 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-green-900/30 transition-all cursor-pointer"
+                className="w-full py-3.5 px-4 rounded-xl bg-[#25D366] hover:bg-[#20ba59] active:scale-98 text-white font-black text-sm flex items-center justify-center gap-2 shadow-xl shadow-green-950/40 transition-all cursor-pointer"
               >
                 <Phone className="w-4 h-4 fill-white" />
-                <span>Re-open WhatsApp Chat With Order</span>
+                <span>Re-open WhatsApp Chat With Order Details</span>
                 <ExternalLink className="w-3.5 h-3.5 opacity-80" />
               </button>
 
@@ -837,4 +1076,3 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
     </div>
   );
 };
-
