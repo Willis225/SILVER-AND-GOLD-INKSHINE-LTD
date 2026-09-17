@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'motion/react';
 import { Check } from 'lucide-react';
 
 interface BrandIntroSectionProps {
@@ -11,8 +12,14 @@ export const BrandIntroSection: React.FC<BrandIntroSectionProps> = ({ onExploreP
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
-          {/* Left Column: Descriptive Text & Bullet Points */}
-          <div className="lg:col-span-5 space-y-6">
+          {/* Left Column: Descriptive Text & Bullet Points with Entrance Animation */}
+          <motion.div 
+            initial={{ opacity: 0, y: 22 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-5 space-y-6"
+          >
             <p className="text-stone-700 text-sm sm:text-[15px] leading-relaxed font-normal text-justify sm:text-left">
               Order everything you need for your business, events or promotions at Rollupbanners.ng and have them delivered nationwide in 3–5 business days! Send your print-ready artwork or hire our graphic experts to help you. We design and print quality roll-up banners, display stands, flyers, business cards, custom t-shirts, branded apparels, vehicle branding, signage, packaging labels, stickers, posters, promotional gifts and more.
             </p>
@@ -46,7 +53,7 @@ export const BrandIntroSection: React.FC<BrandIntroSectionProps> = ({ onExploreP
                 </span>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Right Column: Exact Promo Banner Card with Mockups */}
           <div className="lg:col-span-7">

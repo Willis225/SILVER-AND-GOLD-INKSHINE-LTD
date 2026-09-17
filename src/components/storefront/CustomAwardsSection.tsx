@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { motion } from 'motion/react';
 import { ChevronRight, ChevronLeft, ArrowRight } from 'lucide-react';
 
 interface AwardItem {
@@ -63,8 +64,14 @@ export const CustomAwardsSection: React.FC<CustomAwardsSectionProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
           
-          {/* Left Column: Heading, Paragraph & Call to Action */}
-          <div className="lg:col-span-3 space-y-4 sm:space-y-5">
+          {/* Left Column: Heading, Paragraph & Call to Action with entrance animation */}
+          <motion.div 
+            initial={{ opacity: 0, y: 22 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-3 space-y-4 sm:space-y-5"
+          >
             <h2 className="text-xl sm:text-2xl font-bold text-stone-900 tracking-tight leading-snug">
               Custom Award Plaques and Trophies Printing
             </h2>
@@ -76,13 +83,13 @@ export const CustomAwardsSection: React.FC<CustomAwardsSectionProps> = ({
             <div>
               <button
                 onClick={onViewProducts}
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#009b72] hover:bg-[#00875a] active:scale-98 text-white font-bold text-xs sm:text-sm rounded-md shadow-sm transition-all group"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#c59b27] hover:bg-[#b8860b] active:scale-98 text-white font-bold text-xs sm:text-sm rounded-md shadow-sm transition-all group"
               >
-                <span>View Products</span>
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                <span className="text-white">View Products</span>
+                <ArrowRight className="w-4 h-4 text-white transition-transform group-hover:translate-x-1" />
               </button>
             </div>
-          </div>
+          </motion.div>
 
           {/* Right Column: Carousel of Products */}
           <div className="lg:col-span-9 relative group/carousel">
@@ -208,16 +215,16 @@ export const CustomAwardsSection: React.FC<CustomAwardsSectionProps> = ({
                       </div>
                     )}
 
-                    {/* Item 3: Custom Branded Acrylic Award Plaque (Octagonal emerald trophy on black base) */}
+                    {/* Item 3: Custom Branded Acrylic Award Plaque (Faceted trophy on black base) */}
                     {item.id === 'award-acrylic-plaque' && (
                       <div className="w-full h-full p-2 flex items-center justify-center bg-stone-100">
                         <div className="relative w-36 h-46 flex flex-col items-center justify-end pb-2">
-                          {/* Octagonal Faceted Emerald Acrylic Body */}
-                          <div className="relative w-26 h-32 bg-gradient-to-b from-emerald-100/70 via-teal-50/50 to-emerald-200/80 rounded-2xl border-2 border-emerald-300/80 shadow-xl p-2 flex flex-col justify-between items-center text-center backdrop-blur-xs group-hover:scale-105 transition-transform duration-300">
-                            {/* Nigerian Crest / Official Emblem */}
-                            <div className="w-7 h-7 rounded-full bg-emerald-600 border border-white flex flex-col items-center justify-center text-white shadow-xs">
+                          {/* Octagonal Faceted Acrylic Body in Champagne & Gold */}
+                          <div className="relative w-26 h-32 bg-gradient-to-b from-amber-50/90 via-white/80 to-amber-100/90 rounded-2xl border-2 border-amber-300/80 shadow-xl p-2 flex flex-col justify-between items-center text-center backdrop-blur-xs group-hover:scale-105 transition-transform duration-300">
+                            {/* Gold Official Emblem */}
+                            <div className="w-7 h-7 rounded-full bg-[#b8860b] border border-white flex flex-col items-center justify-center text-white shadow-xs">
                               <span className="text-[4px] font-black leading-none">NIGERIA</span>
-                              <span className="text-[3px] text-amber-300">SERVICE</span>
+                              <span className="text-[3px] text-amber-200">SERVICE</span>
                             </div>
 
                             {/* Award Citation */}
@@ -228,7 +235,7 @@ export const CustomAwardsSection: React.FC<CustomAwardsSectionProps> = ({
                               <div className="text-[3.5px] text-stone-500 italic">
                                 Presented to
                               </div>
-                              <div className="text-[6px] font-black text-emerald-950 font-serif leading-tight">
+                              <div className="text-[6px] font-black text-[#6d4c0d] font-serif leading-tight">
                                 Muharram Sisters
                               </div>
                               <div className="text-[3.5px] text-stone-500 max-w-[85px] mx-auto leading-tight">
@@ -236,13 +243,13 @@ export const CustomAwardsSection: React.FC<CustomAwardsSectionProps> = ({
                               </div>
                             </div>
 
-                            <div className="text-[3.5px] text-emerald-800 font-bold">
+                            <div className="text-[3.5px] text-[#8c6d1f] font-bold">
                               Lagos, Nigeria
                             </div>
                           </div>
 
                           {/* Black Pedestal Glass Base */}
-                          <div className="w-24 h-4 bg-stone-900 rounded-xs border-t-2 border-emerald-400 shadow-xl flex items-center justify-center">
+                          <div className="w-24 h-4 bg-stone-900 rounded-xs border-t-2 border-amber-400 shadow-xl flex items-center justify-center">
                             <div className="w-16 h-0.5 bg-white/20" />
                           </div>
                         </div>
@@ -282,12 +289,12 @@ export const CustomAwardsSection: React.FC<CustomAwardsSectionProps> = ({
 
                   {/* Title */}
                   <div className="pt-3 text-center">
-                    <h3 className="text-xs sm:text-[13px] font-bold text-stone-900 line-clamp-2 leading-tight group-hover:text-[#009b72] transition-colors">
+                    <h3 className="text-xs sm:text-[13px] font-bold text-stone-900 line-clamp-2 leading-tight group-hover:text-[#b8860b] transition-colors">
                       {item.title}
                     </h3>
                     
-                    {/* Teal Price */}
-                    <div className="text-xs sm:text-[13.5px] font-bold text-[#009b72] mt-1.5">
+                    {/* Gold Price */}
+                    <div className="text-xs sm:text-[13.5px] font-bold text-[#b8860b] mt-1.5">
                       {item.price}
                     </div>
                   </div>

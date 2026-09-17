@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { motion } from 'motion/react';
 import { ChevronRight, ChevronLeft, ArrowRight } from 'lucide-react';
 
 interface ShowcaseItem {
@@ -85,8 +86,14 @@ export const ServicesShowcaseSection: React.FC<ServicesShowcaseSectionProps> = (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
           
-          {/* Left Column: Heading, Paragraph & Call to Action */}
-          <div className="lg:col-span-3 space-y-4 sm:space-y-5">
+          {/* Left Column: Heading, Paragraph & Call to Action with entrance animation */}
+          <motion.div 
+            initial={{ opacity: 0, y: 22 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-3 space-y-4 sm:space-y-5"
+          >
             <h2 className="text-xl sm:text-2xl font-bold text-stone-900 tracking-tight leading-snug">
               Get Top-Quality Printing Services Across Nigeria
             </h2>
@@ -104,7 +111,7 @@ export const ServicesShowcaseSection: React.FC<ServicesShowcaseSectionProps> = (
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </button>
             </div>
-          </div>
+          </motion.div>
 
           {/* Right Column: Carousel of Products */}
           <div className="lg:col-span-9 relative group/carousel">

@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
 
 interface WhyChooseUsSectionProps {
@@ -12,9 +13,15 @@ export const WhyChooseUsSection: React.FC<WhyChooseUsSectionProps> = ({ onSendFi
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
           
           {/* Column 1: Left Overview & Action Button */}
-          <div className="lg:col-span-4 space-y-4 sm:space-y-5">
-            {/* Eyebrow */}
-            <div className="text-[#009b72] font-bold text-sm sm:text-base tracking-tight">
+          <motion.div 
+            initial={{ opacity: 0, y: 22 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-4 space-y-4 sm:space-y-5"
+          >
+            {/* Eyebrow in Gold */}
+            <div className="text-[#b8860b] font-bold text-sm sm:text-base tracking-tight">
               Why Businesses in Lagos Choose Rollupbanners.ng
             </div>
 
@@ -28,26 +35,32 @@ export const WhyChooseUsSection: React.FC<WhyChooseUsSectionProps> = ({ onSendFi
               Choose Rollupbanners.ng because we make printing simple, affordable and reliable for businesses, schools, churches, event planners, product owners and corporate organisations in Lagos and across Nigeria. We understand that customers want quality work without wasting money, delaying their events or struggling with poor finishing — and that is exactly what we deliver.
             </p>
 
-            {/* Send Print Ready File Button */}
+            {/* Send Print Ready File Button in Gold with White Writing */}
             <div className="pt-1">
               <a
                 href="https://wa.me/2347030372539?text=Hello%20Rollupbanners.ng%2C%20I%20have%20a%20print-ready%20file%20to%20send%20for%20production"
                 target="_blank"
                 rel="noreferrer"
                 onClick={onSendFile}
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#009b72] hover:bg-[#00875a] active:scale-98 text-white font-bold text-xs sm:text-sm rounded-md shadow-sm transition-all group"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#c59b27] hover:bg-[#b8860b] active:scale-98 text-white font-bold text-xs sm:text-sm rounded-md shadow-sm transition-all group"
               >
-                <span>Send Print Ready File</span>
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                <span className="text-white">Send Print Ready File</span>
+                <ArrowRight className="w-4 h-4 text-white transition-transform group-hover:translate-x-1" />
               </a>
             </div>
-          </div>
+          </motion.div>
 
           {/* Column 2: Points 1 & 2 */}
-          <div className="lg:col-span-4 space-y-8">
+          <motion.div 
+            initial={{ opacity: 0, y: 22 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-4 space-y-8"
+          >
             {/* Point 1 */}
             <div className="space-y-2">
-              <h3 className="text-sm sm:text-base font-bold text-[#005944] tracking-tight">
+              <h3 className="text-sm sm:text-base font-bold text-[#996515] tracking-tight">
                 1. High-Quality Printing Standards
               </h3>
               <p className="text-xs sm:text-[13px] text-stone-600 leading-relaxed font-normal">
@@ -57,20 +70,26 @@ export const WhyChooseUsSection: React.FC<WhyChooseUsSectionProps> = ({ onSendFi
 
             {/* Point 2 */}
             <div className="space-y-2">
-              <h3 className="text-sm sm:text-base font-bold text-[#005944] tracking-tight">
+              <h3 className="text-sm sm:text-base font-bold text-[#996515] tracking-tight">
                 2. Same-Day &amp; Urgent Printing Available
               </h3>
               <p className="text-xs sm:text-[13px] text-stone-600 leading-relaxed font-normal">
                 When deadlines matter, Rollupbanners.ng delivers with speed and accuracy. Our streamlined production process, skilled team and efficient workflow help us complete both small and bulk orders on time without compromising quality. Whether for business promotions, events or urgent campaigns, we help you get your printed materials ready fast.
               </p>
             </div>
-          </div>
+          </motion.div>
 
           {/* Column 3: Points 3 & 4 */}
-          <div className="lg:col-span-4 space-y-8">
+          <motion.div 
+            initial={{ opacity: 0, y: 22 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-4 space-y-8"
+          >
             {/* Point 3 */}
             <div className="space-y-2">
-              <h3 className="text-sm sm:text-base font-bold text-[#005944] tracking-tight">
+              <h3 className="text-sm sm:text-base font-bold text-[#996515] tracking-tight">
                 3. Wide Range of Printing Services
               </h3>
               <p className="text-xs sm:text-[13px] text-stone-600 leading-relaxed font-normal">
@@ -80,14 +99,14 @@ export const WhyChooseUsSection: React.FC<WhyChooseUsSectionProps> = ({ onSendFi
 
             {/* Point 4 */}
             <div className="space-y-2">
-              <h3 className="text-sm sm:text-base font-bold text-[#005944] tracking-tight">
+              <h3 className="text-sm sm:text-base font-bold text-[#996515] tracking-tight">
                 4. Nationwide Delivery in 3–5 Business Days
               </h3>
               <p className="text-xs sm:text-[13px] text-stone-600 leading-relaxed font-normal">
                 Rollupbanners.ng makes it easy to get your printed materials delivered quickly anywhere in Nigeria. From Lagos to Abuja, Port Harcourt and beyond, our fast nationwide delivery service ensures your banners, business cards, souvenirs, packaging and promotional items reach you safely and on time.
               </p>
             </div>
-          </div>
+          </motion.div>
 
         </div>
       </div>
