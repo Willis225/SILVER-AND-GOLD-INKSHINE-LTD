@@ -23,9 +23,15 @@ interface FooterProps {
   onSelectCategory: (cat: ProductCategory | 'all') => void;
   onOpenAdmin?: () => void;
   onOpenInfoModal?: (tab?: InfoModalTab) => void;
+  onOpenCategoriesPage?: (catKey?: string) => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onSelectCategory, onOpenAdmin, onOpenInfoModal }) => {
+export const Footer: React.FC<FooterProps> = ({ 
+  onSelectCategory, 
+  onOpenAdmin, 
+  onOpenInfoModal,
+  onOpenCategoriesPage 
+}) => {
   const [openFaqIdx, setOpenFaqIdx] = useState<number | null>(0);
   const [faqSearch, setFaqSearch] = useState('');
 
@@ -178,7 +184,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategory, onOpenAdmin, o
             <ul className="space-y-2">
               <li>
                 <button 
-                  onClick={() => onSelectCategory('banners_displays')}
+                  onClick={() => onOpenCategoriesPage ? onOpenCategoriesPage('banners_stands') : onSelectCategory('banners_stands')}
                   className="hover:text-amber-400 transition-colors text-left"
                 >
                   Luxury & Standard Roll-Up Banners
@@ -186,7 +192,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategory, onOpenAdmin, o
               </li>
               <li>
                 <button 
-                  onClick={() => onSelectCategory('banners_displays')}
+                  onClick={() => onOpenCategoriesPage ? onOpenCategoriesPage('banners_stands') : onSelectCategory('banners_stands')}
                   className="hover:text-amber-400 transition-colors text-left"
                 >
                   Teardrop Flying Feather Flags
@@ -194,7 +200,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategory, onOpenAdmin, o
               </li>
               <li>
                 <button 
-                  onClick={() => onSelectCategory('packaging_labels')}
+                  onClick={() => onOpenCategoriesPage ? onOpenCategoriesPage('food_packaging') : onSelectCategory('food_packaging')}
                   className="hover:text-amber-400 transition-colors text-left"
                 >
                   Custom Kraft & Paper Gift Bags
@@ -202,7 +208,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategory, onOpenAdmin, o
               </li>
               <li>
                 <button 
-                  onClick={() => onSelectCategory('corporate_stationery')}
+                  onClick={() => onOpenCategoriesPage ? onOpenCategoriesPage('cards_invitations') : onSelectCategory('cards_invitations')}
                   className="hover:text-amber-400 transition-colors text-left"
                 >
                   Executive Matte Business Cards
@@ -210,7 +216,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategory, onOpenAdmin, o
               </li>
               <li>
                 <button 
-                  onClick={() => onSelectCategory('signage')}
+                  onClick={() => onOpenCategoriesPage ? onOpenCategoriesPage('signages') : onSelectCategory('signages')}
                   className="hover:text-amber-400 transition-colors text-left"
                 >
                   3D Acrylic Reception Signage
@@ -218,7 +224,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategory, onOpenAdmin, o
               </li>
               <li>
                 <button 
-                  onClick={() => onSelectCategory('apparels')}
+                  onClick={() => onOpenCategoriesPage ? onOpenCategoriesPage('custom_apparels_caps') : onSelectCategory('custom_apparels_caps')}
                   className="hover:text-amber-400 transition-colors text-left"
                 >
                   Embroidered Corporate Staff Polos
@@ -226,7 +232,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategory, onOpenAdmin, o
               </li>
               <li>
                 <button 
-                  onClick={() => onSelectCategory('gifts_souvenirs')}
+                  onClick={() => onOpenCategoriesPage ? onOpenCategoriesPage('gift_items_souvenirs') : onSelectCategory('gift_items_souvenirs')}
                   className="hover:text-amber-400 transition-colors text-left"
                 >
                   Debossed Executive Leather Journals

@@ -67,7 +67,7 @@ export const GlassBottomDock: React.FC<GlassBottomDockProps> = ({
         {/* Vertical Frosted Glass Divider */}
         <div className="h-5 sm:h-6 w-[1px] bg-white/15 mx-0.5 xs:mx-1 shrink-0" />
 
-        {/* 3. Catalog Button (Gallery & Paintings Showcase) */}
+        {/* 3. Categories Button (Gallery & Print Categories Showcase) */}
         <button
           type="button"
           id="dock-catalog-btn"
@@ -77,13 +77,13 @@ export const GlassBottomDock: React.FC<GlassBottomDockProps> = ({
               ? 'bg-white/25 text-white shadow-inner'
               : 'text-stone-200 hover:text-white hover:bg-white/10'
           }`}
-          title="Explore Sample Paintings, Prints & Works Catalog"
+          title="Browse Print & Branding Categories"
         >
           <div className="relative">
             <Layers className="w-3.5 h-3.5 xs:w-4 xs:h-4 sm:w-4.5 sm:h-4.5 text-[#ebd07f] shrink-0" />
             <Sparkles className="w-2 xs:w-2.5 h-2 xs:h-2.5 text-amber-300 absolute -top-1 -right-1" />
           </div>
-          <span className="tracking-tight whitespace-nowrap">Catalog</span>
+          <span className="tracking-tight whitespace-nowrap">Categories</span>
         </button>
       </nav>
     </aside>

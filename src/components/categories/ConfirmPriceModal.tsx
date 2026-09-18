@@ -1,0 +1,225 @@
+import React, { useState } from 'react';
+import { MessageCircle, Phone, CheckCircle2, ShieldCheck, Truck, X, Sparkles, Copy, Check } from 'lucide-react';
+import { Product } from '../../types/schema';
+
+interface ConfirmPriceModalProps {
+  product: Product | null;
+  isOpen: boolean;
+  onClose: () => void;
+  onOrderOnline?: (product: Product) => void;
+}
+
+export const ConfirmPriceModal: React.FC<ConfirmPriceModalProps> = ({
+  product,
+  isOpen,
+  onClose,
+  onOrderOnline,
+}) => {
+  const [quantity, setQuantity] = useState<number>(1);
+  const [deliveryLocation, setDeliveryLocation] = useState<string>('Lagos, Nigeria');
+  const [copied, setCopied] = useState(false);
+
+  if (!isOpen || !product) return null;
+
+  const unitPrice = product.basePriceNgn;
+  const estimatedTotal = unitPrice * quantity;
+  const formattedUnitPrice = new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN' }).format(unitPrice);
+  const formattedTotal = new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN' }).format(estimatedTotal);
+
+  const whatsappMessage = `Hello Silver & Gold Inkshine Ltd, I would like to confirm price and place an order for:
+*${product.name}*
+SKU: ${product.sku || 'INK-NG'}
+Quantity: ${quantity} unit(s)
+Price Estimate: ${formattedTotal} (${formattedUnitPrice} each)
+Delivery Destination: ${deliveryLocation}
+
+Please confirm availability, production turnaround and artwork preflight check. Thank you!`;
+
+  const whatsappUrl = `https://wa.me/2347030372539?text=${encodeURIComponent(whatsappMessage)}`;
+
+  const handleCopy = () => {
+    navigator.clipboard?.writeText(whatsappMessage);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2500);
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200">
+      <div 
+        className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-stone-200 overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Top Header */}
+        <div className="flex items-center justify-between px-6 py-4 border-b border-stone-200 bg-stone-50">
+          <div className="flex items-center gap-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+            <h3 className="text-base font-bold text-stone-900">Confirm Price & Order Details</h3>
+          </div>
+          <button
+            onClick={onClose}
+            className="p-1.5 text-stone-400 hover:text-stone-700 hover:bg-stone-200 rounded-full transition-colors cursor-pointer"
+            aria-label="Close modal"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Modal Body */}
+        <div className="p-6 space-y-5 max-h-[80vh] overflow-y-auto">
+          {/* Product Mini Preview */}
+          <div className="flex gap-4 p-3 bg-stone-50 rounded-xl border border-stone-200">
+            <div className="w-20 h-20 rounded-lg overflow-hidden bg-white border border-stone-200 shrink-0">
+              <img 
+                src={product.image} 
+                alt={product.name}
+                className="w-full h-full object-cover" 
+              />
+            </div>
+            <div className="flex-1 min-w-0">
+              <h4 className="text-sm font-bold text-stone-900 leading-snug line-clamp-2">
+                {product.name}
+              </h4>
+              <p className="text-xs text-stone-500 mt-0.5">{product.categoryLabel || 'Commercial Print'}</p>
+              <div className="text-base font-extrabold text-stone-900 mt-1.5">
+                {formattedUnitPrice}
+                <span className="text-xs font-normal text-stone-500 ml-1">/ base unit</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Quantity & Location Inputs */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs font-bold text-stone-700 mb-1.5">
+                Required Quantity
+              </label>
+              <div className="flex items-center border border-stone-300 rounded-lg overflow-hidden bg-white">
+                <button
+                  type="button"
+                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                  className="px-3 py-2 bg-stone-100 hover:bg-stone-200 text-stone-700 font-bold text-sm transition-colors"
+                >
+                  -
+                </button>
+                <input
+                  type="number"
+                  min="1"
+                  value={quantity}
+                  onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
+                  className="w-full text-center py-2 text-sm font-bold text-stone-900 focus:outline-hidden"
+                />
+                <button
+                  type="button"
+                  onClick={() => setQuantity(quantity + 1)}
+                  className="px-3 py-2 bg-stone-100 hover:bg-stone-200 text-stone-700 font-bold text-sm transition-colors"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-stone-700 mb-1.5">
+                Delivery Destination
+              </label>
+              <select
+                value={deliveryLocation}
+                onChange={(e) => setDeliveryLocation(e.target.value)}
+                className="w-full py-2 px-3 border border-stone-300 rounded-lg text-xs font-semibold text-stone-800 bg-white focus:outline-hidden focus:border-amber-500"
+              >
+                <option value="Lagos, Nigeria (Doorstep)">Lagos (Doorstep Delivery)</option>
+                <option value="Abuja FCT (Doorstep / Express)">Abuja FCT</option>
+                <option value="Port Harcourt, Rivers State">Port Harcourt</option>
+                <option value="Bayelsa State (Yenagoa Office Pickup)">Bayelsa (Yenagoa)</option>
+                <option value="Ibadan, Oyo State">Ibadan</option>
+                <option value="Kano / Kaduna / North">Kano / Kaduna</option>
+                <option value="Enugu / Onitsha / East">Enugu / Onitsha</option>
+                <option value="Other Nationwide States">Other Nigerian State</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Total Cost Estimate Box */}
+          <div className="p-3.5 bg-emerald-50/80 rounded-xl border border-emerald-200 flex items-center justify-between">
+            <div>
+              <span className="text-xs font-bold text-emerald-900 block">Total Price Estimate ({quantity} unit{quantity > 1 ? 's' : ''})</span>
+              <span className="text-[11px] text-emerald-700">Official VAT-inclusive guide with nationwide logistics</span>
+            </div>
+            <div className="text-lg font-black text-emerald-800">
+              {formattedTotal}
+            </div>
+          </div>
+
+          {/* Guarantees */}
+          <div className="grid grid-cols-2 gap-2 text-[11px] text-stone-600">
+            <div className="flex items-center gap-1.5">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+              <span>Free Pre-press File Check</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <Truck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+              <span>Doorstep Delivery Across Nigeria</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+              <span>RC 1892044 Certified Press</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+              <span>Express Turnaround Available</span>
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="space-y-2.5 pt-2">
+            {/* Direct WhatsApp Confirm */}
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-[#22c55e] hover:bg-[#16a34a] text-white font-extrabold text-sm shadow-md shadow-emerald-500/25 transition-all cursor-pointer"
+            >
+              <MessageCircle className="w-4 h-4 fill-white stroke-none" />
+              <span>Confirm Price on WhatsApp (07030372539)</span>
+            </a>
+
+            <div className="flex items-center gap-2">
+              {/* Configure Online */}
+              {onOrderOnline && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    onClose();
+                    onOrderOnline(product);
+                  }}
+                  className="flex-1 py-2.5 px-3 rounded-xl bg-stone-900 hover:bg-stone-800 text-white font-bold text-xs transition-colors cursor-pointer text-center"
+                >
+                  Configure &amp; Customize Online
+                </button>
+              )}
+
+              {/* Call Direct */}
+              <a
+                href="tel:+2347030372539"
+                className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl border border-stone-300 hover:bg-stone-100 text-stone-800 font-bold text-xs transition-colors"
+              >
+                <Phone className="w-3.5 h-3.5" />
+                <span>Call Desk</span>
+              </a>
+
+              {/* Copy Inquiry Message */}
+              <button
+                type="button"
+                onClick={handleCopy}
+                className="p-2.5 rounded-xl border border-stone-300 hover:bg-stone-100 text-stone-700 transition-colors"
+                title="Copy inquiry message"
+              >
+                {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};

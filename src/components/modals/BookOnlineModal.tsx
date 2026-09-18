@@ -473,34 +473,29 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-2 xs:p-4 sm:p-5 bg-black/85 backdrop-blur-xl overflow-y-auto"
+      className="fixed inset-0 z-50 flex items-center justify-center p-2 xs:p-4 sm:p-5 bg-black/60 backdrop-blur-md overflow-y-auto"
       onClick={onClose}
     >
       <div 
-        className="relative w-full max-w-4xl max-h-[94vh] flex flex-col my-auto rounded-2xl sm:rounded-3xl bg-[#0b0c11] border border-[#dfbc5e]/35 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)] text-white overflow-hidden"
+        className="relative w-full max-w-4xl max-h-[94vh] flex flex-col my-auto rounded-2xl sm:rounded-3xl bg-white border border-stone-200 shadow-2xl text-stone-900 overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Glow ambient background accents */}
-        <div className="absolute -top-32 -right-32 w-80 h-80 bg-[#dfbc5e]/15 rounded-full blur-[100px] pointer-events-none" />
-        <div className="absolute -bottom-32 -left-32 w-80 h-80 bg-amber-600/10 rounded-full blur-[100px] pointer-events-none" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#d4af37]/5 rounded-full blur-[120px] pointer-events-none" />
-
         {/* Modal Top Bar */}
-        <div className="relative border-b border-white/10 px-5 sm:px-7 py-4 flex items-center justify-between bg-white/[0.02] shrink-0">
+        <div className="relative border-b border-stone-200 px-5 sm:px-7 py-4 flex items-center justify-between bg-stone-50/90 shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-[#dfbc5e]/15 border border-[#dfbc5e]/40 flex items-center justify-center text-[#dfbc5e]">
+            <div className="w-9 h-9 rounded-xl bg-amber-50 border border-amber-300/80 flex items-center justify-center text-amber-700 shadow-xs">
               <Printer className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="text-base sm:text-lg font-black tracking-tight text-white">
+                <h3 className="text-base sm:text-lg font-black tracking-tight text-stone-900">
                   Silver &amp; Gold Inkshine
                 </h3>
-                <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#dfbc5e]/15 text-[#dfbc5e] text-[10px] font-extrabold tracking-wider uppercase border border-[#dfbc5e]/30">
-                  <BadgeCheck className="w-3 h-3" /> RC 9350634
+                <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 text-[10px] font-extrabold tracking-wider uppercase border border-amber-300">
+                  <BadgeCheck className="w-3 h-3 text-amber-700" /> RC 9350634
                 </span>
               </div>
-              <p className="text-[11px] sm:text-xs text-stone-400">
+              <p className="text-[11px] sm:text-xs text-stone-500 font-medium">
                 Official Factory Production Reservation &bull; Swali, Yenagoa
               </p>
             </div>
@@ -509,7 +504,7 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="p-2 rounded-full bg-white/5 hover:bg-white/15 text-stone-300 hover:text-white transition-all active:scale-95 cursor-pointer"
+            className="p-2 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-600 hover:text-stone-900 transition-all active:scale-95 cursor-pointer"
             aria-label="Close booking modal"
           >
             <X className="w-5 h-5" />
@@ -519,32 +514,32 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
         {!isSubmitted ? (
           <div className="grid grid-cols-1 lg:grid-cols-12 overflow-y-auto flex-1">
             
-            {/* LEFT COLUMN: Confidence-Building Real-Time Live Job Ticket (Visible on lg, compact on mobile) */}
-            <div className="lg:col-span-5 bg-[#10121a]/80 border-b lg:border-b-0 lg:border-r border-white/10 p-5 sm:p-6 flex flex-col justify-between">
+            {/* LEFT COLUMN: Confidence-Building Real-Time Live Job Ticket */}
+            <div className="lg:col-span-5 bg-stone-50/90 border-b lg:border-b-0 lg:border-r border-stone-200 p-5 sm:p-6 flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#dfbc5e]/10 border border-[#dfbc5e]/30 text-[#dfbc5e] text-[11px] font-bold">
-                    <Sparkles className="w-3 h-3" />
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-100/80 border border-amber-300 text-amber-900 text-[11px] font-bold">
+                    <Sparkles className="w-3 h-3 text-amber-700" />
                     <span>Live Job Ticket Preview</span>
                   </div>
-                  <span className="text-[11px] font-mono text-stone-400">
+                  <span className="text-[11px] font-mono font-semibold text-stone-500">
                     STATUS: DRAFTING
                   </span>
                 </div>
 
                 {/* Ticket Card Container */}
-                <div className="rounded-2xl bg-[#161822] border border-[#dfbc5e]/25 p-4 space-y-3.5 shadow-inner">
+                <div className="rounded-2xl bg-white border border-amber-200/90 p-4 space-y-3.5 shadow-sm">
                   {/* Ticket Header */}
-                  <div className="border-b border-white/10 pb-3">
+                  <div className="border-b border-stone-200 pb-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-[10px] uppercase tracking-widest text-[#dfbc5e] font-bold">
+                      <span className="text-[10px] uppercase tracking-widest text-amber-700 font-black">
                         Job Ticket
                       </span>
-                      <span className="text-[11px] font-mono font-bold text-white/90">
+                      <span className="text-[11px] font-mono font-bold text-stone-700">
                         SG-RESERVE
                       </span>
                     </div>
-                    <h4 className="text-sm font-bold text-white mt-1 line-clamp-2">
+                    <h4 className="text-sm font-bold text-stone-900 mt-1 line-clamp-2">
                       {service || 'Select or enter your service'}
                     </h4>
                   </div>
@@ -552,38 +547,38 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
                   {/* Dynamic Ticket Attributes */}
                   <div className="space-y-2 text-xs">
                     <div className="flex justify-between items-center">
-                      <span className="text-stone-400">Quantity</span>
-                      <span className="font-semibold text-white">
+                      <span className="text-stone-500 font-medium">Quantity</span>
+                      <span className="font-semibold text-stone-900">
                         {quantity || 1} {Number(quantity) > 1 ? 'copies / units' : 'copy / unit'}
                       </span>
                     </div>
 
                     <div className="flex justify-between items-center">
-                      <span className="text-stone-400">Dimensions</span>
-                      <span className="font-semibold text-white truncate max-w-[140px]">
+                      <span className="text-stone-500 font-medium">Dimensions</span>
+                      <span className="font-semibold text-stone-900 truncate max-w-[140px]">
                         {dimensions || 'Standard Factory Spec'}
                       </span>
                     </div>
 
                     <div className="flex justify-between items-center">
-                      <span className="text-stone-400">Speed</span>
-                      <span className="font-bold text-amber-400 flex items-center gap-1">
-                        {urgency === '24hr' && <Zap className="w-3 h-3 text-[#dfbc5e]" />}
+                      <span className="text-stone-500 font-medium">Speed</span>
+                      <span className="font-bold text-amber-800 flex items-center gap-1">
+                        {urgency === '24hr' && <Zap className="w-3 h-3 text-amber-600" />}
                         {urgency === '24hr' ? '⚡ 24hr Express' : urgency === 'standard' ? 'Standard 2-3 Days' : 'Project Schedule'}
                       </span>
                     </div>
 
                     <div className="flex justify-between items-center">
-                      <span className="text-stone-400">Estimated Ready</span>
-                      <span className="font-semibold text-emerald-400">
+                      <span className="text-stone-500 font-medium">Estimated Ready</span>
+                      <span className="font-semibold text-emerald-700">
                         {getEstimatedCompletion()}
                       </span>
                     </div>
 
                     {fullName && (
-                      <div className="flex justify-between items-center pt-1 border-t border-white/5">
-                        <span className="text-stone-400">Client</span>
-                        <span className="font-semibold text-white truncate max-w-[140px]">
+                      <div className="flex justify-between items-center pt-1 border-t border-stone-100">
+                        <span className="text-stone-500 font-medium">Client</span>
+                        <span className="font-semibold text-stone-900 truncate max-w-[140px]">
                           {fullName}
                         </span>
                       </div>
@@ -592,43 +587,43 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
                 </div>
 
                 {/* Trust Guarantee Badges */}
-                <div className="mt-4 space-y-2 text-xs text-stone-300">
-                  <div className="flex items-center gap-2 text-[11px] text-stone-300">
-                    <ShieldCheck className="w-4 h-4 text-[#dfbc5e] shrink-0" />
+                <div className="mt-4 space-y-2 text-xs text-stone-600">
+                  <div className="flex items-center gap-2 text-[11px]">
+                    <ShieldCheck className="w-4 h-4 text-amber-600 shrink-0" />
                     <span>Direct Factory Price &bull; No middleman markups</span>
                   </div>
-                  <div className="flex items-center gap-2 text-[11px] text-stone-300">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <div className="flex items-center gap-2 text-[11px]">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                     <span>Free Proof Review via WhatsApp before printing</span>
                   </div>
-                  <div className="flex items-center gap-2 text-[11px] text-stone-300">
-                    <Clock className="w-4 h-4 text-[#dfbc5e] shrink-0" />
+                  <div className="flex items-center gap-2 text-[11px]">
+                    <Clock className="w-4 h-4 text-amber-600 shrink-0" />
                     <span>24/7 Production line ready for urgent rush orders</span>
                   </div>
                 </div>
               </div>
 
               {/* Assistance Callout */}
-              <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-[11px] text-stone-400">
-                <span className="flex items-center gap-1">
-                  <Building2 className="w-3.5 h-3.5 text-[#dfbc5e]" /> Swali Workshop
+              <div className="mt-4 pt-3 border-t border-stone-200 flex items-center justify-between text-[11px] text-stone-500">
+                <span className="flex items-center gap-1 font-medium text-stone-700">
+                  <Building2 className="w-3.5 h-3.5 text-amber-600" /> Swali Workshop
                 </span>
-                <span className="font-mono text-stone-300">
+                <span className="font-mono font-semibold text-stone-800">
                   +234 703 037 2539
                 </span>
               </div>
             </div>
 
             {/* RIGHT COLUMN: Easy-to-use Form with Clear Visual Hierarchy */}
-            <div className="lg:col-span-7 p-5 sm:p-7 flex flex-col justify-between">
+            <div className="lg:col-span-7 bg-white p-5 sm:p-7 flex flex-col justify-between">
               
-              {/* Step indicator on mobile/tablet */}
+              {/* Step indicator */}
               <div className="flex items-center justify-between mb-5">
                 <div>
-                  <h3 className="text-lg sm:text-xl font-black text-white">
+                  <h3 className="text-lg sm:text-xl font-black text-stone-900">
                     {currentStep === 1 ? '1. What Are We Printing?' : '2. Contact & Confirm'}
                   </h3>
-                  <p className="text-xs text-stone-400 mt-0.5">
+                  <p className="text-xs text-stone-500 mt-0.5">
                     {currentStep === 1 
                       ? 'Select or type your exact project requirements below' 
                       : 'Provide your WhatsApp details so we can dispatch your job ticket'}
@@ -636,14 +631,14 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
                 </div>
 
                 {/* Step Pill Switcher */}
-                <div className="flex items-center gap-1.5 p-1 rounded-xl bg-white/5 border border-white/10">
+                <div className="flex items-center gap-1.5 p-1 rounded-xl bg-stone-100 border border-stone-200">
                   <button
                     type="button"
                     onClick={() => setCurrentStep(1)}
                     className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                       currentStep === 1 
-                        ? 'bg-[#dfbc5e] text-black shadow-sm' 
-                        : 'text-stone-400 hover:text-white'
+                        ? 'bg-amber-400 text-stone-950 shadow-xs' 
+                        : 'text-stone-600 hover:text-stone-900'
                     }`}
                   >
                     Specs
@@ -655,8 +650,8 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
                     }}
                     className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                       currentStep === 2 
-                        ? 'bg-[#dfbc5e] text-black shadow-sm' 
-                        : 'text-stone-400 hover:text-white'
+                        ? 'bg-amber-400 text-stone-950 shadow-xs' 
+                        : 'text-stone-600 hover:text-stone-900'
                     }`}
                   >
                     Contact
@@ -671,10 +666,10 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
                     {/* Service / Item Input */}
                     <div>
                       <div className="flex items-center justify-between mb-1.5">
-                        <label htmlFor="service-custom-input" className="block text-xs font-bold text-stone-200 uppercase tracking-wide">
+                        <label htmlFor="service-custom-input" className="block text-xs font-bold text-stone-800 uppercase tracking-wide">
                           Service or Print Item *
                         </label>
-                        <span className="text-[11px] text-[#dfbc5e] flex items-center gap-1 font-medium">
+                        <span className="text-[11px] text-amber-700 flex items-center gap-1 font-semibold">
                           <Edit3 className="w-3 h-3" /> Fully Editable
                         </span>
                       </div>
@@ -688,7 +683,7 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
                           value={service}
                           onChange={(e) => setService(e.target.value)}
                           placeholder="e.g. 3D Backlight Signage, Custom Oil Canvas Painting, Flex Banners..."
-                          className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/20 text-white text-sm focus:outline-hidden focus:border-[#dfbc5e] focus:ring-2 focus:ring-[#dfbc5e]/20 transition-all font-medium placeholder:text-stone-500"
+                          className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-300 text-stone-900 text-sm focus:outline-hidden focus:bg-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 transition-all font-medium placeholder:text-stone-400"
                           required
                         />
                         <datalist id="services-datalist">
@@ -700,8 +695,8 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
 
                       {/* Quick-Pick Tags */}
                       <div className="mt-2 flex flex-wrap items-center gap-1.5">
-                        <span className="text-[10px] text-stone-400 font-semibold flex items-center gap-1">
-                          <Layers className="w-2.5 h-2.5 text-[#dfbc5e]" /> Quick Picks:
+                        <span className="text-[10px] text-stone-500 font-semibold flex items-center gap-1">
+                          <Layers className="w-2.5 h-2.5 text-amber-600" /> Quick Picks:
                         </span>
                         {QUICK_SUGGESTIONS.map((suggestion) => (
                           <button
@@ -710,8 +705,8 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
                             onClick={() => setService(suggestion)}
                             className={`px-2.5 py-1 rounded-lg text-xs transition-all cursor-pointer ${
                               service === suggestion
-                                ? 'bg-[#dfbc5e] text-black font-extrabold shadow-sm'
-                                : 'bg-white/10 hover:bg-white/20 text-stone-300'
+                                ? 'bg-amber-400 text-stone-950 font-bold border border-amber-500 shadow-xs'
+                                : 'bg-stone-100 hover:bg-stone-200 text-stone-700 border border-stone-200'
                             }`}
                           >
                             {suggestion}
@@ -722,7 +717,7 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
 
                     {/* Urgency & Timeline Selection */}
                     <div>
-                      <label className="block text-xs font-bold text-stone-200 uppercase tracking-wide mb-1.5">
+                      <label className="block text-xs font-bold text-stone-800 uppercase tracking-wide mb-1.5">
                         Production Turnaround Speed
                       </label>
                       <div className="grid grid-cols-3 gap-2">
@@ -731,14 +726,14 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
                           onClick={() => setUrgency('24hr')}
                           className={`p-2.5 rounded-xl border text-xs font-bold transition-all text-center flex flex-col items-center justify-center cursor-pointer ${
                             urgency === '24hr'
-                              ? 'border-[#dfbc5e] bg-[#dfbc5e]/20 text-[#ebd07f] shadow-md shadow-[#dfbc5e]/15 ring-1 ring-[#dfbc5e]'
-                              : 'border-white/10 bg-white/5 text-stone-300 hover:border-white/20'
+                              ? 'border-amber-500 bg-amber-50 text-amber-950 shadow-xs ring-1 ring-amber-500'
+                              : 'border-stone-200 bg-stone-50 text-stone-700 hover:border-stone-300 hover:bg-stone-100'
                           }`}
                         >
-                          <span className="flex items-center gap-1 text-sm font-extrabold">
-                            <Zap className="w-3.5 h-3.5 text-[#dfbc5e]" /> 24hr Express
+                          <span className="flex items-center gap-1 text-sm font-extrabold text-amber-900">
+                            <Zap className="w-3.5 h-3.5 text-amber-600" /> 24hr Express
                           </span>
-                          <span className="text-[10px] text-stone-300 font-normal mt-0.5">Priority Press</span>
+                          <span className="text-[10px] text-stone-500 font-normal mt-0.5">Priority Press</span>
                         </button>
 
                         <button
@@ -746,12 +741,12 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
                           onClick={() => setUrgency('standard')}
                           className={`p-2.5 rounded-xl border text-xs font-bold transition-all text-center flex flex-col items-center justify-center cursor-pointer ${
                             urgency === 'standard'
-                              ? 'border-[#dfbc5e] bg-[#dfbc5e]/20 text-[#ebd07f] shadow-md shadow-[#dfbc5e]/15 ring-1 ring-[#dfbc5e]'
-                              : 'border-white/10 bg-white/5 text-stone-300 hover:border-white/20'
+                              ? 'border-amber-500 bg-amber-50 text-amber-950 shadow-xs ring-1 ring-amber-500'
+                              : 'border-stone-200 bg-stone-50 text-stone-700 hover:border-stone-300 hover:bg-stone-100'
                           }`}
                         >
-                          <span className="text-sm font-extrabold">2 - 3 Days</span>
-                          <span className="text-[10px] text-stone-300 font-normal mt-0.5">Standard Factory</span>
+                          <span className="text-sm font-extrabold text-stone-900">2 - 3 Days</span>
+                          <span className="text-[10px] text-stone-500 font-normal mt-0.5">Standard Factory</span>
                         </button>
 
                         <button
@@ -759,12 +754,12 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
                           onClick={() => setUrgency('flexible')}
                           className={`p-2.5 rounded-xl border text-xs font-bold transition-all text-center flex flex-col items-center justify-center cursor-pointer ${
                             urgency === 'flexible'
-                              ? 'border-[#dfbc5e] bg-[#dfbc5e]/20 text-[#ebd07f] shadow-md shadow-[#dfbc5e]/15 ring-1 ring-[#dfbc5e]'
-                              : 'border-white/10 bg-white/5 text-stone-300 hover:border-white/20'
+                              ? 'border-amber-500 bg-amber-50 text-amber-950 shadow-xs ring-1 ring-amber-500'
+                              : 'border-stone-200 bg-stone-50 text-stone-700 hover:border-stone-300 hover:bg-stone-100'
                           }`}
                         >
-                          <span className="text-sm font-extrabold">Bulk Project</span>
-                          <span className="text-[10px] text-stone-300 font-normal mt-0.5">Custom Timeline</span>
+                          <span className="text-sm font-extrabold text-stone-900">Bulk Project</span>
+                          <span className="text-[10px] text-stone-500 font-normal mt-0.5">Custom Timeline</span>
                         </button>
                       </div>
                     </div>
@@ -772,14 +767,14 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
                     {/* Quantity & Dimensions */}
                     <div className="grid grid-cols-2 gap-3">
                       <div>
-                        <label className="block text-xs font-bold text-stone-200 uppercase tracking-wide mb-1">
+                        <label className="block text-xs font-bold text-stone-800 uppercase tracking-wide mb-1">
                           Quantity / Copies *
                         </label>
                         <div className="flex items-center">
                           <button
                             type="button"
                             onClick={() => setQuantity(Math.max(1, Number(quantity || 1) - 1).toString())}
-                            className="px-3 py-2.5 rounded-l-xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm border border-r-0 border-white/20 active:scale-95"
+                            className="px-3 py-2.5 rounded-l-xl bg-stone-100 hover:bg-stone-200 text-stone-800 font-bold text-sm border border-r-0 border-stone-300 active:scale-95"
                           >
                             -
                           </button>
@@ -788,13 +783,13 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
                             min="1"
                             value={quantity}
                             onChange={(e) => setQuantity(e.target.value)}
-                            className="w-full py-2.5 text-center bg-white/5 border-y border-white/20 text-white text-sm font-bold focus:outline-hidden focus:border-[#dfbc5e]"
+                            className="w-full py-2.5 text-center bg-white border-y border-stone-300 text-stone-900 text-sm font-bold focus:outline-hidden focus:border-amber-500"
                             required
                           />
                           <button
                             type="button"
                             onClick={() => setQuantity((Number(quantity || 1) + 1).toString())}
-                            className="px-3 py-2.5 rounded-r-xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm border border-l-0 border-white/20 active:scale-95"
+                            className="px-3 py-2.5 rounded-r-xl bg-stone-100 hover:bg-stone-200 text-stone-800 font-bold text-sm border border-l-0 border-stone-300 active:scale-95"
                           >
                             +
                           </button>
@@ -802,7 +797,7 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
                       </div>
 
                       <div>
-                        <label className="block text-xs font-bold text-stone-200 uppercase tracking-wide mb-1">
+                        <label className="block text-xs font-bold text-stone-800 uppercase tracking-wide mb-1">
                           Dimensions / Specs
                         </label>
                         <input
@@ -810,7 +805,7 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
                           placeholder="e.g. 5x7 ft, A4, 33x81 in"
                           value={dimensions}
                           onChange={(e) => setDimensions(e.target.value)}
-                          className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/20 text-white text-sm focus:outline-hidden focus:border-[#dfbc5e]"
+                          className="w-full px-3.5 py-2.5 rounded-xl bg-stone-50 border border-stone-300 text-stone-900 text-sm focus:outline-hidden focus:bg-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20"
                         />
                       </div>
                     </div>
@@ -823,7 +818,7 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
                           if (!service.trim()) return;
                           setCurrentStep(2);
                         }}
-                        className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-[#d4af37] via-[#e5c158] to-[#b8860b] hover:from-[#e5c158] hover:to-[#d4af37] active:scale-98 text-black font-black text-sm tracking-wide shadow-lg shadow-[#d4af37]/25 flex items-center justify-center gap-2 cursor-pointer transition-all"
+                        className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:from-amber-500 hover:to-amber-600 active:scale-98 text-stone-950 font-black text-sm tracking-wide shadow-md shadow-amber-500/20 flex items-center justify-center gap-2 cursor-pointer transition-all"
                       >
                         <span>Continue to Contact &amp; Dispatch</span>
                         <ArrowRight className="w-4 h-4 stroke-[2.5]" />
@@ -835,7 +830,7 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
                   <div className="space-y-4 animate-in fade-in duration-200">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <div>
-                        <label className="block text-xs font-bold text-stone-200 uppercase tracking-wide mb-1">
+                        <label className="block text-xs font-bold text-stone-800 uppercase tracking-wide mb-1">
                           Your Full Name *
                         </label>
                         <div className="relative">
@@ -845,24 +840,24 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
                             placeholder="e.g. Praise Brown"
                             value={fullName}
                             onChange={(e) => setFullName(e.target.value)}
-                            className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-white/5 border border-white/20 text-white text-sm focus:outline-hidden focus:border-[#dfbc5e]"
+                            className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-stone-50 border border-stone-300 text-stone-900 text-sm focus:outline-hidden focus:bg-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20"
                             required
                           />
                         </div>
                       </div>
 
                       <div>
-                        <label className="block text-xs font-bold text-stone-200 uppercase tracking-wide mb-1">
+                        <label className="block text-xs font-bold text-stone-800 uppercase tracking-wide mb-1">
                           WhatsApp Phone *
                         </label>
                         <div className="relative">
-                          <Phone className="w-4 h-4 text-[#dfbc5e] absolute left-3.5 top-1/2 -translate-y-1/2" />
+                          <Phone className="w-4 h-4 text-amber-600 absolute left-3.5 top-1/2 -translate-y-1/2" />
                           <input
                             type="tel"
                             placeholder="080 1234 5678"
                             value={phone}
                             onChange={(e) => setPhone(e.target.value)}
-                            className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-white/5 border border-white/20 text-white text-sm focus:outline-hidden focus:border-[#dfbc5e]"
+                            className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-stone-50 border border-stone-300 text-stone-900 text-sm focus:outline-hidden focus:bg-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20"
                             required
                           />
                         </div>
@@ -871,7 +866,7 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
 
                     {/* Delivery / Workshop Pickup */}
                     <div>
-                      <label className="block text-xs font-bold text-stone-200 uppercase tracking-wide mb-1">
+                      <label className="block text-xs font-bold text-stone-800 uppercase tracking-wide mb-1">
                         Delivery City / Pickup Location
                       </label>
                       <div className="relative">
@@ -881,14 +876,14 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
                           value={location}
                           onChange={(e) => setLocation(e.target.value)}
                           placeholder="e.g. Swali, Yenagoa, Bayelsa State"
-                          className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-white/5 border border-white/20 text-white text-sm focus:outline-hidden focus:border-[#dfbc5e]"
+                          className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-stone-50 border border-stone-300 text-stone-900 text-sm focus:outline-hidden focus:bg-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20"
                         />
                       </div>
                     </div>
 
                     {/* Artwork & Finishing Notes */}
                     <div>
-                      <label className="block text-xs font-bold text-stone-200 uppercase tracking-wide mb-1">
+                      <label className="block text-xs font-bold text-stone-800 uppercase tracking-wide mb-1">
                         Artwork &amp; Finishing Instructions (Optional)
                       </label>
                       <div className="relative">
@@ -898,7 +893,7 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
                           placeholder="Mention custom colors, eyelets, gloss/matte lamination, or if you already have artwork ready..."
                           value={notes}
                           onChange={(e) => setNotes(e.target.value)}
-                          className="w-full pl-10 pr-3.5 py-2 rounded-xl bg-white/5 border border-white/20 text-white text-xs sm:text-sm focus:outline-hidden focus:border-[#dfbc5e] resize-none"
+                          className="w-full pl-10 pr-3.5 py-2 rounded-xl bg-stone-50 border border-stone-300 text-stone-900 text-xs sm:text-sm focus:outline-hidden focus:bg-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 resize-none"
                         />
                       </div>
                     </div>
@@ -909,16 +904,16 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
                         type="submit"
                         id="submit-online-booking-btn"
                         disabled={isGeneratingSlip || !fullName.trim() || !phone.trim()}
-                        className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-[#d4af37] via-[#e5c158] to-[#b8860b] hover:from-[#e5c158] hover:to-[#d4af37] active:scale-98 text-black font-black text-sm tracking-wide shadow-xl shadow-[#d4af37]/30 flex items-center justify-center gap-2 cursor-pointer transition-all disabled:opacity-50"
+                        className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:from-amber-500 hover:to-amber-600 active:scale-98 text-stone-950 font-black text-sm tracking-wide shadow-lg shadow-amber-500/20 flex items-center justify-center gap-2 cursor-pointer transition-all disabled:opacity-50"
                       >
                         {isGeneratingSlip ? (
                           <>
-                            <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
+                            <div className="w-4 h-4 border-2 border-stone-950 border-t-transparent rounded-full animate-spin" />
                             <span>Formatting Order Slip &amp; Opening WhatsApp...</span>
                           </>
                         ) : (
                           <>
-                            <Sparkles className="w-4 h-4 fill-black" />
+                            <Sparkles className="w-4 h-4 fill-stone-950" />
                             <span>Confirm &amp; Reserve Production Slot</span>
                           </>
                         )}
@@ -927,14 +922,14 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
                       <button
                         type="button"
                         onClick={() => setCurrentStep(1)}
-                        className="w-full py-2 text-xs text-stone-400 hover:text-white flex items-center justify-center gap-1 cursor-pointer transition-colors"
+                        className="w-full py-2 text-xs text-stone-600 hover:text-stone-900 flex items-center justify-center gap-1 cursor-pointer transition-colors"
                       >
                         <ArrowLeft className="w-3.5 h-3.5" /> Back to Specs
                       </button>
                     </div>
 
-                    <div className="flex items-center justify-center gap-1.5 text-[11px] text-stone-400 text-center">
-                      <ShieldCheck className="w-3.5 h-3.5 text-[#dfbc5e]" />
+                    <div className="flex items-center justify-center gap-1.5 text-[11px] text-stone-500 text-center">
+                      <ShieldCheck className="w-3.5 h-3.5 text-amber-600" />
                       <span>Transfers all details directly to WhatsApp with digital order slip</span>
                     </div>
                   </div>
@@ -944,46 +939,46 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
           </div>
         ) : (
           /* Confirmation Screen: Order Placed with Digital Order Slip Image */
-          <div className="p-6 sm:p-8 space-y-5 max-h-[85vh] overflow-y-auto">
+          <div className="p-6 sm:p-8 space-y-5 max-h-[85vh] overflow-y-auto bg-white">
             <div className="text-center">
-              <div className="w-16 h-16 rounded-full bg-[#25D366]/20 border border-[#25D366] flex items-center justify-center mx-auto text-[#25D366] shadow-lg shadow-green-950/40">
+              <div className="w-16 h-16 rounded-full bg-emerald-100 border border-emerald-300 flex items-center justify-center mx-auto text-emerald-600 shadow-md shadow-emerald-500/10">
                 <CheckCircle2 className="w-9 h-9" />
               </div>
 
               <div className="mt-3">
-                <span className="px-3.5 py-1 rounded-full bg-[#dfbc5e]/20 border border-[#dfbc5e]/40 text-xs font-mono font-bold text-[#dfbc5e] uppercase tracking-wider">
+                <span className="px-3.5 py-1 rounded-full bg-amber-100 border border-amber-300 text-xs font-mono font-bold text-amber-900 uppercase tracking-wider">
                   Booking Ref: {bookingRef}
                 </span>
-                <h3 className="text-2xl sm:text-3xl font-black text-white mt-2">
+                <h3 className="text-2xl sm:text-3xl font-black text-stone-900 mt-2">
                   Order Placed &amp; Dispatched!
                 </h3>
-                <p className="text-stone-300 text-xs sm:text-sm max-w-md mx-auto mt-1.5">
-                  We have picked up all details and opened WhatsApp. Your official <span className="text-[#dfbc5e] font-bold">Production Job Slip</span> has been generated below.
+                <p className="text-stone-600 text-xs sm:text-sm max-w-md mx-auto mt-1.5 font-medium">
+                  We have picked up all details and opened WhatsApp. Your official <span className="text-amber-800 font-bold">Production Job Slip</span> has been generated below.
                 </p>
               </div>
             </div>
 
             {/* Generated Order Slip Image Card */}
             {orderImageUrl && (
-              <div className="rounded-2xl border border-[#dfbc5e]/40 bg-[#12141f] p-4 text-center space-y-3 shadow-2xl max-w-xl mx-auto">
+              <div className="rounded-2xl border border-stone-200 bg-stone-50 p-4 text-center space-y-3 shadow-md max-w-xl mx-auto">
                 <div className="flex items-center justify-between px-1">
-                  <div className="flex items-center gap-1.5 text-xs text-[#dfbc5e] font-bold">
-                    <Sparkles className="w-3.5 h-3.5" />
+                  <div className="flex items-center gap-1.5 text-xs text-amber-800 font-bold">
+                    <Sparkles className="w-3.5 h-3.5 text-amber-600" />
                     <span>Official Production Job Slip (PNG)</span>
                   </div>
                   {copiedImage && (
-                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[11px] font-bold">
+                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold border border-emerald-200">
                       <Check className="w-3.5 h-3.5" /> Copied to Clipboard!
                     </span>
                   )}
                 </div>
 
                 {/* High-definition Image Preview */}
-                <div className="relative rounded-xl overflow-hidden border border-white/10 max-h-72 sm:max-h-80 bg-black/80 flex items-center justify-center p-2">
+                <div className="relative rounded-xl overflow-hidden border border-stone-200 max-h-72 sm:max-h-80 bg-stone-100 flex items-center justify-center p-2">
                   <img 
                     src={orderImageUrl} 
                     alt={`Order Slip ${bookingRef}`} 
-                    className="w-full h-auto object-contain max-h-72 sm:max-h-80 rounded-lg shadow-md"
+                    className="w-full h-auto object-contain max-h-72 sm:max-h-80 rounded-lg shadow-sm"
                   />
                 </div>
 
@@ -992,25 +987,25 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
                   <button
                     type="button"
                     onClick={handleDownloadImage}
-                    className="py-2.5 px-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                    className="py-2.5 px-3 rounded-xl bg-white hover:bg-stone-100 text-stone-800 font-bold text-xs flex items-center justify-center gap-1.5 transition-colors border border-stone-200 shadow-xs cursor-pointer"
                   >
-                    <Download className="w-3.5 h-3.5 text-[#dfbc5e]" />
+                    <Download className="w-3.5 h-3.5 text-amber-600" />
                     <span>Download Image</span>
                   </button>
 
                   <button
                     type="button"
                     onClick={handleCopyImageToClipboard}
-                    className="py-2.5 px-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                    className="py-2.5 px-3 rounded-xl bg-white hover:bg-stone-100 text-stone-800 font-bold text-xs flex items-center justify-center gap-1.5 transition-colors border border-stone-200 shadow-xs cursor-pointer"
                   >
                     {copiedImage ? (
                       <>
-                        <Check className="w-3.5 h-3.5 text-emerald-400" />
-                        <span className="text-emerald-400">Copied to Clipboard!</span>
+                        <Check className="w-3.5 h-3.5 text-emerald-600" />
+                        <span className="text-emerald-700">Copied to Clipboard!</span>
                       </>
                     ) : (
                       <>
-                        <Copy className="w-3.5 h-3.5 text-[#dfbc5e]" />
+                        <Copy className="w-3.5 h-3.5 text-amber-600" />
                         <span>Copy Image (Ctrl+V)</span>
                       </>
                     )}
@@ -1021,9 +1016,9 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
                   <button
                     type="button"
                     onClick={handleShareSlipImage}
-                    className="w-full py-2.5 px-3 rounded-xl bg-[#dfbc5e]/20 hover:bg-[#dfbc5e]/30 border border-[#dfbc5e]/40 text-[#dfbc5e] font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                    className="w-full py-2.5 px-3 rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-300 text-amber-900 font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
                   >
-                    <Share2 className="w-3.5 h-3.5" />
+                    <Share2 className="w-3.5 h-3.5 text-amber-700" />
                     <span>Share Slip Image Directly to WhatsApp</span>
                   </button>
                 )}
@@ -1031,22 +1026,22 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
             )}
 
             {/* Structured Summary Recap */}
-            <div className="max-w-xl mx-auto p-4 rounded-2xl bg-white/5 border border-white/10 text-xs space-y-2 text-stone-300">
+            <div className="max-w-xl mx-auto p-4 rounded-2xl bg-stone-50 border border-stone-200 text-xs space-y-2 text-stone-700">
               <div className="flex justify-between">
-                <span className="text-stone-400">Print Item / Service:</span>
-                <span className="font-bold text-[#dfbc5e] text-right max-w-[240px] truncate">{service}</span>
+                <span className="text-stone-500 font-medium">Print Item / Service:</span>
+                <span className="font-bold text-amber-800 text-right max-w-[240px] truncate">{service}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-stone-400">Quantity &amp; Specs:</span>
-                <span className="font-semibold text-white">{quantity} units {dimensions ? `(${dimensions})` : ''}</span>
+                <span className="text-stone-500 font-medium">Quantity &amp; Specs:</span>
+                <span className="font-semibold text-stone-900">{quantity} units {dimensions ? `(${dimensions})` : ''}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-stone-400">Turnaround Speed:</span>
-                <span className="font-bold text-emerald-400">{urgency === '24hr' ? '⚡ 24hr Express' : 'Standard 2-3 Days'} ({getEstimatedCompletion()})</span>
+                <span className="text-stone-500 font-medium">Turnaround Speed:</span>
+                <span className="font-bold text-emerald-700">{urgency === '24hr' ? '⚡ 24hr Express' : 'Standard 2-3 Days'} ({getEstimatedCompletion()})</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-stone-400">Client Contact:</span>
-                <span className="font-semibold text-white">{fullName} &bull; {phone}</span>
+                <span className="text-stone-500 font-medium">Client Contact:</span>
+                <span className="font-semibold text-stone-900">{fullName} &bull; {phone}</span>
               </div>
             </div>
 
@@ -1055,7 +1050,7 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
               <button
                 type="button"
                 onClick={handleOpenWhatsAppAgain}
-                className="w-full py-3.5 px-4 rounded-xl bg-[#25D366] hover:bg-[#20ba59] active:scale-98 text-white font-black text-sm flex items-center justify-center gap-2 shadow-xl shadow-green-950/40 transition-all cursor-pointer"
+                className="w-full py-3.5 px-4 rounded-xl bg-[#25D366] hover:bg-[#20ba59] active:scale-98 text-white font-black text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/20 transition-all cursor-pointer"
               >
                 <Phone className="w-4 h-4 fill-white" />
                 <span>Re-open WhatsApp Chat With Order Details</span>
@@ -1065,7 +1060,7 @@ export const BookOnlineModal: React.FC<BookOnlineModalProps> = ({
               <button
                 type="button"
                 onClick={handleReset}
-                className="w-full py-2.5 px-4 rounded-xl bg-white/10 hover:bg-white/20 text-stone-300 hover:text-white font-medium text-xs transition-colors cursor-pointer"
+                className="w-full py-2.5 px-4 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 hover:text-stone-900 font-medium text-xs border border-stone-200 transition-colors cursor-pointer"
               >
                 Close &amp; Return to Storefront
               </button>

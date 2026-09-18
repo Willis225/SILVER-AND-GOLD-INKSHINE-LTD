@@ -29,6 +29,26 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
   // Helper to check if product matches a category filter
   const isProductInCategory = (prod: Product, catId: ProductCategory | 'all'): boolean => {
     if (catId === 'all') return true;
+    if (prod.categoryPlacement) {
+      if (prod.categoryPlacement === catId) return true;
+      if (catId === 'advertising_materials' && (prod.categoryPlacement === 'banners' || prod.categoryPlacement === 'advertising_materials')) return true;
+      if (catId === 'banners_stands' && prod.categoryPlacement === 'banners') return true;
+      if (catId === 'outdoor_displays' && prod.categoryPlacement === 'banners') return true;
+      if (catId === 'office_stationery' && prod.categoryPlacement === 'stationery') return true;
+      if (catId === 'cards_invitations' && prod.categoryPlacement === 'stationery') return true;
+      if (catId === 'flyers_handbills' && prod.categoryPlacement === 'flyers') return true;
+      if (catId === 'packaging_labels' && prod.categoryPlacement === 'packaging') return true;
+      if (catId === 'stickers_labels' && prod.categoryPlacement === 'packaging') return true;
+      if (catId === 'food_packaging' && prod.categoryPlacement === 'packaging') return true;
+      if (catId === 'packaging_shipping_cartons' && prod.categoryPlacement === 'packaging') return true;
+      if (catId === 'paper_bags_tags' && prod.categoryPlacement === 'packaging') return true;
+      if (catId === 'signages' && prod.categoryPlacement === 'signage') return true;
+      if (catId === 'events_exhibitions' && prod.categoryPlacement === 'events') return true;
+      if (catId === 'gift_items_souvenirs' && prod.categoryPlacement === 'gifts') return true;
+      if (catId === 'custom_apparels_caps' && prod.categoryPlacement === 'apparel') return true;
+      if (catId === 'company_uniforms' && prod.categoryPlacement === 'apparel') return true;
+      if (catId === 'awards' && prod.categoryPlacement === 'awards') return true;
+    }
     if (prod.category === catId) return true;
     if (catId === 'advertising_materials' && (prod.category === 'banners_displays' || prod.category === 'advertising_materials')) return true;
     if (catId === 'stickers_labels' && (prod.category === 'packaging_labels' || prod.category === 'stickers_labels')) return true;
@@ -71,7 +91,7 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
           <div>
             <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-600 mb-1">
               <Sparkles className="w-4 h-4" />
-              <span>Commercial Print Catalog</span>
+              <span>Browse Product Categories</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-black text-stone-900 tracking-tight">
               Featured Corporate Branding & Print Products

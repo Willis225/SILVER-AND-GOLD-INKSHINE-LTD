@@ -12,6 +12,7 @@ import {
   Check
 } from 'lucide-react';
 import { CLIENT_LOGOS, COMPLETED_JOBS } from '../../data/seedData';
+import { ENTERPRISE_BRANDS } from './TrustedLogosStrip';
 
 interface GoogleReviewItem {
   id: string;
@@ -198,25 +199,27 @@ export const SocialProofSection: React.FC = () => {
         {/* 1. Client Logos Strip */}
         <div className="space-y-6 text-center">
           <div>
-            <span className="text-[11px] font-bold uppercase tracking-widest text-stone-400">
+            <span className="text-xs sm:text-sm font-black uppercase tracking-wider sm:tracking-widest text-stone-700">
               TRUSTED BY NIGERIA&apos;S LEADING ENTERPRISES, FINTECHS &amp; INSTITUTIONS
             </span>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
-            {CLIENT_LOGOS.map((client, idx) => (
+          <div className="grid grid-cols-2 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 sm:gap-4">
+            {ENTERPRISE_BRANDS.map((brand) => (
               <div
-                key={idx}
-                className="bg-stone-50 hover:bg-stone-100 border border-stone-200/80 rounded-xl p-3 flex flex-col items-center justify-center text-center transition-colors group"
+                key={brand.id}
+                className="bg-white hover:bg-amber-50/30 border border-stone-200/90 hover:border-amber-400/50 rounded-2xl p-3.5 sm:p-4 flex flex-col items-center justify-between text-center transition-all shadow-2xs hover:shadow-sm group"
               >
-                <div className="h-8 w-8 rounded-lg bg-stone-200 text-stone-700 flex items-center justify-center font-bold text-xs group-hover:bg-amber-100 group-hover:text-amber-800 transition-colors">
-                  {client.name.substring(0, 2).toUpperCase()}
+                <div className="h-10 sm:h-12 w-full flex items-center justify-center px-1 transition-transform group-hover:scale-105 duration-200">
+                  {brand.renderLogo()}
                 </div>
-                <div className="text-[11px] font-bold text-stone-800 mt-2 truncate w-full">
-                  {client.name}
-                </div>
-                <div className="text-[9px] text-stone-500 truncate w-full">
-                  {client.badge}
+                <div className="w-full pt-2 mt-1 border-t border-stone-100 flex items-center justify-between gap-1 text-[10px]">
+                  <span className="font-bold text-stone-700 truncate text-left max-w-[85px] sm:max-w-[100px]">
+                    {brand.name}
+                  </span>
+                  <span className="shrink-0 px-1.5 py-0.5 rounded-md bg-stone-100 text-stone-600 font-semibold text-[9px] group-hover:bg-amber-100 group-hover:text-amber-900 transition-colors">
+                    {brand.badge}
+                  </span>
                 </div>
               </div>
             ))}

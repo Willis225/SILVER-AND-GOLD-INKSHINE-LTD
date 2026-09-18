@@ -24,15 +24,29 @@ import { CompanyInfoModal, InfoModalTab } from './components/common/CompanyInfoM
 import { GlassBottomDock } from './components/navigation/GlassBottomDock';
 import { BookOnlineModal } from './components/modals/BookOnlineModal';
 import { CatalogModal } from './components/modals/CatalogModal';
-import { ProductGrid } from './components/storefront/ProductGrid';
+import { CategoriesPage } from './components/categories/CategoriesPage';
 import { SAMPLE_PRODUCTS, NIGERIAN_SHIPPING_ZONES } from './data/seedData';
 import { INITIAL_ORDERS } from './data/seedOrders';
 import { Product, ProductCategory, Order, OrderStatus, PaymentStatus, calculateDynamicPrice } from './types/schema';
 import { SubmissionMode, DesignerBrief } from './components/product/ArtworkPreflightChecker';
 
 export default function App() {
-  // Global mutable catalog & orders state
-  const [products, setProducts] = useState<Product[]>(SAMPLE_PRODUCTS);
+  // Global mutable catalog & orders state with local storage persistence
+  const [products, setProducts] = useState<Product[]>(() => {
+    try {
+      const saved = localStorage.getItem('inkshine_products');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return parsed;
+        }
+      }
+    } catch (e) {
+      console.error('Error loading saved products:', e);
+    }
+    return SAMPLE_PRODUCTS;
+  });
+
   const [orders, setOrders] = useState<Order[]>(INITIAL_ORDERS);
 
   // Storefront navigation & state
@@ -68,18 +82,68 @@ export default function App() {
     setIsCompanyInfoOpen(true);
   };
 
-  // Glass Bottom Dock Modal States (Book Online, Info, Catalog)
+  // Glass Bottom Dock Modal States (Book Online, Info, Categories)
   const [isBookOnlineOpen, setIsBookOnlineOpen] = useState(false);
   const [isCatalogOpen, setIsCatalogOpen] = useState(false);
   const [bookOnlineService, setBookOnlineService] = useState('');
+  const [activeCategoryTag, setActiveCategoryTag] = useState<string>('all');
+
+  const [categoryPageInitialCategory, setCategoryPageInitialCategory] = useState<string>('all');
+
+  const handleOpenCategoriesPage = (categoryTag: string = 'all') => {
+    setCategoryPageInitialCategory(categoryTag);
+    setViewMode('categories');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleOpenCategories = (categoryTag: string = 'all') => {
+    handleOpenCategoriesPage(categoryTag);
+  };
 
   const handleOpenBookOnline = (service: string = '') => {
     setBookOnlineService(service);
     setIsBookOnlineOpen(true);
   };
 
-  // Mode toggle between Live Storefront, PDP, Checkout, Architecture Sandbox, and Admin Dashboard
-  const [viewMode, setViewMode] = useState<'storefront' | 'pdp' | 'checkout' | 'stage1_sandbox' | 'admin'>('storefront');
+  // Mode toggle between Live Storefront, Dedicated Categories Page, PDP, Checkout, Architecture Sandbox, and Admin Dashboard
+  const [viewMode, setViewMode] = useState<'storefront' | 'categories' | 'pdp' | 'checkout' | 'stage1_sandbox' | 'admin'>('storefront');
+
+  // Product Add / Update / Delete Handlers with LocalStorage Persistence
+  const handleAddProduct = (newProduct: Product) => {
+    setProducts((prev) => {
+      const next = [newProduct, ...prev];
+      try {
+        localStorage.setItem('inkshine_products', JSON.stringify(next));
+      } catch (e) {
+        console.error(e);
+      }
+      return next;
+    });
+  };
+
+  const handleDeleteProduct = (productId: string) => {
+    setProducts((prev) => {
+      const next = prev.filter((p) => p.id !== productId);
+      try {
+        localStorage.setItem('inkshine_products', JSON.stringify(next));
+      } catch (e) {
+        console.error(e);
+      }
+      return next;
+    });
+  };
+
+  const handleUpdateProduct = (productId: string, updates: Partial<Product>) => {
+    setProducts((prev) => {
+      const next = prev.map((p) => (p.id === productId ? { ...p, ...updates } : p));
+      try {
+        localStorage.setItem('inkshine_products', JSON.stringify(next));
+      } catch (e) {
+        console.error(e);
+      }
+      return next;
+    });
+  };
 
   // Order Management Handlers for Admin
   const handleUpdateOrderStatus = (orderId: string, newStatus: OrderStatus) => {
@@ -103,12 +167,6 @@ export default function App() {
   const handleUpdateProductionNotes = (orderId: string, notes: string) => {
     setOrders((prev) =>
       prev.map((ord) => (ord.id === orderId ? { ...ord, productionNotes: notes } : ord))
-    );
-  };
-
-  const handleUpdateProduct = (productId: string, updates: Partial<Product>) => {
-    setProducts((prev) =>
-      prev.map((p) => (p.id === productId ? { ...p, ...updates } : p))
     );
   };
 
@@ -167,16 +225,8 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const scrollToCatalog = () => {
-    if (viewMode !== 'storefront') {
-      setViewMode('storefront');
-    }
-    setTimeout(() => {
-      const catalogEl = document.getElementById('products-catalog-section');
-      if (catalogEl) {
-        catalogEl.scrollIntoView({ behavior: 'smooth' });
-      }
-    }, 100);
+  const scrollToCatalog = (cat: string = 'all') => {
+    handleOpenCategoriesPage(cat);
   };
 
   const handleOpenProductDetailPage = (product: Product) => {
@@ -221,12 +271,32 @@ export default function App() {
           }}
           onOpenInfoModal={handleOpenInfoModal}
           onOpenBookOnline={() => handleOpenBookOnline()}
-          onOpenCatalog={() => setIsCatalogOpen(true)}
+          onOpenCatalog={() => handleOpenCategoriesPage('all')}
+          onOpenCategoriesPage={handleOpenCategoriesPage}
         />
       )}
 
       {/* Main View Router */}
       <main className="flex-1 pb-24 md:pb-0">
+        {viewMode === 'categories' && (
+          <CategoriesPage
+            products={products}
+            initialCategory={categoryPageInitialCategory}
+            initialSearchQuery={searchQuery}
+            onNavigateHome={() => {
+              setViewMode('storefront');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onSelectProduct={(prod) => {
+              setActivePdpProduct(prod);
+              setViewMode('pdp');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onOpenCart={() => setIsCartOpen(true)}
+            cartCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
+          />
+        )}
+
         {viewMode === 'admin' && (
           <AdminDashboard
             orders={orders}
@@ -240,6 +310,8 @@ export default function App() {
             onUpdateTrackingNumber={handleUpdateTrackingNumber}
             onUpdateProductionNotes={handleUpdateProductionNotes}
             onUpdateProduct={handleUpdateProduct}
+            onAddProduct={handleAddProduct}
+            onDeleteProduct={handleDeleteProduct}
           />
         )}
 
@@ -291,57 +363,34 @@ export default function App() {
             {/* Top-Quality Printing Services Showcase Carousel (Matching Reference) */}
             <ServicesShowcaseSection
               onOrderNow={() => {
-                setIsCatalogOpen(true);
+                handleOpenCategories('all');
               }}
               onSelectItem={(item) => {
-                const prod = products.find((p) => p.id === item.id || p.category === item.category);
-                if (prod) {
-                  setQuickViewProduct(prod);
-                } else {
-                  setIsCatalogOpen(true);
-                }
+                handleOpenCategories(item.category || 'all');
               }}
-            />
-
-            {/* Commercial Print & Design Catalog Grid */}
-            <ProductGrid
-              products={products}
-              selectedCategory={selectedCategory}
-              onSelectCategory={setSelectedCategory}
-              searchQuery={searchQuery}
-              onOpenQuickView={(prod) => setQuickViewProduct(prod)}
             />
 
             {/* Business Stationery & Office Printing Carousel (Matching Reference) */}
             <BusinessStationerySection
-              onViewProducts={scrollToCatalog}
+              onViewProducts={() => handleOpenCategories('stationery')}
               onSelectItem={(item) => {
-                if (item.category) {
-                  setSelectedCategory(item.category as ProductCategory);
-                }
-                scrollToCatalog();
+                handleOpenCategories(item.category || 'stationery');
               }}
             />
 
             {/* Banners, Display Stands & Advertising Materials Carousel (Matching Reference) */}
             <BannersDisplayStandsSection
-              onViewProducts={scrollToCatalog}
+              onViewProducts={() => handleOpenCategories('banners')}
               onSelectItem={(item) => {
-                if (item.category) {
-                  setSelectedCategory(item.category as ProductCategory);
-                }
-                scrollToCatalog();
+                handleOpenCategories(item.category || 'banners');
               }}
             />
 
             {/* Branded Corporate Gifts & Promotional Items (Matching Reference) */}
             <BrandedGiftsSection
-              onViewProducts={scrollToCatalog}
+              onViewProducts={() => handleOpenCategories('gifts')}
               onSelectItem={(item) => {
-                if (item.category) {
-                  setSelectedCategory(item.category as ProductCategory);
-                }
-                scrollToCatalog();
+                handleOpenCategories(item.category || 'gifts');
               }}
             />
 
@@ -350,34 +399,25 @@ export default function App() {
 
             {/* Packaging, Labels & Stickers Printing Carousel (Matching Reference) */}
             <PackagingLabelsSection
-              onViewProducts={scrollToCatalog}
+              onViewProducts={() => handleOpenCategories('packaging')}
               onSelectItem={(item) => {
-                if (item.category) {
-                  setSelectedCategory(item.category as ProductCategory);
-                }
-                scrollToCatalog();
+                handleOpenCategories(item.category || 'packaging');
               }}
             />
 
             {/* Event, Exhibition and Activation Branding Materials (Matching Reference) */}
             <EventExhibitionSection
-              onViewProducts={scrollToCatalog}
+              onViewProducts={() => handleOpenCategories('events')}
               onSelectItem={(item) => {
-                if (item.category) {
-                  setSelectedCategory(item.category as ProductCategory);
-                }
-                scrollToCatalog();
+                handleOpenCategories(item.category || 'events');
               }}
             />
 
             {/* Signage Making Company in Lagos, Nigeria (Matching Reference) */}
             <SignageCompanySection
-              onViewProducts={scrollToCatalog}
+              onViewProducts={() => handleOpenCategories('signage')}
               onSelectItem={(item) => {
-                if (item.category) {
-                  setSelectedCategory(item.category as ProductCategory);
-                }
-                scrollToCatalog();
+                handleOpenCategories(item.category || 'signage');
               }}
             />
 
@@ -386,12 +426,9 @@ export default function App() {
 
             {/* Custom Award Plaques and Trophies Printing (Matching Reference) */}
             <CustomAwardsSection
-              onViewProducts={scrollToCatalog}
+              onViewProducts={() => handleOpenCategories('awards')}
               onSelectItem={(item) => {
-                if (item.category) {
-                  setSelectedCategory(item.category as ProductCategory);
-                }
-                scrollToCatalog();
+                handleOpenCategories(item.category || 'awards');
               }}
             />
 
@@ -406,14 +443,14 @@ export default function App() {
         <Footer
           onSelectCategory={(cat) => {
             setSelectedCategory(cat);
-            setViewMode('storefront');
-            scrollToCatalog();
+            handleOpenCategoriesPage(cat);
           }}
           onOpenAdmin={() => {
             setViewMode('admin');
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
           onOpenInfoModal={handleOpenInfoModal}
+          onOpenCategoriesPage={handleOpenCategoriesPage}
         />
       )}
 
@@ -443,8 +480,7 @@ export default function App() {
         initialTab={companyInfoTab}
         onSelectCategory={(cat) => {
           setSelectedCategory(cat);
-          setViewMode('storefront');
-          scrollToCatalog();
+          handleOpenCategoriesPage(cat);
         }}
       />
 
@@ -452,8 +488,8 @@ export default function App() {
       <GlassBottomDock
         onOpenBookOnline={() => handleOpenBookOnline()}
         onOpenInfo={() => handleOpenInfoModal('info')}
-        onOpenCatalog={() => setIsCatalogOpen(true)}
-        activeModal={isBookOnlineOpen ? 'book' : isCompanyInfoOpen ? 'info' : isCatalogOpen ? 'catalog' : null}
+        onOpenCatalog={() => handleOpenCategoriesPage('all')}
+        activeModal={viewMode === 'categories' ? 'catalog' : isBookOnlineOpen ? 'book' : isCompanyInfoOpen ? 'info' : isCatalogOpen ? 'catalog' : null}
       />
 
       {/* Book Online Modal */}
@@ -463,11 +499,12 @@ export default function App() {
         preselectedService={bookOnlineService}
       />
 
-      {/* Paintings, Artworks & Product Samples Catalog Modal */}
+      {/* Product Categories Modal */}
       <CatalogModal
         isOpen={isCatalogOpen}
         onClose={() => setIsCatalogOpen(false)}
         products={products}
+        initialCategory={activeCategoryTag}
         onSelectProduct={(prod) => {
           setIsCatalogOpen(false);
           setQuickViewProduct(prod);

@@ -1,19 +1,19 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { 
   X, 
   Search, 
   Sparkles, 
   Layers, 
   CheckCircle2, 
-  ArrowRight, 
   ExternalLink,
   Eye,
-  Filter,
   ShoppingBag,
   Clock,
-  ArrowDown
+  ArrowDown,
+  Filter
 } from 'lucide-react';
 import { Product } from '../../types/schema';
+import { STORE_CATEGORIES, getProductCategoryTag } from '../../utils/categoryUtils';
 
 interface CatalogModalProps {
   isOpen: boolean;
@@ -22,10 +22,11 @@ interface CatalogModalProps {
   onSelectProduct: (product: Product) => void;
   onBookSample: (sampleTitle: string) => void;
   onScrollToPageCatalog?: () => void;
+  initialCategory?: string;
 }
 
-// Unified catalog item representation supporting both product models and curated design artworks
-interface CatalogItem {
+// Unified representation supporting both dynamic products and curated display samples
+interface CategoryDisplayItem {
   id: string;
   title: string;
   category: string;
@@ -40,7 +41,7 @@ interface CatalogItem {
   product: Product;
 }
 
-// Curated design and architectural artwork samples from the Bayelsa production house
+// Curated reference pieces showcasing Inkshine's Nigerian print and fabrication capabilities
 const ARTWORK_SAMPLES = [
   {
     id: 'art-sample-1',
@@ -57,8 +58,8 @@ const ARTWORK_SAMPLES = [
   },
   {
     id: 'art-sample-2',
-    title: '3D Golden Backlit Stainless Steel Channel Lettering',
-    category: '3D Signboards & Backlight',
+    title: '3D Golden Backlit Stainless Steel Channel Lettering & Company Logo',
+    category: 'Signage & Company Logos',
     categoryTag: 'signage',
     imageUrl: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80',
     specs: 'Gold Titanium Steel, Samsung IP68 LED Modules, Acrylic Face',
@@ -70,12 +71,12 @@ const ARTWORK_SAMPLES = [
   },
   {
     id: 'art-sample-3',
-    title: 'Teardrop & Feather Flag Display Banner (Double-Sided)',
-    category: 'Banners & Flags',
+    title: 'Teardrop & Feather Outdoor Wind Advertising Flags',
+    category: 'Banners, Displays & Stands',
     categoryTag: 'banners',
-    imageUrl: 'https://images.unsplash.com/photo-1542744094-24638eff58bb?auto=format&fit=crop&w=800&q=80',
-    specs: '3.5m - 5m Aluminum Pole, Cross Base & Water Bag, Solite Fabric',
-    startingPriceNgn: 38000,
+    imageUrl: 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80',
+    specs: '3.5m Anodized Aluminum / Carbon Fiber Pole, Water-Fill Base',
+    startingPriceNgn: 70000,
     turnaround: '24hr Rush',
     badge: 'Outdoor Weatherproof',
     description: 'Weatherproof outdoor advertising flags built for coastal Bayelsa breezes and nationwide roadshows.',
@@ -84,7 +85,7 @@ const ARTWORK_SAMPLES = [
   {
     id: 'art-sample-4',
     title: 'Heavyweight Custom Rigid Packaging Gift Box with Foil',
-    category: 'Boxes & Packaging',
+    category: 'Packaging, Labels & Stickers',
     categoryTag: 'packaging',
     imageUrl: 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=800&q=80',
     specs: '1200gsm Rigid Chipboard, Soft Touch Matte Lam, Hot Foil Stamp',
@@ -97,7 +98,7 @@ const ARTWORK_SAMPLES = [
   {
     id: 'art-sample-5',
     title: 'Diamond-Cut Crystal & Cast Bronze Recognition Award',
-    category: 'Awards & Plaques',
+    category: 'Custom Awards & Plaques',
     categoryTag: 'awards',
     imageUrl: 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?auto=format&fit=crop&w=800&q=80',
     specs: 'K9 Optical Crystal, Solid Polished Walnut Base, UV Color Print',
@@ -110,7 +111,7 @@ const ARTWORK_SAMPLES = [
   {
     id: 'art-sample-6',
     title: 'Executive Triplex Foil-Edged Business Cards (600gsm)',
-    category: 'Luxury Stationery',
+    category: 'Business & Office Printing',
     categoryTag: 'stationery',
     imageUrl: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=800&q=80',
     specs: '600gsm Cotton Card, Gold Gilded Beveled Edges, Raised Spot UV',
@@ -122,20 +123,21 @@ const ARTWORK_SAMPLES = [
   },
   {
     id: 'art-sample-7',
-    title: 'Abstract Geometric Modern Wall Mural & Vinyl Wrap',
-    category: 'Canvas Art & Paintings',
-    categoryTag: 'paintings',
-    imageUrl: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=800&q=80',
-    specs: 'Seamless Textured Self-Adhesive Wall Fabric, Eco-Solvent Ink',
-    startingPriceNgn: 32000,
-    turnaround: '2 Days',
-    description: 'Statement interior wall prints and murals transforming boardrooms, reception lounges, and boutique suites.',
-    targetProductId: 'prod-frames-floating-canvas',
+    title: 'A5 Full-Color Glossy Promotional Flyers & Handbills (500 Pcs)',
+    category: 'Flyers & Marketing Handbills',
+    categoryTag: 'flyers',
+    imageUrl: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80',
+    specs: '150gsm Gloss Art Paper, Double-Sided High Definition Offset',
+    startingPriceNgn: 22000,
+    turnaround: '24hr Express',
+    badge: 'High Volume',
+    description: 'Mass distribution handbills and marketing leaflets for brand campaigns, conferences, and event launches.',
+    targetProductId: 'prod-flyers-handbills-a5',
   },
   {
     id: 'art-sample-8',
     title: 'Corporate Executive VIP Gifting Set in Presentation Case',
-    category: 'Corporate Gifts',
+    category: 'Corporate Gifts & Souvenirs',
     categoryTag: 'gifts',
     imageUrl: 'https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80',
     specs: 'Thermal Flask, Metal Pen, Leather Notebook, Metal USB Key',
@@ -147,29 +149,17 @@ const ARTWORK_SAMPLES = [
   },
   {
     id: 'art-sample-9',
-    title: 'Luxury Broad-Base Rollup Banner Stand (Tear-Drop Chrome)',
-    category: 'Banners & Flags',
-    categoryTag: 'banners',
+    title: 'Pop-Up Media Wall & Exhibition Backdrop Stand (3x3m Curved)',
+    category: 'Events & Exhibition Materials',
+    categoryTag: 'events',
     imageUrl: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80',
-    specs: '85cm x 205cm, Heavy Aluminum Teardrop Base, Padded Carry Bag',
-    startingPriceNgn: 34500,
-    turnaround: '24hr Rush',
-    badge: 'Best Seller',
-    description: 'High-stability freestanding banner stand with anti-curl Solite satin print and no folding feet needed.',
-    targetProductId: 'prod-rollup-luxury',
+    specs: 'Magnetic Aluminum Pop-up Lattice, Fabric Dye-Sublimation Print, Wheeled Trolley Case',
+    startingPriceNgn: 145000,
+    turnaround: '2-3 Days',
+    badge: 'Exhibition Ready',
+    description: 'Quick-setup freestanding media interview wall and conference photo backdrop with ultra-vivid graphics.',
+    targetProductId: 'prod-events-media-wall',
   }
-];
-
-const CATEGORY_CHIPS = [
-  { id: 'all', label: 'All Designs & Products' },
-  { id: 'banners', label: 'Banners & Stands' },
-  { id: 'stationery', label: 'Business Cards & Stationery' },
-  { id: 'packaging', label: 'Boxes & Packaging' },
-  { id: 'signage', label: '3D Signs & Channel Letters' },
-  { id: 'awards', label: 'Plaques & Awards' },
-  { id: 'paintings', label: 'Canvas Paintings & Murals' },
-  { id: 'gifts', label: 'Corporate Gifts & Souvenirs' },
-  { id: 'apparel', label: 'Apparel & Uniforms' },
 ];
 
 export const CatalogModal: React.FC<CatalogModalProps> = ({
@@ -179,76 +169,28 @@ export const CatalogModal: React.FC<CatalogModalProps> = ({
   onSelectProduct,
   onBookSample,
   onScrollToPageCatalog,
+  initialCategory = 'all',
 }) => {
-  const [selectedTag, setSelectedTag] = useState<string>('all');
+  const [selectedTag, setSelectedTag] = useState<string>(initialCategory || 'all');
   const [searchTerm, setSearchTerm] = useState<string>('');
 
-  // Build unified, rich catalog dataset combining products and curated artwork samples
-  const allCatalogItems = useMemo<CatalogItem[]>(() => {
-    // 1. Map standard product catalog items
-    const productCatalogItems: CatalogItem[] = products.map((prod) => {
-      let categoryTag = 'stationery';
-      const cat = prod.category.toLowerCase();
-      const id = prod.id.toLowerCase();
+  // Whenever initialCategory or isOpen changes, sync selected category
+  useEffect(() => {
+    if (isOpen) {
+      setSelectedTag(initialCategory || 'all');
+      setSearchTerm('');
+    }
+  }, [isOpen, initialCategory]);
 
-      if (
-        cat.includes('banner') || 
-        cat.includes('advertising') || 
-        cat.includes('outdoor') || 
-        id.includes('rollup') || 
-        id.includes('banner') ||
-        id.includes('flag')
-      ) {
-        categoryTag = 'banners';
-      } else if (
-        cat.includes('sign') || 
-        id.includes('sign') || 
-        id.includes('led') || 
-        id.includes('channel')
-      ) {
-        categoryTag = 'signage';
-      } else if (
-        cat.includes('packag') || 
-        cat.includes('sticker') || 
-        cat.includes('label') || 
-        cat.includes('bag') || 
-        cat.includes('carton') || 
-        cat.includes('food') ||
-        id.includes('packaging') || 
-        id.includes('box') || 
-        id.includes('sticker')
-      ) {
-        categoryTag = 'packaging';
-      } else if (
-        cat.includes('award') || 
-        id.includes('award') || 
-        id.includes('plaque') || 
-        id.includes('trophy')
-      ) {
-        categoryTag = 'awards';
-      } else if (
-        cat.includes('frame') || 
-        cat.includes('canvas') || 
-        id.includes('canvas') || 
-        id.includes('frame')
-      ) {
-        categoryTag = 'paintings';
-      } else if (
-        cat.includes('gift') || 
-        cat.includes('souvenir') || 
-        id.includes('gift') || 
-        id.includes('notebook')
-      ) {
-        categoryTag = 'gifts';
-      } else if (
-        cat.includes('apparel') || 
-        cat.includes('uniform') || 
-        id.includes('polo') || 
-        id.includes('cap') ||
-        id.includes('uniform')
-      ) {
-        categoryTag = 'apparel';
-      }
+  // Build unified, rich categories dataset combining live products & curated showcases
+  const allCategoryItems = useMemo<CategoryDisplayItem[]>(() => {
+    // 1. Map live products (including newly uploaded admin products)
+    const liveItems: CategoryDisplayItem[] = products.map((prod) => {
+      const categoryTag = getProductCategoryTag(prod);
+
+      // Category display name
+      const matchingCatDef = STORE_CATEGORIES.find((c) => c.id === categoryTag);
+      const catDisplayName = matchingCatDef ? matchingCatDef.label : (prod.categoryLabel || 'Commercial Print');
 
       // Generate a clean summary of technical specifications
       const specsSummary = prod.optionGroups && prod.optionGroups.length > 0
@@ -258,7 +200,7 @@ export const CatalogModal: React.FC<CatalogModalProps> = ({
       return {
         id: prod.id,
         title: prod.name,
-        category: prod.categoryLabel || 'Commercial Print',
+        category: catDisplayName,
         categoryTag,
         imageUrl: prod.image,
         specs: specsSummary,
@@ -271,11 +213,11 @@ export const CatalogModal: React.FC<CatalogModalProps> = ({
       };
     });
 
-    // 2. Map curated artwork samples, linking them to a real customizable Product
-    const artworkCatalogItems: CatalogItem[] = ARTWORK_SAMPLES.map((sample) => {
+    // 2. Map curated reference artworks, associating with live product fallback
+    const artworkItems: CategoryDisplayItem[] = ARTWORK_SAMPLES.map((sample) => {
       const matchedProduct = 
         products.find((p) => p.id === sample.targetProductId) || 
-        products.find((p) => p.category.includes(sample.categoryTag)) || 
+        products.find((p) => getProductCategoryTag(p) === sample.categoryTag) || 
         products[0];
 
       return {
@@ -289,28 +231,27 @@ export const CatalogModal: React.FC<CatalogModalProps> = ({
         turnaround: sample.turnaround,
         description: sample.description,
         badge: sample.badge,
-        minQuantity: 1,
         product: matchedProduct,
       };
     });
 
-    // Combine avoiding duplicate IDs
-    const combined = [...productCatalogItems];
-    artworkCatalogItems.forEach((art) => {
+    // Combine items while avoiding duplicates
+    const combined = [...liveItems];
+    artworkItems.forEach((art) => {
       if (!combined.some((item) => item.id === art.id)) {
-        combined.unshift(art); // Place spotlight artisan designs at the beginning
+        combined.push(art);
       }
     });
 
     return combined;
   }, [products]);
 
-  // Filtered list of catalog items by tag and search keyword
+  // Filtered list of items strictly matching the selected category and optional search term
   const filteredItems = useMemo(() => {
-    return allCatalogItems.filter((item) => {
-      const matchesTag = selectedTag === 'all' || item.categoryTag === selectedTag;
+    return allCategoryItems.filter((item) => {
+      const matchesCategory = selectedTag === 'all' || item.categoryTag === selectedTag;
       const q = searchTerm.trim().toLowerCase();
-      if (!q) return matchesTag;
+      if (!q) return matchesCategory;
 
       const matchesSearch = 
         item.title.toLowerCase().includes(q) ||
@@ -318,9 +259,11 @@ export const CatalogModal: React.FC<CatalogModalProps> = ({
         item.specs.toLowerCase().includes(q) ||
         item.description.toLowerCase().includes(q);
 
-      return matchesTag && matchesSearch;
+      return matchesCategory && matchesSearch;
     });
-  }, [allCatalogItems, selectedTag, searchTerm]);
+  }, [allCategoryItems, selectedTag, searchTerm]);
+
+  const currentCategoryDef = STORE_CATEGORIES.find((c) => c.id === selectedTag);
 
   if (!isOpen) return null;
 
@@ -330,30 +273,34 @@ export const CatalogModal: React.FC<CatalogModalProps> = ({
       onClick={onClose}
     >
       <div 
-        className="relative w-full max-w-6xl h-[95vh] max-h-[900px] my-auto rounded-2xl sm:rounded-3xl bg-[#0d0e12] border border-[#dfbc5e]/30 shadow-2xl flex flex-col text-white overflow-hidden animate-in fade-in zoom-in-95 duration-200"
+        className="relative w-full max-w-6xl h-[95vh] max-h-[920px] my-auto rounded-2xl sm:rounded-3xl bg-[#0d0e12] border border-[#dfbc5e]/30 shadow-2xl flex flex-col text-white overflow-hidden animate-in fade-in zoom-in-95 duration-200"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Header */}
-        <div className="p-4 sm:p-6 border-b border-white/10 shrink-0 bg-gradient-to-r from-[#14151c] via-[#0d0e12] to-[#14151c] flex items-center justify-between gap-4">
+        <div className="p-4 sm:p-5 border-b border-white/10 shrink-0 bg-gradient-to-r from-[#14151c] via-[#0d0e12] to-[#14151c] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <div>
-            <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+            <div className="flex items-center gap-2 mb-1 flex-wrap">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#dfbc5e]/20 border border-[#dfbc5e]/40 text-[#ebd07f] text-xs font-bold">
                 <Sparkles className="w-3.5 h-3.5" />
-                <span>Silver &amp; Gold Inkshine Catalog</span>
+                <span>Product Categories</span>
               </span>
-              <span className="text-stone-400 text-xs font-medium">
-                {filteredItems.length} Premium Designs &amp; Products Available
+              <span className="text-stone-400 text-xs font-mono">
+                {filteredItems.length} Products in View
               </span>
             </div>
             <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight">
-              Designs &amp; Print Products Catalog
+              {currentCategoryDef && selectedTag !== 'all' 
+                ? currentCategoryDef.label 
+                : 'All Print & Fabrication Categories'}
             </h2>
-            <p className="text-stone-400 text-xs sm:text-sm mt-0.5 max-w-2xl">
-              Choose from our wide variety of top-quality print designs below and order instantly with automated pricing, custom specs, and nationwide delivery.
+            <p className="text-stone-400 text-xs mt-0.5 max-w-2xl">
+              {currentCategoryDef && selectedTag !== 'all' 
+                ? currentCategoryDef.tagline 
+                : 'Browse our specialized printing, signage, packaging, and corporate branding categories with automated pricing.'}
             </p>
           </div>
 
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="flex items-center gap-2 shrink-0 self-end sm:self-center">
             {onScrollToPageCatalog && (
               <button
                 type="button"
@@ -362,9 +309,9 @@ export const CatalogModal: React.FC<CatalogModalProps> = ({
                   onScrollToPageCatalog();
                 }}
                 className="hidden md:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-xs font-semibold text-stone-300 hover:text-white border border-white/10 transition-colors cursor-pointer"
-                title="View on-page product catalog"
+                title="Scroll to on-page products"
               >
-                <span>View On Page</span>
+                <span>View On Storefront</span>
                 <ArrowDown className="w-3.5 h-3.5 text-[#dfbc5e]" />
               </button>
             )}
@@ -373,21 +320,58 @@ export const CatalogModal: React.FC<CatalogModalProps> = ({
               type="button"
               onClick={onClose}
               className="p-2.5 rounded-full bg-white/10 hover:bg-white/20 text-stone-300 hover:text-white transition-all active:scale-95 cursor-pointer"
-              aria-label="Close catalog"
+              aria-label="Close categories modal"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
         </div>
 
-        {/* Filter & Search Bar */}
+        {/* Category Navigation & Search Control Strip */}
         <div className="p-3 sm:p-4 bg-[#111218] border-b border-white/10 shrink-0 space-y-3">
-          {/* Search Input */}
+          {/* Quick Category Switcher Tabs */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-1.5 scrollbar-none">
+            <div className="flex items-center gap-1.5 text-xs text-stone-400 font-bold uppercase tracking-wider shrink-0 mr-1 hidden sm:flex">
+              <Filter className="w-3.5 h-3.5 text-[#dfbc5e]" />
+              <span>Category:</span>
+            </div>
+            {STORE_CATEGORIES.map((cat) => {
+              const isActive = selectedTag === cat.id;
+              const count = cat.id === 'all' 
+                ? allCategoryItems.length 
+                : allCategoryItems.filter(i => i.categoryTag === cat.id).length;
+
+              return (
+                <button
+                  key={cat.id}
+                  type="button"
+                  onClick={() => {
+                    setSelectedTag(cat.id);
+                    setSearchTerm(''); // clear search when switching categories
+                  }}
+                  className={`px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1.5 cursor-pointer ${
+                    isActive
+                      ? 'bg-gradient-to-r from-[#d4af37] via-[#e5c158] to-[#b8860b] text-black shadow-md shadow-[#d4af37]/30 font-extrabold scale-102'
+                      : 'bg-white/5 text-stone-300 hover:bg-white/15 border border-white/10 hover:text-white'
+                  }`}
+                >
+                  <span>{cat.shortLabel}</span>
+                  <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono ${
+                    isActive ? 'bg-black/25 text-black font-bold' : 'bg-white/10 text-stone-400'
+                  }`}>
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Search Input Bar */}
           <div className="relative">
             <Search className="w-4 h-4 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
-              placeholder="Search designs by product name, substrate, or keywords (e.g., rollup, business cards, 3D letters, packaging)..."
+              placeholder={`Search within ${selectedTag === 'all' ? 'all categories' : (currentCategoryDef?.label || 'category')} (e.g. flyers, rollup, 3D letters, boxes, notebooks)...`}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full pl-10 pr-20 py-2 sm:py-2.5 rounded-xl bg-white/5 border border-white/15 text-white text-xs sm:text-sm placeholder:text-stone-500 focus:outline-hidden focus:border-[#dfbc5e] transition-colors"
@@ -403,38 +387,25 @@ export const CatalogModal: React.FC<CatalogModalProps> = ({
             )}
           </div>
 
-          {/* Category Chips Scrollbar */}
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
-            {CATEGORY_CHIPS.map((chip) => {
-              const isActive = selectedTag === chip.id;
-              const count = chip.id === 'all' 
-                ? allCatalogItems.length 
-                : allCatalogItems.filter(i => i.categoryTag === chip.id).length;
-
-              return (
-                <button
-                  key={chip.id}
-                  type="button"
-                  onClick={() => setSelectedTag(chip.id)}
-                  className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1.5 cursor-pointer ${
-                    isActive
-                      ? 'bg-[#dfbc5e] text-black shadow-md shadow-[#dfbc5e]/30 font-bold'
-                      : 'bg-white/5 text-stone-300 hover:bg-white/15 border border-white/10'
-                  }`}
-                >
-                  <span>{chip.label}</span>
-                  <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${
-                    isActive ? 'bg-black/20 text-black' : 'bg-white/10 text-stone-400'
-                  }`}>
-                    {count}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
+          {/* Active Category Allocation Notice */}
+          {selectedTag !== 'all' && (
+            <div className="flex items-center justify-between text-xs text-stone-300 bg-[#dfbc5e]/10 border border-[#dfbc5e]/25 px-3 py-1.5 rounded-lg">
+              <span className="flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-[#dfbc5e] animate-pulse" />
+                Allocated exclusively to: <strong className="text-[#ebd07f]">{currentCategoryDef?.label}</strong>
+              </span>
+              <button
+                type="button"
+                onClick={() => setSelectedTag('all')}
+                className="text-[#ebd07f] hover:text-white underline font-semibold cursor-pointer"
+              >
+                View all categories
+              </button>
+            </div>
+          )}
         </div>
 
-        {/* Catalog Grid Viewport */}
+        {/* Products Grid Viewport */}
         <div className="flex-1 overflow-y-auto p-4 sm:p-6 bg-[#0a0a0e]">
           {filteredItems.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
@@ -497,7 +468,7 @@ export const CatalogModal: React.FC<CatalogModalProps> = ({
                     <div className="flex items-baseline justify-between py-1 mb-2.5">
                       <div>
                         <span className="text-[10px] text-stone-400 uppercase tracking-wider block font-medium">
-                          Starting Price
+                          Base Price
                         </span>
                         <span className="font-black text-[#dfbc5e] text-base sm:text-lg font-mono">
                           ₦{item.startingPriceNgn.toLocaleString('en-NG')}
@@ -520,10 +491,10 @@ export const CatalogModal: React.FC<CatalogModalProps> = ({
                           onSelectProduct(item.product);
                         }}
                         className="py-2 px-2.5 rounded-xl bg-gradient-to-r from-[#d4af37] to-[#b8860b] hover:from-[#e5c158] hover:to-[#d4af37] active:scale-95 text-black font-extrabold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-[#d4af37]/25 transition-all cursor-pointer"
-                        title="Choose this design and order instantly"
+                        title="Configure and order this product"
                       >
                         <ShoppingBag className="w-3.5 h-3.5 shrink-0" />
-                        <span>Order Instantly</span>
+                        <span>Order Now</span>
                       </button>
 
                       <button
@@ -539,7 +510,7 @@ export const CatalogModal: React.FC<CatalogModalProps> = ({
                         className="py-2 px-2 rounded-xl bg-white/5 hover:bg-white/15 text-stone-300 hover:text-white border border-white/15 text-xs font-semibold flex items-center justify-center gap-1 active:scale-95 transition-all cursor-pointer"
                       >
                         <Eye className="w-3.5 h-3.5 shrink-0" />
-                        <span>Quick Specs</span>
+                        <span>Quick View</span>
                       </button>
                     </div>
                   </div>
@@ -549,9 +520,12 @@ export const CatalogModal: React.FC<CatalogModalProps> = ({
           ) : (
             <div className="text-center py-20 text-stone-400 space-y-3">
               <Layers className="w-12 h-12 mx-auto text-stone-600 mb-2" />
-              <p className="font-bold text-white text-base">No designs found matching &ldquo;{searchTerm}&rdquo;</p>
+              <p className="font-bold text-white text-base">
+                No products found in {currentCategoryDef?.label || selectedTag}
+                {searchTerm ? ` matching "${searchTerm}"` : ''}
+              </p>
               <p className="text-xs text-stone-500 max-w-sm mx-auto">
-                Try searching for other print categories such as banners, cards, stickers, boxes, signs, or plaques.
+                Select another category above or reset your search filters to browse our other print lines.
               </p>
               <button
                 type="button"
@@ -559,9 +533,9 @@ export const CatalogModal: React.FC<CatalogModalProps> = ({
                   setSearchTerm('');
                   setSelectedTag('all');
                 }}
-                className="mt-2 px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-colors cursor-pointer"
+                className="mt-2 px-4 py-2 rounded-xl bg-[#dfbc5e] text-black text-xs font-bold transition-all hover:bg-[#e5c158] cursor-pointer"
               >
-                Reset Search Filters
+                Browse All Categories
               </button>
             </div>
           )}
@@ -571,7 +545,7 @@ export const CatalogModal: React.FC<CatalogModalProps> = ({
         <div className="p-3.5 sm:p-4 bg-[#111218] border-t border-white/10 shrink-0 flex flex-wrap items-center justify-between gap-3 text-xs text-stone-400">
           <div className="flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-[#dfbc5e] shrink-0" />
-            <span>Need a custom size, painting commission, or bespoke mockup? We produce everything in-house in Yenagoa.</span>
+            <span>Need custom specs or bulk corporate quote? Direct factory production in Yenagoa with nationwide shipping.</span>
           </div>
 
           <div className="flex items-center gap-4">
@@ -584,13 +558,13 @@ export const CatalogModal: React.FC<CatalogModalProps> = ({
                 }}
                 className="text-stone-300 hover:text-[#dfbc5e] font-semibold underline flex items-center gap-1 cursor-pointer"
               >
-                <span>Browse on-page catalog</span>
+                <span>Browse on-page</span>
                 <ArrowDown className="w-3 h-3" />
               </button>
             )}
 
             <a
-              href="https://wa.me/2347030372539?text=Hello%20Silver%20%26%20Gold%20Inkshine%20Ltd%2C%20I%20am%20viewing%20your%20Catalog%20and%20would%20like%20to%20place%20a%20custom%20order"
+              href="https://wa.me/2347030372539?text=Hello%20Silver%20%26%20Gold%20Inkshine%20Ltd%2C%20I%20am%20viewing%20your%20categories%20and%20would%20like%20to%20place%20a%20custom%20order"
               target="_blank"
               rel="noreferrer"
               className="text-[#ebd07f] hover:text-white font-semibold underline flex items-center gap-1 cursor-pointer"

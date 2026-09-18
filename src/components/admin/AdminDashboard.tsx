@@ -41,6 +41,8 @@ interface AdminDashboardProps {
   onUpdateTrackingNumber: (orderId: string, trackingNumber: string) => void;
   onUpdateProductionNotes: (orderId: string, notes: string) => void;
   onUpdateProduct: (productId: string, updates: Partial<Product>) => void;
+  onAddProduct?: (newProduct: Product) => void;
+  onDeleteProduct?: (productId: string) => void;
 }
 
 type AdminTab = 'orders' | 'prepress' | 'press_floor' | 'pricing';
@@ -54,6 +56,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   onUpdateTrackingNumber,
   onUpdateProductionNotes,
   onUpdateProduct,
+  onAddProduct,
+  onDeleteProduct,
 }) => {
   const [activeTab, setActiveTab] = useState<AdminTab>('orders');
   const [searchQuery, setSearchQuery] = useState('');
@@ -192,7 +196,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               }`}
             >
               <Layers className="w-3.5 h-3.5" />
-              <span>Catalog & Rates</span>
+              <span>Categories & Upload</span>
             </button>
           </div>
         </div>
@@ -478,6 +482,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           <ProductPricingManager
             products={products}
             onUpdateProduct={onUpdateProduct}
+            onAddProduct={onAddProduct}
+            onDeleteProduct={onDeleteProduct}
           />
         )}
       </main>

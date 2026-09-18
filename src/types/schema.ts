@@ -75,6 +75,7 @@ export interface Product {
   slug: string;
   category: ProductCategory;
   categoryLabel: string;
+  categoryPlacement?: string; // Direct category placement: 'banners' | 'stationery' | 'flyers' | 'packaging' | 'signage' | 'events' | 'gifts' | 'awards' | 'paintings' | 'apparel' | 'machines'
   description: string;
   shortDescription: string;
   basePriceNgn: number;

@@ -56,6 +56,7 @@ interface HeaderProps {
   onOpenInfoModal?: (tab?: InfoModalTab) => void;
   onOpenBookOnline?: () => void;
   onOpenCatalog?: () => void;
+  onOpenCategoriesPage?: (categoryKey?: string) => void;
 }
 
 export const CATEGORIES: { id: ProductCategory; label: string }[] = [
@@ -100,10 +101,21 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenInfoModal,
   onOpenBookOnline,
   onOpenCatalog,
+  onOpenCategoriesPage,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [showSearchModal, setShowSearchModal] = useState(false);
+
+  const handleCategoryNav = (cat: ProductCategory | string) => {
+    onSelectCategory(cat as ProductCategory);
+    setActiveDropdown(null);
+    if (onOpenCategoriesPage) {
+      onOpenCategoriesPage(cat);
+    } else {
+      onNavigateHome();
+    }
+  };
 
   return (
     <header className="sticky top-0 z-40 bg-[#000000] border-b border-white/10 shadow-lg">
@@ -219,7 +231,20 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
 
             {/* Desktop Category Navigation */}
-            <nav className="hidden md:flex items-center space-x-6 text-sm font-semibold text-stone-200">
+            <nav className="hidden md:flex items-center space-x-5 text-sm font-semibold text-stone-200">
+              {/* Dedicated Categories Page Link */}
+              <button 
+                type="button"
+                onClick={() => onOpenCategoriesPage?.('all')}
+                className="hover:text-[#d4af37] text-stone-200 transition-colors flex items-center gap-1.5 font-bold cursor-pointer"
+                title="View All Product Categories on a dedicated page"
+              >
+                <span>Categories</span>
+                <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/30">
+                  Page
+                </span>
+              </button>
+
               {/* Prints */}
               <div 
                 className="relative group py-2"
@@ -227,10 +252,7 @@ export const Header: React.FC<HeaderProps> = ({
                 onMouseLeave={() => setActiveDropdown(null)}
               >
                 <button 
-                  onClick={() => {
-                    onSelectCategory('advertising_materials');
-                    onNavigateHome();
-                  }}
+                  onClick={() => handleCategoryNav('advertising_materials')}
                   className="flex items-center gap-1 hover:text-[#d4af37] text-stone-200 transition-colors"
                 >
                   <span>Prints</span>
@@ -933,11 +955,15 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
-                onOpenCatalog?.();
+                if (onOpenCategoriesPage) {
+                  onOpenCategoriesPage('all');
+                } else {
+                  onOpenCatalog?.();
+                }
               }}
               className="py-2.5 px-3 rounded-xl bg-white/10 hover:bg-white/15 text-[#ebd07f] border border-[#dfbc5e]/30 font-bold text-xs flex items-center justify-center gap-1.5 active:scale-95 transition-all"
             >
-              <span>✨ Sample Catalog</span>
+              <span>✨ Browse Categories Page</span>
             </button>
           </div>
 
@@ -978,7 +1004,11 @@ export const Header: React.FC<HeaderProps> = ({
               onClick={() => {
                 onSelectCategory('all');
                 setMobileMenuOpen(false);
-                onNavigateHome();
+                if (onOpenCategoriesPage) {
+                  onOpenCategoriesPage('all');
+                } else {
+                  onNavigateHome();
+                }
               }}
               className={`text-left p-2.5 rounded-lg text-xs font-bold ${
                 selectedCategory === 'all'
@@ -994,7 +1024,11 @@ export const Header: React.FC<HeaderProps> = ({
                 onClick={() => {
                   onSelectCategory(cat.id);
                   setMobileMenuOpen(false);
-                  onNavigateHome();
+                  if (onOpenCategoriesPage) {
+                    onOpenCategoriesPage(cat.id);
+                  } else {
+                    onNavigateHome();
+                  }
                 }}
                 className={`text-left p-2.5 rounded-lg text-xs font-semibold ${
                   selectedCategory === cat.id
