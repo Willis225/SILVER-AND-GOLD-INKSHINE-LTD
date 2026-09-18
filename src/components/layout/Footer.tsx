@@ -465,10 +465,10 @@ export const Footer: React.FC<FooterProps> = ({
                 <Phone className="w-4 h-4 fill-none stroke-current stroke-[2.2]" />
               </span>
               <a 
-                href="tel:+2349028694908" 
+                href="tel:+2347030372539" 
                 className="font-medium text-stone-200 hover:text-[#f5be38] transition-colors"
               >
-                +2349028694908
+                +234 703 037 2539
               </a>
             </div>
 
