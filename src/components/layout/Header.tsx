@@ -57,6 +57,7 @@ interface HeaderProps {
   onOpenBookOnline?: () => void;
   onOpenCatalog?: () => void;
   onOpenCategoriesPage?: (categoryKey?: string) => void;
+  onOpenQuoteModal?: () => void;
 }
 
 export const CATEGORIES: { id: ProductCategory; label: string }[] = [
@@ -102,6 +103,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenBookOnline,
   onOpenCatalog,
   onOpenCategoriesPage,
+  onOpenQuoteModal,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -867,6 +869,20 @@ export const Header: React.FC<HeaderProps> = ({
               <span className="whitespace-nowrap">Book Online</span>
               <span className="w-1.5 h-1.5 rounded-full bg-black/70 animate-pulse" />
             </button>
+
+            {/* Request a Quote Button */}
+            {onOpenQuoteModal && (
+              <button
+                id="desktop-header-quote-btn"
+                type="button"
+                onClick={onOpenQuoteModal}
+                className="relative px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-[#f5be38] hover:text-white border border-[#d4af37]/40 font-bold text-xs tracking-tight flex items-center gap-1.5 active:scale-95 transition-all cursor-pointer"
+                title="Request a customized corporate print quote"
+              >
+                <FileText className="w-3.5 h-3.5" />
+                <span className="whitespace-nowrap">Get a Quote</span>
+              </button>
+            )}
           </nav>
 
           {/* Right Action Icons: Search + Cart */}
@@ -942,15 +958,24 @@ export const Header: React.FC<HeaderProps> = ({
       {mobileMenuOpen && (
         <div className="md:hidden bg-[#0a0b0e] border-b border-white/15 px-4 py-3 space-y-3">
           {/* Mobile Direct Action Buttons */}
-          <div className="grid grid-cols-2 gap-2 pt-1">
+          <div className="grid grid-cols-3 gap-1.5 pt-1">
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
                 onOpenBookOnline?.();
               }}
-              className="py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#d4af37] via-[#e5c158] to-[#b8860b] text-black font-extrabold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-[#d4af37]/20 active:scale-95 transition-all"
+              className="py-2.5 px-2 rounded-xl bg-gradient-to-r from-[#d4af37] via-[#e5c158] to-[#b8860b] text-black font-extrabold text-[11px] flex items-center justify-center gap-1 shadow-md shadow-[#d4af37]/20 active:scale-95 transition-all"
             >
-              <span>📅 Book Online Slot</span>
+              <span>📅 Book Slot</span>
+            </button>
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                onOpenQuoteModal?.();
+              }}
+              className="py-2.5 px-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-400/40 font-bold text-[11px] flex items-center justify-center gap-1 active:scale-95 transition-all"
+            >
+              <span>📝 Get Quote</span>
             </button>
             <button
               onClick={() => {
@@ -961,9 +986,9 @@ export const Header: React.FC<HeaderProps> = ({
                   onOpenCatalog?.();
                 }
               }}
-              className="py-2.5 px-3 rounded-xl bg-white/10 hover:bg-white/15 text-[#ebd07f] border border-[#dfbc5e]/30 font-bold text-xs flex items-center justify-center gap-1.5 active:scale-95 transition-all"
+              className="py-2.5 px-2 rounded-xl bg-white/10 hover:bg-white/15 text-[#ebd07f] border border-[#dfbc5e]/30 font-bold text-[11px] flex items-center justify-center gap-1 active:scale-95 transition-all"
             >
-              <span>✨ Browse Categories Page</span>
+              <span>✨ Catalog</span>
             </button>
           </div>
 

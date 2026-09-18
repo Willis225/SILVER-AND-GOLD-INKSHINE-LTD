@@ -183,38 +183,34 @@ Please confirm availability, production turnaround and artwork preflight check. 
               <span>Confirm Price on WhatsApp (07030372539)</span>
             </a>
 
-            <div className="flex items-center gap-2">
-              {/* Configure Online */}
-              {onOrderOnline && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    onClose();
-                    onOrderOnline(product);
-                  }}
-                  className="flex-1 py-2.5 px-3 rounded-xl bg-stone-900 hover:bg-stone-800 text-white font-bold text-xs transition-colors cursor-pointer text-center"
-                >
-                  Configure &amp; Customize Online
-                </button>
-              )}
-
+            <div className="grid grid-cols-2 gap-2">
               {/* Call Direct */}
               <a
                 href="tel:+2347030372539"
                 className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl border border-stone-300 hover:bg-stone-100 text-stone-800 font-bold text-xs transition-colors"
               >
                 <Phone className="w-3.5 h-3.5" />
-                <span>Call Desk</span>
+                <span>Call Desk Directly</span>
               </a>
 
               {/* Copy Inquiry Message */}
               <button
                 type="button"
                 onClick={handleCopy}
-                className="p-2.5 rounded-xl border border-stone-300 hover:bg-stone-100 text-stone-700 transition-colors"
+                className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl border border-stone-300 hover:bg-stone-100 text-stone-700 font-bold text-xs transition-colors cursor-pointer"
                 title="Copy inquiry message"
               >
-                {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
+                {copied ? (
+                  <>
+                    <Check className="w-4 h-4 text-emerald-600" />
+                    <span className="text-emerald-700">Copied!</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-4 h-4" />
+                    <span>Copy Text</span>
+                  </>
+                )}
               </button>
             </div>
           </div>

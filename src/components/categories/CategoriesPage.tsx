@@ -721,14 +721,6 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
                             <MessageCircle className="w-4 h-4 fill-white stroke-none" />
                             <span>Confirm Price</span>
                           </button>
-
-                          <button
-                            type="button"
-                            onClick={() => onSelectProduct(product)}
-                            className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xs border border-stone-300 hover:bg-stone-50 text-stone-700 font-semibold text-xs transition-colors cursor-pointer"
-                          >
-                            <span>Configure &amp; Order Online</span>
-                          </button>
                         </div>
                       </div>
                     </div>
@@ -792,14 +784,6 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
                           >
                             <MessageCircle className="w-3.5 h-3.5 fill-white stroke-none" />
                             <span>Confirm Price</span>
-                          </button>
-                          
-                          <button
-                            type="button"
-                            onClick={() => onSelectProduct(product)}
-                            className="w-full py-1.5 px-3 rounded-md border border-stone-300 hover:bg-stone-50 text-stone-700 font-semibold text-xs transition-colors cursor-pointer text-center"
-                          >
-                            Configure Online
                           </button>
                         </div>
                       </div>

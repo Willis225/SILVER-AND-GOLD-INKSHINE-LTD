@@ -24,6 +24,7 @@ import { CompanyInfoModal, InfoModalTab } from './components/common/CompanyInfoM
 import { GlassBottomDock } from './components/navigation/GlassBottomDock';
 import { BookOnlineModal } from './components/modals/BookOnlineModal';
 import { CatalogModal } from './components/modals/CatalogModal';
+import { RequestQuoteModal } from './components/modals/RequestQuoteModal';
 import { CategoriesPage } from './components/categories/CategoriesPage';
 import { SAMPLE_PRODUCTS, NIGERIAN_SHIPPING_ZONES } from './data/seedData';
 import { INITIAL_ORDERS } from './data/seedOrders';
@@ -85,6 +86,7 @@ export default function App() {
   // Glass Bottom Dock Modal States (Book Online, Info, Categories)
   const [isBookOnlineOpen, setIsBookOnlineOpen] = useState(false);
   const [isCatalogOpen, setIsCatalogOpen] = useState(false);
+  const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
   const [bookOnlineService, setBookOnlineService] = useState('');
   const [activeCategoryTag, setActiveCategoryTag] = useState<string>('all');
 
@@ -273,6 +275,7 @@ export default function App() {
           onOpenBookOnline={() => handleOpenBookOnline()}
           onOpenCatalog={() => handleOpenCategoriesPage('all')}
           onOpenCategoriesPage={handleOpenCategoriesPage}
+          onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
         />
       )}
 
@@ -451,6 +454,7 @@ export default function App() {
           }}
           onOpenInfoModal={handleOpenInfoModal}
           onOpenCategoriesPage={handleOpenCategoriesPage}
+          onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
         />
       )}
 
@@ -516,6 +520,15 @@ export default function App() {
         onScrollToPageCatalog={() => {
           setIsCatalogOpen(false);
           scrollToCatalog();
+        }}
+      />
+
+      {/* Tell Us About Your Print Job / Request a Quote Modal (Silver & Gold Inkshine Ltd) */}
+      <RequestQuoteModal
+        isOpen={isQuoteModalOpen}
+        onClose={() => setIsQuoteModalOpen(false)}
+        onSelectCategory={(catKey) => {
+          handleOpenCategoriesPage(catKey);
         }}
       />
     </div>

@@ -1,22 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { 
-  MapPin, 
   Phone, 
   Mail, 
-  Clock, 
-  ChevronDown, 
-  ChevronUp, 
-  CreditCard, 
-  ShieldCheck, 
   ArrowRight,
-  HelpCircle,
-  Search,
-  ExternalLink,
-  Star
+  ShieldCheck
 } from 'lucide-react';
-import { PRINT_FAQS } from '../../data/seedData';
 import { ProductCategory } from '../../types/schema';
-import { CompanyLogoMark } from '../common/CompanyLogo';
 import { InfoModalTab } from '../common/CompanyInfoModal';
 
 interface FooterProps {
@@ -24,344 +13,544 @@ interface FooterProps {
   onOpenAdmin?: () => void;
   onOpenInfoModal?: (tab?: InfoModalTab) => void;
   onOpenCategoriesPage?: (catKey?: string) => void;
+  onOpenQuoteModal?: () => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({ 
   onSelectCategory, 
   onOpenAdmin, 
   onOpenInfoModal,
-  onOpenCategoriesPage 
+  onOpenCategoriesPage,
+  onOpenQuoteModal 
 }) => {
-  const [openFaqIdx, setOpenFaqIdx] = useState<number | null>(0);
-  const [faqSearch, setFaqSearch] = useState('');
-
-  const toggleFaq = (idx: number) => {
-    setOpenFaqIdx(openFaqIdx === idx ? null : idx);
+  const handleCategoryClick = (catKey: string) => {
+    if (onOpenCategoriesPage) {
+      onOpenCategoriesPage(catKey);
+    } else {
+      onSelectCategory(catKey as ProductCategory);
+    }
   };
 
-  const filteredFaqs = PRINT_FAQS.filter(
-    (faq) =>
-      !faqSearch.trim() ||
-      faq.question.toLowerCase().includes(faqSearch.toLowerCase()) ||
-      faq.answer.toLowerCase().includes(faqSearch.toLowerCase())
-  );
-
   return (
-    <footer className="bg-stone-950 text-stone-300 pt-12 sm:pt-16 pb-28 sm:pb-12 border-t border-stone-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
-        {/* Interactive FAQ Accordion Section */}
-        <div id="faq-section" className="bg-stone-900/90 border border-stone-800 rounded-3xl p-6 sm:p-10 space-y-6">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div>
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-500">
-                <HelpCircle className="w-4 h-4" />
-                <span>Frequently Asked Questions</span>
+    <footer className="bg-white text-stone-700 border-t border-stone-200">
+      {/* Main Footer Container */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-12">
+          
+          {/* ========================================================= */}
+          {/* Column 1: Brand, About Writeup, Social Icons & Actions    */}
+          {/* ========================================================= */}
+          <div className="md:col-span-5 lg:col-span-4 space-y-5">
+            {/* Logo */}
+            <div className="flex items-center gap-2.5">
+              {/* Gold & Emerald SG Emblem */}
+              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#d97706] via-[#10b981] to-[#047857] flex items-center justify-center shrink-0 shadow-xs ring-1 ring-amber-400/40">
+                <span className="font-black text-white text-xs tracking-tighter">SG</span>
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight mt-1">
-                Printing Turnaround, Artwork Bleeds & Nationwide Delivery
-              </h3>
+
+              {/* Brand Text */}
+              <div className="leading-none">
+                <span className="block font-black text-lg tracking-tight text-stone-900 font-sans">
+                  SILVER &amp; GOLD
+                </span>
+                <span className="block font-bold text-[10px] tracking-wider text-[#10b981] uppercase">
+                  INKSHINE LTD
+                </span>
+              </div>
             </div>
 
-            <div className="relative w-full md:w-72">
-              <input
-                type="text"
-                value={faqSearch}
-                onChange={(e) => setFaqSearch(e.target.value)}
-                placeholder="Search printing FAQs..."
-                className="w-full bg-stone-800 border border-stone-700 rounded-xl pl-9 pr-3 py-2 text-xs text-white placeholder:text-stone-500 focus:outline-hidden focus:ring-2 focus:ring-amber-500"
-              />
-              <Search className="w-3.5 h-3.5 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2" />
-            </div>
-          </div>
+            {/* Description Writeup (Exact from design reference with company name) */}
+            <p className="text-[13px] sm:text-sm text-stone-600 leading-relaxed text-justify sm:text-left">
+              <strong className="text-stone-900 font-bold">Silver &amp; Gold Inkshine Ltd</strong> is a complete commercial printing company based in Lagos, Nigeria, and proudly recognized as the Nation&apos;s No.1 trusted online shop for printing. We deliver professional, high-quality print solutions that help businesses, organizations, and individuals stand out. Silver &amp; Gold Inkshine Ltd is proud to be featured on <strong className="text-stone-900 font-bold">Business Insider</strong>, a trusted global business and media platform. This recognition strengthens our commitment to providing quality printing, branding, and advertising solutions across Nigeria.{' '}
+              <button 
+                type="button"
+                onClick={() => onOpenInfoModal?.('contact')}
+                className="text-stone-900 font-bold hover:underline cursor-pointer"
+              >
+                Contact us
+              </button>{' '}
+              for more info. Read our{' '}
+              <button 
+                type="button"
+                onClick={() => onOpenInfoModal?.('terms')}
+                className="text-stone-900 font-bold hover:underline cursor-pointer"
+              >
+                Terms &amp; Conditions
+              </button>
+              ,{' '}
+              <button 
+                type="button"
+                onClick={() => onOpenInfoModal?.('privacy')}
+                className="text-stone-900 font-bold hover:underline cursor-pointer"
+              >
+                Private Policy
+              </button>{' '}
+              and{' '}
+              <button 
+                type="button"
+                onClick={() => onOpenInfoModal?.('terms')}
+                className="text-stone-900 font-bold hover:underline cursor-pointer"
+              >
+                Return Policy
+              </button>
+            </p>
 
-          <div className="space-y-3">
-            {filteredFaqs.map((faq, idx) => {
-              const isOpen = openFaqIdx === idx;
-              return (
-                <div
-                  key={idx}
-                  className="border border-stone-800 rounded-2xl overflow-hidden bg-stone-950/60 transition-colors"
+            {/* Social Media Circular Badges */}
+            <div className="flex items-center gap-2.5 pt-1">
+              {/* Instagram */}
+              <a 
+                href="https://instagram.com" 
+                target="_blank" 
+                rel="noreferrer" 
+                aria-label="Instagram"
+                className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] flex items-center justify-center text-white shadow-xs hover:opacity-90 transition-opacity"
+              >
+                <svg viewBox="0 0 24 24" className="w-4 h-4 fill-none stroke-white stroke-2">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+              </a>
+
+              {/* YouTube */}
+              <a 
+                href="https://youtube.com" 
+                target="_blank" 
+                rel="noreferrer" 
+                aria-label="YouTube"
+                className="w-8 h-8 rounded-full bg-[#FF0000] flex items-center justify-center text-white shadow-xs hover:opacity-90 transition-opacity"
+              >
+                <svg viewBox="0 0 24 24" className="w-4 h-4 fill-white">
+                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                </svg>
+              </a>
+
+              {/* Facebook */}
+              <a 
+                href="https://facebook.com" 
+                target="_blank" 
+                rel="noreferrer" 
+                aria-label="Facebook"
+                className="w-8 h-8 rounded-full bg-[#1877F2] flex items-center justify-center text-white shadow-xs hover:opacity-90 transition-opacity"
+              >
+                <svg viewBox="0 0 24 24" className="w-4 h-4 fill-white">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+              </a>
+
+              {/* Pinterest */}
+              <a 
+                href="https://pinterest.com" 
+                target="_blank" 
+                rel="noreferrer" 
+                aria-label="Pinterest"
+                className="w-8 h-8 rounded-full bg-[#E60023] flex items-center justify-center text-white shadow-xs hover:opacity-90 transition-opacity"
+              >
+                <svg viewBox="0 0 24 24" className="w-4 h-4 fill-white">
+                  <path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.546.535 6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"/>
+                </svg>
+              </a>
+
+              {/* LinkedIn */}
+              <a 
+                href="https://linkedin.com" 
+                target="_blank" 
+                rel="noreferrer" 
+                aria-label="LinkedIn"
+                className="w-8 h-8 rounded-full bg-[#0A66C2] flex items-center justify-center text-white shadow-xs hover:opacity-90 transition-opacity"
+              >
+                <svg viewBox="0 0 24 24" className="w-4 h-4 fill-white">
+                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                </svg>
+              </a>
+
+              {/* Email */}
+              <a 
+                href="mailto:orders@silverandgold.ng" 
+                aria-label="Email"
+                className="w-8 h-8 rounded-full bg-stone-200 text-stone-700 flex items-center justify-center shadow-xs hover:bg-stone-300 transition-colors"
+              >
+                <Mail className="w-4 h-4 stroke-[2.2]" />
+              </a>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="space-y-3 pt-2">
+              <div>
+                <button
+                  type="button"
+                  onClick={() => onOpenQuoteModal ? onOpenQuoteModal() : window.open("https://wa.me/2347030372539?text=Hello%20Silver%20%26%20Gold%20Inkshine%20Ltd%2C%20I%20would%20like%20to%20request%20a%20quote", "_blank")}
+                  className="inline-flex items-center gap-2 px-6 py-2.5 rounded-sm bg-[#00473e] hover:bg-[#03362e] text-white font-bold text-sm shadow-xs transition-colors cursor-pointer"
                 >
-                  <button
-                    onClick={() => toggleFaq(idx)}
-                    className="w-full p-4 text-left flex items-center justify-between gap-3 text-stone-200 hover:text-white font-medium text-xs sm:text-sm"
-                  >
-                    <span className="font-semibold">{faq.question}</span>
-                    <span className="shrink-0 p-1 rounded-md bg-stone-800 text-stone-400">
-                      {isOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-                    </span>
-                  </button>
+                  <span>Get a Quote</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
 
-                  {isOpen && (
-                    <div className="p-4 pt-0 text-xs text-stone-400 leading-relaxed border-t border-stone-800/60 bg-stone-900/30">
-                      <p>{faq.answer}</p>
-                      <div className="mt-2 text-[10px] text-amber-500/80 font-mono">
-                        Category: {faq.category}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
+              <div>
+                <button
+                  type="button"
+                  onClick={() => onOpenInfoModal?.('info')}
+                  className="inline-block px-4 py-2.5 rounded-sm bg-[#65a30d] hover:bg-[#588e0b] text-white font-bold text-xs sm:text-[13px] shadow-xs transition-colors cursor-pointer text-left leading-snug max-w-xs"
+                >
+                  Add Silver &amp; Gold Inkshine Ltd as a Preferred Source on Google
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
 
-        {/* Main Footer Links & Company Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
-          {/* Col 1: Brand & Nigerian Footprint */}
-          <div className="lg:col-span-2 space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="w-11 h-11 shrink-0 drop-shadow-md">
-                <CompanyLogoMark className="w-full h-full" />
+          {/* ========================================================= */}
+          {/* Column 2: Quick Links (2 Sub-Columns side-by-side)        */}
+          {/* ========================================================= */}
+          <div className="md:col-span-4 lg:col-span-5 space-y-4">
+            <h3 className="font-extrabold text-base sm:text-lg text-stone-900 tracking-tight">
+              Quick Links
+            </h3>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 text-[13px] text-stone-600">
+              {/* Left Sub-Column */}
+              <div className="space-y-2.5">
+                <div>
+                  <button 
+                    type="button" 
+                    onClick={() => handleCategoryClick('advertising_materials')}
+                    className="hover:text-[#10b981] transition-colors text-left"
+                  >
+                    Advertising Materials
+                  </button>
+                </div>
+                <div>
+                  <button 
+                    type="button" 
+                    onClick={() => handleCategoryClick('awards')}
+                    className="hover:text-[#10b981] transition-colors text-left"
+                  >
+                    Awards
+                  </button>
+                </div>
+                <div>
+                  <button 
+                    type="button" 
+                    onClick={() => handleCategoryClick('banners_stands')}
+                    className="hover:text-[#10b981] transition-colors text-left"
+                  >
+                    Banners &amp; Stands
+                  </button>
+                </div>
+                <div>
+                  <button 
+                    type="button" 
+                    onClick={() => handleCategoryClick('books_magazines')}
+                    className="hover:text-[#10b981] transition-colors text-left"
+                  >
+                    Books &amp; Magazines
+                  </button>
+                </div>
+                <div>
+                  <button 
+                    type="button" 
+                    onClick={() => handleCategoryClick('cards_invitations')}
+                    className="hover:text-[#10b981] transition-colors text-left"
+                  >
+                    Cards &amp; Invitations
+                  </button>
+                </div>
+                <div>
+                  <button 
+                    type="button" 
+                    onClick={() => handleCategoryClick('company_stamps_seals')}
+                    className="hover:text-[#10b981] transition-colors text-left"
+                  >
+                    Company Stamps &amp; Seals
+                  </button>
+                </div>
+                <div>
+                  <button 
+                    type="button" 
+                    onClick={() => handleCategoryClick('custom_apparels_caps')}
+                    className="hover:text-[#10b981] transition-colors text-left"
+                  >
+                    Custom Apparels &amp; Caps
+                  </button>
+                </div>
+                <div>
+                  <button 
+                    type="button" 
+                    onClick={() => handleCategoryClick('events_exhibitions')}
+                    className="hover:text-[#10b981] transition-colors text-left"
+                  >
+                    Events &amp; Exhibitions
+                  </button>
+                </div>
+                <div>
+                  <button 
+                    type="button" 
+                    onClick={() => handleCategoryClick('flyer_handbill')}
+                    className="hover:text-[#10b981] transition-colors text-left"
+                  >
+                    Flyer &amp; Handbill Printing
+                  </button>
+                </div>
+                <div>
+                  <button 
+                    type="button" 
+                    onClick={() => handleCategoryClick('food_packaging')}
+                    className="hover:text-[#10b981] transition-colors text-left"
+                  >
+                    Food Packaging
+                  </button>
+                </div>
+                <div>
+                  <button 
+                    type="button" 
+                    onClick={() => handleCategoryClick('signages')}
+                    className="hover:text-[#10b981] transition-colors text-left"
+                  >
+                    Signages
+                  </button>
+                </div>
+              </div>
+
+              {/* Right Sub-Column */}
+              <div className="space-y-2.5">
+                <div>
+                  <button 
+                    type="button" 
+                    onClick={() => handleCategoryClick('frames_wall_arts')}
+                    className="hover:text-[#10b981] transition-colors text-left"
+                  >
+                    Frames &amp; Wall Arts
+                  </button>
+                </div>
+                <div>
+                  <button 
+                    type="button" 
+                    onClick={() => handleCategoryClick('gift_items_souvenirs')}
+                    className="hover:text-[#10b981] transition-colors text-left"
+                  >
+                    Gift Items &amp; Souvenirs
+                  </button>
+                </div>
+                <div>
+                  <button 
+                    type="button" 
+                    onClick={() => handleCategoryClick('office_stationery')}
+                    className="hover:text-[#10b981] transition-colors text-left"
+                  >
+                    Office Stationery &amp; Corporate Branding
+                  </button>
+                </div>
+                <div>
+                  <button 
+                    type="button" 
+                    onClick={() => handleCategoryClick('outdoor_displays')}
+                    className="hover:text-[#10b981] transition-colors text-left"
+                  >
+                    Outdoor Displays
+                  </button>
+                </div>
+                <div>
+                  <button 
+                    type="button" 
+                    onClick={() => handleCategoryClick('packages')}
+                    className="hover:text-[#10b981] transition-colors text-left"
+                  >
+                    Packages
+                  </button>
+                </div>
+                <div>
+                  <button 
+                    type="button" 
+                    onClick={() => handleCategoryClick('packaging_cartons')}
+                    className="hover:text-[#10b981] transition-colors text-left"
+                  >
+                    Packaging and Shipping Cartons
+                  </button>
+                </div>
+                <div>
+                  <button 
+                    type="button" 
+                    onClick={() => handleCategoryClick('paper_bags_tags')}
+                    className="hover:text-[#10b981] transition-colors text-left"
+                  >
+                    Paper Bags &amp; Tags
+                  </button>
+                </div>
+                <div>
+                  <button 
+                    type="button" 
+                    onClick={() => handleCategoryClick('stickers_labels')}
+                    className="hover:text-[#10b981] transition-colors text-left"
+                  >
+                    Stickers &amp; Labels
+                  </button>
+                </div>
+                <div>
+                  <button 
+                    type="button" 
+                    onClick={() => handleCategoryClick('vehicle_branding')}
+                    className="hover:text-[#10b981] transition-colors text-left"
+                  >
+                    Vehicle Branding
+                  </button>
+                </div>
+                <div>
+                  <button 
+                    type="button" 
+                    onClick={() => handleCategoryClick('wedding')}
+                    className="hover:text-[#10b981] transition-colors text-left"
+                  >
+                    Wedding
+                  </button>
+                </div>
+                <div>
+                  <button 
+                    type="button" 
+                    onClick={() => handleCategoryClick('printing_machines')}
+                    className="hover:text-[#10b981] transition-colors text-left"
+                  >
+                    Printing Machines
+                  </button>
+                </div>
+                <div>
+                  <button 
+                    type="button" 
+                    onClick={() => handleCategoryClick('events_exhibitions')}
+                    className="hover:text-[#10b981] transition-colors text-left"
+                  >
+                    Event Planner Lagos
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* ========================================================= */}
+          {/* Column 3: Contact Us, Business Hours & Payment Badges     */}
+          {/* ========================================================= */}
+          <div className="md:col-span-3 lg:col-span-3 space-y-4">
+            <h3 className="font-extrabold text-base sm:text-lg text-stone-900 tracking-tight">
+              Contact Us
+            </h3>
+
+            {/* Address */}
+            <div className="text-[13px] text-stone-600 leading-relaxed">
+              <strong className="text-stone-900 font-bold block">Head Office:</strong>
+              <span>7 George St, off Apata Street, Somolu, Lagos 100231, Lagos.</span>
+            </div>
+
+            {/* Phone */}
+            <div className="flex items-center gap-2 text-[13px] text-stone-700">
+              <span className="text-[#10b981] shrink-0">
+                <Phone className="w-4 h-4 fill-none stroke-current stroke-[2.2]" />
+              </span>
+              <a 
+                href="tel:+2349028694908" 
+                className="font-medium text-stone-800 hover:text-[#10b981] transition-colors"
+              >
+                +2349028694908
+              </a>
+            </div>
+
+            {/* Email */}
+            <div className="flex items-center gap-2 text-[13px] text-stone-700">
+              <span className="text-[#10b981] shrink-0">
+                <Mail className="w-4 h-4 fill-none stroke-current stroke-[2.2]" />
+              </span>
+              <a 
+                href="mailto:orders@silverandgold.ng" 
+                className="font-medium text-stone-800 hover:text-[#10b981] transition-colors"
+              >
+                orders@silverandgold.ng
+              </a>
+            </div>
+
+            {/* Operating Hours */}
+            <div className="text-[13px] text-stone-600 space-y-1 pt-1">
+              <div>
+                Mon - Fri: <strong className="text-stone-900 font-bold">09:00AM - 5:30PM.</strong>
               </div>
               <div>
-                <div className="text-lg font-black tracking-tight leading-tight flex items-center gap-1 sm:gap-1.5">
-                  <span className="text-[#d8dce2] drop-shadow-[0_1px_1px_rgba(255,255,255,0.15)] font-black">
-                    SILVER
-                  </span>
-                  <span className="text-stone-400 font-semibold text-sm">&amp;</span>
-                  <span className="text-[#f5be38] drop-shadow-[0_1px_2px_rgba(245,190,56,0.25)] font-black">
-                    GOLD
-                  </span>
-                  <span className="text-white font-extrabold ml-1">
-                    INKSHINE LTD
-                  </span>
-                </div>
-                <p className="text-[10px] text-stone-400 font-medium tracking-wider uppercase mt-0.5">
-                  Nigeria&apos;s Digital Commercial Printing &amp; Branding Press
-                </p>
+                Sat: <strong className="text-stone-900 font-bold">10:00AM - 4:00PM.</strong>
+              </div>
+              <div>
+                Sun: <strong className="text-stone-900 font-bold">Closed</strong>
               </div>
             </div>
 
-            <p className="text-xs text-stone-400 leading-relaxed max-w-sm">
-              Providing corporate institutions, event managers, SMEs, and government agencies with precision large-format displays, luxury roll-up banners, and corporate promotional gifts with guaranteed 24–48h express turnaround.
-            </p>
+            {/* Payment Method Badges (Exact from Screenshot) */}
+            <div className="pt-2">
+              <div className="flex items-center gap-1.5 flex-wrap">
+                {/* VISA */}
+                <div className="h-6 px-2 rounded-xs border border-stone-200 bg-white flex items-center justify-center shadow-2xs">
+                  <span className="font-extrabold text-[10px] italic tracking-tighter text-[#1A1F71]">
+                    VISA
+                  </span>
+                </div>
 
-            {/* Physical Bayelsa Address & Hub */}
-            <div className="space-y-2 text-xs text-stone-400 pt-2">
-              <div className="flex items-start gap-2.5">
-                <MapPin className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
-                <div>
-                  <strong className="text-stone-200 block">Bayelsa Central Press Hub:</strong>
-                  <span>Mbiama-Yenagoa Road, Graphic Arts Complex, Yenagoa, Bayelsa State, Nigeria.</span>
-                  <div className="mt-1.5">
-                    <a
-                      href="https://share.google/k34pe4JFmZSmpWHlA"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 text-[11px] text-amber-400 hover:text-amber-300 font-medium transition-colors"
-                    >
-                      <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
-                      <span>View Google Profile (4.8 ★ / 29 Reviews)</span>
-                      <ExternalLink className="w-3 h-3 ml-0.5" />
-                    </a>
+                {/* PayPal */}
+                <div className="h-6 px-2 rounded-xs border border-stone-200 bg-white flex items-center justify-center shadow-2xs">
+                  <span className="font-bold text-[10px] italic text-[#003087]">
+                    Pay<span className="text-[#0079C1]">Pal</span>
+                  </span>
+                </div>
+
+                {/* Maestro */}
+                <div className="h-6 px-1.5 rounded-xs border border-stone-200 bg-white flex items-center justify-center gap-0.5 shadow-2xs">
+                  <div className="flex -space-x-1">
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#EB001B]" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#0099DF]" />
                   </div>
+                  <span className="font-bold text-[9px] text-stone-700 ml-0.5">
+                    maestro
+                  </span>
+                </div>
+
+                {/* MasterCard */}
+                <div className="h-6 px-1.5 rounded-xs border border-stone-200 bg-white flex items-center justify-center gap-0.5 shadow-2xs">
+                  <div className="flex -space-x-1">
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#EB001B]" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#F79E1B]" />
+                  </div>
+                  <span className="font-bold text-[9px] text-stone-700 ml-0.5">
+                    mastercard
+                  </span>
+                </div>
+
+                {/* Discover */}
+                <div className="h-6 px-2 rounded-xs border border-stone-200 bg-white flex items-center justify-center shadow-2xs">
+                  <span className="font-bold text-[9px] tracking-tight text-stone-900">
+                    DISC<span className="text-[#FF6000]">O</span>VER
+                  </span>
                 </div>
               </div>
-
-              <div className="flex items-center gap-2.5">
-                <Phone className="w-4 h-4 text-amber-500 shrink-0" />
-                <span>+234 (0) 902 869 4908</span>
-              </div>
-
-              <div className="flex items-center gap-2.5">
-                <Mail className="w-4 h-4 text-amber-500 shrink-0" />
-                <span>orders@silverandgold.ng / support@silverandgold.ng</span>
-              </div>
-
-              <div className="flex items-center gap-2.5">
-                <Clock className="w-4 h-4 text-amber-500 shrink-0" />
-                <span>Mon – Fri: 8:00 AM – 6:30 PM | Sat: 9:00 AM – 3:00 PM</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Col 2: Print Categories */}
-          <div className="space-y-3 text-xs">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-white">
-              Print Categories
-            </h4>
-            <ul className="space-y-2">
-              <li>
-                <button 
-                  onClick={() => onOpenCategoriesPage ? onOpenCategoriesPage('banners_stands') : onSelectCategory('banners_stands')}
-                  className="hover:text-amber-400 transition-colors text-left"
-                >
-                  Luxury & Standard Roll-Up Banners
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => onOpenCategoriesPage ? onOpenCategoriesPage('banners_stands') : onSelectCategory('banners_stands')}
-                  className="hover:text-amber-400 transition-colors text-left"
-                >
-                  Teardrop Flying Feather Flags
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => onOpenCategoriesPage ? onOpenCategoriesPage('food_packaging') : onSelectCategory('food_packaging')}
-                  className="hover:text-amber-400 transition-colors text-left"
-                >
-                  Custom Kraft & Paper Gift Bags
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => onOpenCategoriesPage ? onOpenCategoriesPage('cards_invitations') : onSelectCategory('cards_invitations')}
-                  className="hover:text-amber-400 transition-colors text-left"
-                >
-                  Executive Matte Business Cards
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => onOpenCategoriesPage ? onOpenCategoriesPage('signages') : onSelectCategory('signages')}
-                  className="hover:text-amber-400 transition-colors text-left"
-                >
-                  3D Acrylic Reception Signage
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => onOpenCategoriesPage ? onOpenCategoriesPage('custom_apparels_caps') : onSelectCategory('custom_apparels_caps')}
-                  className="hover:text-amber-400 transition-colors text-left"
-                >
-                  Embroidered Corporate Staff Polos
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => onOpenCategoriesPage ? onOpenCategoriesPage('gift_items_souvenirs') : onSelectCategory('gift_items_souvenirs')}
-                  className="hover:text-amber-400 transition-colors text-left"
-                >
-                  Debossed Executive Leather Journals
-                </button>
-              </li>
-            </ul>
-          </div>
-
-          {/* Col 3: Customer Services & Guidelines */}
-          <div className="space-y-3 text-xs">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-white">
-              Pre-Press & Support
-            </h4>
-            <ul className="space-y-2 text-stone-400">
-              <li>
-                <button 
-                  onClick={() => onOpenInfoModal?.('faq')}
-                  className="hover:text-amber-400 text-left transition-colors"
-                >
-                  Artwork Bleed &amp; Safety Guidelines
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => onOpenInfoModal?.('faq')}
-                  className="hover:text-amber-400 text-left transition-colors"
-                >
-                  CMYK vs RGB Color Mode Guide
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => onOpenInfoModal?.('faq')}
-                  className="hover:text-amber-400 text-left transition-colors"
-                >
-                  Resolution &amp; 300 DPI Pre-Flight
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => onOpenInfoModal?.('services')}
-                  className="hover:text-amber-400 text-left transition-colors"
-                >
-                  Nationwide Logistics Delivery Rates
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => onOpenInfoModal?.('contact')}
-                  className="hover:text-amber-400 text-left transition-colors"
-                >
-                  Proforma Invoices for Corporate Accounts
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => onOpenInfoModal?.('info')}
-                  className="hover:text-amber-400 text-left transition-colors"
-                >
-                  Company Info &amp; Press Credentials
-                </button>
-              </li>
-            </ul>
-          </div>
-
-          {/* Col 4: Payment Methods & Trust */}
-          <div className="space-y-3 text-xs">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-white">
-              Payment & Security
-            </h4>
-            <p className="text-stone-400 leading-relaxed">
-              We accept 100% secure payments via top Central Bank of Nigeria licensed processors.
-            </p>
-
-            <div className="space-y-2 pt-1">
-              <div className="flex flex-wrap gap-1.5">
-                <span className="px-2 py-1 rounded bg-stone-800 text-stone-200 font-mono font-bold text-[11px] border border-stone-700">
-                  Paystack
-                </span>
-                <span className="px-2 py-1 rounded bg-stone-800 text-stone-200 font-mono font-bold text-[11px] border border-stone-700">
-                  Flutterwave
-                </span>
-                <span className="px-2 py-1 rounded bg-stone-800 text-stone-200 font-mono text-[11px] border border-stone-700">
-                  Verve
-                </span>
-                <span className="px-2 py-1 rounded bg-stone-800 text-stone-200 font-mono text-[11px] border border-stone-700">
-                  Mastercard
-                </span>
-                <span className="px-2 py-1 rounded bg-stone-800 text-stone-200 font-mono text-[11px] border border-stone-700">
-                  Visa
-                </span>
-                <span className="px-2 py-1 rounded bg-stone-800 text-amber-400 font-mono text-[11px] border border-stone-700">
-                  Bank Transfer
-                </span>
-              </div>
             </div>
 
-            <div className="pt-2 flex items-center gap-1.5 text-amber-400 text-[11px]">
-              <ShieldCheck className="w-4 h-4" />
-              <span>256-Bit SSL Encrypted Checkout</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom Copyright & Disclaimer */}
-        <div className="pt-8 border-t border-stone-800 text-xs text-stone-500 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p>
-            © {new Date().getFullYear()} Silver &amp; Gold Inkshine Ltd. All Rights Reserved. RC 1892044.
-          </p>
-          <div className="flex items-center gap-4 text-[11px]">
-            <span className="hover:text-stone-300 cursor-pointer">Terms of Service</span>
-            <span>•</span>
-            <span className="hover:text-stone-300 cursor-pointer">Privacy Policy</span>
-            <span>•</span>
-            <span className="hover:text-stone-300 cursor-pointer">Print Refund Policy</span>
+            {/* Discreet Admin Desk Link */}
             {onOpenAdmin && (
-              <>
-                <span>•</span>
+              <div className="pt-2">
                 <button
+                  type="button"
                   onClick={onOpenAdmin}
-                  className="hover:text-amber-400 text-stone-400 transition-colors cursor-pointer flex items-center gap-1 font-medium"
+                  className="text-[11px] text-stone-400 hover:text-stone-700 transition-colors flex items-center gap-1 cursor-pointer"
                 >
-                  <ShieldCheck className="w-3 h-3 text-amber-500" />
-                  <span>Staff &amp; Press Desk</span>
+                  <ShieldCheck className="w-3 h-3 text-[#10b981]" />
+                  <span>Admin &amp; Operations Desk</span>
                 </button>
-              </>
+              </div>
             )}
           </div>
+
         </div>
+      </div>
+
+      {/* ========================================================= */}
+      {/* Bottom Full-Width Dark Green Bar (Exact from Screenshot)  */}
+      {/* ========================================================= */}
+      <div className="bg-[#00473e] text-white py-4 px-4 text-center">
+        <p className="text-xs sm:text-[13px] font-medium text-stone-200">
+          Copyright &copy; {new Date().getFullYear()} Silver &amp; Gold Inkshine Ltd. All rights reserved.
+        </p>
       </div>
     </footer>
   );
