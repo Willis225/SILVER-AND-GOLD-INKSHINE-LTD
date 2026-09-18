@@ -283,6 +283,35 @@ export const PageTextManager: React.FC<PageTextManagerProps> = ({
           </div>
         </div>
 
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1 flex items-center gap-1.5">
+              <MapPin className="w-3.5 h-3.5 text-stone-400" />
+              <span>Google Maps Link (Map Line)</span>
+            </label>
+            <input
+              type="url"
+              value={formData.googleMapsUrl || 'https://maps.app.goo.gl/FHkoQGNuL8p13jnG6'}
+              onChange={(e) => handleChange('googleMapsUrl', e.target.value)}
+              placeholder="https://maps.app.goo.gl/FHkoQGNuL8p13jnG6"
+              className="w-full px-3.5 py-2.5 bg-stone-50 rounded-xl border border-stone-300 text-xs text-stone-900 font-mono focus:ring-2 focus:ring-[#b8860b]"
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1 flex items-center gap-1.5">
+              <MapPin className="w-3.5 h-3.5 text-stone-400" />
+              <span>Google Maps Embed URL</span>
+            </label>
+            <input
+              type="url"
+              value={formData.googleMapsEmbedUrl || 'https://maps.google.com/maps?q=9.081999,8.675277&hl=en&z=16&output=embed'}
+              onChange={(e) => handleChange('googleMapsEmbedUrl', e.target.value)}
+              className="w-full px-3.5 py-2.5 bg-stone-50 rounded-xl border border-stone-300 text-xs text-stone-900 font-mono focus:ring-2 focus:ring-[#b8860b]"
+            />
+          </div>
+        </div>
+
         <div>
           <label className="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1 flex items-center gap-1.5">
             <MapPin className="w-3.5 h-3.5 text-stone-400" />

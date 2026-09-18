@@ -432,13 +432,13 @@ export const RequestQuoteModal: React.FC<RequestQuoteModalProps> = ({
           </div>
 
           {/* ========================================================= */}
-          {/* Somolu, Lagos Interactive Map Section                     */}
+          {/* Interactive Google Map Section                            */}
           {/* ========================================================= */}
           <div className="space-y-2">
             <div className="rounded-xl overflow-hidden border border-stone-200 shadow-xs relative bg-stone-100">
               <iframe
-                title="Silver & Gold Inkshine Ltd Location"
-                src="https://maps.google.com/maps?q=7+George+St,+off+Apata+Street,+Somolu,+Lagos+100231,+Lagos,+Nigeria&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                title="Silver & Gold Printing House Location"
+                src="https://maps.google.com/maps?q=9.081999,8.675277&hl=en&z=16&output=embed"
                 width="100%"
                 height="240"
                 style={{ border: 0 }}
@@ -447,9 +447,26 @@ export const RequestQuoteModal: React.FC<RequestQuoteModalProps> = ({
                 className="w-full block"
               />
               <div className="absolute top-2 left-2 bg-white/95 backdrop-blur-xs px-3 py-1.5 rounded-md shadow-xs border border-stone-200 text-[11px] leading-tight">
-                <p className="font-bold text-stone-900">Silver &amp; Gold Inkshine Ltd</p>
-                <p className="text-stone-500">Somolu Print Hub, Lagos</p>
+                <p className="font-bold text-stone-900">Silver &amp; Gold Printing House</p>
+                <p className="text-stone-500">Commercial Press &amp; Production Facility</p>
               </div>
+            </div>
+
+            {/* Direct Google Maps Action Bar */}
+            <div className="p-2.5 rounded-xl bg-stone-50 border border-stone-200 flex flex-wrap items-center justify-between gap-2 text-xs">
+              <div className="flex items-center gap-1.5 text-stone-600 font-mono text-[11px] truncate max-w-full sm:max-w-xs">
+                <MapPin className="w-3.5 h-3.5 text-[#b8860b] shrink-0" />
+                <span className="truncate">https://maps.app.goo.gl/FHkoQGNuL8p13jnG6</span>
+              </div>
+              <a
+                href="https://maps.app.goo.gl/FHkoQGNuL8p13jnG6"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#b8860b] hover:bg-[#996515] text-white text-xs font-bold transition-colors shrink-0 ml-auto"
+              >
+                <span>Open in Google Maps</span>
+                <ExternalLink className="w-3 h-3" />
+              </a>
             </div>
           </div>
 

@@ -197,32 +197,40 @@ export const SocialProofSection: React.FC = () => {
         )}
 
         {/* 1. Client Logos Strip */}
-        <div className="space-y-6 text-center">
+        <div className="space-y-4 text-center">
           <div>
             <span className="text-xs sm:text-sm font-black uppercase tracking-wider sm:tracking-widest text-stone-700">
               TRUSTED BY NIGERIA&apos;S LEADING ENTERPRISES, FINTECHS &amp; INSTITUTIONS
             </span>
           </div>
 
-          <div className="grid grid-cols-2 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 sm:gap-4">
-            {ENTERPRISE_BRANDS.map((brand) => (
-              <div
-                key={brand.id}
-                className="bg-white hover:bg-amber-50/30 border border-stone-200/90 hover:border-amber-400/50 rounded-2xl p-3.5 sm:p-4 flex flex-col items-center justify-between text-center transition-all shadow-2xs hover:shadow-sm group"
-              >
-                <div className="h-10 sm:h-12 w-full flex items-center justify-center px-1 transition-transform group-hover:scale-105 duration-200">
-                  {brand.renderLogo()}
+          {/* Continuous Straight Single-Line Moving Marquee */}
+          <div className="relative w-full overflow-hidden py-1">
+            {/* Left & Right Edge Vignette Fades */}
+            <div className="absolute left-0 top-0 bottom-0 w-10 sm:w-20 bg-gradient-to-r from-stone-50 to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-10 sm:w-20 bg-gradient-to-l from-stone-50 to-transparent z-10 pointer-events-none" />
+
+            <div className="animate-marquee-straight items-center gap-3 sm:gap-4 py-2">
+              {[...ENTERPRISE_BRANDS, ...ENTERPRISE_BRANDS].map((brand, idx) => (
+                <div
+                  key={`${brand.id}-${idx}`}
+                  className="bg-white hover:bg-amber-50/40 border border-stone-200/90 hover:border-amber-400/60 rounded-2xl px-4 sm:px-5 py-3 flex items-center gap-3.5 transition-all shadow-2xs hover:shadow-md shrink-0 h-[64px] min-w-[200px] sm:min-w-[230px] group cursor-pointer"
+                >
+                  <div className="h-8 sm:h-9 w-24 sm:w-28 flex items-center justify-center shrink-0 transition-transform group-hover:scale-105 duration-200">
+                    {brand.renderLogo()}
+                  </div>
+                  <div className="h-6 w-px bg-stone-200 shrink-0" />
+                  <div className="flex flex-col text-left shrink-0">
+                    <span className="font-extrabold text-xs text-stone-800 tracking-tight truncate max-w-[85px] sm:max-w-[105px]">
+                      {brand.name}
+                    </span>
+                    <span className="text-[9.5px] font-semibold text-stone-500 group-hover:text-amber-800 transition-colors">
+                      {brand.badge}
+                    </span>
+                  </div>
                 </div>
-                <div className="w-full pt-2 mt-1 border-t border-stone-100 flex items-center justify-between gap-1 text-[10px]">
-                  <span className="font-bold text-stone-700 truncate text-left max-w-[85px] sm:max-w-[100px]">
-                    {brand.name}
-                  </span>
-                  <span className="shrink-0 px-1.5 py-0.5 rounded-md bg-stone-100 text-stone-600 font-semibold text-[9px] group-hover:bg-amber-100 group-hover:text-amber-900 transition-colors">
-                    {brand.badge}
-                  </span>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
 

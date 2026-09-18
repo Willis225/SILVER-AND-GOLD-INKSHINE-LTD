@@ -4,7 +4,9 @@ import {
   Mail, 
   ArrowRight,
   ShieldCheck,
-  ExternalLink
+  ExternalLink,
+  MapPin,
+  Navigation
 } from 'lucide-react';
 import { ProductCategory } from '../../types/schema';
 import { InfoModalTab } from '../common/CompanyInfoModal';
@@ -486,6 +488,66 @@ export const Footer: React.FC<FooterProps> = ({
               </div>
               <div>
                 Sun: <strong className="text-white font-bold">Closed</strong>
+              </div>
+            </div>
+
+            {/* Interactive Google Map Preview & Link */}
+            <div className="pt-2 space-y-2">
+              <div className="rounded-2xl overflow-hidden border border-white/20 bg-stone-900 shadow-md">
+                <div className="relative h-32 w-full bg-stone-950">
+                  <iframe
+                    title="Silver & Gold Printing House Location Map"
+                    src="https://maps.google.com/maps?q=9.081999,8.675277&hl=en&z=16&output=embed"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    className="w-full h-full block filter contrast-105"
+                  />
+                  <div className="absolute top-2 left-2 bg-black/85 backdrop-blur-xs px-2 py-1 rounded-md border border-white/15 text-[10px] text-amber-300 font-bold flex items-center gap-1">
+                    <MapPin className="w-3 h-3 text-amber-400" />
+                    <span>Silver &amp; Gold Printing House</span>
+                  </div>
+                </div>
+
+                <div className="p-3 bg-stone-950/95 border-t border-white/10 space-y-2">
+                  <div className="flex items-center justify-between text-[11px]">
+                    <span className="text-amber-400 font-bold flex items-center gap-1">
+                      <Navigation className="w-3 h-3" />
+                      Google Maps Link
+                    </span>
+                    <a
+                      href="https://maps.app.goo.gl/FHkoQGNuL8p13jnG6"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-amber-300 hover:underline text-[10px] flex items-center gap-0.5"
+                    >
+                      <span>Open</span>
+                      <ExternalLink className="w-2.5 h-2.5" />
+                    </a>
+                  </div>
+
+                  <a
+                    href="https://maps.app.goo.gl/FHkoQGNuL8p13jnG6"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="block px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-[10.5px] font-mono text-amber-200 hover:text-white truncate border border-white/10 transition-colors"
+                    title="https://maps.app.goo.gl/FHkoQGNuL8p13jnG6"
+                  >
+                    https://maps.app.goo.gl/FHkoQGNuL8p13jnG6
+                  </a>
+
+                  <a
+                    href="https://maps.app.goo.gl/FHkoQGNuL8p13jnG6"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="w-full py-1.5 px-3 rounded-lg bg-[#b8860b] hover:bg-[#996515] text-white text-[11px] font-bold flex items-center justify-center gap-1.5 transition-colors shadow-xs"
+                  >
+                    <span>Get GPS Directions on Google Maps</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                </div>
               </div>
             </div>
 

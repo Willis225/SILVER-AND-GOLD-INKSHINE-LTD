@@ -746,6 +746,45 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
                     </div>
                   </div>
 
+                  {/* Google Maps Location Embed & Link */}
+                  <div className="rounded-2xl overflow-hidden border border-stone-200 bg-stone-100 shadow-2xs">
+                    <iframe
+                      title="Google Maps Location - Silver & Gold Printing House"
+                      src="https://maps.google.com/maps?q=9.081999,8.675277&hl=en&z=16&output=embed"
+                      width="100%"
+                      height="160"
+                      style={{ border: 0 }}
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                      className="w-full block"
+                    />
+                    <div className="p-3 bg-white border-t border-stone-200 space-y-1.5">
+                      <div className="text-[11px] font-bold text-stone-900 flex items-center justify-between gap-1.5">
+                        <span className="flex items-center gap-1.5 text-stone-800">
+                          <MapPin className="w-3.5 h-3.5 text-[#b8860b]" />
+                          <span>Silver &amp; Gold Printing House</span>
+                        </span>
+                        <a
+                          href="https://maps.app.goo.gl/FHkoQGNuL8p13jnG6"
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-1 text-[11px] font-bold text-[#b8860b] hover:underline"
+                        >
+                          <span>Open Map</span>
+                          <ExternalLink className="w-3 h-3" />
+                        </a>
+                      </div>
+                      <a
+                        href="https://maps.app.goo.gl/FHkoQGNuL8p13jnG6"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-[11px] font-mono text-stone-600 hover:text-[#b8860b] break-all block p-1.5 rounded-lg bg-stone-50 border border-stone-200"
+                      >
+                        https://maps.app.goo.gl/FHkoQGNuL8p13jnG6
+                      </a>
+                    </div>
+                  </div>
+
                   {/* WhatsApp Direct Chat Button */}
                   <a
                     href="https://wa.me/2347030372539?text=Hello%20Silver%20%26%20Gold%20Inkshine%2C%20I%20would%20like%20to%20make%20an%20inquiry%20regarding%20a%20commercial%20print%20job"

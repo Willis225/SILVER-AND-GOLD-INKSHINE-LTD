@@ -13,6 +13,7 @@ import { SignageCompanySection } from './components/storefront/SignageCompanySec
 import { WhyChooseUsSection } from './components/storefront/WhyChooseUsSection';
 import { CustomAwardsSection } from './components/storefront/CustomAwardsSection';
 import { SocialProofSection } from './components/storefront/SocialProofSection';
+import { LocationMapSection } from './components/storefront/LocationMapSection';
 import { Footer } from './components/layout/Footer';
 import { ProductQuickViewModal } from './components/storefront/ProductQuickViewModal';
 import { CartDrawer, CartItem } from './components/storefront/CartDrawer';
@@ -472,6 +473,13 @@ export default function App() {
 
             {/* Trust & Social Proof (Reviews, Client Logos, Completed Jobs) */}
             <SocialProofSection />
+
+            {/* Official Production Plant & Location Map */}
+            <LocationMapSection
+              mapUrl={websiteContent.googleMapsUrl}
+              embedUrl={websiteContent.googleMapsEmbedUrl}
+              onRequestQuote={() => setIsQuoteModalOpen(true)}
+            />
           </>
         )}
       </main>

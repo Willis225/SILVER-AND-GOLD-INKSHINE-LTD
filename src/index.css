@@ -94,3 +94,32 @@ canvas {
   -webkit-text-fill-color: transparent;
   animation: goldShimmerFlow 5s ease-in-out infinite;
 }
+
+/* Continuous Straight Single-Line Marquee */
+@keyframes marqueeStraight {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-marquee-straight {
+  display: flex;
+  width: max-content;
+  animation: marqueeStraight 30s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-straight:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee-straight {
+    animation: none;
+    overflow-x: auto;
+  }
+}
+

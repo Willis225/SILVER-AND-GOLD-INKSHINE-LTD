@@ -46,6 +46,8 @@ export interface WebsiteContent {
   contactPhone: string;
   address: string;
   googlePreferredSourceUrl: string;
+  googleMapsUrl: string;
+  googleMapsEmbedUrl: string;
 }
 
 export const DEFAULT_HERO_SLIDES: HeroSlideItem[] = [
@@ -164,7 +166,9 @@ export const DEFAULT_WEBSITE_CONTENT: WebsiteContent = {
   contactEmail: 'orders@silverandgold.ng',
   contactPhone: '+234 703 037 2539',
   address: 'Plot 14 Commercial District, Yenagoa, Bayelsa State / Lagos Hub, Nigeria',
-  googlePreferredSourceUrl: 'https://share.google/5obB8jqnby72M5IDG'
+  googlePreferredSourceUrl: 'https://share.google/5obB8jqnby72M5IDG',
+  googleMapsUrl: 'https://maps.app.goo.gl/FHkoQGNuL8p13jnG6',
+  googleMapsEmbedUrl: 'https://maps.google.com/maps?q=9.081999,8.675277&hl=en&z=16&output=embed'
 };
 
 const STORAGE_KEY = 'inkshine_website_content_v3';
@@ -203,6 +207,14 @@ export function loadSavedWebsiteContent(): WebsiteContent {
         ? DEFAULT_WEBSITE_CONTENT.heroDescription 
         : (parsed.heroDescription || DEFAULT_WEBSITE_CONTENT.heroDescription);
 
+      const hasOldMapUrl = parsed.googleMapsUrl === 'https://maps.app.goo.gl/LSvreepfyxDCE4246';
+      const resolvedMapUrl = (!parsed.googleMapsUrl || hasOldMapUrl)
+        ? DEFAULT_WEBSITE_CONTENT.googleMapsUrl
+        : parsed.googleMapsUrl;
+      const resolvedEmbedUrl = (!parsed.googleMapsEmbedUrl || hasOldMapUrl)
+        ? DEFAULT_WEBSITE_CONTENT.googleMapsEmbedUrl
+        : parsed.googleMapsEmbedUrl;
+
       const mergedContent: WebsiteContent = {
         ...DEFAULT_WEBSITE_CONTENT,
         ...parsed,
@@ -212,10 +224,12 @@ export function loadSavedWebsiteContent(): WebsiteContent {
         heroDescription,
         heroSlides,
         showcaseServices: Array.isArray(parsed.showcaseServices) && parsed.showcaseServices.length > 0 ? parsed.showcaseServices : DEFAULT_SHOWCASE_SERVICES,
+        googleMapsUrl: resolvedMapUrl,
+        googleMapsEmbedUrl: resolvedEmbedUrl,
       };
 
-      // If we sanitized from v2, persist to v3
-      if (hasUnsplashHero || hasTemporaryHeadline || !localStorage.getItem(STORAGE_KEY)) {
+      // If we sanitized or updated, persist to storage
+      if (hasUnsplashHero || hasTemporaryHeadline || hasOldMapUrl || !localStorage.getItem(STORAGE_KEY)) {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(mergedContent));
       }
 
