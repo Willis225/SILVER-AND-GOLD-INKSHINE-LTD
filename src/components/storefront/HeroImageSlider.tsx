@@ -47,21 +47,33 @@ const SLIDES: SlideItem[] = [
   },
 ];
 
-export const HeroImageSlider: React.FC = () => {
+interface HeroImageSliderProps {
+  slides?: SlideItem[];
+}
+
+export const HeroImageSlider: React.FC<HeroImageSliderProps> = ({ slides: propSlides }) => {
+  const activeSlides = propSlides && propSlides.length > 0 ? propSlides : SLIDES;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(1);
   const [isHovered, setIsHovered] = useState(false);
   const autoplayTimerRef = useRef<number | null>(null);
 
+  // Auto-reset index if slides count changes
+  useEffect(() => {
+    if (currentIndex >= activeSlides.length) {
+      setCurrentIndex(0);
+    }
+  }, [activeSlides.length, currentIndex]);
+
   const nextSlide = useCallback(() => {
     setDirection(1);
-    setCurrentIndex((prev) => (prev + 1) % SLIDES.length);
-  }, []);
+    setCurrentIndex((prev) => (prev + 1) % activeSlides.length);
+  }, [activeSlides.length]);
 
   const prevSlide = useCallback(() => {
     setDirection(-1);
-    setCurrentIndex((prev) => (prev - 1 + SLIDES.length) % SLIDES.length);
-  }, []);
+    setCurrentIndex((prev) => (prev - 1 + activeSlides.length) % activeSlides.length);
+  }, [activeSlides.length]);
 
   const goToSlide = (idx: number) => {
     setDirection(idx > currentIndex ? 1 : -1);
@@ -112,7 +124,7 @@ export const HeroImageSlider: React.FC = () => {
     touchEndXRef.current = null;
   };
 
-  const currentSlide = SLIDES[currentIndex];
+  const currentSlide = activeSlides[currentIndex] || activeSlides[0] || SLIDES[0];
 
   return (
     <div 
@@ -205,16 +217,16 @@ export const HeroImageSlider: React.FC = () => {
         </button>
       </div>
 
-      {/* Minimal Animated Dot Indicators (Tap to jump directly to any of the 7 pictures) */}
+      {/* Minimal Animated Dot Indicators */}
       <div 
         className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/50 backdrop-blur-md border border-white/10"
         onClick={(e) => e.stopPropagation()}
       >
-        {SLIDES.map((slide, idx) => {
+        {activeSlides.map((slide, idx) => {
           const isActive = idx === currentIndex;
           return (
             <button
-              key={slide.id}
+              key={slide.id || idx}
               type="button"
               onClick={() => goToSlide(idx)}
               aria-label={`Jump to picture ${idx + 1}`}

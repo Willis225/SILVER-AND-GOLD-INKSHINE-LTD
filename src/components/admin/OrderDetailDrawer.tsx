@@ -50,6 +50,13 @@ const ORDER_STATUS_CONFIG: Record<OrderStatus, { label: string; color: string; b
     border: 'border-indigo-200',
     icon: FileText,
   },
+  prepress_approved: {
+    label: 'Pre-Press Approved',
+    color: 'text-teal-800',
+    bg: 'bg-teal-50',
+    border: 'border-teal-200',
+    icon: CheckCircle2,
+  },
   in_production: {
     label: 'In Production (Printing)',
     color: 'text-blue-800',

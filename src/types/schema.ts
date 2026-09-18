@@ -136,6 +136,7 @@ export interface OrderItem {
 export type OrderStatus = 
   | 'pending_payment'
   | 'artwork_review'
+  | 'prepress_approved'
   | 'in_production'
   | 'ready_for_dispatch'
   | 'out_for_delivery'

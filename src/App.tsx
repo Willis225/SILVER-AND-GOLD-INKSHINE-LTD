@@ -30,6 +30,12 @@ import { SAMPLE_PRODUCTS, NIGERIAN_SHIPPING_ZONES } from './data/seedData';
 import { INITIAL_ORDERS } from './data/seedOrders';
 import { Product, ProductCategory, Order, OrderStatus, PaymentStatus, calculateDynamicPrice } from './types/schema';
 import { SubmissionMode, DesignerBrief } from './components/product/ArtworkPreflightChecker';
+import { 
+  WebsiteContent, 
+  loadSavedWebsiteContent, 
+  saveWebsiteContent, 
+  resetWebsiteContentToDefaults 
+} from './types/websiteContent';
 
 export default function App() {
   // Global mutable catalog & orders state with local storage persistence
@@ -49,6 +55,21 @@ export default function App() {
   });
 
   const [orders, setOrders] = useState<Order[]>(INITIAL_ORDERS);
+
+  // Dynamic Website CMS Content with local storage persistence
+  const [websiteContent, setWebsiteContent] = useState<WebsiteContent>(() => {
+    return loadSavedWebsiteContent();
+  });
+
+  const handleUpdateWebsiteContent = (newContent: WebsiteContent) => {
+    setWebsiteContent(newContent);
+    saveWebsiteContent(newContent);
+  };
+
+  const handleResetWebsiteContent = () => {
+    const defaults = resetWebsiteContentToDefaults();
+    setWebsiteContent(defaults);
+  };
 
   // Storefront navigation & state
   const [selectedCategory, setSelectedCategory] = useState<ProductCategory | 'all'>('all');
@@ -304,6 +325,9 @@ export default function App() {
           <AdminDashboard
             orders={orders}
             products={products}
+            websiteContent={websiteContent}
+            onUpdateWebsiteContent={handleUpdateWebsiteContent}
+            onResetAllWebsiteContentToDefaults={handleResetWebsiteContent}
             onReturnToStorefront={() => {
               setViewMode('storefront');
               window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -358,6 +382,11 @@ export default function App() {
               onExploreProducts={scrollToCatalog}
               onOpenPricingSandbox={() => setViewMode('stage1_sandbox')}
               onSelectProductQuickView={handleOpenProductById}
+              slides={websiteContent.heroSlides}
+              headline={websiteContent.heroHeadline}
+              subheadline={websiteContent.heroSubheadline}
+              eyebrow={websiteContent.heroEyebrow}
+              description={websiteContent.heroDescription}
             />
 
             {/* Brand Introduction & Promotions Overview (Matching Reference) */}
@@ -365,6 +394,9 @@ export default function App() {
 
             {/* Top-Quality Printing Services Showcase Carousel (Matching Reference) */}
             <ServicesShowcaseSection
+              title={websiteContent.showcaseTitle}
+              description={websiteContent.showcaseDescription}
+              items={websiteContent.showcaseServices}
               onOrderNow={() => {
                 handleOpenCategories('all');
               }}
@@ -425,7 +457,10 @@ export default function App() {
             />
 
             {/* Why Businesses Choose SILVER & GOLD INKSHINE LTD */}
-            <WhyChooseUsSection />
+            <WhyChooseUsSection
+              title={websiteContent.whyChooseTitle}
+              description={websiteContent.whyChooseDescription}
+            />
 
             {/* Custom Award Plaques and Trophies Printing (Matching Reference) */}
             <CustomAwardsSection

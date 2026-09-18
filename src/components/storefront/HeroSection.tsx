@@ -6,11 +6,17 @@ import {
   CheckCircle2
 } from 'lucide-react';
 import { HeroImageSlider } from './HeroImageSlider';
+import { HeroSlideItem } from '../../types/websiteContent';
 
 interface HeroSectionProps {
   onExploreProducts: () => void;
   onOpenPricingSandbox: () => void;
   onSelectProductQuickView: (productId: string) => void;
+  slides?: HeroSlideItem[];
+  headline?: string;
+  subheadline?: string;
+  eyebrow?: string;
+  description?: string;
 }
 
 const containerVariants: Variants = {
@@ -40,6 +46,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   onExploreProducts,
   onOpenPricingSandbox,
   onSelectProductQuickView,
+  slides,
+  headline = '#1 Online Printing Company in Bayelsa',
+  subheadline = 'Banners • Branding • Digital Printing',
+  eyebrow = 'Bring your business to the best scale',
+  description = 'Select from top print collections, guaranteeing precision color matching and pre-press audit. Need custom specs or large volume? Fast turnaround and nationwide doorstep delivery across Nigeria!',
 }) => {
   return (
     <section className="relative overflow-hidden bg-[#07080a] text-white pt-8 pb-14 sm:pt-12 sm:pb-20 lg:pt-16 lg:pb-24">
@@ -80,14 +91,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             {/* Soft gold glow behind text */}
             <div className="absolute -top-12 -left-12 w-[300px] sm:w-[480px] h-[300px] sm:h-[480px] rounded-full bg-[radial-gradient(circle,rgba(245,190,56,0.15)_0%,rgba(212,175,55,0.05)_45%,transparent_70%)] blur-3xl pointer-events-none -z-10" />
 
-            {/* Eyebrow Pill Badge with Gold Accent (Matching Reference) */}
+            {/* Eyebrow Pill Badge with Gold Accent */}
             <motion.div 
               variants={itemVariants}
               className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full border border-[#ebd07f]/40 bg-[#16140f]/90 text-xs text-stone-200 backdrop-blur-md shadow-[0_2px_12px_rgba(0,0,0,0.4)] group"
             >
               <span className="w-2 h-2 rounded-full bg-[#f5be38] shadow-[0_0_8px_#f5be38] animate-pulse shrink-0" />
               <span className="tracking-wide text-[11.5px] sm:text-[12.5px] font-medium text-stone-100">
-                Bring your business to the best scale
+                {eyebrow}
               </span>
               <Sparkles className="w-3.5 h-3.5 text-[#f5be38] opacity-90 shrink-0" />
             </motion.div>
@@ -96,13 +107,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             <motion.div variants={itemVariants} className="space-y-2">
               {/* Primary Headline: Bold Large White Font */}
               <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-[45px] xl:text-[52px] font-black tracking-tight text-white leading-[1.1] sm:leading-[1.08] drop-shadow-[0_2px_20px_rgba(245,190,56,0.2)]">
-                #1 Online Printing Company in Bayelsa
+                {headline}
               </h1>
 
               {/* Sub-headline: Shimmering Vibrant Gold Font */}
               <div className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-[38px] xl:text-[45px] font-black tracking-tight leading-[1.14] sm:leading-[1.12]">
                 <span className="gold-shimmer-text drop-shadow-[0_0_24px_rgba(245,190,56,0.4)] inline-block">
-                  Banners • Branding • Digital Printing
+                  {subheadline}
                 </span>
               </div>
 
@@ -122,7 +133,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
               {/* Subtitle text: Modern clean sans-serif typography (Tight gap below gold line) */}
               <p className="text-stone-300 text-xs sm:text-sm md:text-base leading-relaxed max-w-xl font-normal pt-0.5">
-                Select from top print collections, guaranteeing precision color matching and pre-press audit. Need custom specs or large volume? Fast turnaround and nationwide doorstep delivery across Nigeria!
+                {description}
               </p>
             </motion.div>
 
@@ -194,7 +205,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               {/* Product Visual Presentation Scene Card */}
               <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-b from-[#14151b]/95 via-[#0a0a0d]/98 to-[#040406] border border-[#ebd07f]/25 p-2 sm:p-2.5 backdrop-blur-md ring-1 ring-[#ebd07f]/10">
                 {/* Pure Interactive Animated Sliding Image Showcase */}
-                <HeroImageSlider />
+                <HeroImageSlider slides={slides} />
               </div>
             </div>
           </motion.div>

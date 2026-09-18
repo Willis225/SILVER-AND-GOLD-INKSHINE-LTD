@@ -1,12 +1,13 @@
 import React, { useRef } from 'react';
 import { motion } from 'motion/react';
 import { ChevronRight, ChevronLeft, ArrowRight } from 'lucide-react';
+import { ShowcaseServiceItem } from '../../types/websiteContent';
 
-interface ShowcaseItem {
+export interface ShowcaseItem {
   id: string;
   title: string;
   price: string;
-  numericPrice: number;
+  numericPrice?: number;
   imageUrl: string;
   badge?: string;
   category: string;
@@ -15,6 +16,9 @@ interface ShowcaseItem {
 interface ServicesShowcaseSectionProps {
   onOrderNow?: () => void;
   onSelectItem?: (item: ShowcaseItem) => void;
+  items?: ShowcaseServiceItem[];
+  title?: string;
+  description?: string;
 }
 
 const SHOWCASE_ITEMS: ShowcaseItem[] = [
@@ -71,8 +75,12 @@ const SHOWCASE_ITEMS: ShowcaseItem[] = [
 export const ServicesShowcaseSection: React.FC<ServicesShowcaseSectionProps> = ({
   onOrderNow,
   onSelectItem,
+  items: propItems,
+  title = 'Get Top-Quality Printing Services Across Nigeria',
+  description = 'From flyers, business cards, banners and packaging to branded items, signage, apparel printing and corporate stationery, SILVER & GOLD INKSHINE LTD delivers fast, affordable and professional printing services for businesses across Nigeria.',
 }) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const displayItems = propItems && propItems.length > 0 ? propItems : SHOWCASE_ITEMS;
 
   const handleScroll = (direction: 'left' | 'right') => {
     if (scrollContainerRef.current) {
@@ -95,11 +103,11 @@ export const ServicesShowcaseSection: React.FC<ServicesShowcaseSectionProps> = (
             className="lg:col-span-3 space-y-4 sm:space-y-5"
           >
             <h2 className="text-xl sm:text-2xl font-bold text-stone-900 tracking-tight leading-snug">
-              Get Top-Quality Printing Services Across Nigeria
+              {title}
             </h2>
 
             <p className="text-xs sm:text-[13px] text-stone-600 leading-relaxed font-normal">
-              From flyers, business cards, banners and packaging to branded items, signage, apparel printing and corporate stationery, SILVER &amp; GOLD INKSHINE LTD delivers fast, affordable and professional printing services for businesses across Nigeria.
+              {description}
             </p>
 
             <div>
@@ -142,17 +150,31 @@ export const ServicesShowcaseSection: React.FC<ServicesShowcaseSectionProps> = (
               className="flex gap-4 sm:gap-6 overflow-x-auto scrollbar-none scroll-smooth pb-4 pt-1 px-1 -mx-1"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
-              {SHOWCASE_ITEMS.map((item) => (
-                <div
-                  key={item.id}
-                  onClick={() => onSelectItem?.(item)}
-                  className="w-[200px] sm:w-[220px] shrink-0 flex flex-col group cursor-pointer"
-                >
-                  {/* Image Container with Exact Aspect Ratio & Styling */}
-                  <div className="w-full h-[210px] sm:h-[230px] rounded-lg overflow-hidden bg-stone-50 border border-stone-100 group-hover:shadow-md transition-shadow relative flex items-center justify-center">
-                    
-                    {/* Render specific custom graphic representations matching image */}
-                    {item.id === 'showcase-annual-reports' ? (
+              {displayItems.map((item) => {
+                const hasReplacedImage = item.imageUrl && 
+                  item.imageUrl !== 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=600&q=80' &&
+                  item.imageUrl !== 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80' &&
+                  item.imageUrl !== 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=600&q=80' &&
+                  item.imageUrl !== 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80';
+
+                return (
+                  <div
+                    key={item.id}
+                    onClick={() => onSelectItem?.(item as any)}
+                    className="w-[200px] sm:w-[220px] shrink-0 flex flex-col group cursor-pointer"
+                  >
+                    {/* Image Container with Exact Aspect Ratio & Styling */}
+                    <div className="w-full h-[210px] sm:h-[230px] rounded-lg overflow-hidden bg-stone-50 border border-stone-100 group-hover:shadow-md transition-shadow relative flex items-center justify-center">
+                      
+                      {/* If user uploaded or replaced the image, show it directly */}
+                      {hasReplacedImage ? (
+                        <img
+                          src={item.imageUrl}
+                          alt={item.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          referrerPolicy="no-referrer"
+                        />
+                      ) : item.id === 'showcase-annual-reports' ? (
                       /* Realistic Annual Report booklets */
                       <div className="w-full h-full p-4 flex items-center justify-center bg-[#fafafa]">
                         <div className="relative w-36 h-48 transform -rotate-6 transition-transform group-hover:rotate-0 duration-300">
@@ -296,7 +318,8 @@ export const ServicesShowcaseSection: React.FC<ServicesShowcaseSectionProps> = (
                     </div>
                   </div>
                 </div>
-              ))}
+                );
+              })}
             </div>
 
           </div>

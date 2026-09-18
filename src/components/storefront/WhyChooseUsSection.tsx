@@ -4,9 +4,15 @@ import { ArrowRight } from 'lucide-react';
 
 interface WhyChooseUsSectionProps {
   onSendFile?: () => void;
+  title?: string;
+  description?: string;
 }
 
-export const WhyChooseUsSection: React.FC<WhyChooseUsSectionProps> = ({ onSendFile }) => {
+export const WhyChooseUsSection: React.FC<WhyChooseUsSectionProps> = ({ 
+  onSendFile,
+  title = 'Bayelsa & Nigeria’s Fast, Affordable, and Reliable Online Printing Company',
+  description = 'Choose SILVER & GOLD INKSHINE LTD because we make printing simple, affordable and reliable for businesses, schools, churches, event planners, product owners and corporate organisations across Nigeria. We understand that customers want quality work without wasting money, delaying their events or struggling with poor finishing — and that is exactly what we deliver.',
+}) => {
   return (
     <section className="bg-[#f0f5f9] py-12 sm:py-16 border-b border-stone-200/70">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -27,12 +33,12 @@ export const WhyChooseUsSection: React.FC<WhyChooseUsSectionProps> = ({ onSendFi
 
             {/* Title */}
             <h2 className="text-xl sm:text-2xl font-bold text-stone-900 tracking-tight leading-snug">
-              Bayelsa &amp; Nigeria’s Fast, Affordable, and Reliable Online Printing Company
+              {title}
             </h2>
 
             {/* Paragraph */}
             <p className="text-xs sm:text-[13px] text-stone-600 leading-relaxed font-normal">
-              Choose SILVER &amp; GOLD INKSHINE LTD because we make printing simple, affordable and reliable for businesses, schools, churches, event planners, product owners and corporate organisations across Nigeria. We understand that customers want quality work without wasting money, delaying their events or struggling with poor finishing — and that is exactly what we deliver.
+              {description}
             </p>
 
             {/* Send Print Ready File Button in Gold with White Writing */}

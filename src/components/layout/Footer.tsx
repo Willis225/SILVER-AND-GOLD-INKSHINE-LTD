@@ -3,7 +3,8 @@ import {
   Phone, 
   Mail, 
   ArrowRight,
-  ShieldCheck
+  ShieldCheck,
+  ExternalLink
 } from 'lucide-react';
 import { ProductCategory } from '../../types/schema';
 import { InfoModalTab } from '../common/CompanyInfoModal';
@@ -32,7 +33,7 @@ export const Footer: React.FC<FooterProps> = ({
   };
 
   return (
-    <footer className="bg-white text-stone-700 border-t border-stone-200">
+    <footer className="bg-black text-stone-300 border-t border-white/15">
       {/* Main Footer Container */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-12">
@@ -50,7 +51,7 @@ export const Footer: React.FC<FooterProps> = ({
 
               {/* Brand Text */}
               <div className="leading-none">
-                <span className="block font-black text-lg tracking-tight text-stone-900 font-sans">
+                <span className="block font-black text-lg tracking-tight text-white font-sans">
                   SILVER &amp; GOLD
                 </span>
                 <span className="block font-bold text-[10px] tracking-wider text-[#10b981] uppercase">
@@ -60,12 +61,12 @@ export const Footer: React.FC<FooterProps> = ({
             </div>
 
             {/* Description Writeup (Exact from design reference with company name) */}
-            <p className="text-[13px] sm:text-sm text-stone-600 leading-relaxed text-justify sm:text-left">
-              <strong className="text-stone-900 font-bold">Silver &amp; Gold Inkshine Ltd</strong> is a complete commercial printing company based in Lagos, Nigeria, and proudly recognized as the Nation&apos;s No.1 trusted online shop for printing. We deliver professional, high-quality print solutions that help businesses, organizations, and individuals stand out. Silver &amp; Gold Inkshine Ltd is proud to be featured on <strong className="text-stone-900 font-bold">Business Insider</strong>, a trusted global business and media platform. This recognition strengthens our commitment to providing quality printing, branding, and advertising solutions across Nigeria.{' '}
+            <p className="text-[13px] sm:text-sm text-stone-300 leading-relaxed text-justify sm:text-left">
+              <strong className="text-white font-bold">Silver &amp; Gold Inkshine Ltd</strong> is a complete commercial printing company based in Lagos, Nigeria, and proudly recognized as the Nation&apos;s No.1 trusted online shop for printing. We deliver professional, high-quality print solutions that help businesses, organizations, and individuals stand out. Silver &amp; Gold Inkshine Ltd is proud to be featured on <strong className="text-white font-bold">Business Insider</strong>, a trusted global business and media platform. This recognition strengthens our commitment to providing quality printing, branding, and advertising solutions across Nigeria.{' '}
               <button 
                 type="button"
                 onClick={() => onOpenInfoModal?.('contact')}
-                className="text-stone-900 font-bold hover:underline cursor-pointer"
+                className="text-[#f5be38] hover:text-[#ffd666] font-semibold hover:underline cursor-pointer"
               >
                 Contact us
               </button>{' '}
@@ -73,7 +74,7 @@ export const Footer: React.FC<FooterProps> = ({
               <button 
                 type="button"
                 onClick={() => onOpenInfoModal?.('terms')}
-                className="text-stone-900 font-bold hover:underline cursor-pointer"
+                className="text-[#f5be38] hover:text-[#ffd666] font-semibold hover:underline cursor-pointer"
               >
                 Terms &amp; Conditions
               </button>
@@ -81,7 +82,7 @@ export const Footer: React.FC<FooterProps> = ({
               <button 
                 type="button"
                 onClick={() => onOpenInfoModal?.('privacy')}
-                className="text-stone-900 font-bold hover:underline cursor-pointer"
+                className="text-[#f5be38] hover:text-[#ffd666] font-semibold hover:underline cursor-pointer"
               >
                 Private Policy
               </button>{' '}
@@ -89,7 +90,7 @@ export const Footer: React.FC<FooterProps> = ({
               <button 
                 type="button"
                 onClick={() => onOpenInfoModal?.('terms')}
-                className="text-stone-900 font-bold hover:underline cursor-pointer"
+                className="text-[#f5be38] hover:text-[#ffd666] font-semibold hover:underline cursor-pointer"
               >
                 Return Policy
               </button>
@@ -168,7 +169,7 @@ export const Footer: React.FC<FooterProps> = ({
               <a 
                 href="mailto:orders@silverandgold.ng" 
                 aria-label="Email"
-                className="w-8 h-8 rounded-full bg-stone-200 text-stone-700 flex items-center justify-center shadow-xs hover:bg-stone-300 transition-colors"
+                className="w-8 h-8 rounded-full bg-white/10 text-stone-200 flex items-center justify-center shadow-xs hover:bg-white/20 hover:text-white transition-colors"
               >
                 <Mail className="w-4 h-4 stroke-[2.2]" />
               </a>
@@ -180,7 +181,7 @@ export const Footer: React.FC<FooterProps> = ({
                 <button
                   type="button"
                   onClick={() => onOpenQuoteModal ? onOpenQuoteModal() : window.open("https://wa.me/2347030372539?text=Hello%20Silver%20%26%20Gold%20Inkshine%20Ltd%2C%20I%20would%20like%20to%20request%20a%20quote", "_blank")}
-                  className="inline-flex items-center gap-2 px-6 py-2.5 rounded-sm bg-[#00473e] hover:bg-[#03362e] text-white font-bold text-sm shadow-xs transition-colors cursor-pointer"
+                  className="inline-flex items-center gap-2 px-6 py-2.5 rounded-sm bg-[#00473e] hover:bg-[#03554a] text-white font-bold text-sm shadow-xs transition-colors cursor-pointer border border-emerald-500/30"
                 >
                   <span>Get a Quote</span>
                   <ArrowRight className="w-4 h-4" />
@@ -188,13 +189,23 @@ export const Footer: React.FC<FooterProps> = ({
               </div>
 
               <div>
-                <button
-                  type="button"
-                  onClick={() => onOpenInfoModal?.('info')}
-                  className="inline-block px-4 py-2.5 rounded-sm bg-[#65a30d] hover:bg-[#588e0b] text-white font-bold text-xs sm:text-[13px] shadow-xs transition-colors cursor-pointer text-left leading-snug max-w-xs"
+                <a
+                  href="https://share.google/5obB8jqnby72M5IDG"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-sm bg-[#65a30d] hover:bg-[#52840a] text-white font-bold text-xs sm:text-[13px] shadow-xs transition-colors cursor-pointer text-left leading-snug max-w-xs group"
                 >
-                  Add Silver &amp; Gold Inkshine Ltd as a Preferred Source on Google
-                </button>
+                  <span className="shrink-0 w-5 h-5 rounded-full bg-white flex items-center justify-center">
+                    <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" aria-hidden="true">
+                      <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                      <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                      <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                      <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                    </svg>
+                  </span>
+                  <span>Add Silver &amp; Gold Inkshine Ltd as a Preferred Source on Google</span>
+                  <ExternalLink className="w-3.5 h-3.5 opacity-80 group-hover:opacity-100 shrink-0 ml-auto" />
+                </a>
               </div>
             </div>
           </div>
@@ -203,18 +214,18 @@ export const Footer: React.FC<FooterProps> = ({
           {/* Column 2: Quick Links (2 Sub-Columns side-by-side)        */}
           {/* ========================================================= */}
           <div className="md:col-span-4 lg:col-span-5 space-y-4">
-            <h3 className="font-extrabold text-base sm:text-lg text-stone-900 tracking-tight">
+            <h3 className="font-extrabold text-base sm:text-lg text-white tracking-tight">
               Quick Links
             </h3>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 text-[13px] text-stone-600">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 text-[13px] text-stone-300">
               {/* Left Sub-Column */}
               <div className="space-y-2.5">
                 <div>
                   <button 
                     type="button" 
                     onClick={() => handleCategoryClick('advertising_materials')}
-                    className="hover:text-[#10b981] transition-colors text-left"
+                    className="hover:text-[#f5be38] transition-colors text-left"
                   >
                     Advertising Materials
                   </button>
@@ -223,7 +234,7 @@ export const Footer: React.FC<FooterProps> = ({
                   <button 
                     type="button" 
                     onClick={() => handleCategoryClick('awards')}
-                    className="hover:text-[#10b981] transition-colors text-left"
+                    className="hover:text-[#f5be38] transition-colors text-left"
                   >
                     Awards
                   </button>
@@ -232,7 +243,7 @@ export const Footer: React.FC<FooterProps> = ({
                   <button 
                     type="button" 
                     onClick={() => handleCategoryClick('banners_stands')}
-                    className="hover:text-[#10b981] transition-colors text-left"
+                    className="hover:text-[#f5be38] transition-colors text-left"
                   >
                     Banners &amp; Stands
                   </button>
@@ -241,7 +252,7 @@ export const Footer: React.FC<FooterProps> = ({
                   <button 
                     type="button" 
                     onClick={() => handleCategoryClick('books_magazines')}
-                    className="hover:text-[#10b981] transition-colors text-left"
+                    className="hover:text-[#f5be38] transition-colors text-left"
                   >
                     Books &amp; Magazines
                   </button>
@@ -250,7 +261,7 @@ export const Footer: React.FC<FooterProps> = ({
                   <button 
                     type="button" 
                     onClick={() => handleCategoryClick('cards_invitations')}
-                    className="hover:text-[#10b981] transition-colors text-left"
+                    className="hover:text-[#f5be38] transition-colors text-left"
                   >
                     Cards &amp; Invitations
                   </button>
@@ -259,7 +270,7 @@ export const Footer: React.FC<FooterProps> = ({
                   <button 
                     type="button" 
                     onClick={() => handleCategoryClick('company_stamps_seals')}
-                    className="hover:text-[#10b981] transition-colors text-left"
+                    className="hover:text-[#f5be38] transition-colors text-left"
                   >
                     Company Stamps &amp; Seals
                   </button>
@@ -268,7 +279,7 @@ export const Footer: React.FC<FooterProps> = ({
                   <button 
                     type="button" 
                     onClick={() => handleCategoryClick('custom_apparels_caps')}
-                    className="hover:text-[#10b981] transition-colors text-left"
+                    className="hover:text-[#f5be38] transition-colors text-left"
                   >
                     Custom Apparels &amp; Caps
                   </button>
@@ -277,7 +288,7 @@ export const Footer: React.FC<FooterProps> = ({
                   <button 
                     type="button" 
                     onClick={() => handleCategoryClick('events_exhibitions')}
-                    className="hover:text-[#10b981] transition-colors text-left"
+                    className="hover:text-[#f5be38] transition-colors text-left"
                   >
                     Events &amp; Exhibitions
                   </button>
@@ -286,7 +297,7 @@ export const Footer: React.FC<FooterProps> = ({
                   <button 
                     type="button" 
                     onClick={() => handleCategoryClick('flyer_handbill')}
-                    className="hover:text-[#10b981] transition-colors text-left"
+                    className="hover:text-[#f5be38] transition-colors text-left"
                   >
                     Flyer &amp; Handbill Printing
                   </button>
@@ -295,7 +306,7 @@ export const Footer: React.FC<FooterProps> = ({
                   <button 
                     type="button" 
                     onClick={() => handleCategoryClick('food_packaging')}
-                    className="hover:text-[#10b981] transition-colors text-left"
+                    className="hover:text-[#f5be38] transition-colors text-left"
                   >
                     Food Packaging
                   </button>
@@ -304,7 +315,7 @@ export const Footer: React.FC<FooterProps> = ({
                   <button 
                     type="button" 
                     onClick={() => handleCategoryClick('signages')}
-                    className="hover:text-[#10b981] transition-colors text-left"
+                    className="hover:text-[#f5be38] transition-colors text-left"
                   >
                     Signages
                   </button>
@@ -317,7 +328,7 @@ export const Footer: React.FC<FooterProps> = ({
                   <button 
                     type="button" 
                     onClick={() => handleCategoryClick('frames_wall_arts')}
-                    className="hover:text-[#10b981] transition-colors text-left"
+                    className="hover:text-[#f5be38] transition-colors text-left"
                   >
                     Frames &amp; Wall Arts
                   </button>
@@ -326,7 +337,7 @@ export const Footer: React.FC<FooterProps> = ({
                   <button 
                     type="button" 
                     onClick={() => handleCategoryClick('gift_items_souvenirs')}
-                    className="hover:text-[#10b981] transition-colors text-left"
+                    className="hover:text-[#f5be38] transition-colors text-left"
                   >
                     Gift Items &amp; Souvenirs
                   </button>
@@ -335,7 +346,7 @@ export const Footer: React.FC<FooterProps> = ({
                   <button 
                     type="button" 
                     onClick={() => handleCategoryClick('office_stationery')}
-                    className="hover:text-[#10b981] transition-colors text-left"
+                    className="hover:text-[#f5be38] transition-colors text-left"
                   >
                     Office Stationery &amp; Corporate Branding
                   </button>
@@ -344,7 +355,7 @@ export const Footer: React.FC<FooterProps> = ({
                   <button 
                     type="button" 
                     onClick={() => handleCategoryClick('outdoor_displays')}
-                    className="hover:text-[#10b981] transition-colors text-left"
+                    className="hover:text-[#f5be38] transition-colors text-left"
                   >
                     Outdoor Displays
                   </button>
@@ -353,7 +364,7 @@ export const Footer: React.FC<FooterProps> = ({
                   <button 
                     type="button" 
                     onClick={() => handleCategoryClick('packages')}
-                    className="hover:text-[#10b981] transition-colors text-left"
+                    className="hover:text-[#f5be38] transition-colors text-left"
                   >
                     Packages
                   </button>
@@ -362,7 +373,7 @@ export const Footer: React.FC<FooterProps> = ({
                   <button 
                     type="button" 
                     onClick={() => handleCategoryClick('packaging_cartons')}
-                    className="hover:text-[#10b981] transition-colors text-left"
+                    className="hover:text-[#f5be38] transition-colors text-left"
                   >
                     Packaging and Shipping Cartons
                   </button>
@@ -371,7 +382,7 @@ export const Footer: React.FC<FooterProps> = ({
                   <button 
                     type="button" 
                     onClick={() => handleCategoryClick('paper_bags_tags')}
-                    className="hover:text-[#10b981] transition-colors text-left"
+                    className="hover:text-[#f5be38] transition-colors text-left"
                   >
                     Paper Bags &amp; Tags
                   </button>
@@ -380,7 +391,7 @@ export const Footer: React.FC<FooterProps> = ({
                   <button 
                     type="button" 
                     onClick={() => handleCategoryClick('stickers_labels')}
-                    className="hover:text-[#10b981] transition-colors text-left"
+                    className="hover:text-[#f5be38] transition-colors text-left"
                   >
                     Stickers &amp; Labels
                   </button>
@@ -389,7 +400,7 @@ export const Footer: React.FC<FooterProps> = ({
                   <button 
                     type="button" 
                     onClick={() => handleCategoryClick('vehicle_branding')}
-                    className="hover:text-[#10b981] transition-colors text-left"
+                    className="hover:text-[#f5be38] transition-colors text-left"
                   >
                     Vehicle Branding
                   </button>
@@ -398,7 +409,7 @@ export const Footer: React.FC<FooterProps> = ({
                   <button 
                     type="button" 
                     onClick={() => handleCategoryClick('wedding')}
-                    className="hover:text-[#10b981] transition-colors text-left"
+                    className="hover:text-[#f5be38] transition-colors text-left"
                   >
                     Wedding
                   </button>
@@ -407,7 +418,7 @@ export const Footer: React.FC<FooterProps> = ({
                   <button 
                     type="button" 
                     onClick={() => handleCategoryClick('printing_machines')}
-                    className="hover:text-[#10b981] transition-colors text-left"
+                    className="hover:text-[#f5be38] transition-colors text-left"
                   >
                     Printing Machines
                   </button>
@@ -416,7 +427,7 @@ export const Footer: React.FC<FooterProps> = ({
                   <button 
                     type="button" 
                     onClick={() => handleCategoryClick('events_exhibitions')}
-                    className="hover:text-[#10b981] transition-colors text-left"
+                    className="hover:text-[#f5be38] transition-colors text-left"
                   >
                     Event Planner Lagos
                   </button>
@@ -429,52 +440,52 @@ export const Footer: React.FC<FooterProps> = ({
           {/* Column 3: Contact Us, Business Hours & Payment Badges     */}
           {/* ========================================================= */}
           <div className="md:col-span-3 lg:col-span-3 space-y-4">
-            <h3 className="font-extrabold text-base sm:text-lg text-stone-900 tracking-tight">
+            <h3 className="font-extrabold text-base sm:text-lg text-white tracking-tight">
               Contact Us
             </h3>
 
             {/* Address */}
-            <div className="text-[13px] text-stone-600 leading-relaxed">
-              <strong className="text-stone-900 font-bold block">Head Office:</strong>
+            <div className="text-[13px] text-stone-300 leading-relaxed">
+              <strong className="text-white font-bold block">Head Office:</strong>
               <span>7 George St, off Apata Street, Somolu, Lagos 100231, Lagos.</span>
             </div>
 
             {/* Phone */}
-            <div className="flex items-center gap-2 text-[13px] text-stone-700">
+            <div className="flex items-center gap-2 text-[13px] text-stone-300">
               <span className="text-[#10b981] shrink-0">
                 <Phone className="w-4 h-4 fill-none stroke-current stroke-[2.2]" />
               </span>
               <a 
                 href="tel:+2349028694908" 
-                className="font-medium text-stone-800 hover:text-[#10b981] transition-colors"
+                className="font-medium text-stone-200 hover:text-[#f5be38] transition-colors"
               >
                 +2349028694908
               </a>
             </div>
 
             {/* Email */}
-            <div className="flex items-center gap-2 text-[13px] text-stone-700">
+            <div className="flex items-center gap-2 text-[13px] text-stone-300">
               <span className="text-[#10b981] shrink-0">
                 <Mail className="w-4 h-4 fill-none stroke-current stroke-[2.2]" />
               </span>
               <a 
                 href="mailto:orders@silverandgold.ng" 
-                className="font-medium text-stone-800 hover:text-[#10b981] transition-colors"
+                className="font-medium text-stone-200 hover:text-[#f5be38] transition-colors"
               >
                 orders@silverandgold.ng
               </a>
             </div>
 
             {/* Operating Hours */}
-            <div className="text-[13px] text-stone-600 space-y-1 pt-1">
+            <div className="text-[13px] text-stone-300 space-y-1 pt-1">
               <div>
-                Mon - Fri: <strong className="text-stone-900 font-bold">09:00AM - 5:30PM.</strong>
+                Mon - Fri: <strong className="text-white font-bold">09:00AM - 5:30PM.</strong>
               </div>
               <div>
-                Sat: <strong className="text-stone-900 font-bold">10:00AM - 4:00PM.</strong>
+                Sat: <strong className="text-white font-bold">10:00AM - 4:00PM.</strong>
               </div>
               <div>
-                Sun: <strong className="text-stone-900 font-bold">Closed</strong>
+                Sun: <strong className="text-white font-bold">Closed</strong>
               </div>
             </div>
 
@@ -482,21 +493,21 @@ export const Footer: React.FC<FooterProps> = ({
             <div className="pt-2">
               <div className="flex items-center gap-1.5 flex-wrap">
                 {/* VISA */}
-                <div className="h-6 px-2 rounded-xs border border-stone-200 bg-white flex items-center justify-center shadow-2xs">
+                <div className="h-6 px-2 rounded-xs border border-white/20 bg-white flex items-center justify-center shadow-2xs">
                   <span className="font-extrabold text-[10px] italic tracking-tighter text-[#1A1F71]">
                     VISA
                   </span>
                 </div>
 
                 {/* PayPal */}
-                <div className="h-6 px-2 rounded-xs border border-stone-200 bg-white flex items-center justify-center shadow-2xs">
+                <div className="h-6 px-2 rounded-xs border border-white/20 bg-white flex items-center justify-center shadow-2xs">
                   <span className="font-bold text-[10px] italic text-[#003087]">
                     Pay<span className="text-[#0079C1]">Pal</span>
                   </span>
                 </div>
 
                 {/* Maestro */}
-                <div className="h-6 px-1.5 rounded-xs border border-stone-200 bg-white flex items-center justify-center gap-0.5 shadow-2xs">
+                <div className="h-6 px-1.5 rounded-xs border border-white/20 bg-white flex items-center justify-center gap-0.5 shadow-2xs">
                   <div className="flex -space-x-1">
                     <span className="w-2.5 h-2.5 rounded-full bg-[#EB001B]" />
                     <span className="w-2.5 h-2.5 rounded-full bg-[#0099DF]" />
@@ -507,7 +518,7 @@ export const Footer: React.FC<FooterProps> = ({
                 </div>
 
                 {/* MasterCard */}
-                <div className="h-6 px-1.5 rounded-xs border border-stone-200 bg-white flex items-center justify-center gap-0.5 shadow-2xs">
+                <div className="h-6 px-1.5 rounded-xs border border-white/20 bg-white flex items-center justify-center gap-0.5 shadow-2xs">
                   <div className="flex -space-x-1">
                     <span className="w-2.5 h-2.5 rounded-full bg-[#EB001B]" />
                     <span className="w-2.5 h-2.5 rounded-full bg-[#F79E1B]" />
@@ -518,7 +529,7 @@ export const Footer: React.FC<FooterProps> = ({
                 </div>
 
                 {/* Discover */}
-                <div className="h-6 px-2 rounded-xs border border-stone-200 bg-white flex items-center justify-center shadow-2xs">
+                <div className="h-6 px-2 rounded-xs border border-white/20 bg-white flex items-center justify-center shadow-2xs">
                   <span className="font-bold text-[9px] tracking-tight text-stone-900">
                     DISC<span className="text-[#FF6000]">O</span>VER
                   </span>
@@ -532,7 +543,7 @@ export const Footer: React.FC<FooterProps> = ({
                 <button
                   type="button"
                   onClick={onOpenAdmin}
-                  className="text-[11px] text-stone-400 hover:text-stone-700 transition-colors flex items-center gap-1 cursor-pointer"
+                  className="text-[11px] text-stone-400 hover:text-stone-200 transition-colors flex items-center gap-1 cursor-pointer"
                 >
                   <ShieldCheck className="w-3 h-3 text-[#10b981]" />
                   <span>Admin &amp; Operations Desk</span>
@@ -545,10 +556,10 @@ export const Footer: React.FC<FooterProps> = ({
       </div>
 
       {/* ========================================================= */}
-      {/* Bottom Full-Width Dark Green Bar (Exact from Screenshot)  */}
+      {/* Bottom Full-Width Black Bar with Clean Border             */}
       {/* ========================================================= */}
-      <div className="bg-[#00473e] text-white py-4 px-4 text-center">
-        <p className="text-xs sm:text-[13px] font-medium text-stone-200">
+      <div className="bg-[#050505] border-t border-white/10 text-stone-400 py-4 px-4 text-center">
+        <p className="text-xs sm:text-[13px] font-medium text-stone-300">
           Copyright &copy; {new Date().getFullYear()} Silver &amp; Gold Inkshine Ltd. All rights reserved.
         </p>
       </div>
