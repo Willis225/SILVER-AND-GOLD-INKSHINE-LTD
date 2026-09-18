@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { ProductCategory } from '../../types/schema';
 import { InfoModalTab } from '../common/CompanyInfoModal';
+import { CompanyLogoMark } from '../common/CompanyLogo';
 
 interface FooterProps {
   onSelectCategory: (cat: ProductCategory | 'all') => void;
@@ -45,20 +46,26 @@ export const Footer: React.FC<FooterProps> = ({
           {/* ========================================================= */}
           <div className="md:col-span-5 lg:col-span-4 space-y-5">
             {/* Logo */}
-            <div className="flex items-center gap-2.5">
-              {/* Gold & Emerald SG Emblem */}
-              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#d97706] via-[#10b981] to-[#047857] flex items-center justify-center shrink-0 shadow-xs ring-1 ring-amber-400/40">
-                <span className="font-black text-white text-xs tracking-tighter">SG</span>
+            <div className="flex items-center gap-3">
+              {/* Official Silver & Gold Inkshine Emblem */}
+              <div className="relative w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center shrink-0 drop-shadow-md">
+                <CompanyLogoMark className="w-full h-full" />
               </div>
 
-              {/* Brand Text */}
-              <div className="leading-none">
-                <span className="block font-black text-lg tracking-tight text-white font-sans">
-                  SILVER &amp; GOLD
-                </span>
-                <span className="block font-bold text-[10px] tracking-wider text-[#10b981] uppercase">
+              {/* Brand Text: SILVER in silver color, GOLD in gold color, INKSHINE LTD in white */}
+              <div>
+                <div className="text-base sm:text-xl font-black tracking-tight leading-none flex items-center gap-1 sm:gap-1.5">
+                  <span className="text-[#d8dce2] drop-shadow-[0_1px_1px_rgba(255,255,255,0.15)] font-black">
+                    SILVER
+                  </span>
+                  <span className="text-stone-400 font-semibold text-xs sm:text-sm">&amp;</span>
+                  <span className="text-[#f5be38] drop-shadow-[0_1px_2px_rgba(245,190,56,0.25)] font-black">
+                    GOLD
+                  </span>
+                </div>
+                <div className="text-[9.5px] sm:text-[11px] font-extrabold tracking-[0.24em] text-white leading-none mt-1 drop-shadow-xs">
                   INKSHINE LTD
-                </span>
+                </div>
               </div>
             </div>
 
@@ -183,10 +190,10 @@ export const Footer: React.FC<FooterProps> = ({
                 <button
                   type="button"
                   onClick={() => onOpenQuoteModal ? onOpenQuoteModal() : window.open("https://wa.me/2347030372539?text=Hello%20Silver%20%26%20Gold%20Inkshine%20Ltd%2C%20I%20would%20like%20to%20request%20a%20quote", "_blank")}
-                  className="inline-flex items-center gap-2 px-6 py-2.5 rounded-sm bg-[#00473e] hover:bg-[#03554a] text-white font-bold text-sm shadow-xs transition-colors cursor-pointer border border-emerald-500/30"
+                  className="inline-flex items-center gap-2 px-6 py-2.5 rounded-sm bg-gradient-to-r from-[#d4af37] via-[#f5be38] to-[#b8860b] hover:from-[#e5c158] hover:via-[#fed766] hover:to-[#c69214] text-stone-950 font-extrabold text-sm shadow-md transition-all cursor-pointer border border-amber-300/70 active:scale-95"
                 >
                   <span>Get a Quote</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-4 h-4 stroke-[2.5]" />
                 </button>
               </div>
 

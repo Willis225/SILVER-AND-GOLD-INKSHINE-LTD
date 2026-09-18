@@ -234,19 +234,6 @@ export const Header: React.FC<HeaderProps> = ({
 
             {/* Desktop Category Navigation */}
             <nav className="hidden md:flex items-center space-x-5 text-sm font-semibold text-stone-200">
-              {/* Dedicated Categories Page Link */}
-              <button 
-                type="button"
-                onClick={() => onOpenCategoriesPage?.('all')}
-                className="hover:text-[#d4af37] text-stone-200 transition-colors flex items-center gap-1.5 font-bold cursor-pointer"
-                title="View All Product Categories on a dedicated page"
-              >
-                <span>Categories</span>
-                <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/30">
-                  Page
-                </span>
-              </button>
-
               {/* Prints */}
               <div 
                 className="relative group py-2"
@@ -876,10 +863,10 @@ export const Header: React.FC<HeaderProps> = ({
                 id="desktop-header-quote-btn"
                 type="button"
                 onClick={onOpenQuoteModal}
-                className="relative px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-[#f5be38] hover:text-white border border-[#d4af37]/40 font-bold text-xs tracking-tight flex items-center gap-1.5 active:scale-95 transition-all cursor-pointer"
+                className="relative px-3.5 py-1.5 rounded-full bg-gradient-to-r from-[#d4af37] via-[#f5be38] to-[#b8860b] hover:from-[#e5c158] hover:via-[#fed766] hover:to-[#c69214] text-stone-950 font-extrabold text-xs tracking-tight flex items-center gap-1.5 shadow-[0_2px_12px_rgba(212,175,55,0.45)] border border-amber-300/70 active:scale-95 transition-all cursor-pointer"
                 title="Request a customized corporate print quote"
               >
-                <FileText className="w-3.5 h-3.5" />
+                <FileText className="w-3.5 h-3.5 stroke-[2.4]" />
                 <span className="whitespace-nowrap">Get a Quote</span>
               </button>
             )}
@@ -973,7 +960,7 @@ export const Header: React.FC<HeaderProps> = ({
                 setMobileMenuOpen(false);
                 onOpenQuoteModal?.();
               }}
-              className="py-2.5 px-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-400/40 font-bold text-[11px] flex items-center justify-center gap-1 active:scale-95 transition-all"
+              className="py-2.5 px-2 rounded-xl bg-gradient-to-r from-[#d4af37] via-[#f5be38] to-[#b8860b] text-stone-950 font-extrabold text-[11px] flex items-center justify-center gap-1 active:scale-95 transition-all shadow-xs border border-amber-300/60"
             >
               <span>📝 Get Quote</span>
             </button>

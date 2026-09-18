@@ -173,13 +173,13 @@ export const DEFAULT_WEBSITE_CONTENT: WebsiteContent = {
   googleMapsEmbedUrl: 'https://maps.google.com/maps?q=9.081999,8.675277&hl=en&z=16&output=embed'
 };
 
-const STORAGE_KEY = 'inkshine_website_content_v3';
+const STORAGE_KEY = 'inkshine_website_content_v5';
 
 export function loadSavedWebsiteContent(): WebsiteContent {
   try {
     let saved = localStorage.getItem(STORAGE_KEY);
     if (!saved) {
-      saved = localStorage.getItem('inkshine_website_content_v2');
+      saved = localStorage.getItem('inkshine_website_content_v4') || localStorage.getItem('inkshine_website_content_v3') || localStorage.getItem('inkshine_website_content_v2');
     }
     if (saved) {
       const parsed = JSON.parse(saved);
@@ -187,7 +187,7 @@ export function loadSavedWebsiteContent(): WebsiteContent {
       const hasUnsplashHero = Array.isArray(parsed.heroSlides) && parsed.heroSlides.some((s: any) => 
         typeof s?.imageUrl === 'string' && s.imageUrl.includes('images.unsplash.com/photo-1541701494587')
       );
-      const hasTemporaryHeadline = parsed.heroHeadline === "Nigeria's #1 Online Printing Platform";
+      const hasTemporaryHeadline = parsed.heroHeadline === "Nigeria's #1 Online Printing Platform" || parsed.heroHeadline === 'SILVER & GOLD INKSHINE LTD';
 
       const heroSlides = (!parsed.heroSlides || parsed.heroSlides.length === 0 || hasUnsplashHero)
         ? DEFAULT_HERO_SLIDES
