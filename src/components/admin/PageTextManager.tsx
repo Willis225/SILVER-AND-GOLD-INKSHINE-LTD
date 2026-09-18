@@ -154,6 +154,31 @@ export const PageTextManager: React.FC<PageTextManagerProps> = ({
             className="w-full px-3.5 py-2.5 bg-stone-50 rounded-xl border border-stone-300 text-xs text-stone-900 leading-relaxed focus:ring-2 focus:ring-[#b8860b] resize-none"
           />
         </div>
+
+        <div>
+          <label className="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">
+            Hero / Home Page Background Texture URL
+          </label>
+          <div className="flex gap-2 items-center">
+            <input
+              type="text"
+              value={formData.heroBackgroundImage || '/homepage-bg.jpg'}
+              onChange={(e) => handleChange('heroBackgroundImage', e.target.value)}
+              placeholder="/homepage-bg.jpg"
+              className="w-full px-3.5 py-2.5 bg-stone-50 rounded-xl border border-stone-300 text-xs text-stone-900 font-mono focus:ring-2 focus:ring-[#b8860b]"
+            />
+            {formData.heroBackgroundImage && (
+              <div className="w-10 h-10 rounded-lg overflow-hidden border border-stone-300 shrink-0 bg-stone-900">
+                <img
+                  src={formData.heroBackgroundImage}
+                  alt="Preview"
+                  className="w-full h-full object-cover"
+                  referrerPolicy="no-referrer"
+                />
+              </div>
+            )}
+          </div>
+        </div>
       </div>
 
       {/* Section 2: Top Services Showcase Section */}

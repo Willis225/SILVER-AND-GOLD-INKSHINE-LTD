@@ -29,6 +29,7 @@ export interface WebsiteContent {
   heroSubheadline: string;
   heroEyebrow: string;
   heroDescription: string;
+  heroBackgroundImage?: string;
   heroSlides: HeroSlideItem[];
 
   // Services Showcase Section
@@ -156,6 +157,7 @@ export const DEFAULT_WEBSITE_CONTENT: WebsiteContent = {
   heroSubheadline: 'Banners • Branding • Digital Printing',
   heroEyebrow: 'Bring your business to the best scale',
   heroDescription: 'Select from top print collections, guaranteeing precision color matching and pre-press audit. Need custom specs or large volume? Fast turnaround and nationwide doorstep delivery across Nigeria!',
+  heroBackgroundImage: '/homepage-bg.jpg',
   heroSlides: DEFAULT_HERO_SLIDES,
   showcaseTitle: 'Top-Quality Printing Services',
   showcaseDescription: 'Engineered on industrial press equipment with laser-sharp registration, vibrant CMYK color balance, and rapid nationwide delivery.',
@@ -222,6 +224,7 @@ export function loadSavedWebsiteContent(): WebsiteContent {
         heroSubheadline,
         heroEyebrow,
         heroDescription,
+        heroBackgroundImage: parsed.heroBackgroundImage || DEFAULT_WEBSITE_CONTENT.heroBackgroundImage,
         heroSlides,
         showcaseServices: Array.isArray(parsed.showcaseServices) && parsed.showcaseServices.length > 0 ? parsed.showcaseServices : DEFAULT_SHOWCASE_SERVICES,
         googleMapsUrl: resolvedMapUrl,

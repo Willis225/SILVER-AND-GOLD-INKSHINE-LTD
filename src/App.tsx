@@ -388,6 +388,7 @@ export default function App() {
               subheadline={websiteContent.heroSubheadline}
               eyebrow={websiteContent.heroEyebrow}
               description={websiteContent.heroDescription}
+              backgroundImageUrl={websiteContent.heroBackgroundImage}
             />
 
             {/* Brand Introduction & Promotions Overview (Matching Reference) */}

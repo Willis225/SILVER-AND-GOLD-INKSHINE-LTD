@@ -17,6 +17,7 @@ interface HeroSectionProps {
   subheadline?: string;
   eyebrow?: string;
   description?: string;
+  backgroundImageUrl?: string;
 }
 
 const containerVariants: Variants = {
@@ -51,22 +52,25 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   subheadline = 'Banners • Branding • Digital Printing',
   eyebrow = 'Bring your business to the best scale',
   description = 'Select from top print collections, guaranteeing precision color matching and pre-press audit. Need custom specs or large volume? Fast turnaround and nationwide doorstep delivery across Nigeria!',
+  backgroundImageUrl = '/homepage-bg.jpg',
 }) => {
   return (
     <section className="relative overflow-hidden bg-[#07080a] text-white pt-8 pb-14 sm:pt-12 sm:pb-20 lg:pt-16 lg:pb-24">
       {/* 
         Dark Sleek Minimalist UI Website Hero Background:
-        - Moody dark aesthetic with dark charcoal textured backdrop
-        - Soft subtle vertical silky light rays and shadows falling top-to-bottom
-        - Faint subtle geometric grid lines in the center
+        - Textured matte curved backdrop
+        - Soft ambient lighting along curved crests
       */}
       <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
         <img 
-          src="/assets/hero-dark-texture.svg" 
-          alt="Dark sleek minimalist hero background with vertical silky light rays and faint geometric grid" 
-          className="w-full h-full object-cover object-center opacity-60"
+          src={backgroundImageUrl || '/homepage-bg.jpg'} 
+          alt="Home page background texture" 
+          className="w-full h-full object-cover object-center scale-105 opacity-90 transition-transform duration-700"
           referrerPolicy="no-referrer"
         />
+        {/* Soft atmospheric gradient overlays for rich depth and crisp text contrast */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-black/60 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-[#07080a] pointer-events-none" />
       </div>
 
       {/* Subtle warm gold ambient atmospheric light blooms */}
