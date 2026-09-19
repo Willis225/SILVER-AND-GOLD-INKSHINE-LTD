@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { 
   Package, 
   Search, 
@@ -22,6 +22,7 @@ import {
 import { Product, ProductCategory } from '../../types/schema';
 import { STORE_CATEGORIES, getProductCategoryTag } from '../../utils/categoryUtils';
 import { ImageManagerModal, PRINT_IMAGE_PRESETS } from './ImageManagerModal';
+import { compressImageFile, saveUploadedImageToCloud } from '../../lib/firebase';
 
 interface ProductPricingManagerProps {
   products: Product[];
@@ -76,6 +77,30 @@ export const ProductPricingManager: React.FC<ProductPricingManagerProps> = ({
   const [newImageUrl, setNewImageUrl] = useState<string>(PRINT_IMAGE_PRESETS[0].url);
   const [newDescription, setNewDescription] = useState<string>('');
   const [customImageInput, setCustomImageInput] = useState<string>('');
+  const [isUploadingProductImg, setIsUploadingProductImg] = useState<boolean>(false);
+  const newProductFileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleProductDeviceUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setIsUploadingProductImg(true);
+    try {
+      const compressed = await compressImageFile(file, 1200, 0.76);
+      setNewImageUrl(compressed);
+      const imageId = `product-img-${Date.now()}`;
+      saveUploadedImageToCloud({
+        id: imageId,
+        name: file.name,
+        dataUrl: compressed,
+        uploadedAt: new Date().toISOString()
+      }).catch(console.warn);
+    } catch (err) {
+      console.error('Product image compression error:', err);
+      alert('Failed to process image. Please try another image file.');
+    } finally {
+      setIsUploadingProductImg(false);
+    }
+  };
 
   // Filter products by search and category
   const filteredProducts = products.filter((p) => {
@@ -869,17 +894,52 @@ export const ProductPricingManager: React.FC<ProductPricingManagerProps> = ({
 
               {/* Image Selection */}
               <div className="space-y-2">
-                <label className="block text-xs font-bold text-stone-700 uppercase tracking-wider">
-                  Product Image (Photo)
-                </label>
-                <div className="flex gap-2">
-                  <input
-                    type="text"
-                    value={newImageUrl}
-                    onChange={(e) => setNewImageUrl(e.target.value)}
-                    placeholder="Paste image URL or use presets below"
-                    className="flex-1 px-3 py-2 rounded-xl border border-stone-300 text-xs focus:ring-2 focus:ring-[#b8860b]"
-                  />
+                <div className="flex items-center justify-between">
+                  <label className="block text-xs font-bold text-stone-700 uppercase tracking-wider">
+                    Product Image (Photo)
+                  </label>
+                  <span className="text-[11px] text-emerald-700 font-semibold flex items-center gap-1">
+                    <CheckCircle2 className="w-3 h-3" />
+                    <span>Syncs to Cloud DB across all devices</span>
+                  </span>
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-3 items-center p-3 bg-stone-50 rounded-xl border border-stone-200">
+                  <div className="w-16 h-16 rounded-lg overflow-hidden bg-white border border-stone-300 shadow-xs shrink-0">
+                    <img src={newImageUrl} alt="Preview" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                  </div>
+
+                  <div className="flex-1 w-full space-y-2">
+                    <div className="flex gap-2">
+                      <input
+                        type="file"
+                        ref={newProductFileInputRef}
+                        onChange={handleProductDeviceUpload}
+                        accept="image/*"
+                        className="hidden"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => newProductFileInputRef.current?.click()}
+                        disabled={isUploadingProductImg}
+                        className="px-3 py-1.5 bg-[#00473e] hover:bg-[#03554a] text-white rounded-lg text-xs font-bold flex items-center gap-1.5 cursor-pointer disabled:opacity-60"
+                      >
+                        <Upload className="w-3.5 h-3.5" />
+                        <span>{isUploadingProductImg ? 'Compressing & Syncing...' : 'Upload Photo from Device'}</span>
+                      </button>
+
+                      <input
+                        type="text"
+                        value={newImageUrl}
+                        onChange={(e) => setNewImageUrl(e.target.value)}
+                        placeholder="Or paste web image URL"
+                        className="flex-1 px-3 py-1.5 rounded-lg border border-stone-300 text-xs focus:ring-2 focus:ring-[#b8860b]"
+                      />
+                    </div>
+                    <p className="text-[11px] text-stone-500">
+                      Upload any JPG/PNG from your mobile or laptop. Automatically compressed and synced to all devices.
+                    </p>
+                  </div>
                 </div>
 
                 {/* Preset Thumbnails */}

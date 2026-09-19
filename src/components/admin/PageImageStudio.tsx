@@ -20,7 +20,7 @@ import {
 import { Product } from '../../types/schema';
 import { HeroSlideItem, ShowcaseServiceItem } from '../../types/websiteContent';
 import { ImageManagerModal } from './ImageManagerModal';
-import { compressImageFile } from '../../lib/firebase';
+import { compressImageFile, saveUploadedImageToCloud } from '../../lib/firebase';
 
 interface PageImageStudioProps {
   heroSlides: HeroSlideItem[];
@@ -77,8 +77,15 @@ export const PageImageStudio: React.FC<PageImageStudioProps> = ({
     if (!file) return;
     setIsUploadingMediaImg(true);
     try {
-      const compressed = await compressImageFile(file, 1600, 0.84);
+      const compressed = await compressImageFile(file, 1200, 0.76);
       setNewImageUrl(compressed);
+      const imageId = `media-img-${Date.now()}`;
+      saveUploadedImageToCloud({
+        id: imageId,
+        name: file.name,
+        dataUrl: compressed,
+        uploadedAt: new Date().toISOString()
+      }).catch(console.warn);
     } catch (err) {
       console.error('Media upload error:', err);
       alert('Failed to process image. Please try another image file.');

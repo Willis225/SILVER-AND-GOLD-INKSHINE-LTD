@@ -41,7 +41,9 @@ import {
   subscribeWebsiteContent,
   saveWebsiteContentToCloud,
   subscribeProducts,
-  saveProductsToCloud
+  saveProductsToCloud,
+  saveSingleProductToCloud,
+  deleteProductFromCloud
 } from './lib/firebase';
 
 export default function App() {
@@ -71,24 +73,24 @@ export default function App() {
   // Real-time Cloud Database sync across all devices via Firebase Firestore
   useEffect(() => {
     const unsubscribeContent = subscribeWebsiteContent(
-      websiteContent,
-      (cloudContent) => {
+      (cloudContent: WebsiteContent) => {
         if (cloudContent) {
           setWebsiteContent((prev) => ({
             ...prev,
             ...cloudContent,
           }));
         }
-      }
+      },
+      (err: any) => console.error('Website content sync listener error:', err)
     );
 
     const unsubscribeProducts = subscribeProducts(
-      products,
-      (cloudProducts) => {
+      (cloudProducts: Product[]) => {
         if (cloudProducts && cloudProducts.length > 0) {
           setProducts(cloudProducts);
         }
-      }
+      },
+      (err: any) => console.error('Products sync listener error:', err)
     );
 
     return () => {
@@ -182,8 +184,11 @@ export default function App() {
       } catch (e) {
         console.error(e);
       }
+      saveSingleProductToCloud(newProduct).catch((err) => {
+        console.error('Failed to sync new product to Firestore collection:', err);
+      });
       saveProductsToCloud(next).catch((err) => {
-        console.error('Failed to sync new product to Firestore:', err);
+        console.error('Failed to sync catalog summary to Firestore:', err);
       });
       return next;
     });
@@ -197,8 +202,11 @@ export default function App() {
       } catch (e) {
         console.error(e);
       }
+      deleteProductFromCloud(productId).catch((err) => {
+        console.error('Failed to delete product from Firestore collection:', err);
+      });
       saveProductsToCloud(next).catch((err) => {
-        console.error('Failed to sync product deletion to Firestore:', err);
+        console.error('Failed to sync catalog summary to Firestore:', err);
       });
       return next;
     });
@@ -212,8 +220,14 @@ export default function App() {
       } catch (e) {
         console.error(e);
       }
+      const updatedProduct = next.find((p) => p.id === productId);
+      if (updatedProduct) {
+        saveSingleProductToCloud(updatedProduct).catch((err) => {
+          console.error('Failed to sync updated product to Firestore collection:', err);
+        });
+      }
       saveProductsToCloud(next).catch((err) => {
-        console.error('Failed to sync product updates to Firestore:', err);
+        console.error('Failed to sync catalog summary to Firestore:', err);
       });
       return next;
     });

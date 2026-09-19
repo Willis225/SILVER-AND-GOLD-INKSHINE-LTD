@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { 
   X, 
   Upload, 
@@ -7,9 +7,17 @@ import {
   Check, 
   Sparkles, 
   RefreshCw,
-  AlertCircle
+  AlertCircle,
+  Database,
+  Cloud,
+  CheckCircle2
 } from 'lucide-react';
-import { compressImageFile } from '../../lib/firebase';
+import { 
+  compressImageFile, 
+  saveUploadedImageToCloud, 
+  subscribeUploadedImages, 
+  CloudUploadedImage 
+} from '../../lib/firebase';
 
 export interface PresetImage {
   url: string;
@@ -192,13 +200,26 @@ export const ImageManagerModal: React.FC<ImageManagerModalProps> = ({
   const [customUrlInput, setCustomUrlInput] = useState<string>('');
   const [activePresetCategory, setActivePresetCategory] = useState<string>('all');
   const [isUploading, setIsUploading] = useState<boolean>(false);
+  const [isCloudSaving, setIsCloudSaving] = useState<boolean>(false);
+  const [cloudImages, setCloudImages] = useState<CloudUploadedImage[]>([]);
   const [errorNotice, setErrorNotice] = useState<string | null>(null);
+  const [successNotice, setSuccessNotice] = useState<string | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // Subscribe to real-time cloud uploaded images across all devices
+  useEffect(() => {
+    if (!isOpen) return;
+    const unsubscribe = subscribeUploadedImages(
+      (imgs) => setCloudImages(imgs),
+      (err) => console.warn('Could not load cloud images:', err)
+    );
+    return () => unsubscribe();
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
-  // Handle local image file upload, optimize/compress, and convert to base64 Data URL
+  // Handle local image file upload, optimize/compress, and save to Cloud DB
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -208,18 +229,30 @@ export const ImageManagerModal: React.FC<ImageManagerModalProps> = ({
       return;
     }
 
-    // Allow up to 15MB source image because compressor will optimize it
-    if (file.size > 15 * 1024 * 1024) {
-      setErrorNotice('Image file size must be less than 15MB.');
+    if (file.size > 20 * 1024 * 1024) {
+      setErrorNotice('Image file size must be less than 20MB.');
       return;
     }
 
     setIsUploading(true);
     setErrorNotice(null);
+    setSuccessNotice(null);
 
     try {
-      const optimizedUrl = await compressImageFile(file, 1600, 0.84);
+      // 1. High quality multi-step compression optimized for Firestore document size
+      const optimizedUrl = await compressImageFile(file, 1200, 0.76);
       setSelectedImageUrl(optimizedUrl);
+
+      // 2. Immediately persist to Firestore `uploaded_images` collection so all devices can access it
+      const imageId = `img-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
+      await saveUploadedImageToCloud({
+        id: imageId,
+        name: file.name,
+        dataUrl: optimizedUrl,
+        uploadedAt: new Date().toISOString()
+      });
+
+      setSuccessNotice('Image compressed & uploaded to Cloud Database! Available across all devices.');
       setIsUploading(false);
     } catch (err) {
       console.error('Image processing error:', err);
@@ -235,22 +268,30 @@ export const ImageManagerModal: React.FC<ImageManagerModalProps> = ({
       setSelectedImageUrl(customUrlInput.trim());
       setCustomUrlInput('');
       setErrorNotice(null);
+      setSuccessNotice('Web image applied to preview.');
     } catch {
       setErrorNotice('Please enter a valid web URL starting with https://');
     }
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!selectedImageUrl) {
       setErrorNotice('Please select or upload an image.');
       return;
     }
 
-    onSave({
-      imageUrl: selectedImageUrl,
-      ...(allowDetailsEdit ? { title: editedTitle.trim(), description: editedDescription.trim() } : {})
-    });
-    onClose();
+    setIsCloudSaving(true);
+    try {
+      await onSave({
+        imageUrl: selectedImageUrl,
+        ...(allowDetailsEdit ? { title: editedTitle.trim(), description: editedDescription.trim() } : {})
+      });
+      onClose();
+    } catch (err) {
+      console.error('Error saving image:', err);
+      setErrorNotice('Could not save image. Please check your connection.');
+      setIsCloudSaving(false);
+    }
   };
 
   const filteredPresets = activePresetCategory === 'all'
@@ -269,10 +310,16 @@ export const ImageManagerModal: React.FC<ImageManagerModalProps> = ({
         {/* Header */}
         <div className="px-6 py-4 bg-stone-900 text-white flex items-center justify-between shrink-0">
           <div>
-            <h3 className="font-bold text-base sm:text-lg flex items-center gap-2">
-              <ImageIcon className="w-5 h-5 text-[#f5be38]" />
-              <span>{title}</span>
-            </h3>
+            <div className="flex items-center gap-2">
+              <h3 className="font-bold text-base sm:text-lg flex items-center gap-2">
+                <ImageIcon className="w-5 h-5 text-[#f5be38]" />
+                <span>{title}</span>
+              </h3>
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[10px] font-bold">
+                <Database className="w-2.5 h-2.5" />
+                <span>Cloud Synced</span>
+              </span>
+            </div>
             <p className="text-xs text-stone-400 mt-0.5">{subtitle}</p>
           </div>
           <button
@@ -290,6 +337,13 @@ export const ImageManagerModal: React.FC<ImageManagerModalProps> = ({
             <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
               <AlertCircle className="w-4 h-4 shrink-0" />
               <span>{errorNotice}</span>
+            </div>
+          )}
+
+          {successNotice && (
+            <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-600" />
+              <span>{successNotice}</span>
             </div>
           )}
 
@@ -408,6 +462,51 @@ export const ImageManagerModal: React.FC<ImageManagerModalProps> = ({
             </div>
           )}
 
+          {/* Cloud Uploads Gallery (Synced across all devices) */}
+          {cloudImages.length > 0 && (
+            <div className="space-y-2 p-3.5 bg-emerald-50/70 rounded-2xl border border-emerald-200/70">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-950 uppercase tracking-wider">
+                  <Cloud className="w-4 h-4 text-emerald-600" />
+                  <span>Cloud Uploads from All Devices ({cloudImages.length})</span>
+                </div>
+                <span className="text-[11px] text-emerald-700 font-medium">Click to select</span>
+              </div>
+              <div className="grid grid-cols-4 sm:grid-cols-6 gap-2 max-h-36 overflow-y-auto p-1">
+                {cloudImages.map((img) => {
+                  const isSelected = selectedImageUrl === img.dataUrl;
+                  return (
+                    <div
+                      key={img.id}
+                      onClick={() => {
+                        setSelectedImageUrl(img.dataUrl);
+                        setSuccessNotice(`Selected cloud image: ${img.name || 'Device photo'}`);
+                      }}
+                      className={`group relative rounded-xl overflow-hidden border-2 cursor-pointer transition-all aspect-square ${
+                        isSelected
+                          ? 'border-emerald-600 ring-2 ring-emerald-500/50 shadow-md scale-95'
+                          : 'border-emerald-200 hover:border-emerald-400 bg-white'
+                      }`}
+                      title={img.name || 'Cloud upload'}
+                    >
+                      <img
+                        src={img.dataUrl}
+                        alt={img.name || 'Cloud upload'}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                        referrerPolicy="no-referrer"
+                      />
+                      {isSelected && (
+                        <div className="absolute inset-0 bg-emerald-600/60 flex items-center justify-center text-white">
+                          <Check className="w-5 h-5 stroke-[3]" />
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
           {/* Preset Stock Photography Gallery */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
@@ -483,10 +582,20 @@ export const ImageManagerModal: React.FC<ImageManagerModalProps> = ({
           <button
             type="button"
             onClick={handleSave}
-            className="px-6 py-2 rounded-xl bg-[#00473e] hover:bg-[#03554a] active:scale-98 text-white font-bold text-xs shadow-md transition-all flex items-center gap-2 cursor-pointer"
+            disabled={isCloudSaving}
+            className="px-6 py-2 rounded-xl bg-[#00473e] hover:bg-[#03554a] active:scale-98 text-white font-bold text-xs shadow-md transition-all flex items-center gap-2 cursor-pointer disabled:opacity-60"
           >
-            <Check className="w-4 h-4" />
-            <span>Save &amp; Update Image</span>
+            {isCloudSaving ? (
+              <>
+                <RefreshCw className="w-4 h-4 animate-spin" />
+                <span>Saving to Cloud Database...</span>
+              </>
+            ) : (
+              <>
+                <Check className="w-4 h-4" />
+                <span>Save &amp; Update Image Across All Devices</span>
+              </>
+            )}
           </button>
         </div>
       </div>

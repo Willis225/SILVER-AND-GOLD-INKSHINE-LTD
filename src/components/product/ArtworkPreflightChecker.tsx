@@ -63,7 +63,7 @@ export const ArtworkPreflightChecker: React.FC<ArtworkPreflightCheckerProps> = (
   const [brief, setBrief] = useState<DesignerBrief>({
     brandColors: '#0F172A, #D97706',
     keyHeading: 'Annual Corporate Conference 2026',
-    contactDetails: '+234 803 123 4567 | www.company.ng',
+    contactDetails: '+234 703 037 2539 | www.company.ng',
     additionalNotes: 'Please place logo at top left and retain 20mm bottom margin for roll-up cassette.',
     logoUploaded: false,
   });
@@ -461,7 +461,7 @@ export const ArtworkPreflightChecker: React.FC<ArtworkPreflightCheckerProps> = (
             </div>
             <div className="flex items-center justify-between">
               <span>💬 Instant WhatsApp Despatch:</span>
-              <span className="font-mono font-bold text-[#b8860b]">+234 (0) 803 123 4567</span>
+              <span className="font-mono font-bold text-[#b8860b]">+234 (0) 703 037 2539</span>
             </div>
           </div>
         </div>

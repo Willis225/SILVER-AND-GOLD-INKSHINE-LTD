@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 import { HeroSlideItem } from '../../types/websiteContent';
 import { ImageManagerModal } from './ImageManagerModal';
-import { compressImageFile } from '../../lib/firebase';
+import { compressImageFile, saveUploadedImageToCloud } from '../../lib/firebase';
 
 interface HeroSlidesManagerProps {
   slides: HeroSlideItem[];
@@ -42,8 +42,15 @@ export const HeroSlidesManager: React.FC<HeroSlidesManagerProps> = ({
     if (!file) return;
     setIsUploadingSlideImg(true);
     try {
-      const compressed = await compressImageFile(file, 1600, 0.84);
+      const compressed = await compressImageFile(file, 1200, 0.76);
       setNewImageUrl(compressed);
+      const imageId = `slide-img-${Date.now()}`;
+      saveUploadedImageToCloud({
+        id: imageId,
+        name: file.name,
+        dataUrl: compressed,
+        uploadedAt: new Date().toISOString()
+      }).catch(console.warn);
     } catch (err) {
       console.error('Slide image compression error:', err);
       alert('Failed to process image. Please try another image file.');
