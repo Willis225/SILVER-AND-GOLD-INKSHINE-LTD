@@ -20,28 +20,28 @@ const PACKAGING_ITEMS: PackagingItem[] = [
     title: 'Design and Print custom branded pouch Packaging in Lagos',
     price: '₦85.00',
     numericPrice: 85,
-    category: 'packaging',
+    category: 'packaging_shipping_cartons',
   },
   {
     id: 'pkg-woven-labels',
     title: 'Custom Woven Labels',
     price: '₦85.00',
     numericPrice: 85,
-    category: 'packaging',
+    category: 'stickers_labels',
   },
   {
     id: 'pkg-ice-cream-cups',
     title: 'Ice Cream Cups',
     price: '₦900.00',
     numericPrice: 900,
-    category: 'packaging',
+    category: 'food_packaging',
   },
   {
     id: 'pkg-paper-bags-a3',
     title: 'Custom Paper Bags (A3 size)',
     price: '₦1,000.00',
     numericPrice: 1000,
-    category: 'packaging',
+    category: 'paper_bags_tags',
   },
 ];
 

@@ -20,28 +20,28 @@ const STATIONERY_ITEMS: StationeryItem[] = [
     title: 'Business Cards Printing in Lagos – Custom & Premium Cards',
     price: '₦20,000.00',
     numericPrice: 20000,
-    category: 'stationery',
+    category: 'cards_invitations',
   },
   {
     id: 'stationery-plastic-cards',
     title: 'Premium Plastic Business Cards',
     price: '₦48,000.00',
     numericPrice: 48000,
-    category: 'stationery',
+    category: 'cards_invitations',
   },
   {
     id: 'stationery-certificates',
     title: 'Certificate Printing in Lagos – Professional Award & Academic Certificates',
     price: '₦1,000.00',
     numericPrice: 1000,
-    category: 'stationery',
+    category: 'office_stationery',
   },
   {
     id: 'stationery-book-printing',
     title: 'Book Printing in Lagos Nigeria',
     price: '₦2,400.00',
     numericPrice: 2400,
-    category: 'stationery',
+    category: 'books_magazines',
   },
 ];
 

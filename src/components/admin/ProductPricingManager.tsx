@@ -17,7 +17,10 @@ import {
   CheckCircle2, 
   ExternalLink,
   FileText,
-  DollarSign
+  DollarSign,
+  Star,
+  Images,
+  Layers
 } from 'lucide-react';
 import { Product, ProductCategory } from '../../types/schema';
 import { STORE_CATEGORIES, getProductCategoryTag } from '../../utils/categoryUtils';
@@ -69,36 +72,89 @@ export const ProductPricingManager: React.FC<ProductPricingManagerProps> = ({
 
   // New product form fields
   const [newName, setNewName] = useState('');
-  const [newCategoryPlacement, setNewCategoryPlacement] = useState<string>('banners');
+  const [newCategoryPlacement, setNewCategoryPlacement] = useState<string>('banners_stands');
   const [newBasePrice, setNewBasePrice] = useState<number>(25000);
   const [newMinQuantity, setNewMinQuantity] = useState<number>(1);
   const [newTurnaroundDays, setNewTurnaroundDays] = useState<number>(2);
   const [newBadge, setNewBadge] = useState<string>('Best Seller');
   const [newImageUrl, setNewImageUrl] = useState<string>(PRINT_IMAGE_PRESETS[0].url);
+  const [newImages, setNewImages] = useState<string[]>([]);
+  const [batchUploadMode, setBatchUploadMode] = useState<boolean>(false);
   const [newDescription, setNewDescription] = useState<string>('');
   const [customImageInput, setCustomImageInput] = useState<string>('');
   const [isUploadingProductImg, setIsUploadingProductImg] = useState<boolean>(false);
   const newProductFileInputRef = useRef<HTMLInputElement>(null);
 
+  // Edit product modal state for multiple images
+  const [editModalImages, setEditModalImages] = useState<string[]>([]);
+  const [isUploadingEditImages, setIsUploadingEditImages] = useState<boolean>(false);
+  const editProductFileInputRef = useRef<HTMLInputElement>(null);
+
   const handleProductDeviceUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
     setIsUploadingProductImg(true);
     try {
-      const compressed = await compressImageFile(file, 1200, 0.76);
-      setNewImageUrl(compressed);
-      const imageId = `product-img-${Date.now()}`;
-      saveUploadedImageToCloud({
-        id: imageId,
-        name: file.name,
-        dataUrl: compressed,
-        uploadedAt: new Date().toISOString()
-      }).catch(console.warn);
+      const uploadedUrls: string[] = [];
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const compressed = await compressImageFile(file, 1200, 0.76);
+        uploadedUrls.push(compressed);
+        const imageId = `product-img-${Date.now()}-${i}`;
+        saveUploadedImageToCloud({
+          id: imageId,
+          name: file.name,
+          dataUrl: compressed,
+          uploadedAt: new Date().toISOString()
+        }).catch(console.warn);
+      }
+      setNewImages((prev) => {
+        const combined = [...prev, ...uploadedUrls];
+        if (!newImageUrl || newImageUrl === PRINT_IMAGE_PRESETS[0].url) {
+          setNewImageUrl(combined[0]);
+        }
+        return combined;
+      });
     } catch (err) {
       console.error('Product image compression error:', err);
-      alert('Failed to process image. Please try another image file.');
+      alert('Failed to process one or more images. Please try another image file.');
     } finally {
       setIsUploadingProductImg(false);
+      if (e.target) e.target.value = '';
+    }
+  };
+
+  const handleEditDeviceUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+    setIsUploadingEditImages(true);
+    try {
+      const uploadedUrls: string[] = [];
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const compressed = await compressImageFile(file, 1200, 0.76);
+        uploadedUrls.push(compressed);
+        const imageId = `edit-img-${Date.now()}-${i}`;
+        saveUploadedImageToCloud({
+          id: imageId,
+          name: file.name,
+          dataUrl: compressed,
+          uploadedAt: new Date().toISOString()
+        }).catch(console.warn);
+      }
+      setEditModalImages((prev) => {
+        const combined = [...prev, ...uploadedUrls];
+        if (!editModalImage && combined.length > 0) {
+          setEditModalImage(combined[0]);
+        }
+        return combined;
+      });
+    } catch (err) {
+      console.error('Edit image compression error:', err);
+      alert('Failed to process one or more images. Please try another image file.');
+    } finally {
+      setIsUploadingEditImages(false);
+      if (e.target) e.target.value = '';
     }
   };
 
@@ -148,6 +204,10 @@ export const ProductPricingManager: React.FC<ProductPricingManagerProps> = ({
     setEditModalBadge(product.badge || '');
     setEditModalCategoryPlacement(getProductCategoryTag(product));
     setEditModalImage(product.image);
+    const existingImgs = (product.images && product.images.length > 0)
+      ? [...product.images]
+      : (product.image ? [product.image] : []);
+    setEditModalImages(existingImgs);
   };
 
   // Save Full Edit Modal
@@ -156,6 +216,8 @@ export const ProductPricingManager: React.FC<ProductPricingManagerProps> = ({
     if (!editingProductModal) return;
 
     const matchingCatDef = STORE_CATEGORIES.find((c) => c.id === editModalCategoryPlacement);
+    const finalCover = editModalImage || (editModalImages.length > 0 ? editModalImages[0] : editingProductModal.image);
+    const finalImages = editModalImages.length > 0 ? editModalImages : [finalCover];
 
     onUpdateProduct(editingProductModal.id, {
       name: editModalName.trim() || editingProductModal.name,
@@ -166,11 +228,12 @@ export const ProductPricingManager: React.FC<ProductPricingManagerProps> = ({
       minQuantity: Number(editModalMinQty) || 1,
       badge: editModalBadge.trim() || undefined,
       categoryPlacement: editModalCategoryPlacement,
-      image: editModalImage || editingProductModal.image,
+      image: finalCover,
+      images: finalImages,
       ...(matchingCatDef ? { categoryLabel: matchingCatDef.label } : {}),
     });
 
-    setUploadSuccessMessage(`Successfully updated details for "${editModalName}"!`);
+    setUploadSuccessMessage(`Successfully updated details for "${editModalName}" with ${finalImages.length} photo(s)!`);
     setEditingProductModal(null);
   };
 
@@ -201,67 +264,110 @@ export const ProductPricingManager: React.FC<ProductPricingManagerProps> = ({
     const timestamp = Date.now();
     const slug = newName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
-    const newProduct: Product = {
-      id: `prod-admin-${timestamp}`,
-      sku: `SKU-${newCategoryPlacement.toUpperCase().slice(0, 3)}-${Math.floor(1000 + Math.random() * 9000)}`,
-      name: newName.trim(),
-      slug: `${slug}-${timestamp}`,
-      category: resolvedCategory,
-      categoryLabel: resolvedCatLabel,
-      categoryPlacement: newCategoryPlacement,
-      basePriceNgn: Number(newBasePrice) || 10000,
-      minQuantity: Number(newMinQuantity) || 1,
-      turnaroundDays: Number(newTurnaroundDays) || 2,
-      badge: newBadge.trim() || undefined,
-      image: newImageUrl || PRINT_IMAGE_PRESETS[0].url,
-      shortDescription: newDescription.trim() || `Professional ${resolvedCatLabel} by Silver & Gold Inkshine Ltd with premium finishing and guaranteed factory precision.`,
-      description: newDescription.trim() || `Our ${newName.trim()} is produced in-house with strict color-calibration, top-grade substrates, and nationwide door-step delivery across Nigeria.`,
-      optionGroups: [
-        {
-          id: 'opt-size',
-          name: 'Standard Format & Dimension',
-          type: 'size',
-          required: true,
-          options: [
-            { id: 'opt-sz-std', name: 'Standard Commercial Size', code: 'STD', priceModifierType: 'fixed', priceModifierValue: 0, isDefault: true },
-            { id: 'opt-sz-large', name: 'Large Executive Size', code: 'LRG', priceModifierType: 'fixed', priceModifierValue: 5000 },
-          ]
-        },
-        {
-          id: 'opt-material',
-          name: 'Media Substrate & Coating',
-          type: 'material',
-          required: true,
-          options: [
-            { id: 'opt-mat-matte', name: 'Premium Matte Finish', code: 'MATTE', priceModifierType: 'fixed', priceModifierValue: 0, isDefault: true },
-            { id: 'opt-mat-gloss', name: 'Ultra-Vibrant Gloss Finish', code: 'GLOSS', priceModifierType: 'fixed', priceModifierValue: 1500 },
-          ]
-        }
-      ],
-      bulkPricingTiers: [
-        { minQuantity: 1, maxQuantity: 5, discountPercentage: 0, label: '1 - 5 units' },
-        { minQuantity: 6, maxQuantity: 20, discountPercentage: 10, label: '6 - 20 units (10% Off)' },
-        { minQuantity: 21, maxQuantity: null, discountPercentage: 20, label: '21+ units (20% Off)' },
-      ],
-      artworkRequirements: {
-        recommendedDpi: 300,
-        supportedFormats: ['PDF', 'CDR', 'AI', 'TIFF', 'PNG'],
-        bleedMarginMm: 3,
-        maxFileSizeMb: 50,
+    const finalCover = newImageUrl || (newImages.length > 0 ? newImages[0] : PRINT_IMAGE_PRESETS[0].url);
+    const finalImages = newImages.length > 0 ? newImages : [finalCover];
+
+    const defaultOptionGroups = [
+      {
+        id: 'opt-size',
+        name: 'Standard Format & Dimension',
+        type: 'size' as const,
+        required: true,
+        options: [
+          { id: 'opt-sz-std', name: 'Standard Commercial Size', code: 'STD', priceModifierType: 'fixed' as const, priceModifierValue: 0, isDefault: true },
+          { id: 'opt-sz-large', name: 'Large Executive Size', code: 'LRG', priceModifierType: 'fixed' as const, priceModifierValue: 5000 },
+        ]
+      },
+      {
+        id: 'opt-material',
+        name: 'Media Substrate & Coating',
+        type: 'material' as const,
+        required: true,
+        options: [
+          { id: 'opt-mat-matte', name: 'Premium Matte Finish', code: 'MATTE', priceModifierType: 'fixed' as const, priceModifierValue: 0, isDefault: true },
+          { id: 'opt-mat-gloss', name: 'Ultra-Vibrant Gloss Finish', code: 'GLOSS', priceModifierType: 'fixed' as const, priceModifierValue: 1500 },
+        ]
       }
+    ];
+
+    const defaultBulkPricing = [
+      { minQuantity: 1, maxQuantity: 5, discountPercentage: 0, label: '1 - 5 units' },
+      { minQuantity: 6, maxQuantity: 20, discountPercentage: 10, label: '6 - 20 units (10% Off)' },
+      { minQuantity: 21, maxQuantity: null, discountPercentage: 20, label: '21+ units (20% Off)' },
+    ];
+
+    const defaultArtworkReqs = {
+      recommendedDpi: 300,
+      supportedFormats: ['PDF', 'CDR', 'AI', 'TIFF', 'PNG'],
+      bleedMarginMm: 3,
+      maxFileSizeMb: 50,
     };
 
-    if (onAddProduct) {
-      onAddProduct(newProduct);
+    if (batchUploadMode && newImages.length > 1) {
+      // Batch mode: create individual jobs for each uploaded photo under this category
+      newImages.forEach((imgUrl, i) => {
+        const itemNumber = i + 1;
+        const itemTitle = `${newName.trim()} (Design #${itemNumber})`;
+        const itemProduct: Product = {
+          id: `prod-admin-${timestamp}-${i}`,
+          sku: `SKU-${newCategoryPlacement.toUpperCase().slice(0, 3)}-${Math.floor(1000 + Math.random() * 9000)}`,
+          name: itemTitle,
+          slug: `${slug}-${timestamp}-${i}`,
+          category: resolvedCategory,
+          categoryLabel: resolvedCatLabel,
+          categoryPlacement: newCategoryPlacement,
+          basePriceNgn: Number(newBasePrice) || 10000,
+          minQuantity: Number(newMinQuantity) || 1,
+          turnaroundDays: Number(newTurnaroundDays) || 2,
+          badge: newBadge.trim() || undefined,
+          image: imgUrl,
+          images: [imgUrl],
+          shortDescription: newDescription.trim() || `Professional ${resolvedCatLabel} by Silver & Gold Inkshine Ltd with premium finishing and guaranteed factory precision.`,
+          description: newDescription.trim() || `Our ${itemTitle} is produced in-house with strict color-calibration, top-grade substrates, and nationwide door-step delivery across Nigeria.`,
+          optionGroups: defaultOptionGroups,
+          bulkPricingTiers: defaultBulkPricing,
+          artworkRequirements: defaultArtworkReqs,
+        };
+        onAddProduct?.(itemProduct);
+      });
+      setUploadSuccessMessage(`Successfully published ${newImages.length} separate jobs to "${resolvedCatLabel}"!`);
+    } else {
+      // Single product with multi-image gallery
+      const newProduct: Product = {
+        id: `prod-admin-${timestamp}`,
+        sku: `SKU-${newCategoryPlacement.toUpperCase().slice(0, 3)}-${Math.floor(1000 + Math.random() * 9000)}`,
+        name: newName.trim(),
+        slug: `${slug}-${timestamp}`,
+        category: resolvedCategory,
+        categoryLabel: resolvedCatLabel,
+        categoryPlacement: newCategoryPlacement,
+        basePriceNgn: Number(newBasePrice) || 10000,
+        minQuantity: Number(newMinQuantity) || 1,
+        turnaroundDays: Number(newTurnaroundDays) || 2,
+        badge: newBadge.trim() || undefined,
+        image: finalCover,
+        images: finalImages,
+        shortDescription: newDescription.trim() || `Professional ${resolvedCatLabel} by Silver & Gold Inkshine Ltd with premium finishing and guaranteed factory precision.`,
+        description: newDescription.trim() || `Our ${newName.trim()} is produced in-house with strict color-calibration, top-grade substrates, and nationwide door-step delivery across Nigeria.`,
+        optionGroups: defaultOptionGroups,
+        bulkPricingTiers: defaultBulkPricing,
+        artworkRequirements: defaultArtworkReqs,
+      };
+
+      if (onAddProduct) {
+        onAddProduct(newProduct);
+      }
+      setUploadSuccessMessage(`Successfully added "${newProduct.name}" with ${finalImages.length} photo(s)! Allocated to "${resolvedCatLabel}".`);
     }
 
-    setUploadSuccessMessage(`Successfully added "${newProduct.name}"! Allocated to "${resolvedCatLabel}".`);
     setIsUploadModalOpen(false);
 
     // Reset form fields
     setNewName('');
     setNewDescription('');
     setNewBasePrice(25000);
+    setNewImages([]);
+    setBatchUploadMode(false);
   };
 
   return (
@@ -568,35 +674,133 @@ export const ProductPricingManager: React.FC<ProductPricingManagerProps> = ({
 
             {/* Form */}
             <form onSubmit={handleSaveFullEdit} className="p-6 overflow-y-auto space-y-4 flex-1">
-              {/* Image Preview & Replace */}
-              <div className="p-3.5 bg-stone-50 rounded-xl border border-stone-200 flex items-center gap-4">
-                <img
-                  src={editModalImage}
-                  alt={editModalName}
-                  className="w-16 h-16 rounded-lg object-cover bg-stone-200 border border-stone-300 shrink-0"
-                  referrerPolicy="no-referrer"
-                />
-                <div className="flex-1">
-                  <label className="block text-[11px] font-bold text-stone-700 uppercase tracking-wider mb-1">
-                    Product Photography
+              {/* Image Preview & Multi-Photo Management */}
+              <div className="p-4 bg-stone-50 rounded-2xl border border-stone-200 space-y-3">
+                <div className="flex items-center justify-between">
+                  <label className="block text-xs font-bold text-stone-800 uppercase tracking-wider flex items-center gap-1.5">
+                    <Images className="w-4 h-4 text-[#b8860b]" />
+                    <span>Product Photo Gallery ({editModalImages.length} image{editModalImages.length !== 1 ? 's' : ''})</span>
                   </label>
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="text"
-                      value={editModalImage}
-                      onChange={(e) => setEditModalImage(e.target.value)}
-                      placeholder="Image URL or upload"
-                      className="flex-1 px-3 py-1.5 rounded-lg border border-stone-300 text-xs focus:ring-2 focus:ring-[#b8860b]"
+                  <span className="text-[11px] text-stone-500">
+                    Primary cover image is starred
+                  </span>
+                </div>
+
+                {/* Cover Preview & Controls */}
+                <div className="flex flex-col sm:flex-row gap-3 items-center">
+                  <div className="relative w-20 h-20 rounded-xl overflow-hidden bg-stone-200 border-2 border-[#b8860b] shadow-sm shrink-0">
+                    <img
+                      src={editModalImage || (editModalImages[0] || '')}
+                      alt={editModalName}
+                      className="w-full h-full object-cover"
+                      referrerPolicy="no-referrer"
                     />
-                    <button
-                      type="button"
-                      onClick={() => setReplacingImageProduct(editingProductModal)}
-                      className="px-3 py-1.5 rounded-lg bg-stone-900 hover:bg-stone-800 text-white font-bold text-xs shrink-0 cursor-pointer"
-                    >
-                      Change Photo
-                    </button>
+                    <span className="absolute bottom-0 inset-x-0 bg-stone-950/80 text-[9px] font-bold text-[#f5be38] text-center py-0.5 uppercase tracking-wide">
+                      Cover
+                    </span>
+                  </div>
+
+                  <div className="flex-1 w-full space-y-2">
+                    <div className="flex flex-wrap gap-2">
+                      <input
+                        type="file"
+                        ref={editProductFileInputRef}
+                        onChange={handleEditDeviceUpload}
+                        accept="image/*"
+                        multiple
+                        className="hidden"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => editProductFileInputRef.current?.click()}
+                        disabled={isUploadingEditImages}
+                        className="px-3 py-1.5 bg-[#00473e] hover:bg-[#03554a] text-white rounded-lg text-xs font-bold flex items-center gap-1.5 cursor-pointer disabled:opacity-60"
+                      >
+                        <Upload className="w-3.5 h-3.5" />
+                        <span>{isUploadingEditImages ? 'Compressing & Syncing...' : 'Upload Photos (Multi-Select)'}</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => setReplacingImageProduct(editingProductModal)}
+                        className="px-3 py-1.5 rounded-lg bg-stone-900 hover:bg-stone-800 text-white font-bold text-xs shrink-0 cursor-pointer flex items-center gap-1.5"
+                      >
+                        <ImageIcon className="w-3.5 h-3.5" />
+                        <span>Preset Library</span>
+                      </button>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="text"
+                        value={editModalImage}
+                        onChange={(e) => {
+                          setEditModalImage(e.target.value);
+                          if (e.target.value && !editModalImages.includes(e.target.value)) {
+                            setEditModalImages(prev => [e.target.value, ...prev]);
+                          }
+                        }}
+                        placeholder="Or paste direct image URL for cover"
+                        className="flex-1 px-3 py-1.5 rounded-lg border border-stone-300 text-xs focus:ring-2 focus:ring-[#b8860b]"
+                      />
+                    </div>
                   </div>
                 </div>
+
+                {/* Gallery Strip of Current Images */}
+                {editModalImages.length > 0 && (
+                  <div className="pt-2 border-t border-stone-200">
+                    <p className="text-[11px] font-semibold text-stone-600 mb-2">
+                      All Gallery Photos (Click star to set as main cover, trash to remove):
+                    </p>
+                    <div className="flex flex-wrap gap-2.5">
+                      {editModalImages.map((imgUrl, idx) => {
+                        const isCover = imgUrl === editModalImage;
+                        return (
+                          <div
+                            key={idx}
+                            className={`relative group w-16 h-16 rounded-lg overflow-hidden border-2 transition-all ${
+                              isCover ? 'border-[#b8860b] ring-2 ring-[#b8860b]/30' : 'border-stone-300 hover:border-stone-400'
+                            }`}
+                          >
+                            <img src={imgUrl} alt={`Photo ${idx + 1}`} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                            {isCover && (
+                              <span className="absolute top-1 left-1 bg-[#b8860b] text-white p-0.5 rounded-full shadow-xs">
+                                <Star className="w-2.5 h-2.5 fill-current" />
+                              </span>
+                            )}
+                            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1">
+                              {!isCover && (
+                                <button
+                                  type="button"
+                                  onClick={() => setEditModalImage(imgUrl)}
+                                  className="p-1 bg-[#b8860b] text-white rounded hover:bg-[#d4af37] cursor-pointer"
+                                  title="Set as Cover Photo"
+                                >
+                                  <Star className="w-3 h-3" />
+                                </button>
+                              )}
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  const updated = editModalImages.filter((_, i) => i !== idx);
+                                  setEditModalImages(updated);
+                                  if (isCover) {
+                                    setEditModalImage(updated[0] || '');
+                                  }
+                                }}
+                                className="p-1 bg-red-600 text-white rounded hover:bg-red-700 cursor-pointer"
+                                title="Remove this photo"
+                              >
+                                <Trash2 className="w-3 h-3" />
+                              </button>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Product Name (Rename) */}
@@ -892,11 +1096,17 @@ export const ProductPricingManager: React.FC<ProductPricingManagerProps> = ({
                 />
               </div>
 
-              {/* Image Selection */}
-              <div className="space-y-2">
+              {/* Image Selection & Multi-Photo Gallery Upload */}
+              <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <label className="block text-xs font-bold text-stone-700 uppercase tracking-wider">
-                    Product Image (Photo)
+                  <label className="block text-xs font-bold text-stone-700 uppercase tracking-wider flex items-center gap-1.5">
+                    <Images className="w-4 h-4 text-[#b8860b]" />
+                    <span>Product Images &amp; Gallery</span>
+                    {newImages.length > 0 && (
+                      <span className="px-2 py-0.5 bg-[#b8860b]/15 text-[#926c05] font-bold text-[10px] rounded-full">
+                        {newImages.length} Photo{newImages.length !== 1 ? 's' : ''} Selected
+                      </span>
+                    )}
                   </label>
                   <span className="text-[11px] text-emerald-700 font-semibold flex items-center gap-1">
                     <CheckCircle2 className="w-3 h-3" />
@@ -904,58 +1114,150 @@ export const ProductPricingManager: React.FC<ProductPricingManagerProps> = ({
                   </span>
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-3 items-center p-3 bg-stone-50 rounded-xl border border-stone-200">
-                  <div className="w-16 h-16 rounded-lg overflow-hidden bg-white border border-stone-300 shadow-xs shrink-0">
-                    <img src={newImageUrl} alt="Preview" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                <div className="p-3.5 bg-stone-50 rounded-xl border border-stone-200 space-y-3">
+                  <div className="flex flex-col sm:flex-row gap-3 items-center">
+                    <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-white border border-stone-300 shadow-xs shrink-0">
+                      <img src={newImageUrl || (newImages[0] || PRINT_IMAGE_PRESETS[0].url)} alt="Cover Preview" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                      <span className="absolute bottom-0 inset-x-0 bg-stone-950/80 text-[8px] font-bold text-[#f5be38] text-center py-0.5 uppercase tracking-wide">
+                        Cover
+                      </span>
+                    </div>
+
+                    <div className="flex-1 w-full space-y-2">
+                      <div className="flex flex-wrap gap-2">
+                        <input
+                          type="file"
+                          ref={newProductFileInputRef}
+                          onChange={handleProductDeviceUpload}
+                          accept="image/*"
+                          multiple
+                          className="hidden"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => newProductFileInputRef.current?.click()}
+                          disabled={isUploadingProductImg}
+                          className="px-3.5 py-1.5 bg-[#00473e] hover:bg-[#03554a] text-white rounded-lg text-xs font-bold flex items-center gap-1.5 cursor-pointer disabled:opacity-60"
+                        >
+                          <Upload className="w-3.5 h-3.5" />
+                          <span>{isUploadingProductImg ? 'Compressing & Syncing...' : 'Upload Photos from Device (Multi-Select)'}</span>
+                        </button>
+
+                        <input
+                          type="text"
+                          value={newImageUrl}
+                          onChange={(e) => {
+                            setNewImageUrl(e.target.value);
+                            if (e.target.value && !newImages.includes(e.target.value)) {
+                              setNewImages(prev => [e.target.value, ...prev]);
+                            }
+                          }}
+                          placeholder="Or paste web image URL"
+                          className="flex-1 min-w-[180px] px-3 py-1.5 rounded-lg border border-stone-300 text-xs focus:ring-2 focus:ring-[#b8860b]"
+                        />
+                      </div>
+                      <p className="text-[11px] text-stone-500">
+                        Select one or multiple photos from your mobile phone or laptop. Supports multiple angle shots, detailed textures, and sample variations.
+                      </p>
+                    </div>
                   </div>
 
-                  <div className="flex-1 w-full space-y-2">
-                    <div className="flex gap-2">
-                      <input
-                        type="file"
-                        ref={newProductFileInputRef}
-                        onChange={handleProductDeviceUpload}
-                        accept="image/*"
-                        className="hidden"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => newProductFileInputRef.current?.click()}
-                        disabled={isUploadingProductImg}
-                        className="px-3 py-1.5 bg-[#00473e] hover:bg-[#03554a] text-white rounded-lg text-xs font-bold flex items-center gap-1.5 cursor-pointer disabled:opacity-60"
-                      >
-                        <Upload className="w-3.5 h-3.5" />
-                        <span>{isUploadingProductImg ? 'Compressing & Syncing...' : 'Upload Photo from Device'}</span>
-                      </button>
+                  {/* Multi-Photo Gallery List */}
+                  {newImages.length > 0 && (
+                    <div className="pt-2 border-t border-stone-200 space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[11px] font-bold text-stone-700">
+                          Selected Photos ({newImages.length}):
+                        </span>
+                        {newImages.length > 1 && (
+                          <label className="inline-flex items-center gap-2 cursor-pointer text-xs font-medium text-stone-700 bg-white px-2.5 py-1 rounded-lg border border-stone-200">
+                            <input
+                              type="checkbox"
+                              checked={batchUploadMode}
+                              onChange={(e) => setBatchUploadMode(e.target.checked)}
+                              className="rounded text-[#00473e] focus:ring-[#00473e]"
+                            />
+                            <span className="text-[11px] font-semibold">
+                              Batch Publish: Create separate product for each photo
+                            </span>
+                          </label>
+                        )}
+                      </div>
 
-                      <input
-                        type="text"
-                        value={newImageUrl}
-                        onChange={(e) => setNewImageUrl(e.target.value)}
-                        placeholder="Or paste web image URL"
-                        className="flex-1 px-3 py-1.5 rounded-lg border border-stone-300 text-xs focus:ring-2 focus:ring-[#b8860b]"
-                      />
+                      <div className="flex flex-wrap gap-2">
+                        {newImages.map((imgUrl, idx) => {
+                          const isCover = imgUrl === newImageUrl;
+                          return (
+                            <div
+                              key={idx}
+                              className={`relative group w-14 h-14 rounded-lg overflow-hidden border-2 transition-all ${
+                                isCover ? 'border-[#b8860b] ring-2 ring-[#b8860b]/30' : 'border-stone-300'
+                              }`}
+                            >
+                              <img src={imgUrl} alt={`Upload ${idx + 1}`} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                              {isCover && (
+                                <span className="absolute top-0.5 left-0.5 bg-[#b8860b] text-white p-0.5 rounded-full">
+                                  <Star className="w-2.5 h-2.5 fill-current" />
+                                </span>
+                              )}
+                              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1">
+                                {!isCover && (
+                                  <button
+                                    type="button"
+                                    onClick={() => setNewImageUrl(imgUrl)}
+                                    className="p-1 bg-[#b8860b] text-white rounded hover:bg-[#d4af37] cursor-pointer"
+                                    title="Set as Cover"
+                                  >
+                                    <Star className="w-3 h-3" />
+                                  </button>
+                                )}
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    const updated = newImages.filter((_, i) => i !== idx);
+                                    setNewImages(updated);
+                                    if (isCover) {
+                                      setNewImageUrl(updated[0] || PRINT_IMAGE_PRESETS[0].url);
+                                    }
+                                  }}
+                                  className="p-1 bg-red-600 text-white rounded hover:bg-red-700 cursor-pointer"
+                                  title="Remove"
+                                >
+                                  <Trash2 className="w-3 h-3" />
+                                </button>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
-                    <p className="text-[11px] text-stone-500">
-                      Upload any JPG/PNG from your mobile or laptop. Automatically compressed and synced to all devices.
-                    </p>
+                  )}
+
+                  {/* Preset Library Thumbnails */}
+                  <div className="pt-2 border-t border-stone-200">
+                    <span className="text-[11px] font-semibold text-stone-600 block mb-1.5">
+                      Or pick from print presets:
+                    </span>
+                    <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
+                      {PRINT_IMAGE_PRESETS.slice(0, 12).map((preset, idx) => (
+                        <div
+                          key={idx}
+                          onClick={() => {
+                            setNewImageUrl(preset.url);
+                            if (!newImages.includes(preset.url)) {
+                              setNewImages(prev => [...prev, preset.url]);
+                            }
+                          }}
+                          className={`relative aspect-square rounded-lg overflow-hidden border-2 cursor-pointer transition-all ${
+                            newImageUrl === preset.url ? 'border-[#b8860b] ring-2 ring-[#b8860b]/30' : 'border-stone-200 opacity-70 hover:opacity-100'
+                          }`}
+                          title={preset.label}
+                        >
+                          <img src={preset.url} alt={preset.label} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
-
-                {/* Preset Thumbnails */}
-                <div className="grid grid-cols-4 sm:grid-cols-6 gap-2 pt-2">
-                  {PRINT_IMAGE_PRESETS.slice(0, 12).map((preset, idx) => (
-                    <div
-                      key={idx}
-                      onClick={() => setNewImageUrl(preset.url)}
-                      className={`relative aspect-square rounded-lg overflow-hidden border-2 cursor-pointer transition-all ${
-                        newImageUrl === preset.url ? 'border-[#b8860b] ring-2 ring-[#b8860b]/30' : 'border-stone-200 opacity-70 hover:opacity-100'
-                      }`}
-                      title={preset.label}
-                    >
-                      <img src={preset.url} alt={preset.label} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
-                    </div>
-                  ))}
                 </div>
               </div>
 

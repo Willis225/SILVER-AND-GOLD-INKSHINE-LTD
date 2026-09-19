@@ -20,28 +20,28 @@ const SIGNAGE_ITEMS: SignageItem[] = [
     title: '3D Signs in Lagos Nigeria | Custom 3D Signage for Businesses',
     price: '₦70,000.00',
     numericPrice: 70000,
-    category: 'signage',
+    category: 'signages',
   },
   {
     id: 'signage-logo-signs',
     title: 'Logo Signage in Lagos Nigeria | Custom Business Logo Signs',
     price: '₦37,000.00',
     numericPrice: 37000,
-    category: 'signage',
+    category: 'signages',
   },
   {
     id: 'signage-directional',
     title: 'Directional Signage in Lagos Nigeria | Custom Wayfinding Signs',
     price: '₦27,000.00',
     numericPrice: 27000,
-    category: 'signage',
+    category: 'signages',
   },
   {
     id: 'signage-digital-display',
     title: 'Electronic Digital Signage in Lagos Nigeria | Digital Display Signs',
     price: '₦2,400,000.00',
     numericPrice: 2400000,
-    category: 'signage',
+    category: 'signages',
   },
 ];
 

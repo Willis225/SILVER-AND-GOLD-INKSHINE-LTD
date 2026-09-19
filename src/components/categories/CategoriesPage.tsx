@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { 
   Search, 
   Grid, 
@@ -13,11 +13,14 @@ import {
   Phone,
   ShoppingCart,
   ExternalLink,
-  ChevronDown
+  ChevronDown,
+  Sparkles,
+  CheckCircle2
 } from 'lucide-react';
 import { Product, ProductCategory } from '../../types/schema';
 import { ConfirmPriceModal } from './ConfirmPriceModal';
 import { RecentPostModal, PostItem } from './RecentPostModal';
+import { normalizeCategoryKey } from '../../data/homepageCatalogProducts';
 
 // Categories matching exact list from screenshot
 export const SCREENSHOT_CATEGORIES: { key: string; label: string }[] = [
@@ -124,6 +127,7 @@ interface CategoriesPageProps {
   products: Product[];
   initialCategory?: string;
   initialSearchQuery?: string;
+  highlightedProductId?: string | null;
   onNavigateHome: () => void;
   onSelectProduct: (product: Product) => void;
   onOpenCart?: () => void;
@@ -134,15 +138,17 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
   products,
   initialCategory = 'all',
   initialSearchQuery = '',
+  highlightedProductId = null,
   onNavigateHome,
   onSelectProduct,
   onOpenCart,
   cartCount = 0,
 }) => {
   // Navigation & filter states
-  const [selectedCategoryKey, setSelectedCategoryKey] = useState<string>(initialCategory || 'all');
+  const [selectedCategoryKey, setSelectedCategoryKey] = useState<string>(() => normalizeCategoryKey(initialCategory || 'all'));
   const [searchKeyword, setSearchKeyword] = useState<string>(initialSearchQuery || '');
   const [searchInput, setSearchInput] = useState<string>(initialSearchQuery || '');
+  const [activeHighlightedId, setActiveHighlightedId] = useState<string | null>(highlightedProductId || null);
   const [sortBy, setSortBy] = useState<string>('default');
   const [viewMode, setViewMode] = useState<'list' | 'grid'>('list'); // Default to list view as in screenshot
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState<boolean>(false);
@@ -153,12 +159,31 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
   const [confirmPriceProduct, setConfirmPriceProduct] = useState<Product | null>(null);
   const [selectedPost, setSelectedPost] = useState<PostItem | null>(null);
 
-  // Sync if initialCategory or initialSearchQuery prop changes
+  // Exact target product selected from homepage
+  const highlightedProduct = useMemo(() => {
+    if (!activeHighlightedId) return null;
+    return products.find((p) => p.id === activeHighlightedId || p.slug === activeHighlightedId) || null;
+  }, [products, activeHighlightedId]);
+
+  // Sync if initialCategory or highlightedProductId prop changes
   useEffect(() => {
     if (initialCategory) {
-      setSelectedCategoryKey(initialCategory);
+      setSelectedCategoryKey(normalizeCategoryKey(initialCategory));
     }
   }, [initialCategory]);
+
+  useEffect(() => {
+    if (highlightedProductId) {
+      setActiveHighlightedId(highlightedProductId);
+      // Auto-scroll gently into view
+      setTimeout(() => {
+        const el = document.getElementById('highlighted-product-banner') || document.getElementById('catalog-product-list-view');
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 120);
+    }
+  }, [highlightedProductId]);
 
   useEffect(() => {
     if (initialSearchQuery !== undefined) {
@@ -187,26 +212,79 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
       if (selectedCategoryKey !== 'all') {
         const pCat = (p.category || '').toLowerCase();
         const pPlacement = (p.categoryPlacement || '').toLowerCase();
+        const pName = (p.name || '').toLowerCase();
         const sKey = selectedCategoryKey.toLowerCase();
         
         // Exact match or related prefix
-        const matchesCategory = 
+        let matchesCategory = 
           pCat === sKey || 
           pPlacement === sKey || 
           pCat.includes(sKey) ||
-          (sKey === 'advertising_materials' && (pCat.includes('advertising') || pCat.includes('banner') || pPlacement === 'banners')) ||
-          (sKey === 'banners_stands' && (pCat.includes('banner') || pPlacement === 'banners')) ||
-          (sKey === 'flyers_handbills' && (pCat.includes('flyer') || pPlacement === 'flyers')) ||
-          (sKey === 'office_stationery' && (pCat.includes('stationery') || pPlacement === 'stationery')) ||
-          (sKey === 'packaging_shipping_cartons' && (pCat.includes('carton') || pCat.includes('packaging'))) ||
-          (sKey === 'stickers_labels' && (pCat.includes('sticker') || pCat.includes('label'))) ||
-          (sKey === 'signages' && (pCat.includes('sign') || pPlacement === 'signage')) ||
-          (sKey === 'events_exhibitions' && (pCat.includes('event') || pPlacement === 'events')) ||
-          (sKey === 'custom_apparels_caps' && (pCat.includes('apparel') || pCat.includes('uniform'))) ||
-          (sKey === 'gift_items_souvenirs' && (pCat.includes('gift') || pPlacement === 'gifts')) ||
-          (sKey === 'awards' && (pCat.includes('award') || pPlacement === 'awards')) ||
-          (sKey === 'frames_wallarts' && (pCat.includes('frame') || pCat.includes('canvas') || pPlacement === 'paintings')) ||
-          (sKey === 'printing_machines' && (pCat.includes('machine') || pPlacement === 'machines'));
+          pName.includes(sKey.replace(/_/g, ' '));
+
+        if (!matchesCategory) {
+          if (sKey === 'books_magazines') {
+            matchesCategory = pCat.includes('book') || pCat.includes('magazine') || pCat.includes('annual') ||
+              pName.includes('annual report') || pName.includes('book') || pName.includes('handbook') || pName.includes('catalogue') || pName.includes('magazine');
+          } else if (sKey === 'cards_invitations') {
+            matchesCategory = pCat.includes('card') || pCat.includes('invitation') ||
+              pName.includes('business card') || pName.includes('plastic card') || pName.includes('card') || pName.includes('invitation');
+          } else if (sKey === 'advertising_materials') {
+            matchesCategory = pCat.includes('advertising') || pCat.includes('banner') || pPlacement === 'banners' ||
+              pName.includes('advertising') || pName.includes('poster');
+          } else if (sKey === 'banners_stands') {
+            matchesCategory = pCat.includes('banner') || pCat.includes('stand') || pPlacement === 'banners' ||
+              pName.includes('banner') || pName.includes('rollup') || pName.includes('teardrop') || pName.includes('flag') || pName.includes('backdrop');
+          } else if (sKey === 'flyers_handbills') {
+            matchesCategory = pCat.includes('flyer') || pCat.includes('handbill') || pPlacement === 'flyers' ||
+              pName.includes('flyer') || pName.includes('handbill') || pName.includes('poster') || pName.includes('brochure');
+          } else if (sKey === 'office_stationery') {
+            matchesCategory = pCat.includes('stationery') || pCat.includes('office') || pPlacement === 'stationery' ||
+              pName.includes('stationery') || pName.includes('letterhead') || pName.includes('envelope') || pName.includes('stamp') || pName.includes('certificate');
+          } else if (sKey === 'packaging_shipping_cartons') {
+            matchesCategory = pCat.includes('carton') || pCat.includes('packaging') || pCat.includes('shipping') || pPlacement === 'packaging' ||
+              pName.includes('carton') || pName.includes('shipping') || pName.includes('box') || pName.includes('pouch');
+          } else if (sKey === 'paper_bags_tags') {
+            matchesCategory = pCat.includes('bag') || pCat.includes('tag') ||
+              pName.includes('paper bag') || pName.includes('souvenir bag') || pName.includes('jute bag') || pName.includes('hang tag') || pName.includes('drawstring bag');
+          } else if (sKey === 'food_packaging') {
+            matchesCategory = pCat.includes('food') || pName.includes('ice cream') || pName.includes('food') || pName.includes('cup') || pName.includes('takeaway');
+          } else if (sKey === 'stickers_labels') {
+            matchesCategory = pCat.includes('sticker') || pCat.includes('label') ||
+              pName.includes('sticker') || pName.includes('label');
+          } else if (sKey === 'signages') {
+            matchesCategory = pCat.includes('sign') || pPlacement === 'signage' ||
+              pName.includes('sign') || pName.includes('3d sign') || pName.includes('led') || pName.includes('directional');
+          } else if (sKey === 'events_exhibitions') {
+            matchesCategory = pCat.includes('event') || pCat.includes('exhibition') || pPlacement === 'events' ||
+              pName.includes('event') || pName.includes('spin wheel') || pName.includes('exhibition') || pName.includes('booth');
+          } else if (sKey === 'custom_apparels_caps') {
+            matchesCategory = pCat.includes('apparel') || pCat.includes('cap') || pCat.includes('shirt') || pCat.includes('uniform') ||
+              pName.includes('t-shirt') || pName.includes('cap') || pName.includes('shirt') || pName.includes('hoodie');
+          } else if (sKey === 'gift_items_souvenirs') {
+            matchesCategory = pCat.includes('gift') || pCat.includes('souvenir') || pPlacement === 'gifts' ||
+              pName.includes('gift') || pName.includes('souvenir') || pName.includes('wristband') || pName.includes('keychain') || pName.includes('pop socket') || pName.includes('bottle') || pName.includes('mat');
+          } else if (sKey === 'awards') {
+            matchesCategory = pCat.includes('award') || pCat.includes('plaque') || pCat.includes('trophy') || pPlacement === 'awards' ||
+              pName.includes('award') || pName.includes('plaque') || pName.includes('trophy') || pName.includes('medal');
+          } else if (sKey === 'frames_wallarts') {
+            matchesCategory = pCat.includes('frame') || pCat.includes('canvas') || pPlacement === 'paintings' ||
+              pName.includes('frame') || pName.includes('wall art') || pName.includes('canvas') || pName.includes('center rug');
+          } else if (sKey === 'printing_machines') {
+            matchesCategory = pCat.includes('machine') || pPlacement === 'machines' ||
+              pName.includes('machine') || pName.includes('printer') || pName.includes('press');
+          } else if (sKey === 'carports') {
+            matchesCategory = pCat.includes('carport') || pName.includes('carport');
+          } else if (sKey === 'outdoor_displays') {
+            matchesCategory = pCat.includes('outdoor') || pCat.includes('display') || pName.includes('billboard') || pName.includes('outdoor');
+          } else if (sKey === 'packages') {
+            matchesCategory = pCat.includes('package') || pName.includes('bundle') || pName.includes('package');
+          } else if (sKey === 'vehicle_branding') {
+            matchesCategory = pCat.includes('vehicle') || pCat.includes('car') || pName.includes('vehicle') || pName.includes('car wrap');
+          } else if (sKey === 'wedding') {
+            matchesCategory = pCat.includes('wedding') || pName.includes('wedding') || pName.includes('bridal');
+          }
+        }
 
         if (!matchesCategory) return false;
       }
@@ -228,7 +306,7 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
     });
   }, [products, selectedCategoryKey, searchKeyword]);
 
-  // Sort products
+  // Sort products & place the selected product at index 0 (top of page)
   const sortedProducts = useMemo(() => {
     const list = [...filteredProducts];
     if (sortBy === 'price-low') {
@@ -238,8 +316,23 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
     } else if (sortBy === 'latest') {
       list.reverse();
     }
+
+    // Pin the highlighted product to the very top so the user immediately sees what they clicked on
+    if (activeHighlightedId) {
+      const targetIndex = list.findIndex(
+        (p) => p.id === activeHighlightedId || p.slug === activeHighlightedId
+      );
+      if (targetIndex > 0) {
+        const [target] = list.splice(targetIndex, 1);
+        list.unshift(target);
+      } else if (targetIndex === -1 && highlightedProduct) {
+        // If not in current category filter, insert at top so user never loses sight of their clicked item
+        list.unshift(highlightedProduct);
+      }
+    }
+
     return list;
-  }, [filteredProducts, sortBy]);
+  }, [filteredProducts, sortBy, activeHighlightedId, highlightedProduct]);
 
   // Pagination calculations
   const totalResults = sortedProducts.length;
@@ -584,6 +677,44 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
               </div>
             </div>
 
+            {/* Highlighted Banner if navigating from homepage */}
+            {highlightedProduct && (
+              <div id="highlighted-product-banner" className="mb-6 p-4 sm:p-5 bg-gradient-to-r from-amber-50 to-orange-50 border-2 border-amber-300 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm animate-fadeIn">
+                <div className="flex items-center gap-3.5 min-w-0">
+                  <div className="w-14 h-14 rounded-lg overflow-hidden bg-white border border-amber-300 shrink-0 shadow-xs">
+                    <img src={highlightedProduct.image} alt={highlightedProduct.name} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-1.5 text-xs font-bold text-amber-800 uppercase tracking-wider">
+                      <Sparkles className="w-3.5 h-3.5 text-amber-600 animate-pulse" />
+                      <span>Viewing Selected Item from Homepage</span>
+                    </div>
+                    <h3 className="text-sm sm:text-base font-bold text-stone-900 truncate mt-0.5">
+                      {highlightedProduct.name}
+                    </h3>
+                    <p className="text-xs text-stone-600 mt-0.5">
+                      Showing this item below together with all other designs & options available in <span className="font-bold text-stone-800">{currentCategoryLabel}</span>.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 shrink-0 self-end sm:self-center">
+                  <button
+                    onClick={() => onSelectProduct(highlightedProduct)}
+                    className="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-md shadow-xs transition-colors cursor-pointer"
+                  >
+                    Configure & Order
+                  </button>
+                  <button
+                    onClick={() => setActiveHighlightedId(null)}
+                    className="p-2 text-stone-400 hover:text-stone-700 rounded-md hover:bg-white/60 transition-colors cursor-pointer"
+                    title="Dismiss highlight"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            )}
+
             {/* Empty State */}
             {currentProducts.length === 0 && (
               <div className="p-12 text-center bg-stone-50 rounded-xl border border-stone-200">
@@ -606,8 +737,11 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
             {/* 1. LIST VIEW (Exact replica of the uploaded image layout)  */}
             {/* ========================================================== */}
             {viewMode === 'list' && (
-              <div className="space-y-10 sm:space-y-14">
-                {currentProducts.map((product) => {
+              <div id="catalog-product-list-view" className="space-y-10 sm:space-y-14">
+                {currentProducts.map((product, pIndex) => {
+                  const isHighlighted = Boolean(
+                    activeHighlightedId && (product.id === activeHighlightedId || product.slug === activeHighlightedId)
+                  );
                   const formattedPrice = formatPrice(product.basePriceNgn);
                   
                   // Extract or construct 4-6 bullet specs with checkmarks
@@ -660,70 +794,106 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
                   }
 
                   return (
-                    <div 
-                      key={product.id}
-                      className="flex flex-col sm:flex-row items-start gap-6 lg:gap-10 pb-10 sm:pb-14 border-b border-stone-200/80 last:border-b-0"
-                    >
-                      {/* Left: Product Image */}
-                      <div className="w-full sm:w-64 lg:w-72 shrink-0 aspect-4/3 sm:aspect-square bg-stone-50 rounded-xs overflow-hidden border border-stone-200/90 group cursor-pointer relative"
-                        onClick={() => onSelectProduct(product)}
+                    <React.Fragment key={product.id}>
+                      <div 
+                        className={`flex flex-col sm:flex-row items-start gap-6 lg:gap-10 pb-10 sm:pb-14 border-b border-stone-200/80 last:border-b-0 transition-all ${
+                          isHighlighted 
+                            ? 'bg-amber-50/50 p-4 sm:p-6 rounded-xl border-2 border-amber-400 ring-2 ring-amber-300/40 shadow-sm' 
+                            : ''
+                        }`}
                       >
-                        <img
-                          src={product.image}
-                          alt={product.name}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                          loading="lazy"
-                        />
-                        {product.badge && (
-                          <span className="absolute top-2 left-2 px-2 py-0.5 text-[10px] font-bold bg-amber-500 text-black rounded-xs shadow-xs uppercase tracking-wider">
-                            {product.badge}
-                          </span>
-                        )}
-                      </div>
-
-                      {/* Right: Product Details matching screenshot */}
-                      <div className="flex-1 min-w-0 space-y-3">
-                        {/* Title */}
-                        <h3 
+                        {/* Left: Product Image */}
+                        <div className="w-full sm:w-64 lg:w-72 shrink-0 aspect-4/3 sm:aspect-square bg-stone-50 rounded-xs overflow-hidden border border-stone-200/90 group cursor-pointer relative"
                           onClick={() => onSelectProduct(product)}
-                          className="text-lg sm:text-xl font-medium text-stone-900 leading-snug hover:text-amber-700 transition-colors cursor-pointer"
                         >
-                          {product.name}
-                        </h3>
-
-                        {/* Price */}
-                        <div className="text-xs font-bold text-stone-500">
-                          <span className="text-stone-700 text-sm font-semibold">{formattedPrice}</span>
+                          <img
+                            src={product.image}
+                            alt={product.name}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            loading="lazy"
+                          />
+                          {isHighlighted ? (
+                            <span className="absolute top-2 left-2 px-2 py-0.5 text-[10px] font-bold bg-amber-500 text-stone-950 rounded-xs shadow-xs uppercase tracking-wider flex items-center gap-1">
+                              <Sparkles className="w-2.5 h-2.5" />
+                              Selected Item
+                            </span>
+                          ) : product.badge ? (
+                            <span className="absolute top-2 left-2 px-2 py-0.5 text-[10px] font-bold bg-amber-500 text-black rounded-xs shadow-xs uppercase tracking-wider">
+                              {product.badge}
+                            </span>
+                          ) : null}
                         </div>
 
-                        {/* Description Text */}
-                        <p className="text-xs sm:text-sm text-stone-600 leading-relaxed max-w-2xl">
-                          {product.description || product.shortDescription}
-                        </p>
-
-                        {/* Bullet Specs with Green Checkmark */}
-                        <div className="space-y-1 py-1">
-                          {dynamicSpecs.map((spec, sIdx) => (
-                            <div key={sIdx} className="flex items-center gap-2 text-xs sm:text-sm text-stone-800">
-                              <Check className="w-3.5 h-3.5 text-[#22c55e] stroke-[2.5] shrink-0" />
-                              <span>{spec}</span>
+                        {/* Right: Product Details matching screenshot */}
+                        <div className="flex-1 min-w-0 space-y-3">
+                          {isHighlighted && (
+                            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-900 text-xs font-bold border border-amber-300">
+                              <CheckCircle2 className="w-3.5 h-3.5 text-amber-600" />
+                              <span>Exact Match from Homepage Showcase</span>
                             </div>
-                          ))}
-                        </div>
+                          )}
 
-                        {/* Action Buttons: Confirm Price (Green Button matching screenshot) */}
-                        <div className="pt-2 flex flex-wrap items-center gap-3">
-                          <button
-                            type="button"
-                            onClick={() => setConfirmPriceProduct(product)}
-                            className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xs bg-[#22c55e] hover:bg-[#16a34a] text-white font-bold text-xs sm:text-sm shadow-xs transition-colors cursor-pointer"
+                          {/* Title */}
+                          <h3 
+                            onClick={() => onSelectProduct(product)}
+                            className="text-lg sm:text-xl font-medium text-stone-900 leading-snug hover:text-amber-700 transition-colors cursor-pointer"
                           >
-                            <MessageCircle className="w-4 h-4 fill-white stroke-none" />
-                            <span>Confirm Price</span>
-                          </button>
+                            {product.name}
+                          </h3>
+
+                          {/* Price */}
+                          <div className="text-xs font-bold text-stone-500">
+                            <span className="text-stone-700 text-sm font-semibold">{formattedPrice}</span>
+                          </div>
+
+                          {/* Description Text */}
+                          <p className="text-xs sm:text-sm text-stone-600 leading-relaxed max-w-2xl">
+                            {product.description || product.shortDescription}
+                          </p>
+
+                          {/* Bullet Specs with Green Checkmark */}
+                          <div className="space-y-1 py-1">
+                            {dynamicSpecs.map((spec, sIdx) => (
+                              <div key={sIdx} className="flex items-center gap-2 text-xs sm:text-sm text-stone-800">
+                                <Check className="w-3.5 h-3.5 text-[#22c55e] stroke-[2.5] shrink-0" />
+                                <span>{spec}</span>
+                              </div>
+                            ))}
+                          </div>
+
+                          {/* Action Buttons: Confirm Price (Green Button matching screenshot) */}
+                          <div className="pt-2 flex flex-wrap items-center gap-3">
+                            <button
+                              type="button"
+                              onClick={() => setConfirmPriceProduct(product)}
+                              className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xs bg-[#22c55e] hover:bg-[#16a34a] text-white font-bold text-xs sm:text-sm shadow-xs transition-colors cursor-pointer"
+                            >
+                              <MessageCircle className="w-4 h-4 fill-white stroke-none" />
+                              <span>Confirm Price</span>
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={() => onSelectProduct(product)}
+                              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xs bg-stone-900 hover:bg-stone-800 text-white font-semibold text-xs sm:text-sm shadow-xs transition-colors cursor-pointer"
+                            >
+                              <span>View Product Details</span>
+                            </button>
+                          </div>
                         </div>
                       </div>
-                    </div>
+
+                      {/* Helpful divider separating the clicked item from other items in the same category */}
+                      {pIndex === 0 && isHighlighted && currentProducts.length > 1 && (
+                        <div className="py-3 px-4 bg-stone-50 border border-stone-200 rounded-lg flex items-center justify-between text-xs text-stone-600">
+                          <span className="font-semibold text-stone-800 flex items-center gap-1.5">
+                            <span className="w-2 h-2 rounded-full bg-amber-500 inline-block"></span>
+                            More Designs & Products in {currentCategoryLabel} ({currentProducts.length - 1} other options)
+                          </span>
+                          <span className="text-stone-400 text-[11px] hidden sm:inline">Browse alternatives below</span>
+                        </div>
+                      )}
+                    </React.Fragment>
                   );
                 })}
               </div>
@@ -733,13 +903,20 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
             {/* 2. GRID VIEW (Modern Clean Card Grid when toggled)       */}
             {/* ========================================================== */}
             {viewMode === 'grid' && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div id="catalog-product-list-view" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {currentProducts.map((product) => {
+                  const isHighlighted = Boolean(
+                    activeHighlightedId && (product.id === activeHighlightedId || product.slug === activeHighlightedId)
+                  );
                   const formattedPrice = formatPrice(product.basePriceNgn);
                   return (
                     <div 
                       key={product.id}
-                      className="border border-stone-200 rounded-lg overflow-hidden bg-white hover:shadow-lg transition-all flex flex-col group"
+                      className={`border rounded-lg overflow-hidden bg-white hover:shadow-lg transition-all flex flex-col group ${
+                        isHighlighted 
+                          ? 'border-2 border-amber-500 ring-2 ring-amber-300/50 shadow-md' 
+                          : 'border-stone-200'
+                      }`}
                     >
                       <div 
                         className="aspect-square bg-stone-50 overflow-hidden relative cursor-pointer"
@@ -750,11 +927,16 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
                           alt={product.name}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
                         />
-                        {product.badge && (
+                        {isHighlighted ? (
+                          <span className="absolute top-2 left-2 px-2 py-0.5 text-[10px] font-bold bg-amber-500 text-stone-950 rounded-xs shadow-xs uppercase tracking-wider flex items-center gap-1">
+                            <Sparkles className="w-2.5 h-2.5" />
+                            Selected
+                          </span>
+                        ) : product.badge ? (
                           <span className="absolute top-2 left-2 px-2 py-0.5 text-[10px] font-bold bg-amber-500 text-black rounded-xs shadow-xs uppercase">
                             {product.badge}
                           </span>
-                        )}
+                        ) : null}
                       </div>
 
                       <div className="p-4 flex-1 flex flex-col justify-between space-y-3">

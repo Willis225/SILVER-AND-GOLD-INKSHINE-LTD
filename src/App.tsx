@@ -45,6 +45,7 @@ import {
   saveSingleProductToCloud,
   deleteProductFromCloud
 } from './lib/firebase';
+import { ensureCompleteCatalog } from './data/homepageCatalogProducts';
 
 export default function App() {
   // Global mutable catalog & orders state with local storage persistence
@@ -54,13 +55,13 @@ export default function App() {
       if (saved) {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          return parsed;
+          return ensureCompleteCatalog(parsed);
         }
       }
     } catch (e) {
       console.error('Error loading saved products:', e);
     }
-    return SAMPLE_PRODUCTS;
+    return ensureCompleteCatalog(SAMPLE_PRODUCTS);
   });
 
   const [orders, setOrders] = useState<Order[]>(INITIAL_ORDERS);
@@ -87,7 +88,7 @@ export default function App() {
     const unsubscribeProducts = subscribeProducts(
       (cloudProducts: Product[]) => {
         if (cloudProducts && cloudProducts.length > 0) {
-          setProducts(cloudProducts);
+          setProducts(ensureCompleteCatalog(cloudProducts));
         }
       },
       (err: any) => console.error('Products sync listener error:', err)
@@ -156,15 +157,17 @@ export default function App() {
   const [activeCategoryTag, setActiveCategoryTag] = useState<string>('all');
 
   const [categoryPageInitialCategory, setCategoryPageInitialCategory] = useState<string>('all');
+  const [categoryPageHighlightedProductId, setCategoryPageHighlightedProductId] = useState<string | null>(null);
 
-  const handleOpenCategoriesPage = (categoryTag: string = 'all') => {
+  const handleOpenCategoriesPage = (categoryTag: string = 'all', productId: string | null = null) => {
     setCategoryPageInitialCategory(categoryTag);
+    setCategoryPageHighlightedProductId(productId);
     setViewMode('categories');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleOpenCategories = (categoryTag: string = 'all') => {
-    handleOpenCategoriesPage(categoryTag);
+  const handleOpenCategories = (categoryTag: string = 'all', productId: string | null = null) => {
+    handleOpenCategoriesPage(categoryTag, productId);
   };
 
   const handleOpenBookOnline = (service: string = '') => {
@@ -372,6 +375,7 @@ export default function App() {
             products={products}
             initialCategory={categoryPageInitialCategory}
             initialSearchQuery={searchQuery}
+            highlightedProductId={categoryPageHighlightedProductId}
             onNavigateHome={() => {
               setViewMode('storefront');
               window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -467,31 +471,31 @@ export default function App() {
                 handleOpenCategories('all');
               }}
               onSelectItem={(item) => {
-                handleOpenCategories(item.category || 'all');
+                handleOpenCategories(item.category || 'all', item.id);
               }}
             />
 
             {/* Business Stationery & Office Printing Carousel (Matching Reference) */}
             <BusinessStationerySection
-              onViewProducts={() => handleOpenCategories('stationery')}
+              onViewProducts={() => handleOpenCategories('cards_invitations')}
               onSelectItem={(item) => {
-                handleOpenCategories(item.category || 'stationery');
+                handleOpenCategories(item.category || 'cards_invitations', item.id);
               }}
             />
 
             {/* Banners, Display Stands & Advertising Materials Carousel (Matching Reference) */}
             <BannersDisplayStandsSection
-              onViewProducts={() => handleOpenCategories('banners')}
+              onViewProducts={() => handleOpenCategories('banners_stands')}
               onSelectItem={(item) => {
-                handleOpenCategories(item.category || 'banners');
+                handleOpenCategories(item.category || 'banners_stands', item.id);
               }}
             />
 
             {/* Branded Corporate Gifts & Promotional Items (Matching Reference) */}
             <BrandedGiftsSection
-              onViewProducts={() => handleOpenCategories('gifts')}
+              onViewProducts={() => handleOpenCategories('gift_items_souvenirs')}
               onSelectItem={(item) => {
-                handleOpenCategories(item.category || 'gifts');
+                handleOpenCategories(item.category || 'gift_items_souvenirs', item.id);
               }}
             />
 
@@ -500,25 +504,25 @@ export default function App() {
 
             {/* Packaging, Labels & Stickers Printing Carousel (Matching Reference) */}
             <PackagingLabelsSection
-              onViewProducts={() => handleOpenCategories('packaging')}
+              onViewProducts={() => handleOpenCategories('packaging_shipping_cartons')}
               onSelectItem={(item) => {
-                handleOpenCategories(item.category || 'packaging');
+                handleOpenCategories(item.category || 'packaging_shipping_cartons', item.id);
               }}
             />
 
             {/* Event, Exhibition and Activation Branding Materials (Matching Reference) */}
             <EventExhibitionSection
-              onViewProducts={() => handleOpenCategories('events')}
+              onViewProducts={() => handleOpenCategories('events_exhibitions')}
               onSelectItem={(item) => {
-                handleOpenCategories(item.category || 'events');
+                handleOpenCategories(item.category || 'events_exhibitions', item.id);
               }}
             />
 
             {/* Signage Making Company in Lagos, Nigeria (Matching Reference) */}
             <SignageCompanySection
-              onViewProducts={() => handleOpenCategories('signage')}
+              onViewProducts={() => handleOpenCategories('signages')}
               onSelectItem={(item) => {
-                handleOpenCategories(item.category || 'signage');
+                handleOpenCategories(item.category || 'signages', item.id);
               }}
             />
 
@@ -532,7 +536,7 @@ export default function App() {
             <CustomAwardsSection
               onViewProducts={() => handleOpenCategories('awards')}
               onSelectItem={(item) => {
-                handleOpenCategories(item.category || 'awards');
+                handleOpenCategories(item.category || 'awards', item.id);
               }}
             />
 

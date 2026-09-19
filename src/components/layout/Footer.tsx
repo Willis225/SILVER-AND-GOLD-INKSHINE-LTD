@@ -278,10 +278,10 @@ export const Footer: React.FC<FooterProps> = ({
                 <div>
                   <button 
                     type="button" 
-                    onClick={() => handleCategoryClick('company_stamps_seals')}
+                    onClick={() => handleCategoryClick('carports')}
                     className="hover:text-[#f5be38] transition-colors text-left"
                   >
-                    Company Stamps &amp; Seals
+                    Carports
                   </button>
                 </div>
                 <div>

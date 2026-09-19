@@ -6,35 +6,36 @@
 
 export type ProductCategory = 
   | 'advertising_materials'
-  | 'stickers_labels'
-  | 'flyers_handbills'
-  | 'cards_invitations'
-  | 'office_stationery'
-  | 'books_magazines'
-  | 'stamps_seals'
-  | 'banners_stands'
-  | 'outdoor_displays'
-  | 'signages'
-  | 'events_exhibitions'
-  | 'frames_wallarts'
   | 'awards'
-  | 'printing_machines'
-  | 'wedding'
+  | 'banners_stands'
+  | 'books_magazines'
+  | 'cards_invitations'
   | 'carports'
   | 'custom_apparels_caps'
-  | 'company_uniforms'
-  | 'gift_items_souvenirs'
+  | 'events_exhibitions'
+  | 'flyers_handbills'
   | 'food_packaging'
+  | 'frames_wallarts'
+  | 'gift_items_souvenirs'
+  | 'office_stationery'
+  | 'outdoor_displays'
+  | 'packages'
   | 'packaging_shipping_cartons'
   | 'paper_bags_tags'
+  | 'printing_machines'
+  | 'signages'
+  | 'stickers_labels'
   | 'vehicle_branding'
-  | 'packages'
+  | 'wedding'
+  // Legacy aliases kept for backwards compatibility
   | 'banners_displays'
   | 'packaging_labels'
   | 'corporate_stationery'
   | 'apparels'
   | 'signage'
-  | 'gifts_souvenirs';
+  | 'gifts_souvenirs'
+  | 'stamps_seals'
+  | 'company_uniforms';
 
 export interface PrintOption {
   id: string;
@@ -75,7 +76,7 @@ export interface Product {
   slug: string;
   category: ProductCategory;
   categoryLabel: string;
-  categoryPlacement?: string; // Direct category placement: 'banners' | 'stationery' | 'flyers' | 'packaging' | 'signage' | 'events' | 'gifts' | 'awards' | 'paintings' | 'apparel' | 'machines'
+  categoryPlacement?: string; // Direct category placement key matching the 22 categories
   description: string;
   shortDescription: string;
   basePriceNgn: number;
@@ -83,6 +84,7 @@ export interface Product {
   turnaroundDays: number;
   badge?: string;
   image: string;
+  images?: string[]; // Multiple photos/angles/finished works for this product/job
   optionGroups: PrintOptionGroup[];
   bulkPricingTiers: BulkWrappedPricingTier[];
   artworkRequirements: ArtworkRequirements;

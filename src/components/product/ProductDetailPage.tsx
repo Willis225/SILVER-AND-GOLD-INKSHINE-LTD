@@ -66,12 +66,14 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
   const [activeImageIdx, setActiveImageIdx] = useState<number>(0);
   const [addedToast, setAddedToast] = useState(false);
 
-  // Gallery angles
-  const galleryImages = [
-    product.image,
-    'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=900&q=80',
-    'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=900&q=80',
-  ];
+  // Gallery angles - prioritize uploaded multi-image photos of finished work
+  const galleryImages = (product.images && product.images.length > 0)
+    ? product.images
+    : [
+        product.image,
+        'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=900&q=80',
+        'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=900&q=80',
+      ];
 
   const designerFeeNgn = submissionMode === 'hire_designer' ? 7500 : 0;
   const pricing = calculateDynamicPrice(product, quantity, selectedOptions);

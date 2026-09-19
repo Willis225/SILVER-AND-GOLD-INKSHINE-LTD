@@ -28,7 +28,7 @@ const SHOWCASE_ITEMS: ShowcaseItem[] = [
     price: '₦10,000.00',
     numericPrice: 10000,
     imageUrl: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=600&q=80',
-    category: 'stationery',
+    category: 'books_magazines',
   },
   {
     id: 'showcase-nylon-printer',
@@ -52,7 +52,7 @@ const SHOWCASE_ITEMS: ShowcaseItem[] = [
     price: '₦1,300.00',
     numericPrice: 1300,
     imageUrl: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80',
-    category: 'packaging',
+    category: 'paper_bags_tags',
   },
   {
     id: 'showcase-luxury-rollup',
@@ -68,7 +68,7 @@ const SHOWCASE_ITEMS: ShowcaseItem[] = [
     price: '₦8,500.00',
     numericPrice: 8500,
     imageUrl: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=600&q=80',
-    category: 'stationery',
+    category: 'cards_invitations',
   },
 ];
 

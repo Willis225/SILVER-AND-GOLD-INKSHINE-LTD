@@ -20,7 +20,7 @@ const EVENT_ITEMS: EventItem[] = [
     title: 'A3 Poster',
     price: '₦370.00',
     numericPrice: 370,
-    category: 'marketing_materials',
+    category: 'flyers_handbills',
   },
   {
     id: 'event-pos-banners',
@@ -34,14 +34,14 @@ const EVENT_ITEMS: EventItem[] = [
     title: 'Wall Pictures & Photo Frames',
     price: '₦10,000.00',
     numericPrice: 10000,
-    category: 'signage',
+    category: 'frames_wallarts',
   },
   {
     id: 'event-spin-wheel',
     title: 'Spin To Win Wheel',
     price: '₦175,000.00',
     numericPrice: 175000,
-    category: 'banners_stands',
+    category: 'events_exhibitions',
   },
 ];
 

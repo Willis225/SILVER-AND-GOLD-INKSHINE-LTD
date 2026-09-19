@@ -20,28 +20,28 @@ const GIFT_ITEMS: GiftItem[] = [
     title: 'Drawstring Bag Printing',
     price: '₦2,000.00',
     numericPrice: 2000,
-    category: 'packaging',
+    category: 'gift_items_souvenirs',
   },
   {
     id: 'gift-pop-socket',
     title: 'Custom Pop Socket Phone Holder',
     price: '₦1,999.00',
     numericPrice: 1999,
-    category: 'gifts_promotional',
+    category: 'gift_items_souvenirs',
   },
   {
     id: 'gift-jute-bag',
     title: 'Custom Jute Bag Printing in Nigeria',
     price: '₦3,500.00',
     numericPrice: 3500,
-    category: 'packaging',
+    category: 'paper_bags_tags',
   },
   {
     id: 'gift-wristband',
     title: 'Custom Wristband Printing in Lagos, Nigeria – Silicone, Fabric & Rubber Bands',
     price: '₦1,200.00',
     numericPrice: 1200,
-    category: 'gifts_promotional',
+    category: 'gift_items_souvenirs',
   },
 ];
 

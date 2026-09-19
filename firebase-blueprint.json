@@ -46,6 +46,7 @@
         "category": { "type": "string" },
         "basePriceNgn": { "type": "number" },
         "image": { "type": "string" },
+        "images": { "type": "array" },
         "description": { "type": "string" }
       },
       "required": ["id", "name", "category", "basePriceNgn"]
