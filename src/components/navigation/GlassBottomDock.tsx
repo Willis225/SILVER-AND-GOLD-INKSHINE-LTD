@@ -1,23 +1,25 @@
 import React from 'react';
-import { Calendar, Info, Layers, Sparkles } from 'lucide-react';
+import { Calendar, Info, Layers, Sparkles, ShieldCheck } from 'lucide-react';
 
 interface GlassBottomDockProps {
   onOpenBookOnline: () => void;
   onOpenInfo: () => void;
   onOpenCatalog: () => void;
-  activeModal?: 'book' | 'info' | 'catalog' | null;
+  onOpenAdmin?: () => void;
+  activeModal?: 'book' | 'info' | 'catalog' | 'admin' | null;
 }
 
 export const GlassBottomDock: React.FC<GlassBottomDockProps> = ({
   onOpenBookOnline,
   onOpenInfo,
   onOpenCatalog,
+  onOpenAdmin,
   activeModal,
 }) => {
   return (
     <aside 
       aria-label="Mobile quick action navigation dock"
-      className="md:hidden fixed bottom-[max(0.75rem,env(safe-area-inset-bottom,0.75rem))] inset-x-2 sm:inset-x-4 z-40 max-w-[360px] mx-auto pointer-events-none"
+      className="md:hidden fixed bottom-[max(0.75rem,env(safe-area-inset-bottom,0.75rem))] inset-x-2 sm:inset-x-4 z-40 max-w-[400px] mx-auto pointer-events-none"
     >
       {/* iPhone-inspired Ultra-Glass Floating Capsule Dock */}
       <nav 
@@ -33,46 +35,26 @@ export const GlassBottomDock: React.FC<GlassBottomDockProps> = ({
           type="button"
           id="dock-book-online-btn"
           onClick={onOpenBookOnline}
-          className={`relative flex-1 flex items-center justify-center gap-1 xs:gap-1.5 sm:gap-2 py-2 xs:py-2.5 sm:py-3 px-2 xs:px-3 sm:px-4 rounded-full font-bold text-[11px] xs:text-xs sm:text-sm transition-all duration-200 active:scale-95 cursor-pointer ${
+          className={`relative flex-1 flex items-center justify-center gap-1 xs:gap-1.5 sm:gap-2 py-2 xs:py-2.5 sm:py-3 px-2 xs:px-2.5 sm:px-3 rounded-full font-bold text-[10px] xs:text-xs sm:text-sm transition-all duration-200 active:scale-95 cursor-pointer ${
             activeModal === 'book'
               ? 'bg-gradient-to-r from-[#d4af37] via-[#e5c158] to-[#b8860b] text-black shadow-lg shadow-[#d4af37]/30'
               : 'bg-gradient-to-r from-[#dfbc5e]/20 via-[#dfbc5e]/30 to-[#dfbc5e]/20 text-[#ebd07f] hover:bg-[#dfbc5e]/40 hover:text-white border border-[#dfbc5e]/40'
           }`}
           title="Book your print and design order online"
         >
-          <Calendar className="w-3.5 h-3.5 xs:w-4 xs:h-4 sm:w-4.5 sm:h-4.5 text-[#dfbc5e] shrink-0" />
-          <span className="font-extrabold tracking-tight whitespace-nowrap">Book Online</span>
-          <span className="hidden xs:inline-block w-1.5 h-1.5 rounded-full bg-[#dfbc5e] animate-pulse" />
+          <Calendar className="w-3.5 h-3.5 xs:w-4 xs:h-4 text-[#dfbc5e] shrink-0" />
+          <span className="font-extrabold tracking-tight whitespace-nowrap">Book</span>
         </button>
 
         {/* Vertical Frosted Glass Divider */}
-        <div className="h-5 sm:h-6 w-[1px] bg-white/15 mx-0.5 xs:mx-1 shrink-0" />
+        <div className="h-5 sm:h-6 w-[1px] bg-white/15 mx-0.5 shrink-0" />
 
-        {/* 2. Info Button (Sleek Glass Capsule) */}
-        <button
-          type="button"
-          id="dock-info-btn"
-          onClick={onOpenInfo}
-          className={`relative flex-1 flex items-center justify-center gap-1 xs:gap-1.5 sm:gap-2 py-2 xs:py-2.5 sm:py-3 px-2 xs:px-3 sm:px-4 rounded-full font-semibold text-[11px] xs:text-xs sm:text-sm transition-all duration-200 active:scale-95 cursor-pointer ${
-            activeModal === 'info'
-              ? 'bg-white/25 text-white shadow-inner'
-              : 'text-stone-200 hover:text-white hover:bg-white/10'
-          }`}
-          title="Company Info, RC Verification & Services"
-        >
-          <Info className="w-3.5 h-3.5 xs:w-4 xs:h-4 sm:w-4.5 sm:h-4.5 text-stone-300 shrink-0" />
-          <span className="tracking-tight whitespace-nowrap">Info</span>
-        </button>
-
-        {/* Vertical Frosted Glass Divider */}
-        <div className="h-5 sm:h-6 w-[1px] bg-white/15 mx-0.5 xs:mx-1 shrink-0" />
-
-        {/* 3. Categories Button (Gallery & Print Categories Showcase) */}
+        {/* 2. Categories Button (Gallery & Print Categories Showcase) */}
         <button
           type="button"
           id="dock-catalog-btn"
           onClick={onOpenCatalog}
-          className={`relative flex-1 flex items-center justify-center gap-1 xs:gap-1.5 sm:gap-2 py-2 xs:py-2.5 sm:py-3 px-2 xs:px-3 sm:px-4 rounded-full font-semibold text-[11px] xs:text-xs sm:text-sm transition-all duration-200 active:scale-95 cursor-pointer ${
+          className={`relative flex-1 flex items-center justify-center gap-1 xs:gap-1.5 py-2 xs:py-2.5 sm:py-3 px-2 xs:px-2.5 rounded-full font-semibold text-[10px] xs:text-xs transition-all duration-200 active:scale-95 cursor-pointer ${
             activeModal === 'catalog'
               ? 'bg-white/25 text-white shadow-inner'
               : 'text-stone-200 hover:text-white hover:bg-white/10'
@@ -80,11 +62,51 @@ export const GlassBottomDock: React.FC<GlassBottomDockProps> = ({
           title="Browse Print & Branding Categories"
         >
           <div className="relative">
-            <Layers className="w-3.5 h-3.5 xs:w-4 xs:h-4 sm:w-4.5 sm:h-4.5 text-[#ebd07f] shrink-0" />
-            <Sparkles className="w-2 xs:w-2.5 h-2 xs:h-2.5 text-amber-300 absolute -top-1 -right-1" />
+            <Layers className="w-3.5 h-3.5 xs:w-4 xs:h-4 text-[#ebd07f] shrink-0" />
+            <Sparkles className="w-2 h-2 text-amber-300 absolute -top-1 -right-1" />
           </div>
           <span className="tracking-tight whitespace-nowrap">Categories</span>
         </button>
+
+        {/* Vertical Frosted Glass Divider */}
+        <div className="h-5 sm:h-6 w-[1px] bg-white/15 mx-0.5 shrink-0" />
+
+        {/* 3. Info Button */}
+        <button
+          type="button"
+          id="dock-info-btn"
+          onClick={onOpenInfo}
+          className={`relative flex-1 flex items-center justify-center gap-1 xs:gap-1.5 py-2 xs:py-2.5 sm:py-3 px-1.5 xs:px-2 rounded-full font-semibold text-[10px] xs:text-xs transition-all duration-200 active:scale-95 cursor-pointer ${
+            activeModal === 'info'
+              ? 'bg-white/25 text-white shadow-inner'
+              : 'text-stone-200 hover:text-white hover:bg-white/10'
+          }`}
+          title="Company Info, RC Verification & Services"
+        >
+          <Info className="w-3.5 h-3.5 text-stone-300 shrink-0" />
+          <span className="tracking-tight whitespace-nowrap">Info</span>
+        </button>
+
+        {/* 4. Admin Desk Button */}
+        {onOpenAdmin && (
+          <>
+            <div className="h-5 sm:h-6 w-[1px] bg-white/15 mx-0.5 shrink-0" />
+            <button
+              type="button"
+              id="dock-admin-btn"
+              onClick={onOpenAdmin}
+              className={`relative flex-1 flex items-center justify-center gap-1 xs:gap-1.5 py-2 xs:py-2.5 sm:py-3 px-1.5 xs:px-2 rounded-full font-bold text-[10px] xs:text-xs transition-all duration-200 active:scale-95 cursor-pointer ${
+                activeModal === 'admin'
+                  ? 'bg-amber-400 text-stone-950 font-black shadow-lg shadow-amber-400/30'
+                  : 'bg-amber-400/20 text-amber-300 hover:bg-amber-400 hover:text-stone-950 border border-amber-400/30'
+              }`}
+              title="Open Press Control Center & Categories Admin"
+            >
+              <ShieldCheck className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+              <span className="tracking-tight whitespace-nowrap">Admin</span>
+            </button>
+          </>
+        )}
       </nav>
     </aside>
   );

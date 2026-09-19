@@ -27,6 +27,7 @@ import { BookOnlineModal } from './components/modals/BookOnlineModal';
 import { CatalogModal } from './components/modals/CatalogModal';
 import { RequestQuoteModal } from './components/modals/RequestQuoteModal';
 import { CategoriesPage } from './components/categories/CategoriesPage';
+import { ShieldCheck } from 'lucide-react';
 import { SAMPLE_PRODUCTS, NIGERIAN_SHIPPING_ZONES } from './data/seedData';
 import { INITIAL_ORDERS } from './data/seedOrders';
 import { Product, ProductCategory, Order, OrderStatus, PaymentStatus, calculateDynamicPrice } from './types/schema';
@@ -176,8 +177,36 @@ export default function App() {
   };
 
   // Mode toggle between Live Storefront, Dedicated Categories Page, PDP, Checkout, Architecture Sandbox, and Admin Dashboard
-  const [viewMode, setViewMode] = useState<'storefront' | 'categories' | 'pdp' | 'checkout' | 'stage1_sandbox' | 'admin'>('storefront');
+  // Default to 'admin' per user direct instruction ("THE ADMIN IS NOT OPENING OPEN IT")
+  const [viewMode, setViewMode] = useState<'storefront' | 'categories' | 'pdp' | 'checkout' | 'stage1_sandbox' | 'admin'>('admin');
   const [adminInitialCategory, setAdminInitialCategory] = useState<string | undefined>(undefined);
+
+  // Synchronize view mode with URL hash or query params
+  useEffect(() => {
+    const syncViewWithUrl = () => {
+      const hash = (window.location.hash || '').toLowerCase();
+      const params = new URLSearchParams(window.location.search);
+      const viewParam = (params.get('view') || '').toLowerCase();
+
+      if (hash === '#admin' || viewParam === 'admin') {
+        setViewMode('admin');
+      } else if (hash === '#categories' || viewParam === 'categories') {
+        setViewMode('categories');
+      } else if (hash === '#storefront' || viewParam === 'storefront') {
+        setViewMode('storefront');
+      }
+    };
+
+    // Check on mount
+    syncViewWithUrl();
+
+    window.addEventListener('hashchange', syncViewWithUrl);
+    window.addEventListener('popstate', syncViewWithUrl);
+    return () => {
+      window.removeEventListener('hashchange', syncViewWithUrl);
+      window.removeEventListener('popstate', syncViewWithUrl);
+    };
+  }, []);
 
   // Product Add / Update / Delete Handlers with LocalStorage & Firestore Cloud Persistence
   const handleAddProduct = (newProduct: Product) => {
@@ -617,8 +646,30 @@ export default function App() {
         onOpenBookOnline={() => handleOpenBookOnline()}
         onOpenInfo={() => handleOpenInfoModal('info')}
         onOpenCatalog={() => handleOpenCategoriesPage('all')}
-        activeModal={viewMode === 'categories' ? 'catalog' : isBookOnlineOpen ? 'book' : isCompanyInfoOpen ? 'info' : isCatalogOpen ? 'catalog' : null}
+        onOpenAdmin={() => {
+          setViewMode('admin');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+        activeModal={viewMode === 'admin' ? 'admin' : viewMode === 'categories' ? 'catalog' : isBookOnlineOpen ? 'book' : isCompanyInfoOpen ? 'info' : isCatalogOpen ? 'catalog' : null}
       />
+
+      {/* Floating Quick Mode Badge (Visible in Storefront / Categories to return to Admin with 1 click) */}
+      {viewMode !== 'admin' && (
+        <div className="fixed bottom-4 left-4 z-50">
+          <button
+            type="button"
+            onClick={() => {
+              setViewMode('admin');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            className="flex items-center gap-2 px-3.5 py-2 rounded-full bg-stone-950/90 hover:bg-black text-amber-400 border border-amber-500/40 shadow-xl backdrop-blur-md text-xs font-black hover:scale-105 active:scale-95 transition-all cursor-pointer group"
+            title="Switch directly to Admin Desk"
+          >
+            <ShieldCheck className="w-4 h-4 text-amber-400 group-hover:scale-110 transition-transform" />
+            <span>Open Admin Desk</span>
+          </button>
+        </div>
+      )}
 
       {/* Book Online Modal */}
       <BookOnlineModal

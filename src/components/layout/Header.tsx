@@ -808,6 +808,20 @@ export const Header: React.FC<HeaderProps> = ({
               )}
             </div>
 
+            {/* Direct Admin Desk Button */}
+            {onOpenAdmin && (
+              <button
+                id="desktop-header-admin-btn"
+                type="button"
+                onClick={onOpenAdmin}
+                className="relative px-3.5 py-1.5 rounded-full bg-amber-500/15 hover:bg-amber-400 text-amber-300 hover:text-stone-950 border border-amber-500/40 hover:border-amber-400 font-extrabold text-xs tracking-tight flex items-center gap-1.5 shadow-sm active:scale-95 transition-all cursor-pointer group"
+                title="Open Press Control Center & Categories Admin"
+              >
+                <ShieldCheck className="w-3.5 h-3.5 text-amber-400 group-hover:text-stone-950" />
+                <span className="whitespace-nowrap">Admin Desk</span>
+              </button>
+            )}
+
             {/* Book Online Action Button */}
             <button
               id="desktop-header-book-online-btn"
@@ -878,6 +892,19 @@ export const Header: React.FC<HeaderProps> = ({
                 </div>
               )}
             </div>
+
+            {/* Mobile Admin Quick Access Button */}
+            {onOpenAdmin && (
+              <button
+                type="button"
+                onClick={onOpenAdmin}
+                className="md:hidden flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-500/20 hover:bg-amber-400 text-amber-300 hover:text-stone-950 border border-amber-500/40 text-[11px] font-bold active:scale-95 transition-all cursor-pointer"
+                title="Open Admin Desk"
+              >
+                <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
+                <span>Admin</span>
+              </button>
+            )}
 
             {/* Shopping Cart Icon with Counter matching screenshot */}
             <button
