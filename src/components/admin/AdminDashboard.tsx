@@ -26,7 +26,8 @@ import {
   FileText,
   ImageIcon,
   Sliders,
-  RotateCcw
+  RotateCcw,
+  FolderTree
 } from 'lucide-react';
 import { Order, OrderStatus, PaymentStatus, Product } from '../../types/schema';
 import { WebsiteContent, HeroSlideItem, ShowcaseServiceItem } from '../../types/websiteContent';
@@ -38,13 +39,14 @@ import { ProductPricingManager } from './ProductPricingManager';
 import { PageImageStudio } from './PageImageStudio';
 import { HeroSlidesManager } from './HeroSlidesManager';
 import { PageTextManager } from './PageTextManager';
+import { CategoryAdmin } from './CategoryAdmin';
 
 interface AdminDashboardProps {
   orders: Order[];
   products: Product[];
   websiteContent: WebsiteContent;
   onUpdateWebsiteContent: (content: WebsiteContent) => void;
-  onReturnToStorefront: () => void;
+  onReturnToStorefront: (categoryKey?: string) => void;
   onUpdateOrderStatus: (orderId: string, newStatus: OrderStatus) => void;
   onUpdatePaymentStatus: (orderId: string, newPaymentStatus: PaymentStatus) => void;
   onUpdateTrackingNumber: (orderId: string, trackingNumber: string) => void;
@@ -53,12 +55,15 @@ interface AdminDashboardProps {
   onAddProduct?: (newProduct: Product) => void;
   onDeleteProduct?: (productId: string) => void;
   onResetAllWebsiteContentToDefaults?: () => void;
+  initialTab?: AdminTab;
+  initialCategoryKey?: string;
 }
 
 export type AdminTab = 
+  | 'categories'
+  | 'products'
   | 'media' 
   | 'hero_slides' 
-  | 'products' 
   | 'page_texts' 
   | 'orders' 
   | 'prepress' 
@@ -78,8 +83,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   onAddProduct,
   onDeleteProduct,
   onResetAllWebsiteContentToDefaults,
+  initialTab,
+  initialCategoryKey,
 }) => {
-  const [activeTab, setActiveTab] = useState<AdminTab>('media');
+  const [activeTab, setActiveTab] = useState<AdminTab>(initialTab || 'categories');
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<OrderStatus | 'all'>('all');
   const [gatewayFilter, setGatewayFilter] = useState<'all' | 'paystack' | 'flutterwave' | 'bank_transfer'>('all');
@@ -96,14 +103,17 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
   // Filtered orders list
   const filteredOrders = orders.filter((ord) => {
-    const matchesSearch = 
-      ord.orderNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      ord.customer.fullName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (ord.customer.companyName && ord.customer.companyName.toLowerCase().includes(searchQuery.toLowerCase())) ||
-      ord.customer.phone.includes(searchQuery);
-
     const matchesStatus = statusFilter === 'all' || ord.orderStatus === statusFilter;
     const matchesGateway = gatewayFilter === 'all' || ord.paymentGateway === gatewayFilter;
+
+    const sq = String(searchQuery || '').trim().toLowerCase();
+    if (!sq) return matchesStatus && matchesGateway;
+
+    const matchesSearch = 
+      String(ord.orderNumber || '').toLowerCase().includes(sq) ||
+      String(ord.customer?.fullName || '').toLowerCase().includes(sq) ||
+      (ord.customer?.companyName && String(ord.customer.companyName).toLowerCase().includes(sq)) ||
+      String(ord.customer?.phone || '').includes(searchQuery || '');
 
     return matchesSearch && matchesStatus && matchesGateway;
   });
@@ -207,7 +217,36 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
         {/* Primary Sub-Navigation Tabs */}
         <div className="bg-stone-900 border-t border-stone-800/80 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto flex items-center gap-1 overflow-x-auto scrollbar-none py-1.5">
+          <div className="max-w-7xl mx-auto flex items-center gap-1.5 overflow-x-auto scrollbar-none py-1.5">
+            <button
+              type="button"
+              onClick={() => setActiveTab('categories')}
+              className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all flex items-center gap-2 cursor-pointer ${
+                activeTab === 'categories'
+                  ? 'bg-gradient-to-r from-amber-400 to-amber-500 text-stone-950 font-black shadow-md'
+                  : 'text-amber-400 hover:text-white hover:bg-stone-800/80 border border-amber-500/30'
+              }`}
+            >
+              <FolderTree className="w-4 h-4" />
+              <span>Categories Admin (Multi-Photo)</span>
+              <span className="px-1.5 py-0.2 rounded-full bg-emerald-500 text-white text-[9px] font-bold uppercase">
+                New
+              </span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setActiveTab('products')}
+              className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all flex items-center gap-2 cursor-pointer ${
+                activeTab === 'products'
+                  ? 'bg-[#b8860b] text-stone-950 shadow-xs'
+                  : 'text-stone-300 hover:text-white hover:bg-stone-800/60'
+              }`}
+            >
+              <Package className="w-3.5 h-3.5" />
+              <span>Categories &amp; Products Admin</span>
+            </button>
+
             <button
               type="button"
               onClick={() => setActiveTab('media')}
@@ -232,19 +271,6 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             >
               <Sliders className="w-3.5 h-3.5" />
               <span>Hero Slider</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setActiveTab('products')}
-              className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all flex items-center gap-2 cursor-pointer ${
-                activeTab === 'products'
-                  ? 'bg-[#b8860b] text-stone-950 shadow-xs'
-                  : 'text-stone-300 hover:text-white hover:bg-stone-800/60'
-              }`}
-            >
-              <Package className="w-3.5 h-3.5" />
-              <span>Products &amp; Catalog</span>
             </button>
 
             <button
@@ -306,7 +332,19 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
       {/* Main Workspace Body */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
-        {/* TAB 1: MEDIA & IMAGE STUDIO */}
+        {/* TAB: CATEGORIES ADMIN WITH MULTI-IMAGE UPLOAD */}
+        {activeTab === 'categories' && (
+          <CategoryAdmin
+            products={products}
+            onUpdateProduct={onUpdateProduct}
+            onAddProduct={onAddProduct}
+            onDeleteProduct={onDeleteProduct}
+            onOpenStorefront={onReturnToStorefront}
+            initialCategoryKey={initialCategoryKey}
+          />
+        )}
+
+        {/* TAB: MEDIA & IMAGE STUDIO */}
         {activeTab === 'media' && (
           <PageImageStudio
             heroSlides={websiteContent.heroSlides}

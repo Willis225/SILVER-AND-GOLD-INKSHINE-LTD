@@ -249,15 +249,16 @@ export const CatalogModal: React.FC<CatalogModalProps> = ({
   // Filtered list of items strictly matching the selected category and optional search term
   const filteredItems = useMemo(() => {
     return allCategoryItems.filter((item) => {
+      if (!item) return false;
       const matchesCategory = selectedTag === 'all' || item.categoryTag === selectedTag;
-      const q = searchTerm.trim().toLowerCase();
+      const q = String(searchTerm || '').trim().toLowerCase();
       if (!q) return matchesCategory;
 
       const matchesSearch = 
-        item.title.toLowerCase().includes(q) ||
-        item.category.toLowerCase().includes(q) ||
-        item.specs.toLowerCase().includes(q) ||
-        item.description.toLowerCase().includes(q);
+        String(item.title || '').toLowerCase().includes(q) ||
+        String(item.category || '').toLowerCase().includes(q) ||
+        String(item.specs || '').toLowerCase().includes(q) ||
+        String(item.description || '').toLowerCase().includes(q);
 
       return matchesCategory && matchesSearch;
     });

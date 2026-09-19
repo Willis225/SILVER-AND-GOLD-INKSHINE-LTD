@@ -15,7 +15,8 @@ import {
   ExternalLink,
   ChevronDown,
   Sparkles,
-  CheckCircle2
+  CheckCircle2,
+  FolderTree
 } from 'lucide-react';
 import { Product, ProductCategory } from '../../types/schema';
 import { ConfirmPriceModal } from './ConfirmPriceModal';
@@ -132,6 +133,7 @@ interface CategoriesPageProps {
   onSelectProduct: (product: Product) => void;
   onOpenCart?: () => void;
   cartCount?: number;
+  onOpenAdmin?: (categoryKey?: string) => void;
 }
 
 export const CategoriesPage: React.FC<CategoriesPageProps> = ({
@@ -143,6 +145,7 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
   onSelectProduct,
   onOpenCart,
   cartCount = 0,
+  onOpenAdmin,
 }) => {
   // Navigation & filter states
   const [selectedCategoryKey, setSelectedCategoryKey] = useState<string>(() => normalizeCategoryKey(initialCategory || 'all'));
@@ -208,12 +211,13 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
   // Filter products by category and keyword
   const filteredProducts = useMemo(() => {
     return products.filter((p) => {
+      if (!p) return false;
       // 1. Category check
       if (selectedCategoryKey !== 'all') {
-        const pCat = (p.category || '').toLowerCase();
-        const pPlacement = (p.categoryPlacement || '').toLowerCase();
-        const pName = (p.name || '').toLowerCase();
-        const sKey = selectedCategoryKey.toLowerCase();
+        const pCat = String(p.category || '').toLowerCase();
+        const pPlacement = String(p.categoryPlacement || '').toLowerCase();
+        const pName = String(p.name || '').toLowerCase();
+        const sKey = String(selectedCategoryKey || '').toLowerCase();
         
         // Exact match or related prefix
         let matchesCategory = 
@@ -291,13 +295,13 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
 
       // 2. Search keyword check
       if (searchKeyword) {
-        const kw = searchKeyword.toLowerCase();
+        const kw = String(searchKeyword || '').trim().toLowerCase();
         const matchesKeyword = 
-          p.name.toLowerCase().includes(kw) ||
-          p.description.toLowerCase().includes(kw) ||
-          (p.shortDescription && p.shortDescription.toLowerCase().includes(kw)) ||
-          p.sku.toLowerCase().includes(kw) ||
-          (p.categoryLabel && p.categoryLabel.toLowerCase().includes(kw));
+          String(p.name || '').toLowerCase().includes(kw) ||
+          String(p.description || '').toLowerCase().includes(kw) ||
+          String(p.shortDescription || '').toLowerCase().includes(kw) ||
+          String(p.sku || '').toLowerCase().includes(kw) ||
+          String(p.categoryLabel || '').toLowerCase().includes(kw);
         
         if (!matchesKeyword) return false;
       }
@@ -390,8 +394,21 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
             )}
           </div>
 
-          {/* Quick Actions (Call, WhatsApp, Cart) */}
+          {/* Quick Actions (Call, WhatsApp, Categories Admin, Cart) */}
           <div className="flex items-center gap-3">
+            {onOpenAdmin && (
+              <button
+                type="button"
+                onClick={() => onOpenAdmin(selectedCategoryKey !== 'all' ? selectedCategoryKey : undefined)}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-50 text-amber-900 border border-amber-300 text-xs font-bold hover:bg-amber-100 transition-colors shadow-xs cursor-pointer"
+                title="Open Categories Admin to upload multiple photos"
+              >
+                <FolderTree className="w-3.5 h-3.5 text-[#b8860b]" />
+                <span className="hidden sm:inline">Categories Admin (Multi-Photo)</span>
+                <span className="sm:hidden">Admin Upload</span>
+              </button>
+            )}
+
             <a
               href="https://wa.me/2347030372539?text=Hello%20Silver%20and%20Gold%20Inkshine,%20I%20am%20browsing%20the%20categories%20page%20and%20need%20assistance"
               target="_blank"
@@ -753,10 +770,11 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
                   ];
 
                   // Specific custom checks for known products matching screenshot
-                  const isPhotoBooth = product.name.toLowerCase().includes('360 photo');
-                  const isSignage = product.name.toLowerCase().includes('3d signs') || product.name.toLowerCase().includes('signage');
-                  const isExerciseBook = product.name.toLowerCase().includes('exercise book');
-                  const isPoster = product.name.toLowerCase().includes('poster');
+                  const pNameLower = String(product.name || '').toLowerCase();
+                  const isPhotoBooth = pNameLower.includes('360 photo');
+                  const isSignage = pNameLower.includes('3d signs') || pNameLower.includes('signage');
+                  const isExerciseBook = pNameLower.includes('exercise book');
+                  const isPoster = pNameLower.includes('poster');
 
                   let dynamicSpecs = specs;
                   if (isPhotoBooth) {

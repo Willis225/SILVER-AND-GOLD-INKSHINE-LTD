@@ -177,6 +177,7 @@ export default function App() {
 
   // Mode toggle between Live Storefront, Dedicated Categories Page, PDP, Checkout, Architecture Sandbox, and Admin Dashboard
   const [viewMode, setViewMode] = useState<'storefront' | 'categories' | 'pdp' | 'checkout' | 'stage1_sandbox' | 'admin'>('storefront');
+  const [adminInitialCategory, setAdminInitialCategory] = useState<string | undefined>(undefined);
 
   // Product Add / Update / Delete Handlers with LocalStorage & Firestore Cloud Persistence
   const handleAddProduct = (newProduct: Product) => {
@@ -387,6 +388,11 @@ export default function App() {
             }}
             onOpenCart={() => setIsCartOpen(true)}
             cartCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
+            onOpenAdmin={(catKey) => {
+              if (catKey) setAdminInitialCategory(catKey);
+              setViewMode('admin');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
           />
         )}
 
@@ -395,10 +401,16 @@ export default function App() {
             orders={orders}
             products={products}
             websiteContent={websiteContent}
+            initialTab="categories"
+            initialCategoryKey={adminInitialCategory}
             onUpdateWebsiteContent={handleUpdateWebsiteContent}
             onResetAllWebsiteContentToDefaults={handleResetWebsiteContent}
-            onReturnToStorefront={() => {
-              setViewMode('storefront');
+            onReturnToStorefront={(catKey) => {
+              if (catKey) {
+                handleOpenCategoriesPage(catKey);
+              } else {
+                setViewMode('storefront');
+              }
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
             onUpdateOrderStatus={handleUpdateOrderStatus}

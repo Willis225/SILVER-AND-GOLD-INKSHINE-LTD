@@ -200,8 +200,9 @@ export const STORE_CATEGORIES: CategoryDefinition[] = [
  * Maps any Product to its unified category placement tag (one of the 22 canonical keys)
  */
 export function getProductCategoryTag(product: Product): string {
+  if (!product) return 'advertising_materials';
   // If explicitly assigned via admin upload
-  if (product.categoryPlacement) {
+  if (product.categoryPlacement && typeof product.categoryPlacement === 'string') {
     const cp = product.categoryPlacement.toLowerCase();
     if (cp === 'banners') return 'banners_stands';
     if (cp === 'stationery') return 'office_stationery';
@@ -217,10 +218,10 @@ export function getProductCategoryTag(product: Product): string {
     return product.categoryPlacement;
   }
 
-  const cat = (product.category || '').toLowerCase();
-  const id = (product.id || '').toLowerCase();
-  const name = (product.name || '').toLowerCase();
-  const catLabel = (product.categoryLabel || '').toLowerCase();
+  const cat = String(product.category || '').toLowerCase();
+  const id = String(product.id || '').toLowerCase();
+  const name = String(product.name || '').toLowerCase();
+  const catLabel = String(product.categoryLabel || '').toLowerCase();
 
   if (cat === 'wedding' || name.includes('wedding') || name.includes('bridal') || id.includes('wedding')) {
     return 'wedding';

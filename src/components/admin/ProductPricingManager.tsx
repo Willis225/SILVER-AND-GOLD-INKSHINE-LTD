@@ -160,13 +160,17 @@ export const ProductPricingManager: React.FC<ProductPricingManagerProps> = ({
 
   // Filter products by search and category
   const filteredProducts = products.filter((p) => {
+    if (!p) return false;
     const productTag = getProductCategoryTag(p);
     const matchesCategory = categoryFilter === 'all' || productTag === categoryFilter;
+    const s = String(search || '').trim().toLowerCase();
+    if (!s) return matchesCategory;
+
     const matchesSearch =
-      p.name.toLowerCase().includes(search.toLowerCase()) ||
-      p.sku.toLowerCase().includes(search.toLowerCase()) ||
-      p.categoryLabel.toLowerCase().includes(search.toLowerCase()) ||
-      p.description.toLowerCase().includes(search.toLowerCase());
+      String(p.name || '').toLowerCase().includes(s) ||
+      String(p.sku || '').toLowerCase().includes(s) ||
+      String(p.categoryLabel || '').toLowerCase().includes(s) ||
+      String(p.description || '').toLowerCase().includes(s);
 
     return matchesCategory && matchesSearch;
   });
@@ -419,11 +423,16 @@ export const ProductPricingManager: React.FC<ProductPricingManagerProps> = ({
 
           <button
             type="button"
-            onClick={() => setIsUploadModalOpen(true)}
+            onClick={() => {
+              if (categoryFilter !== 'all') {
+                setNewCategoryPlacement(categoryFilter);
+              }
+              setIsUploadModalOpen(true);
+            }}
             className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 active:scale-95 text-stone-950 font-black text-xs sm:text-sm flex items-center gap-2 shadow-lg shadow-amber-500/20 transition-all cursor-pointer"
           >
-            <Plus className="w-4 h-4" />
-            <span>Add New Product</span>
+            <Images className="w-4 h-4" />
+            <span>Upload Multiple Category Photos</span>
           </button>
         </div>
       </div>
@@ -441,7 +450,7 @@ export const ProductPricingManager: React.FC<ProductPricingManagerProps> = ({
           />
         </div>
 
-        {/* Category Placement Filter */}
+        {/* Category Placement Filter & Direct Multi-Image Upload */}
         <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
           <span className="text-xs text-stone-500 font-bold whitespace-nowrap">Category:</span>
           <select
@@ -455,6 +464,21 @@ export const ProductPricingManager: React.FC<ProductPricingManagerProps> = ({
               </option>
             ))}
           </select>
+
+          <button
+            type="button"
+            onClick={() => {
+              if (categoryFilter !== 'all') {
+                setNewCategoryPlacement(categoryFilter);
+              }
+              setIsUploadModalOpen(true);
+            }}
+            className="px-3 py-1.5 rounded-lg bg-[#00473e] hover:bg-[#03554a] text-white text-xs font-bold whitespace-nowrap flex items-center gap-1.5 cursor-pointer shadow-xs"
+            title="Upload multiple photos directly to this category"
+          >
+            <Upload className="w-3.5 h-3.5" />
+            <span>Upload Photos to {categoryFilter === 'all' ? 'Category' : (STORE_CATEGORIES.find(c => c.id === categoryFilter)?.shortLabel || 'Category')}</span>
+          </button>
         </div>
       </div>
 

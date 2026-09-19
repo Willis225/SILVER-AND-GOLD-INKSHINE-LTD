@@ -70,12 +70,16 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
 
   // Filter products by category and search
   const filteredProducts = products.filter((prod) => {
+    if (!prod) return false;
     const matchesCategory = isProductInCategory(prod, selectedCategory);
+    const q = String(searchQuery || '').trim().toLowerCase();
+    if (!q) return matchesCategory;
+
     const matchesSearch = 
-      !searchQuery.trim() ||
-      prod.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      prod.shortDescription.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      prod.categoryLabel.toLowerCase().includes(searchQuery.toLowerCase());
+      String(prod.name || '').toLowerCase().includes(q) ||
+      String(prod.shortDescription || '').toLowerCase().includes(q) ||
+      String(prod.description || '').toLowerCase().includes(q) ||
+      String(prod.categoryLabel || '').toLowerCase().includes(q);
     return matchesCategory && matchesSearch;
   });
 

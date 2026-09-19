@@ -138,10 +138,12 @@ export const PageImageStudio: React.FC<PageImageStudioProps> = ({
       (activeFilter === 'showcase' && item.type === 'showcase') ||
       (activeFilter === 'products' && item.type === 'product');
 
+    const sq = String(searchQuery || '').trim().toLowerCase();
     const matchesSearch = 
-      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (item.category && item.category.toLowerCase().includes(searchQuery.toLowerCase()));
+      !sq ||
+      String(item.name || '').toLowerCase().includes(sq) ||
+      String(item.description || '').toLowerCase().includes(sq) ||
+      (item.category && String(item.category).toLowerCase().includes(sq));
 
     return matchesFilter && matchesSearch;
   });
