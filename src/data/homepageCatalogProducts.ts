@@ -939,8 +939,8 @@ export const HOMEPAGE_SHOWCASE_PRODUCTS: Product[] = [
  * Normalizes any category tag (e.g. shorthand 'stationery', 'banners', 'packaging', 'annual_reports')
  * to its exact key in SCREENSHOT_CATEGORIES.
  */
-export function normalizeCategoryKey(key: string): string {
-  const k = (key || '').toLowerCase().trim();
+export function normalizeCategoryKey(key: any): string {
+  const k = String(key || '').toLowerCase().trim();
   if (k === 'stationery' || k === 'office') return 'office_stationery';
   if (k === 'cards' || k === 'business_cards') return 'cards_invitations';
   if (k === 'books' || k === 'magazines' || k === 'annual_reports' || k === 'handbooks') return 'books_magazines';

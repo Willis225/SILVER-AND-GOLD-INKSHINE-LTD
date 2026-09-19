@@ -300,7 +300,7 @@ export const PageImageStudio: React.FC<PageImageStudioProps> = ({
             {onOpenStorefront && (
               <button
                 type="button"
-                onClick={onOpenStorefront}
+                onClick={() => onOpenStorefront()}
                 className="px-4 py-2.5 bg-stone-800 hover:bg-stone-700 text-stone-200 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer"
               >
                 <Eye className="w-4 h-4" />

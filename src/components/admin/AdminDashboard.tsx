@@ -205,7 +205,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
               <button
                 type="button"
-                onClick={onReturnToStorefront}
+                onClick={() => onReturnToStorefront()}
                 className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 active:scale-95 text-stone-950 font-black text-xs sm:text-sm shadow-md transition-all cursor-pointer"
               >
                 <Eye className="w-4 h-4" />

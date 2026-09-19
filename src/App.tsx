@@ -161,8 +161,10 @@ export default function App() {
   const [categoryPageHighlightedProductId, setCategoryPageHighlightedProductId] = useState<string | null>(null);
 
   const handleOpenCategoriesPage = (categoryTag: string = 'all', productId: string | null = null) => {
-    setCategoryPageInitialCategory(categoryTag);
-    setCategoryPageHighlightedProductId(productId);
+    const safeTag = typeof categoryTag === 'string' && categoryTag.trim().length > 0 ? categoryTag : 'all';
+    const safeProductId = typeof productId === 'string' ? productId : null;
+    setCategoryPageInitialCategory(safeTag);
+    setCategoryPageHighlightedProductId(safeProductId);
     setViewMode('categories');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -177,8 +179,18 @@ export default function App() {
   };
 
   // Mode toggle between Live Storefront, Dedicated Categories Page, PDP, Checkout, Architecture Sandbox, and Admin Dashboard
-  // Default to 'admin' per user direct instruction ("THE ADMIN IS NOT OPENING OPEN IT")
-  const [viewMode, setViewMode] = useState<'storefront' | 'categories' | 'pdp' | 'checkout' | 'stage1_sandbox' | 'admin'>('admin');
+  // By default, open the main customer-facing website ('storefront') unless explicitly requested via URL hash (#admin) or parameter (?view=admin)
+  const [viewMode, setViewMode] = useState<'storefront' | 'categories' | 'pdp' | 'checkout' | 'stage1_sandbox' | 'admin'>(() => {
+    if (typeof window !== 'undefined') {
+      const hash = (window.location.hash || '').toLowerCase();
+      const params = new URLSearchParams(window.location.search);
+      const viewParam = (params.get('view') || '').toLowerCase();
+
+      if (hash === '#admin' || viewParam === 'admin') return 'admin';
+      if (hash === '#categories' || viewParam === 'categories') return 'categories';
+    }
+    return 'storefront';
+  });
   const [adminInitialCategory, setAdminInitialCategory] = useState<string | undefined>(undefined);
 
   // Synchronize view mode with URL hash or query params
@@ -192,7 +204,7 @@ export default function App() {
         setViewMode('admin');
       } else if (hash === '#categories' || viewParam === 'categories') {
         setViewMode('categories');
-      } else if (hash === '#storefront' || viewParam === 'storefront') {
+      } else if (hash === '#storefront' || viewParam === 'storefront' || hash === '#home') {
         setViewMode('storefront');
       }
     };
@@ -435,9 +447,11 @@ export default function App() {
             onUpdateWebsiteContent={handleUpdateWebsiteContent}
             onResetAllWebsiteContentToDefaults={handleResetWebsiteContent}
             onReturnToStorefront={(catKey) => {
-              if (catKey) {
+              if (typeof catKey === 'string' && catKey.trim().length > 0) {
                 handleOpenCategoriesPage(catKey);
               } else {
+                setSelectedCategory('all');
+                setSearchQuery('');
                 setViewMode('storefront');
               }
               window.scrollTo({ top: 0, behavior: 'smooth' });
