@@ -9,6 +9,7 @@ import {
   RefreshCw,
   AlertCircle
 } from 'lucide-react';
+import { compressImageFile } from '../../lib/firebase';
 
 export interface PresetImage {
   url: string;
@@ -197,8 +198,8 @@ export const ImageManagerModal: React.FC<ImageManagerModalProps> = ({
 
   if (!isOpen) return null;
 
-  // Handle local image file upload and convert to base64 Data URL
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // Handle local image file upload, optimize/compress, and convert to base64 Data URL
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -207,28 +208,24 @@ export const ImageManagerModal: React.FC<ImageManagerModalProps> = ({
       return;
     }
 
-    // Limit to 5MB
-    if (file.size > 5 * 1024 * 1024) {
-      setErrorNotice('Image file size must be less than 5MB.');
+    // Allow up to 15MB source image because compressor will optimize it
+    if (file.size > 15 * 1024 * 1024) {
+      setErrorNotice('Image file size must be less than 15MB.');
       return;
     }
 
     setIsUploading(true);
     setErrorNotice(null);
 
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const result = event.target?.result as string;
-      if (result) {
-        setSelectedImageUrl(result);
-        setIsUploading(false);
-      }
-    };
-    reader.onerror = () => {
-      setErrorNotice('Failed to read selected image.');
+    try {
+      const optimizedUrl = await compressImageFile(file, 1600, 0.84);
+      setSelectedImageUrl(optimizedUrl);
       setIsUploading(false);
-    };
-    reader.readAsDataURL(file);
+    } catch (err) {
+      console.error('Image processing error:', err);
+      setErrorNotice('Failed to process image. Please try another image.');
+      setIsUploading(false);
+    }
   };
 
   const handleApplyCustomUrl = () => {

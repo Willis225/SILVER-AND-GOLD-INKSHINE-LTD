@@ -1,0 +1,85 @@
+{
+  "entities": {
+    "WebsiteContent": {
+      "title": "Website Content",
+      "description": "Global website configuration, branding, hero images, and contact information",
+      "type": "object",
+      "properties": {
+        "heroHeadline": { "type": "string" },
+        "heroSubheadline": { "type": "string" },
+        "heroEyebrow": { "type": "string" },
+        "heroDescription": { "type": "string" },
+        "heroBackgroundImage": { "type": "string" },
+        "heroSlides": { "type": "array" },
+        "showcaseTitle": { "type": "string" },
+        "showcaseDescription": { "type": "string" },
+        "showcaseServices": { "type": "array" },
+        "contactPhone": { "type": "string" },
+        "contactEmail": { "type": "string" },
+        "address": { "type": "string" },
+        "googleMapsUrl": { "type": "string" },
+        "googleMapsEmbedUrl": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      }
+    },
+    "UploadedImage": {
+      "title": "Uploaded Image Asset",
+      "description": "Uploaded images saved to Firestore for multi-device synchronization",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "url": { "type": "string" },
+        "size": { "type": "number" },
+        "mimeType": { "type": "string" },
+        "category": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["name", "url", "createdAt"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Print product catalog item",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "category": { "type": "string" },
+        "basePriceNgn": { "type": "number" },
+        "image": { "type": "string" },
+        "description": { "type": "string" }
+      },
+      "required": ["id", "name", "category", "basePriceNgn"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer print order",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "orderNumber": { "type": "string" },
+        "status": { "type": "string" },
+        "totalAmountNgn": { "type": "number" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["orderNumber", "status", "totalAmountNgn"]
+    }
+  },
+  "firestore": {
+    "/website_content/{docId}": {
+      "schema": "WebsiteContent",
+      "description": "Global website content, background images, and settings synced across all devices"
+    },
+    "/uploaded_images/{imageId}": {
+      "schema": "UploadedImage",
+      "description": "Uploaded images and assets synced across all devices"
+    },
+    "/products/{productId}": {
+      "schema": "Product",
+      "description": "Catalog products available across all devices"
+    },
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Customer orders and proof status"
+    }
+  }
+}

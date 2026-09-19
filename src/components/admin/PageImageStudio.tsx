@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { 
   Image as ImageIcon, 
   Upload, 
@@ -13,11 +13,14 @@ import {
   Layers,
   ArrowRight,
   Eye,
-  RefreshCw
+  RefreshCw,
+  Database,
+  Loader2
 } from 'lucide-react';
 import { Product } from '../../types/schema';
 import { HeroSlideItem, ShowcaseServiceItem } from '../../types/websiteContent';
 import { ImageManagerModal } from './ImageManagerModal';
+import { compressImageFile } from '../../lib/firebase';
 
 interface PageImageStudioProps {
   heroSlides: HeroSlideItem[];
@@ -66,6 +69,23 @@ export const PageImageStudio: React.FC<PageImageStudioProps> = ({
   const [newDescription, setNewDescription] = useState<string>('');
   const [newBadge, setNewBadge] = useState<string>('');
   const [newImageUrl, setNewImageUrl] = useState<string>('https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=1200&q=80');
+  const [isUploadingMediaImg, setIsUploadingMediaImg] = useState<boolean>(false);
+  const mediaFileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleMediaFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setIsUploadingMediaImg(true);
+    try {
+      const compressed = await compressImageFile(file, 1600, 0.84);
+      setNewImageUrl(compressed);
+    } catch (err) {
+      console.error('Media upload error:', err);
+      alert('Failed to process image. Please try another image file.');
+    } finally {
+      setIsUploadingMediaImg(false);
+    }
+  };
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -240,15 +260,21 @@ export const PageImageStudio: React.FC<PageImageStudioProps> = ({
       <div className="bg-gradient-to-r from-stone-900 via-stone-850 to-stone-950 text-white p-6 sm:p-8 rounded-3xl border border-stone-800 shadow-xl relative overflow-hidden">
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2 max-w-2xl">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#b8860b]/20 border border-[#b8860b]/40 text-[#f5be38] text-[11px] font-bold uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Full Storefront Image Control</span>
+            <div className="flex items-center gap-2 flex-wrap">
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#b8860b]/20 border border-[#b8860b]/40 text-[#f5be38] text-[11px] font-bold uppercase tracking-wider">
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>Full Storefront Image Control</span>
+              </div>
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 text-[11px] font-bold">
+                <Database className="w-3.5 h-3.5 text-emerald-400" />
+                <span>Cloud Database Live Sync (All Devices)</span>
+              </div>
             </div>
             <h2 className="text-xl sm:text-2xl font-black tracking-tight text-white">
               Website Image &amp; Content Studio
             </h2>
             <p className="text-xs sm:text-sm text-stone-300 leading-relaxed">
-              Upload, replace, and delete images on your live website. Change titles, descriptions, and badges in real-time. Every change synchronizes immediately with the storefront.
+              Upload, replace, and edit images on your live website. When you upload or save an image, it automatically synchronizes to the cloud database and appears across all devices instantly.
             </p>
           </div>
 
@@ -486,14 +512,54 @@ export const PageImageStudio: React.FC<PageImageStudioProps> = ({
               </div>
 
               <div>
-                <label className="block font-bold text-stone-700 mb-1">Image URL</label>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="block font-bold text-stone-700">Media Image (Upload or URL) *</label>
+                  <div>
+                    <input
+                      type="file"
+                      ref={mediaFileInputRef}
+                      onChange={handleMediaFileUpload}
+                      accept="image/*"
+                      className="hidden"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => mediaFileInputRef.current?.click()}
+                      disabled={isUploadingMediaImg}
+                      className="inline-flex items-center gap-1 px-2.5 py-1 bg-stone-900 hover:bg-stone-800 text-white rounded-lg text-xs font-semibold cursor-pointer disabled:opacity-50"
+                    >
+                      {isUploadingMediaImg ? (
+                        <>
+                          <Loader2 className="w-3 h-3 animate-spin" />
+                          <span>Compressing...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Upload className="w-3 h-3" />
+                          <span>Upload from Device</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </div>
                 <input
-                  type="url"
+                  type="text"
                   required
                   value={newImageUrl}
                   onChange={(e) => setNewImageUrl(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl border border-stone-300"
+                  placeholder="https://... or uploaded image data"
+                  className="w-full px-3 py-2 rounded-xl border border-stone-300 font-mono text-xs"
                 />
+                {newImageUrl && (
+                  <div className="mt-2 w-full h-24 rounded-xl overflow-hidden border border-stone-200 bg-stone-100">
+                    <img
+                      src={newImageUrl}
+                      alt="Media preview"
+                      className="w-full h-full object-cover"
+                      referrerPolicy="no-referrer"
+                    />
+                  </div>
+                )}
               </div>
 
               <div className="pt-3 border-t border-stone-200 flex items-center justify-between">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   FileText, 
   Check, 
@@ -9,9 +9,14 @@ import {
   MapPin, 
   ExternalLink,
   Sparkles,
-  Save
+  Save,
+  Upload,
+  Database,
+  Image as ImageIcon,
+  Loader2
 } from 'lucide-react';
 import { WebsiteContent } from '../../types/websiteContent';
+import { compressImageFile } from '../../lib/firebase';
 
 interface PageTextManagerProps {
   content: WebsiteContent;
@@ -26,6 +31,12 @@ export const PageTextManager: React.FC<PageTextManagerProps> = ({
 }) => {
   const [formData, setFormData] = useState<WebsiteContent>({ ...content });
   const [savedSuccess, setSavedSuccess] = useState(false);
+  const [isUploadingBg, setIsUploadingBg] = useState(false);
+  const bgFileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    setFormData({ ...content });
+  }, [content]);
 
   const handleChange = (field: keyof WebsiteContent, value: any) => {
     setFormData((prev) => ({
@@ -35,11 +46,26 @@ export const PageTextManager: React.FC<PageTextManagerProps> = ({
     setSavedSuccess(false);
   };
 
+  const handleBgFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setIsUploadingBg(true);
+    try {
+      const compressed = await compressImageFile(file, 1920, 0.85);
+      handleChange('heroBackgroundImage', compressed);
+    } catch (err) {
+      console.error('Error compressing background image:', err);
+      alert('Failed to process image. Please choose another image file.');
+    } finally {
+      setIsUploadingBg(false);
+    }
+  };
+
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
     onSaveContent(formData);
     setSavedSuccess(true);
-    setTimeout(() => setSavedSuccess(false), 3000);
+    setTimeout(() => setSavedSuccess(false), 3500);
   };
 
   const handleReset = () => {
@@ -56,9 +82,15 @@ export const PageTextManager: React.FC<PageTextManagerProps> = ({
       {/* Header Banner */}
       <div className="bg-white p-6 rounded-3xl border border-stone-200 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#00473e]/10 text-[#00473e] font-bold text-[10px] uppercase tracking-wider mb-2">
-            <FileText className="w-3.5 h-3.5" />
-            <span>Storefront Copywriting &amp; Descriptions</span>
+          <div className="flex items-center gap-2 mb-2 flex-wrap">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#00473e]/10 text-[#00473e] font-bold text-[10px] uppercase tracking-wider">
+              <FileText className="w-3.5 h-3.5" />
+              <span>Storefront Copywriting &amp; Descriptions</span>
+            </div>
+            <div className="inline-flex items-center gap-1 text-[10px] bg-emerald-50 border border-emerald-200 text-emerald-800 px-2.5 py-0.5 rounded-full font-bold">
+              <Database className="w-3 h-3 text-emerald-600" />
+              <span>Live Cloud Database (Syncs All Devices)</span>
+            </div>
           </div>
           <h2 className="text-xl font-black text-stone-900 tracking-tight">
             Manage Website Headings &amp; Descriptions
@@ -156,28 +188,70 @@ export const PageTextManager: React.FC<PageTextManagerProps> = ({
         </div>
 
         <div>
-          <label className="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">
-            Hero / Home Page Background Texture URL
-          </label>
-          <div className="flex gap-2 items-center">
+          <div className="flex items-center justify-between mb-1.5">
+            <label className="block text-xs font-bold text-stone-700 uppercase tracking-wider">
+              Hero / Home Page Background Texture &amp; Image
+            </label>
+            <div className="flex items-center gap-2">
+              <input
+                type="file"
+                ref={bgFileInputRef}
+                onChange={handleBgFileUpload}
+                accept="image/*"
+                className="hidden"
+              />
+              <button
+                type="button"
+                onClick={() => bgFileInputRef.current?.click()}
+                disabled={isUploadingBg}
+                className="inline-flex items-center gap-1.5 px-3 py-1 bg-stone-900 hover:bg-stone-800 text-white rounded-lg text-xs font-semibold transition-colors cursor-pointer disabled:opacity-50"
+              >
+                {isUploadingBg ? (
+                  <>
+                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                    <span>Compressing...</span>
+                  </>
+                ) : (
+                  <>
+                    <Upload className="w-3.5 h-3.5" />
+                    <span>Upload Image from Device</span>
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
             <input
               type="text"
               value={formData.heroBackgroundImage || '/homepage-bg.jpg'}
               onChange={(e) => handleChange('heroBackgroundImage', e.target.value)}
-              placeholder="/homepage-bg.jpg"
+              placeholder="/homepage-bg.jpg or https://..."
               className="w-full px-3.5 py-2.5 bg-stone-50 rounded-xl border border-stone-300 text-xs text-stone-900 font-mono focus:ring-2 focus:ring-[#b8860b]"
             />
             {formData.heroBackgroundImage && (
-              <div className="w-10 h-10 rounded-lg overflow-hidden border border-stone-300 shrink-0 bg-stone-900">
-                <img
-                  src={formData.heroBackgroundImage}
-                  alt="Preview"
-                  className="w-full h-full object-cover"
-                  referrerPolicy="no-referrer"
-                />
+              <div className="flex items-center gap-2 shrink-0">
+                <div className="w-12 h-12 rounded-xl overflow-hidden border border-stone-300 shadow-xs bg-stone-900">
+                  <img
+                    src={formData.heroBackgroundImage}
+                    alt="Preview"
+                    className="w-full h-full object-cover"
+                    referrerPolicy="no-referrer"
+                  />
+                </div>
+                <button
+                  type="button"
+                  onClick={() => handleChange('heroBackgroundImage', '/homepage-bg.jpg')}
+                  className="text-[11px] text-stone-500 hover:text-red-600 underline font-medium"
+                >
+                  Reset texture
+                </button>
               </div>
             )}
           </div>
+          <p className="text-[11px] text-stone-500 mt-1">
+            Upload any image or banner from your phone/computer. It will be saved directly into the database and shown on all devices immediately.
+          </p>
         </div>
       </div>
 

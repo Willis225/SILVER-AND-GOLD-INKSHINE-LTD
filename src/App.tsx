@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Header } from './components/layout/Header';
 import { HeroSection } from './components/storefront/HeroSection';
 import { BrandIntroSection } from './components/storefront/BrandIntroSection';
@@ -37,6 +37,12 @@ import {
   saveWebsiteContent, 
   resetWebsiteContentToDefaults 
 } from './types/websiteContent';
+import {
+  subscribeWebsiteContent,
+  saveWebsiteContentToCloud,
+  subscribeProducts,
+  saveProductsToCloud
+} from './lib/firebase';
 
 export default function App() {
   // Global mutable catalog & orders state with local storage persistence
@@ -62,14 +68,49 @@ export default function App() {
     return loadSavedWebsiteContent();
   });
 
+  // Real-time Cloud Database sync across all devices via Firebase Firestore
+  useEffect(() => {
+    const unsubscribeContent = subscribeWebsiteContent(
+      websiteContent,
+      (cloudContent) => {
+        if (cloudContent) {
+          setWebsiteContent((prev) => ({
+            ...prev,
+            ...cloudContent,
+          }));
+        }
+      }
+    );
+
+    const unsubscribeProducts = subscribeProducts(
+      products,
+      (cloudProducts) => {
+        if (cloudProducts && cloudProducts.length > 0) {
+          setProducts(cloudProducts);
+        }
+      }
+    );
+
+    return () => {
+      unsubscribeContent();
+      unsubscribeProducts();
+    };
+  }, []);
+
   const handleUpdateWebsiteContent = (newContent: WebsiteContent) => {
     setWebsiteContent(newContent);
     saveWebsiteContent(newContent);
+    saveWebsiteContentToCloud(newContent).catch((err) => {
+      console.error('Cloud website content sync error:', err);
+    });
   };
 
   const handleResetWebsiteContent = () => {
     const defaults = resetWebsiteContentToDefaults();
     setWebsiteContent(defaults);
+    saveWebsiteContentToCloud(defaults).catch((err) => {
+      console.error('Cloud reset sync error:', err);
+    });
   };
 
   // Storefront navigation & state
@@ -132,7 +173,7 @@ export default function App() {
   // Mode toggle between Live Storefront, Dedicated Categories Page, PDP, Checkout, Architecture Sandbox, and Admin Dashboard
   const [viewMode, setViewMode] = useState<'storefront' | 'categories' | 'pdp' | 'checkout' | 'stage1_sandbox' | 'admin'>('storefront');
 
-  // Product Add / Update / Delete Handlers with LocalStorage Persistence
+  // Product Add / Update / Delete Handlers with LocalStorage & Firestore Cloud Persistence
   const handleAddProduct = (newProduct: Product) => {
     setProducts((prev) => {
       const next = [newProduct, ...prev];
@@ -141,6 +182,9 @@ export default function App() {
       } catch (e) {
         console.error(e);
       }
+      saveProductsToCloud(next).catch((err) => {
+        console.error('Failed to sync new product to Firestore:', err);
+      });
       return next;
     });
   };
@@ -153,6 +197,9 @@ export default function App() {
       } catch (e) {
         console.error(e);
       }
+      saveProductsToCloud(next).catch((err) => {
+        console.error('Failed to sync product deletion to Firestore:', err);
+      });
       return next;
     });
   };
@@ -165,6 +212,9 @@ export default function App() {
       } catch (e) {
         console.error(e);
       }
+      saveProductsToCloud(next).catch((err) => {
+        console.error('Failed to sync product updates to Firestore:', err);
+      });
       return next;
     });
   };

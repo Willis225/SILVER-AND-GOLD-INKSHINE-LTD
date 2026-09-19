@@ -407,8 +407,8 @@ export const RequestQuoteModal: React.FC<RequestQuoteModalProps> = ({
                 </div>
                 <div>
                   <strong className="text-stone-900 font-bold">Phone No:</strong>{' '}
-                  <a href="tel:+2349028694908" className="hover:text-[#008060] transition-colors">
-                    +2349028694908
+                  <a href="tel:+2347030372539" className="hover:text-[#008060] transition-colors">
+                    +234 703 037 2539
                   </a>
                 </div>
               </div>
