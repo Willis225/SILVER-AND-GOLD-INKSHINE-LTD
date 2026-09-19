@@ -204,7 +204,7 @@ export const CatalogModal: React.FC<CatalogModalProps> = ({
         categoryTag,
         imageUrl: prod.image,
         specs: specsSummary,
-        startingPriceNgn: prod.basePriceNgn,
+        startingPriceNgn: prod.basePriceNgn ?? 0,
         turnaround: `${prod.turnaroundDays}d Turnaround`,
         description: prod.shortDescription || prod.description,
         badge: prod.badge,
@@ -472,7 +472,7 @@ export const CatalogModal: React.FC<CatalogModalProps> = ({
                           Base Price
                         </span>
                         <span className="font-black text-[#dfbc5e] text-base sm:text-lg font-mono">
-                          ₦{item.startingPriceNgn.toLocaleString('en-NG')}
+                          ₦{(item.startingPriceNgn ?? 0).toLocaleString('en-NG')}
                         </span>
                       </div>
 

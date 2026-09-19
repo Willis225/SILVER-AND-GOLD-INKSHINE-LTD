@@ -578,7 +578,7 @@ export const ProductPricingManager: React.FC<ProductPricingManagerProps> = ({
                         </div>
                       ) : (
                         <span className="text-sm font-bold text-stone-900">
-                          ₦{product.basePriceNgn.toLocaleString()}
+                          ₦{(product.basePriceNgn ?? 0).toLocaleString()}
                         </span>
                       )}
                     </td>

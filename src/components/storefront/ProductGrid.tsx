@@ -83,8 +83,9 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
     return matchesCategory && matchesSearch;
   });
 
-  const formatNaira = (amount: number) => {
-    return '₦' + amount.toLocaleString('en-NG');
+  const formatNaira = (amount?: number | null) => {
+    const safe = typeof amount === 'number' && !isNaN(amount) ? amount : Number(amount) || 0;
+    return '₦' + Math.round(safe).toLocaleString('en-NG');
   };
 
   return (

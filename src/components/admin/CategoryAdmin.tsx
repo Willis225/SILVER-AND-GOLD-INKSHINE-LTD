@@ -1088,7 +1088,7 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
                           </h5>
 
                           <p className="text-xs font-mono font-black text-amber-700 mt-1">
-                            ₦{prod.basePriceNgn.toLocaleString()}
+                            ₦{(prod.basePriceNgn ?? 0).toLocaleString()}
                           </p>
 
                           {/* Gallery Thumbnail Strip */}

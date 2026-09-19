@@ -1,19 +1,17 @@
 import React from 'react';
-import { Calendar, Info, Layers, Sparkles, ShieldCheck } from 'lucide-react';
+import { Calendar, Info, Layers, Sparkles } from 'lucide-react';
 
 interface GlassBottomDockProps {
   onOpenBookOnline: () => void;
   onOpenInfo: () => void;
   onOpenCatalog: () => void;
-  onOpenAdmin?: () => void;
-  activeModal?: 'book' | 'info' | 'catalog' | 'admin' | null;
+  activeModal?: 'book' | 'info' | 'catalog' | null;
 }
 
 export const GlassBottomDock: React.FC<GlassBottomDockProps> = ({
   onOpenBookOnline,
   onOpenInfo,
   onOpenCatalog,
-  onOpenAdmin,
   activeModal,
 }) => {
   return (
@@ -86,27 +84,6 @@ export const GlassBottomDock: React.FC<GlassBottomDockProps> = ({
           <Info className="w-3.5 h-3.5 text-stone-300 shrink-0" />
           <span className="tracking-tight whitespace-nowrap">Info</span>
         </button>
-
-        {/* 4. Admin Desk Button */}
-        {onOpenAdmin && (
-          <>
-            <div className="h-5 sm:h-6 w-[1px] bg-white/15 mx-0.5 shrink-0" />
-            <button
-              type="button"
-              id="dock-admin-btn"
-              onClick={onOpenAdmin}
-              className={`relative flex-1 flex items-center justify-center gap-1 xs:gap-1.5 py-2 xs:py-2.5 sm:py-3 px-1.5 xs:px-2 rounded-full font-bold text-[10px] xs:text-xs transition-all duration-200 active:scale-95 cursor-pointer ${
-                activeModal === 'admin'
-                  ? 'bg-amber-400 text-stone-950 font-black shadow-lg shadow-amber-400/30'
-                  : 'bg-amber-400/20 text-amber-300 hover:bg-amber-400 hover:text-stone-950 border border-amber-400/30'
-              }`}
-              title="Open Press Control Center & Categories Admin"
-            >
-              <ShieldCheck className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-              <span className="tracking-tight whitespace-nowrap">Admin</span>
-            </button>
-          </>
-        )}
       </nav>
     </aside>
   );

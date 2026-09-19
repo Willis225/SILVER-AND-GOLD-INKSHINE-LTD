@@ -91,18 +91,22 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const [statusFilter, setStatusFilter] = useState<OrderStatus | 'all'>('all');
   const [gatewayFilter, setGatewayFilter] = useState<'all' | 'paystack' | 'flutterwave' | 'bank_transfer'>('all');
   
+  // Safe arrays
+  const safeOrders = Array.isArray(orders) ? orders : [];
+  const safeProducts = Array.isArray(products) ? products : [];
+
   // Selected order for deep inspection drawer
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   // Compute live KPIs
-  const totalGrossRevenueNgn = orders.reduce((sum, ord) => sum + (ord.paymentStatus === 'paid' ? ord.grandTotalNgn : 0), 0);
-  const ordersInReview = orders.filter((o) => o.orderStatus === 'artwork_review').length;
-  const ordersInProduction = orders.filter((o) => o.orderStatus === 'in_production').length;
-  const ordersDispatched = orders.filter((o) => o.orderStatus === 'out_for_delivery' || o.orderStatus === 'ready_for_dispatch').length;
+  const totalGrossRevenueNgn = safeOrders.reduce((sum, ord) => sum + (ord.paymentStatus === 'paid' ? (ord.grandTotalNgn || 0) : 0), 0);
+  const ordersInReview = safeOrders.filter((o) => o.orderStatus === 'artwork_review').length;
+  const ordersInProduction = safeOrders.filter((o) => o.orderStatus === 'in_production').length;
+  const ordersDispatched = safeOrders.filter((o) => o.orderStatus === 'out_for_delivery' || o.orderStatus === 'ready_for_dispatch').length;
 
   // Filtered orders list
-  const filteredOrders = orders.filter((ord) => {
+  const filteredOrders = safeOrders.filter((ord) => {
     const matchesStatus = statusFilter === 'all' || ord.orderStatus === statusFilter;
     const matchesGateway = gatewayFilter === 'all' || ord.paymentGateway === gatewayFilter;
 
@@ -124,7 +128,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   };
 
   const handleAdvanceOrderStatus = (orderId: string) => {
-    const target = orders.find((o) => o.id === orderId);
+    const target = safeOrders.find((o) => o.id === orderId);
     if (!target) return;
 
     const pipeline: OrderStatus[] = [
@@ -335,7 +339,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         {/* TAB: CATEGORIES ADMIN WITH MULTI-IMAGE UPLOAD */}
         {activeTab === 'categories' && (
           <CategoryAdmin
-            products={products}
+            products={safeProducts}
             onUpdateProduct={onUpdateProduct}
             onAddProduct={onAddProduct}
             onDeleteProduct={onDeleteProduct}
@@ -347,13 +351,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         {/* TAB: MEDIA & IMAGE STUDIO */}
         {activeTab === 'media' && (
           <PageImageStudio
-            heroSlides={websiteContent.heroSlides}
+            heroSlides={websiteContent?.heroSlides || []}
             onUpdateHeroSlides={handleUpdateHeroSlides}
-            products={products}
+            products={safeProducts}
             onUpdateProduct={onUpdateProduct}
             onDeleteProduct={onDeleteProduct}
             onAddProduct={onAddProduct}
-            showcaseServices={websiteContent.showcaseServices}
+            showcaseServices={websiteContent?.showcaseServices || []}
             onUpdateShowcaseServices={handleUpdateShowcaseServices}
             onOpenStorefront={onReturnToStorefront}
           />
@@ -362,7 +366,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         {/* TAB 2: HERO SLIDER CAROUSEL */}
         {activeTab === 'hero_slides' && (
           <HeroSlidesManager
-            slides={websiteContent.heroSlides}
+            slides={websiteContent?.heroSlides || []}
             onUpdateSlides={handleUpdateHeroSlides}
           />
         )}
@@ -370,7 +374,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         {/* TAB 3: PRODUCTS & CATALOG CMS */}
         {activeTab === 'products' && (
           <ProductPricingManager
-            products={products}
+            products={safeProducts}
             onUpdateProduct={onUpdateProduct}
             onAddProduct={onAddProduct}
             onDeleteProduct={onDeleteProduct}
@@ -398,7 +402,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   <DollarSign className="w-4 h-4 text-emerald-600" />
                 </div>
                 <div className="text-2xl font-black text-stone-900 font-mono">
-                  ₦{totalGrossRevenueNgn.toLocaleString()}
+                  ₦{(totalGrossRevenueNgn || 0).toLocaleString()}
                 </div>
                 <div className="text-[11px] text-emerald-600 font-medium mt-1 flex items-center gap-1">
                   <TrendingUp className="w-3 h-3" />
@@ -545,7 +549,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                           </td>
 
                           <td className="py-3.5 px-4 font-mono font-bold text-stone-900">
-                            ₦{ord.grandTotalNgn.toLocaleString()}
+                            ₦{(ord.grandTotalNgn ?? 0).toLocaleString()}
                           </td>
 
                           <td className="py-3.5 px-4">
@@ -595,7 +599,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         {/* TAB 6: PRE-PRESS AUDIT DESK */}
         {activeTab === 'prepress' && (
           <PrePressAuditDesk
-            orders={orders}
+            orders={safeOrders}
             onOpenOrder={handleOpenDrawer}
             onAdvanceStatus={handleAdvanceOrderStatus}
           />
@@ -604,7 +608,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         {/* TAB 7: PRINT PRESS FLOOR */}
         {activeTab === 'press_floor' && (
           <PressFloorQueue
-            orders={orders}
+            orders={safeOrders}
             onOpenOrder={handleOpenDrawer}
             onAdvanceStatus={handleAdvanceOrderStatus}
           />

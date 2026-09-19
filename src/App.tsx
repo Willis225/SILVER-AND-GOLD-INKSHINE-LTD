@@ -179,30 +179,54 @@ export default function App() {
   };
 
   // Mode toggle between Live Storefront, Dedicated Categories Page, PDP, Checkout, Architecture Sandbox, and Admin Dashboard
-  // By default, open the main customer-facing website ('storefront') unless explicitly requested via URL hash (#admin) or parameter (?view=admin)
+  // By default, open the main customer-facing website ('storefront') unless explicitly requested via URL pathname (/admin), hash (#admin), or parameter (?admin or ?view=admin)
   const [viewMode, setViewMode] = useState<'storefront' | 'categories' | 'pdp' | 'checkout' | 'stage1_sandbox' | 'admin'>(() => {
     if (typeof window !== 'undefined') {
+      const pathname = (window.location.pathname || '').toLowerCase();
       const hash = (window.location.hash || '').toLowerCase();
       const params = new URLSearchParams(window.location.search);
       const viewParam = (params.get('view') || '').toLowerCase();
+      const hasAdminParam = params.has('admin');
 
-      if (hash === '#admin' || viewParam === 'admin') return 'admin';
-      if (hash === '#categories' || viewParam === 'categories') return 'categories';
+      if (
+        pathname === '/admin' || 
+        pathname.startsWith('/admin/') || 
+        pathname.endsWith('/admin') || 
+        hash === '#admin' || 
+        hash.startsWith('#admin') ||
+        viewParam === 'admin' || 
+        hasAdminParam
+      ) {
+        return 'admin';
+      }
+      if (hash === '#categories' || viewParam === 'categories' || pathname.endsWith('/categories')) {
+        return 'categories';
+      }
     }
     return 'storefront';
   });
   const [adminInitialCategory, setAdminInitialCategory] = useState<string | undefined>(undefined);
 
-  // Synchronize view mode with URL hash or query params
+  // Synchronize view mode with URL hash, pathname, or query params
   useEffect(() => {
     const syncViewWithUrl = () => {
+      const pathname = (window.location.pathname || '').toLowerCase();
       const hash = (window.location.hash || '').toLowerCase();
       const params = new URLSearchParams(window.location.search);
       const viewParam = (params.get('view') || '').toLowerCase();
+      const hasAdminParam = params.has('admin');
 
-      if (hash === '#admin' || viewParam === 'admin') {
+      if (
+        pathname === '/admin' || 
+        pathname.startsWith('/admin/') || 
+        pathname.endsWith('/admin') || 
+        hash === '#admin' || 
+        hash.startsWith('#admin') ||
+        viewParam === 'admin' || 
+        hasAdminParam
+      ) {
         setViewMode('admin');
-      } else if (hash === '#categories' || viewParam === 'categories') {
+      } else if (hash === '#categories' || viewParam === 'categories' || pathname.endsWith('/categories')) {
         setViewMode('categories');
       } else if (hash === '#storefront' || viewParam === 'storefront' || hash === '#home') {
         setViewMode('storefront');
@@ -218,6 +242,49 @@ export default function App() {
       window.removeEventListener('hashchange', syncViewWithUrl);
       window.removeEventListener('popstate', syncViewWithUrl);
     };
+  }, []);
+
+  const handleOpenAdmin = (categoryKey?: string) => {
+    if (categoryKey && typeof categoryKey === 'string') {
+      setAdminInitialCategory(categoryKey);
+    }
+    setViewMode('admin');
+    try {
+      if (window.location.hash !== '#admin') {
+        window.location.hash = '#admin';
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleReturnToStorefront = (catKey?: string) => {
+    if (typeof catKey === 'string' && catKey.trim().length > 0) {
+      handleOpenCategoriesPage(catKey);
+    } else {
+      setSelectedCategory('all');
+      setSearchQuery('');
+      setViewMode('storefront');
+      try {
+        if (window.location.hash === '#admin') {
+          history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+      } catch (e) {}
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Keyboard shortcut Ctrl+Shift+A or Cmd+Shift+A to open Admin Desk
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+        e.preventDefault();
+        handleOpenAdmin();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
   // Product Add / Update / Delete Handlers with LocalStorage & Firestore Cloud Persistence
@@ -398,10 +465,7 @@ export default function App() {
             setViewMode('storefront');
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
-          onOpenAdmin={() => {
-            setViewMode('admin');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }}
+          onOpenAdmin={() => handleOpenAdmin()}
           onOpenInfoModal={handleOpenInfoModal}
           onOpenBookOnline={() => handleOpenBookOnline()}
           onOpenCatalog={() => handleOpenCategoriesPage('all')}
@@ -429,33 +493,20 @@ export default function App() {
             }}
             onOpenCart={() => setIsCartOpen(true)}
             cartCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
-            onOpenAdmin={(catKey) => {
-              if (catKey) setAdminInitialCategory(catKey);
-              setViewMode('admin');
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
+            onOpenAdmin={handleOpenAdmin}
           />
         )}
 
         {viewMode === 'admin' && (
           <AdminDashboard
-            orders={orders}
-            products={products}
+            orders={orders || []}
+            products={products || []}
             websiteContent={websiteContent}
             initialTab="categories"
             initialCategoryKey={adminInitialCategory}
             onUpdateWebsiteContent={handleUpdateWebsiteContent}
             onResetAllWebsiteContentToDefaults={handleResetWebsiteContent}
-            onReturnToStorefront={(catKey) => {
-              if (typeof catKey === 'string' && catKey.trim().length > 0) {
-                handleOpenCategoriesPage(catKey);
-              } else {
-                setSelectedCategory('all');
-                setSearchQuery('');
-                setViewMode('storefront');
-              }
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
+            onReturnToStorefront={handleReturnToStorefront}
             onUpdateOrderStatus={handleUpdateOrderStatus}
             onUpdatePaymentStatus={handleUpdatePaymentStatus}
             onUpdateTrackingNumber={handleUpdateTrackingNumber}
@@ -615,10 +666,7 @@ export default function App() {
             setSelectedCategory(cat);
             handleOpenCategoriesPage(cat);
           }}
-          onOpenAdmin={() => {
-            setViewMode('admin');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }}
+          onOpenAdmin={() => handleOpenAdmin()}
           onOpenInfoModal={handleOpenInfoModal}
           onOpenCategoriesPage={handleOpenCategoriesPage}
           onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
@@ -660,30 +708,8 @@ export default function App() {
         onOpenBookOnline={() => handleOpenBookOnline()}
         onOpenInfo={() => handleOpenInfoModal('info')}
         onOpenCatalog={() => handleOpenCategoriesPage('all')}
-        onOpenAdmin={() => {
-          setViewMode('admin');
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }}
-        activeModal={viewMode === 'admin' ? 'admin' : viewMode === 'categories' ? 'catalog' : isBookOnlineOpen ? 'book' : isCompanyInfoOpen ? 'info' : isCatalogOpen ? 'catalog' : null}
+        activeModal={viewMode === 'categories' ? 'catalog' : isBookOnlineOpen ? 'book' : isCompanyInfoOpen ? 'info' : isCatalogOpen ? 'catalog' : null}
       />
-
-      {/* Floating Quick Mode Badge (Visible in Storefront / Categories to return to Admin with 1 click) */}
-      {viewMode !== 'admin' && (
-        <div className="fixed bottom-4 left-4 z-50">
-          <button
-            type="button"
-            onClick={() => {
-              setViewMode('admin');
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
-            className="flex items-center gap-2 px-3.5 py-2 rounded-full bg-stone-950/90 hover:bg-black text-amber-400 border border-amber-500/40 shadow-xl backdrop-blur-md text-xs font-black hover:scale-105 active:scale-95 transition-all cursor-pointer group"
-            title="Switch directly to Admin Desk"
-          >
-            <ShieldCheck className="w-4 h-4 text-amber-400 group-hover:scale-110 transition-transform" />
-            <span>Open Admin Desk</span>
-          </button>
-        </div>
-      )}
 
       {/* Book Online Modal */}
       <BookOnlineModal
