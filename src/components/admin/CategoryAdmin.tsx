@@ -30,6 +30,13 @@ import {
 import { Product, ProductCategory } from '../../types/schema';
 import { STORE_CATEGORIES, CategoryDefinition, getProductCategoryTag } from '../../utils/categoryUtils';
 import { compressImageFile, saveUploadedImageToCloud } from '../../lib/firebase';
+import { 
+  searchOnlineProductImages, 
+  SearchResultImage, 
+  processExternalImageUrl,
+  getGoogleImagesSearchUrl,
+  getPinterestSearchUrl
+} from '../../services/imageSearchService';
 
 interface CategoryAdminProps {
   products: Product[];
@@ -92,6 +99,14 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
   const [batchTurnaroundDays, setBatchTurnaroundDays] = useState<number>(2);
   const [batchMinQty, setBatchMinQty] = useState<number>(1);
 
+  // Auto-Fetch Online Category Photos State (Option 2)
+  const [isAutoFetchModalOpen, setIsAutoFetchModalOpen] = useState<boolean>(false);
+  const [autoFetchQuery, setAutoFetchQuery] = useState<string>('');
+  const [isAutoSearching, setIsAutoSearching] = useState<boolean>(false);
+  const [autoSearchResults, setAutoSearchResults] = useState<SearchResultImage[]>([]);
+  const [selectedAutoPhotos, setSelectedAutoPhotos] = useState<SearchResultImage[]>([]);
+  const [pinterestInputUrl, setPinterestInputUrl] = useState<string>('');
+
   // Notifications
   const [toastMessage, setToastMessage] = useState<{ title: string; desc: string } | null>(null);
 
@@ -132,6 +147,82 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
   const showToast = (title: string, desc: string) => {
     setToastMessage({ title, desc });
     setTimeout(() => setToastMessage(null), 4000);
+  };
+
+  // Open Auto-Fetch Modal & load initial online results for this category
+  const handleOpenAutoFetchModal = async () => {
+    setIsAutoFetchModalOpen(true);
+    const query = currentCategoryDef.label;
+    setAutoFetchQuery(query);
+    setSelectedAutoPhotos([]);
+    setIsAutoSearching(true);
+    try {
+      const results = await searchOnlineProductImages(query, currentCategoryDef.id);
+      setAutoSearchResults(results);
+    } catch (err) {
+      console.warn('Error fetching online images for category:', err);
+    } finally {
+      setIsAutoSearching(false);
+    }
+  };
+
+  // Perform search with custom query keywords
+  const handleSearchAutoFetch = async (queryText?: string) => {
+    const q = queryText !== undefined ? queryText : autoFetchQuery;
+    setIsAutoSearching(true);
+    try {
+      const results = await searchOnlineProductImages(q, currentCategoryDef.id);
+      setAutoSearchResults(results);
+    } catch (err) {
+      console.warn('Error searching online images:', err);
+    } finally {
+      setIsAutoSearching(false);
+    }
+  };
+
+  // Stage selected online photos into the staging area
+  const handleStageAutoPhotos = (photosToStage: SearchResultImage[]) => {
+    if (photosToStage.length === 0) return;
+    const newItems: StagedPhotoItem[] = photosToStage.map((photo, idx) => ({
+      id: `auto-${Date.now()}-${idx}-${Math.random().toString(36).slice(2, 6)}`,
+      dataUrl: photo.url,
+      fileName: `${photo.title || 'Online Photo'}.jpg`,
+      title: photo.title || `${currentCategoryDef.label} Project #${stagedPhotos.length + idx + 1}`,
+      isCover: stagedPhotos.length === 0 && idx === 0,
+      priceNgn: batchBasePrice || 20000,
+    }));
+    setStagedPhotos((prev) => [...prev, ...newItems]);
+    setIsAutoFetchModalOpen(false);
+    showToast(
+      'Photos Staged from Online Search',
+      `Added ${photosToStage.length} online photo(s) to staging area for "${currentCategoryDef.label}". Ready to publish!`
+    );
+  };
+
+  // Apply custom Pinterest / Web URL to staged photos
+  const handleApplyPinterestUrl = () => {
+    if (!pinterestInputUrl.trim()) return;
+    const processed = processExternalImageUrl(pinterestInputUrl);
+    if (!processed.valid) {
+      alert(processed.error || 'Please enter a valid web image URL.');
+      return;
+    }
+
+    const newItem: StagedPhotoItem = {
+      id: `url-${Date.now()}`,
+      dataUrl: processed.cleanUrl,
+      fileName: `${processed.source} Image`,
+      title: `${currentCategoryDef.label} (${processed.source})`,
+      isCover: stagedPhotos.length === 0,
+      priceNgn: batchBasePrice || 20000,
+    };
+    setStagedPhotos((prev) => [...prev, newItem]);
+    setPinterestInputUrl('');
+    setIsAutoFetchModalOpen(false);
+    showToast(
+      `${processed.source} Image Added`,
+      `Added photo from ${processed.source} to staging area. Ready to publish!`
+    );
   };
 
   // Process multiple image files from input or drag-and-drop
@@ -641,7 +732,17 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
               </p>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
+              <button
+                type="button"
+                onClick={handleOpenAutoFetchModal}
+                className="px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-stone-950 rounded-xl text-xs font-black flex items-center gap-2 shadow-sm transition-all cursor-pointer"
+                title="Auto-fetch matching photos for this category (Option 2)"
+              >
+                <Sparkles className="w-4 h-4" />
+                <span>Auto-Fetch Category Photos</span>
+              </button>
+
               <button
                 type="button"
                 onClick={() => multiFileInputRef.current?.click()}
@@ -692,6 +793,15 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
               </div>
 
               <div className="flex flex-wrap items-center justify-center gap-3 pt-1">
+                <button
+                  type="button"
+                  onClick={handleOpenAutoFetchModal}
+                  className="px-5 py-2.5 bg-[#b8860b] hover:bg-[#996515] text-white rounded-xl text-xs font-bold transition-all shadow-md flex items-center gap-2 cursor-pointer"
+                >
+                  <Sparkles className="w-4 h-4" />
+                  <span>Auto-Fetch Matching Online Photos (Option 2)</span>
+                </button>
+
                 <button
                   type="button"
                   onClick={() => multiFileInputRef.current?.click()}
@@ -1154,6 +1264,269 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
           </div>
         </div>
       </div>
+
+      {/* Auto-Fetch Online Category Photos Modal (Option 2) */}
+      {isAutoFetchModalOpen && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-sm overflow-y-auto"
+          onClick={() => setIsAutoFetchModalOpen(false)}
+        >
+          <div 
+            className="bg-white rounded-2xl max-w-4xl w-full max-h-[92vh] overflow-hidden shadow-2xl border border-stone-200 flex flex-col animate-in fade-in zoom-in-95"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="p-4 sm:p-5 border-b border-stone-200 flex items-center justify-between bg-gradient-to-r from-amber-50/80 to-white">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-[#b8860b]/15 text-[#b8860b] flex items-center justify-center">
+                  <Sparkles className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-base sm:text-lg font-black text-stone-900 flex items-center gap-2">
+                    <span>Auto-Fetch Photos: {currentCategoryDef.label}</span>
+                    <span className="px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 text-[10px] font-bold">Option 2</span>
+                  </h3>
+                  <p className="text-xs text-stone-500">
+                    Find high-resolution commercial print &amp; mockup photos online, or stage Pinterest inspiration.
+                  </p>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setIsAutoFetchModalOpen(false)}
+                className="p-2 text-stone-400 hover:text-stone-700 rounded-lg hover:bg-stone-100 cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <div className="p-4 sm:p-6 overflow-y-auto space-y-5 flex-1">
+              {/* Search Bar & Preset Tags */}
+              <div className="space-y-2">
+                <div className="flex gap-2">
+                  <div className="relative flex-1">
+                    <Search className="w-4 h-4 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                    <input
+                      type="text"
+                      value={autoFetchQuery}
+                      onChange={(e) => setAutoFetchQuery(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          e.preventDefault();
+                          handleSearchAutoFetch();
+                        }
+                      }}
+                      placeholder={`Search print photos for ${currentCategoryDef.label}...`}
+                      className="w-full pl-9 pr-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs font-semibold focus:ring-2 focus:ring-[#b8860b] focus:outline-hidden"
+                    />
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => handleSearchAutoFetch()}
+                    disabled={isAutoSearching}
+                    className="px-4 py-2 bg-[#b8860b] hover:bg-[#996515] text-white rounded-xl text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer disabled:opacity-60"
+                  >
+                    {isAutoSearching ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <Search className="w-3.5 h-3.5" />}
+                    <span>{isAutoSearching ? 'Searching...' : 'Search'}</span>
+                  </button>
+                </div>
+
+                {/* Quick Query Suggestions & Direct Google/Pinterest Shortcuts */}
+                <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    <span className="text-[11px] font-bold text-stone-500 mr-1">Quick Ideas:</span>
+                    {[
+                      currentCategoryDef.label,
+                      `${currentCategoryDef.shortLabel} mockup`,
+                      `${currentCategoryDef.shortLabel} design`,
+                      'corporate branding printing',
+                      'luxury packaging mockup',
+                    ].map((preset, idx) => (
+                      <button
+                        key={idx}
+                        type="button"
+                        onClick={() => {
+                          setAutoFetchQuery(preset);
+                          handleSearchAutoFetch(preset);
+                        }}
+                        className="px-2.5 py-1 bg-stone-100 hover:bg-amber-100 text-stone-700 hover:text-amber-900 rounded-lg text-[11px] font-medium transition-colors cursor-pointer"
+                      >
+                        {preset}
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="flex items-center gap-1.5">
+                    <a
+                      href={getGoogleImagesSearchUrl(autoFetchQuery || currentCategoryDef.label)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-2.5 py-1 bg-white hover:bg-blue-50 text-blue-700 border border-blue-200 rounded-lg text-[10px] font-bold flex items-center gap-1 shadow-2xs transition-colors"
+                      title="Open Google Images in new tab for this category"
+                    >
+                      <ExternalLink className="w-3 h-3 text-blue-600" />
+                      <span>Google Images ↗</span>
+                    </a>
+                    <a
+                      href={getPinterestSearchUrl(autoFetchQuery || currentCategoryDef.label)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-2.5 py-1 bg-white hover:bg-rose-50 text-rose-700 border border-rose-200 rounded-lg text-[10px] font-bold flex items-center gap-1 shadow-2xs transition-colors"
+                      title="Open Pinterest in new tab for inspiration"
+                    >
+                      <ExternalLink className="w-3 h-3 text-rose-600" />
+                      <span>Pinterest ↗</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {/* Paste Pinterest / Direct Image Link Box */}
+              <div className="p-3 bg-amber-50/50 border border-amber-200/80 rounded-xl flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                <div className="flex-1">
+                  <label className="block text-[11px] font-bold text-amber-950 mb-0.5">
+                    Have a Google Images, Pinterest, or Direct Image URL?
+                  </label>
+                  <input
+                    type="url"
+                    value={pinterestInputUrl}
+                    onChange={(e) => setPinterestInputUrl(e.target.value)}
+                    placeholder="Paste image address from Google Images, Pinterest, or any website..."
+                    className="w-full px-3 py-1.5 bg-white border border-amber-300 rounded-lg text-xs focus:ring-2 focus:ring-[#b8860b] focus:outline-hidden"
+                  />
+                </div>
+                <button
+                  type="button"
+                  onClick={handleApplyPinterestUrl}
+                  disabled={!pinterestInputUrl.trim()}
+                  className="px-4 py-2 bg-stone-900 hover:bg-stone-800 disabled:opacity-50 text-white rounded-lg text-xs font-bold cursor-pointer whitespace-nowrap self-end sm:self-auto"
+                >
+                  Stage Link
+                </button>
+              </div>
+
+              {/* Search Results Grid */}
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <h4 className="font-bold text-stone-900 text-xs flex items-center gap-2">
+                    <span>Matching Commercial Photography ({autoSearchResults.length})</span>
+                    {isAutoSearching && <RefreshCw className="w-3 h-3 text-[#b8860b] animate-spin" />}
+                  </h4>
+                  {autoSearchResults.length > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const top4 = autoSearchResults.slice(0, 4);
+                        setSelectedAutoPhotos(top4);
+                      }}
+                      className="text-[11px] text-[#b8860b] hover:underline font-bold cursor-pointer"
+                    >
+                      Select Top 4 Matches
+                    </button>
+                  )}
+                </div>
+
+                {isAutoSearching ? (
+                  <div className="py-12 text-center text-stone-400 space-y-2">
+                    <RefreshCw className="w-8 h-8 mx-auto animate-spin text-[#b8860b]" />
+                    <p className="text-xs font-semibold">Auto-fetching print &amp; mockup photos across online sources...</p>
+                  </div>
+                ) : autoSearchResults.length === 0 ? (
+                  <div className="py-12 text-center text-stone-400 border-2 border-dashed border-stone-200 rounded-2xl">
+                    <ImageIcon className="w-8 h-8 mx-auto text-stone-300 mb-2" />
+                    <p className="text-xs font-bold text-stone-600">No matching online photos found.</p>
+                    <p className="text-[11px] text-stone-400 mt-1">Try another keyword or paste a direct image URL above.</p>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 max-h-[420px] overflow-y-auto p-1">
+                    {autoSearchResults.map((item) => {
+                      const isSelected = selectedAutoPhotos.some((p) => p.url === item.url);
+
+                      return (
+                        <div
+                          key={item.id}
+                          onClick={() => {
+                            if (isSelected) {
+                              setSelectedAutoPhotos(selectedAutoPhotos.filter((p) => p.url !== item.url));
+                            } else {
+                              setSelectedAutoPhotos([...selectedAutoPhotos, item]);
+                            }
+                          }}
+                          className={`group relative rounded-xl overflow-hidden border-2 cursor-pointer transition-all ${
+                            isSelected
+                              ? 'border-[#b8860b] ring-2 ring-[#b8860b]/30 shadow-md scale-[0.99]'
+                              : 'border-stone-200 hover:border-stone-400 hover:shadow-xs'
+                          }`}
+                        >
+                          <div className="aspect-square bg-stone-100 relative overflow-hidden">
+                            <img
+                              src={item.thumbnail || (item as any).thumbnailUrl || item.url}
+                              alt={item.title}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                              referrerPolicy="no-referrer"
+                              loading="lazy"
+                            />
+                            {/* Source badge */}
+                            <span className="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded bg-black/70 text-white font-mono text-[9px] uppercase tracking-wider backdrop-blur-xs">
+                              {item.source}
+                            </span>
+                            {/* Checkmark indicator */}
+                            <div
+                              className={`absolute top-1.5 right-1.5 w-5 h-5 rounded-full flex items-center justify-center transition-colors ${
+                                isSelected ? 'bg-[#b8860b] text-white shadow-xs' : 'bg-white/80 text-stone-400 border border-stone-300'
+                              }`}
+                            >
+                              <Check className="w-3 h-3" />
+                            </div>
+                          </div>
+
+                          <div className="p-2 bg-white">
+                            <p className="text-[11px] font-bold text-stone-900 truncate" title={item.title}>
+                              {item.title}
+                            </p>
+                            <div className="flex items-center justify-between text-[10px] text-stone-400 mt-0.5">
+                              <span className="truncate">{item.domain || item.category || item.source}</span>
+                              {item.license && <span className="font-mono uppercase">{item.license}</span>}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Modal Footer Actions */}
+            <div className="p-4 border-t border-stone-200 bg-stone-50 flex items-center justify-between">
+              <div className="text-xs text-stone-600">
+                <span className="font-bold text-stone-900">{selectedAutoPhotos.length}</span> photo{selectedAutoPhotos.length !== 1 ? 's' : ''} selected
+              </div>
+
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setIsAutoFetchModalOpen(false)}
+                  className="px-4 py-2 border border-stone-300 rounded-xl text-xs font-bold text-stone-700 bg-white hover:bg-stone-50 cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleStageAutoPhotos(selectedAutoPhotos)}
+                  disabled={selectedAutoPhotos.length === 0}
+                  className="px-5 py-2 bg-[#b8860b] hover:bg-[#996515] disabled:opacity-40 text-white rounded-xl text-xs font-black shadow-md flex items-center gap-2 cursor-pointer transition-all"
+                >
+                  <Sparkles className="w-4 h-4" />
+                  <span>Stage {selectedAutoPhotos.length} Selected Photo{selectedAutoPhotos.length !== 1 ? 's' : ''}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

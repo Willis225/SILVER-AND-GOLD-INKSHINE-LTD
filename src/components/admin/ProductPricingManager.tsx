@@ -468,6 +468,21 @@ export const ProductPricingManager: React.FC<ProductPricingManagerProps> = ({
           <button
             type="button"
             onClick={() => {
+              const target = filteredProducts[0];
+              if (target) {
+                setReplacingImageProduct(target);
+              }
+            }}
+            className="px-3 py-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 text-[#b8860b] border border-[#b8860b]/50 text-xs font-bold whitespace-nowrap flex items-center gap-1.5 cursor-pointer shadow-xs"
+            title="Auto-fetch matching web & commercial photography for products"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-[#b8860b]" />
+            <span>Auto-Fetch Photos</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
               if (categoryFilter !== 'all') {
                 setNewCategoryPlacement(categoryFilter);
               }
@@ -642,12 +657,23 @@ export const ProductPricingManager: React.FC<ProductPricingManagerProps> = ({
                         <span>Rename / Details</span>
                       </button>
 
+                      {/* Auto-Fetch Online Image (Option 2) */}
+                      <button
+                        type="button"
+                        onClick={() => setReplacingImageProduct(product)}
+                        className="px-2 py-1 bg-amber-50 hover:bg-[#b8860b] text-[#b8860b] hover:text-white border border-[#b8860b]/40 rounded font-bold text-xs inline-flex items-center gap-1 transition-all cursor-pointer"
+                        title="Auto-Fetch Online Images for this Product (Pinterest / Web inspiration)"
+                      >
+                        <Sparkles className="w-3 h-3" />
+                        <span>Auto-Fetch</span>
+                      </button>
+
                       {/* Replace Image Button */}
                       <button
                         type="button"
                         onClick={() => setReplacingImageProduct(product)}
                         className="p-1 text-stone-500 hover:text-[#b8860b] hover:bg-stone-100 rounded transition-colors cursor-pointer inline-flex items-center"
-                        title="Replace Image"
+                        title="Upload from Device or Manage Image"
                       >
                         <ImageIcon className="w-4 h-4" />
                       </button>
@@ -965,14 +991,18 @@ export const ProductPricingManager: React.FC<ProductPricingManagerProps> = ({
         </div>
       )}
 
-      {/* Direct Image Replace Modal */}
+      {/* Direct Image Replace / Auto-Fetch Modal */}
       {replacingImageProduct && (
         <ImageManagerModal
           isOpen={true}
           onClose={() => setReplacingImageProduct(null)}
           currentImageUrl={replacingImageProduct.image}
-          title={`Replace Photo: ${replacingImageProduct.name}`}
-          subtitle="Upload a high-resolution photo from your device, enter a web URL, or choose a print preset."
+          title={`Photo Studio: ${replacingImageProduct.name}`}
+          subtitle="Auto-fetch matching photos online (Option 2), upload from device, or paste a Pinterest/web link."
+          categoryKey={replacingImageProduct.categoryPlacement || getProductCategoryTag(replacingImageProduct)}
+          currentTitle={replacingImageProduct.name}
+          currentDescription={replacingImageProduct.shortDescription || replacingImageProduct.description}
+          autoFetchOnOpen={true}
           allowDetailsEdit={false}
           onSave={(data) => {
             onUpdateProduct(replacingImageProduct.id, {
@@ -982,7 +1012,7 @@ export const ProductPricingManager: React.FC<ProductPricingManagerProps> = ({
               setEditModalImage(data.imageUrl);
             }
             setReplacingImageProduct(null);
-            setUploadSuccessMessage(`Replaced image for "${replacingImageProduct.name}"!`);
+            setUploadSuccessMessage(`Successfully updated photo for "${replacingImageProduct.name}"!`);
           }}
         />
       )}

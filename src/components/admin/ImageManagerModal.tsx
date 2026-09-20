@@ -10,7 +10,10 @@ import {
   AlertCircle,
   Database,
   Cloud,
-  CheckCircle2
+  CheckCircle2,
+  Search,
+  Globe,
+  Download
 } from 'lucide-react';
 import { 
   compressImageFile, 
@@ -18,6 +21,13 @@ import {
   subscribeUploadedImages, 
   CloudUploadedImage 
 } from '../../lib/firebase';
+import { 
+  searchOnlineProductImages, 
+  SearchResultImage, 
+  processExternalImageUrl,
+  getGoogleImagesSearchUrl,
+  getPinterestSearchUrl
+} from '../../services/imageSearchService';
 
 export interface PresetImage {
   url: string;
@@ -179,7 +189,9 @@ export interface ImageManagerModalProps {
   subtitle?: string;
   currentTitle?: string;
   currentDescription?: string;
+  categoryKey?: string;
   allowDetailsEdit?: boolean;
+  autoFetchOnOpen?: boolean;
   onSave: (data: { imageUrl: string; title?: string; description?: string }) => void;
 }
 
@@ -188,16 +200,31 @@ export const ImageManagerModal: React.FC<ImageManagerModalProps> = ({
   onClose,
   currentImageUrl,
   title,
-  subtitle = 'Replace existing image or select from high-resolution print presets.',
+  subtitle = 'Replace existing image, auto-fetch matching online images, or upload from your device.',
   currentTitle = '',
   currentDescription = '',
+  categoryKey,
   allowDetailsEdit = false,
+  autoFetchOnOpen = false,
   onSave,
 }) => {
+  const [activeTab, setActiveTab] = useState<'auto_fetch' | 'upload' | 'pinterest_url' | 'cloud' | 'presets'>(
+    autoFetchOnOpen ? 'auto_fetch' : 'auto_fetch'
+  );
   const [selectedImageUrl, setSelectedImageUrl] = useState<string>(currentImageUrl);
   const [editedTitle, setEditedTitle] = useState<string>(currentTitle);
   const [editedDescription, setEditedDescription] = useState<string>(currentDescription);
+  
+  // Custom URL / Pinterest Link Input
   const [customUrlInput, setCustomUrlInput] = useState<string>('');
+
+  // Online Image Auto-Fetch State (Option 2)
+  const [searchQuery, setSearchQuery] = useState<string>(currentTitle || title);
+  const [isSearchingOnline, setIsSearchingOnline] = useState<boolean>(false);
+  const [searchResults, setSearchResults] = useState<SearchResultImage[]>([]);
+  const [selectedSourceFilter, setSelectedSourceFilter] = useState<string>('all');
+
+  // Presets & Local Uploads State
   const [activePresetCategory, setActivePresetCategory] = useState<string>('all');
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const [isCloudSaving, setIsCloudSaving] = useState<boolean>(false);
@@ -206,6 +233,22 @@ export const ImageManagerModal: React.FC<ImageManagerModalProps> = ({
   const [successNotice, setSuccessNotice] = useState<string | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Sync state when modal opens
+  useEffect(() => {
+    if (isOpen) {
+      setSelectedImageUrl(currentImageUrl);
+      setEditedTitle(currentTitle);
+      setEditedDescription(currentDescription);
+      const initialQuery = currentTitle || title;
+      setSearchQuery(initialQuery);
+      setErrorNotice(null);
+      setSuccessNotice(null);
+
+      // Trigger automated image search based on product title and category
+      handleTriggerOnlineSearch(initialQuery, categoryKey);
+    }
+  }, [isOpen, currentImageUrl, currentTitle, title, categoryKey]);
 
   // Subscribe to real-time cloud uploaded images across all devices
   useEffect(() => {
@@ -218,6 +261,25 @@ export const ImageManagerModal: React.FC<ImageManagerModalProps> = ({
   }, [isOpen]);
 
   if (!isOpen) return null;
+
+  // Automated search function
+  const handleTriggerOnlineSearch = async (queryText?: string, catKey?: string) => {
+    const q = queryText !== undefined ? queryText : searchQuery;
+    setIsSearchingOnline(true);
+    setErrorNotice(null);
+    try {
+      const results = await searchOnlineProductImages(q, catKey || categoryKey);
+      setSearchResults(results);
+      if (results.length === 0) {
+        setErrorNotice('No matching images found for this query. Try different keywords.');
+      }
+    } catch (err) {
+      console.warn('Error fetching online images:', err);
+      setErrorNotice('Could not connect to image service. You can use preset photos or upload directly.');
+    } finally {
+      setIsSearchingOnline(false);
+    }
+  };
 
   // Handle local image file upload, optimize/compress, and save to Cloud DB
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -239,11 +301,9 @@ export const ImageManagerModal: React.FC<ImageManagerModalProps> = ({
     setSuccessNotice(null);
 
     try {
-      // 1. High quality multi-step compression optimized for Firestore document size
       const optimizedUrl = await compressImageFile(file, 1200, 0.76);
       setSelectedImageUrl(optimizedUrl);
 
-      // 2. Immediately persist to Firestore `uploaded_images` collection so all devices can access it
       const imageId = `img-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
       await saveUploadedImageToCloud({
         id: imageId,
@@ -261,17 +321,19 @@ export const ImageManagerModal: React.FC<ImageManagerModalProps> = ({
     }
   };
 
+  // Apply custom web or Pinterest URL
   const handleApplyCustomUrl = () => {
     if (!customUrlInput.trim()) return;
-    try {
-      new URL(customUrlInput);
-      setSelectedImageUrl(customUrlInput.trim());
-      setCustomUrlInput('');
-      setErrorNotice(null);
-      setSuccessNotice('Web image applied to preview.');
-    } catch {
-      setErrorNotice('Please enter a valid web URL starting with https://');
+    const processed = processExternalImageUrl(customUrlInput);
+    if (!processed.valid) {
+      setErrorNotice(processed.error || 'Please enter a valid URL starting with https://');
+      return;
     }
+
+    setSelectedImageUrl(processed.cleanUrl);
+    setCustomUrlInput('');
+    setErrorNotice(null);
+    setSuccessNotice(`${processed.source} image successfully applied to preview!`);
   };
 
   const handleSave = async () => {
@@ -294,9 +356,18 @@ export const ImageManagerModal: React.FC<ImageManagerModalProps> = ({
     }
   };
 
+  const filteredSearchResults = selectedSourceFilter === 'all'
+    ? searchResults
+    : selectedSourceFilter === 'web'
+    ? searchResults.filter(r => r.source.toLowerCase().includes('web') || r.source.toLowerCase().includes('google'))
+    : searchResults.filter(r => r.source.toLowerCase().includes(selectedSourceFilter.toLowerCase()));
+
   const filteredPresets = activePresetCategory === 'all'
     ? PRINT_IMAGE_PRESETS
     : PRINT_IMAGE_PRESETS.filter((p) => p.category === activePresetCategory);
+
+  const googleImagesUrl = getGoogleImagesSearchUrl(searchQuery || currentTitle || title);
+  const pinterestUrl = getPinterestSearchUrl(searchQuery || currentTitle || title);
 
   return (
     <div 
@@ -304,7 +375,7 @@ export const ImageManagerModal: React.FC<ImageManagerModalProps> = ({
       onClick={onClose}
     >
       <div 
-        className="bg-white rounded-2xl max-w-2xl w-full max-h-[92vh] overflow-hidden shadow-2xl border border-stone-200 flex flex-col"
+        className="bg-white rounded-2xl max-w-3xl w-full max-h-[94vh] overflow-hidden shadow-2xl border border-stone-200 flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
@@ -312,12 +383,12 @@ export const ImageManagerModal: React.FC<ImageManagerModalProps> = ({
           <div>
             <div className="flex items-center gap-2">
               <h3 className="font-bold text-base sm:text-lg flex items-center gap-2">
-                <ImageIcon className="w-5 h-5 text-[#f5be38]" />
+                <Sparkles className="w-5 h-5 text-[#f5be38]" />
                 <span>{title}</span>
               </h3>
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[10px] font-bold">
-                <Database className="w-2.5 h-2.5" />
-                <span>Cloud Synced</span>
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-500/20 text-[#f5be38] border border-amber-500/30 text-[10px] font-bold">
+                <Globe className="w-2.5 h-2.5" />
+                <span>Auto-Fetch &amp; Upload</span>
               </span>
             </div>
             <p className="text-xs text-stone-400 mt-0.5">{subtitle}</p>
@@ -328,6 +399,75 @@ export const ImageManagerModal: React.FC<ImageManagerModalProps> = ({
             className="p-1 rounded-lg text-stone-400 hover:text-white hover:bg-stone-800 transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Tab Navigation */}
+        <div className="px-6 pt-3 border-b border-stone-200 bg-stone-50 flex items-center gap-2 overflow-x-auto shrink-0">
+          <button
+            type="button"
+            onClick={() => setActiveTab('auto_fetch')}
+            className={`pb-2.5 px-3 text-xs font-bold transition-all border-b-2 flex items-center gap-1.5 cursor-pointer shrink-0 ${
+              activeTab === 'auto_fetch'
+                ? 'border-[#b8860b] text-[#b8860b]'
+                : 'border-transparent text-stone-600 hover:text-stone-900'
+            }`}
+          >
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>Auto-Fetch Online (Option 2)</span>
+            <span className="px-1.5 py-0.2 rounded-full bg-amber-100 text-amber-800 text-[9px] font-extrabold">NEW</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab('upload')}
+            className={`pb-2.5 px-3 text-xs font-bold transition-all border-b-2 flex items-center gap-1.5 cursor-pointer shrink-0 ${
+              activeTab === 'upload'
+                ? 'border-[#00473e] text-[#00473e]'
+                : 'border-transparent text-stone-600 hover:text-stone-900'
+            }`}
+          >
+            <Upload className="w-3.5 h-3.5" />
+            <span>Upload From Computer</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab('pinterest_url')}
+            className={`pb-2.5 px-3 text-xs font-bold transition-all border-b-2 flex items-center gap-1.5 cursor-pointer shrink-0 ${
+              activeTab === 'pinterest_url'
+                ? 'border-rose-600 text-rose-600'
+                : 'border-transparent text-stone-600 hover:text-stone-900'
+            }`}
+          >
+            <LinkIcon className="w-3.5 h-3.5" />
+            <span>Paste Pinterest / Web URL</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab('cloud')}
+            className={`pb-2.5 px-3 text-xs font-bold transition-all border-b-2 flex items-center gap-1.5 cursor-pointer shrink-0 ${
+              activeTab === 'cloud'
+                ? 'border-emerald-600 text-emerald-600'
+                : 'border-transparent text-stone-600 hover:text-stone-900'
+            }`}
+          >
+            <Cloud className="w-3.5 h-3.5" />
+            <span>Cloud Library ({cloudImages.length})</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab('presets')}
+            className={`pb-2.5 px-3 text-xs font-bold transition-all border-b-2 flex items-center gap-1.5 cursor-pointer shrink-0 ${
+              activeTab === 'presets'
+                ? 'border-stone-800 text-stone-800'
+                : 'border-transparent text-stone-600 hover:text-stone-900'
+            }`}
+          >
+            <ImageIcon className="w-3.5 h-3.5" />
+            <span>Curated Presets</span>
           </button>
         </div>
 
@@ -349,83 +489,430 @@ export const ImageManagerModal: React.FC<ImageManagerModalProps> = ({
 
           {/* Top: Current / Selected Image Preview */}
           <div className="flex flex-col sm:flex-row gap-5 items-center p-4 bg-stone-50 rounded-2xl border border-stone-200">
-            <div className="w-36 h-36 rounded-xl overflow-hidden bg-white border border-stone-300 shadow-sm shrink-0 flex items-center justify-center relative group">
+            <div className="w-32 h-32 rounded-xl overflow-hidden bg-white border border-stone-300 shadow-sm shrink-0 flex items-center justify-center relative group">
               <img
                 src={selectedImageUrl}
                 alt="Preview"
                 className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"
               />
-              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-[11px] font-bold">
-                Active Preview
+              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-[10px] font-bold">
+                Active Selection
               </div>
             </div>
 
-            <div className="flex-1 space-y-3 w-full">
-              <div className="flex items-center gap-2 text-xs font-bold text-stone-700 uppercase tracking-wider">
-                <Sparkles className="w-3.5 h-3.5 text-[#b8860b]" />
-                <span>Upload Custom Image or Enter Link</span>
-              </div>
-
-              {/* Upload Local File Button */}
-              <div className="flex flex-wrap gap-2">
-                <input
-                  type="file"
-                  ref={fileInputRef}
-                  onChange={handleFileChange}
-                  accept="image/png,image/jpeg,image/webp,image/svg+xml"
-                  className="hidden"
-                />
-                <button
-                  type="button"
-                  onClick={() => fileInputRef.current?.click()}
-                  disabled={isUploading}
-                  className="px-4 py-2 bg-[#00473e] hover:bg-[#03554a] text-white rounded-xl text-xs font-bold transition-all shadow-xs flex items-center gap-2 cursor-pointer"
-                >
-                  <Upload className="w-4 h-4" />
-                  <span>{isUploading ? 'Reading file...' : 'Upload From Computer'}</span>
-                </button>
-
+            <div className="flex-1 space-y-2 w-full">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-stone-700 uppercase tracking-wider">
+                  Active Selected Photo
+                </span>
                 {selectedImageUrl !== currentImageUrl && (
                   <button
                     type="button"
                     onClick={() => setSelectedImageUrl(currentImageUrl)}
-                    className="px-3 py-2 bg-stone-200 hover:bg-stone-300 text-stone-700 rounded-xl text-xs font-semibold transition-colors flex items-center gap-1.5 cursor-pointer"
+                    className="px-2.5 py-1 bg-stone-200 hover:bg-stone-300 text-stone-700 rounded-lg text-[11px] font-semibold transition-colors flex items-center gap-1 cursor-pointer"
                   >
-                    <RefreshCw className="w-3.5 h-3.5" />
-                    <span>Revert to Original</span>
+                    <RefreshCw className="w-3 h-3" />
+                    <span>Revert</span>
                   </button>
                 )}
               </div>
-
-              {/* Enter Web URL */}
-              <div className="flex gap-2 pt-1">
-                <div className="relative flex-1">
-                  <LinkIcon className="w-3.5 h-3.5 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2" />
-                  <input
-                    type="url"
-                    placeholder="https://example.com/banner-photo.jpg"
-                    value={customUrlInput}
-                    onChange={(e) => setCustomUrlInput(e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') {
-                        e.preventDefault();
-                        handleApplyCustomUrl();
-                      }
-                    }}
-                    className="w-full pl-8 pr-3 py-1.5 text-xs rounded-xl border border-stone-300 focus:outline-hidden focus:ring-2 focus:ring-[#b8860b]"
-                  />
-                </div>
-                <button
-                  type="button"
-                  onClick={handleApplyCustomUrl}
-                  className="px-3 py-1.5 bg-stone-800 hover:bg-stone-900 text-white rounded-xl text-xs font-semibold cursor-pointer"
-                >
-                  Apply
-                </button>
+              <p className="text-xs text-stone-500 line-clamp-1 break-all">
+                {selectedImageUrl}
+              </p>
+              <div className="pt-1 flex items-center gap-2">
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-emerald-100 text-emerald-800 text-xs font-semibold">
+                  <Check className="w-3.5 h-3.5" />
+                  <span>Ready to Save to Storefront &amp; Catalog</span>
+                </span>
               </div>
             </div>
           </div>
+
+          {/* TAB 1: AUTO-FETCH ONLINE IMAGES (Option 2) */}
+          {activeTab === 'auto_fetch' && (
+            <div className="space-y-4">
+              <div className="p-4 bg-amber-50/70 border border-amber-200 rounded-2xl space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-[#b8860b]" />
+                    <span className="text-xs font-bold text-amber-950 uppercase tracking-wider">
+                      Auto-Fetch Matching Images by Title &amp; Category
+                    </span>
+                  </div>
+                  <span className="text-[11px] text-amber-800 font-medium">
+                    Option 2 Enabled
+                  </span>
+                </div>
+
+                <div className="flex gap-2">
+                  <div className="relative flex-1">
+                    <Search className="w-4 h-4 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                    <input
+                      type="text"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          e.preventDefault();
+                          handleTriggerOnlineSearch();
+                        }
+                      }}
+                      placeholder="e.g. Rollup Banner Stand, Luxury Business Card, Acrylic Award"
+                      className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-amber-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-[#b8860b]"
+                    />
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => handleTriggerOnlineSearch()}
+                    disabled={isSearchingOnline}
+                    className="px-4 py-2 bg-[#b8860b] hover:bg-[#996515] text-white rounded-xl text-xs font-bold transition-all shadow-xs flex items-center gap-2 cursor-pointer shrink-0"
+                  >
+                    <Search className="w-3.5 h-3.5" />
+                    <span>{isSearchingOnline ? 'Searching...' : 'Search Online'}</span>
+                  </button>
+                </div>
+
+                {/* Quick Google & Pinterest Search Actions + Source Filter Chips */}
+                <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
+                  <div className="flex items-center gap-1.5 overflow-x-auto">
+                    <span className="text-[11px] font-bold text-amber-900 mr-1">Source:</span>
+                    {[
+                      { id: 'all', label: 'All Online' },
+                      { id: 'web', label: 'Google & Live Web' },
+                      { id: 'curated', label: 'Curated Studio' },
+                      { id: 'openverse', label: 'Openverse' },
+                      { id: 'wiki', label: 'Wikimedia' }
+                    ].map((filter) => (
+                      <button
+                        key={filter.id}
+                        type="button"
+                        onClick={() => setSelectedSourceFilter(filter.id)}
+                        className={`px-2.5 py-0.5 rounded-lg text-[10px] font-bold transition-colors cursor-pointer ${
+                          selectedSourceFilter === filter.id
+                            ? 'bg-[#00473e] text-white'
+                            : 'bg-white text-stone-700 hover:bg-stone-100 border border-stone-200'
+                        }`}
+                      >
+                        {filter.label}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Direct Google & Pinterest External Links */}
+                  <div className="flex items-center gap-1.5">
+                    <a
+                      href={googleImagesUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-2.5 py-1 bg-white hover:bg-blue-50 text-blue-700 border border-blue-200 rounded-lg text-[10px] font-bold flex items-center gap-1 shadow-2xs transition-colors"
+                      title="Open Google Images in new tab for this item, right click to copy image address"
+                    >
+                      <Globe className="w-3 h-3 text-blue-600" />
+                      <span>Google Images ↗</span>
+                    </a>
+                    <a
+                      href={pinterestUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-2.5 py-1 bg-white hover:bg-rose-50 text-rose-700 border border-rose-200 rounded-lg text-[10px] font-bold flex items-center gap-1 shadow-2xs transition-colors"
+                      title="Open Pinterest in new tab for design ideas & mockups"
+                    >
+                      <LinkIcon className="w-3 h-3 text-rose-600" />
+                      <span>Pinterest ↗</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {/* Grid of Results */}
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-bold text-stone-700">
+                    Found {filteredSearchResults.length} Live Online Photography Results:
+                  </span>
+                  {filteredSearchResults.length > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (filteredSearchResults[0]) {
+                          setSelectedImageUrl(filteredSearchResults[0].url);
+                          setSuccessNotice(`Auto-selected top match: "${filteredSearchResults[0].title}"`);
+                        }
+                      }}
+                      className="text-[11px] font-bold text-[#b8860b] hover:underline cursor-pointer flex items-center gap-1"
+                    >
+                      <Sparkles className="w-3 h-3" />
+                      <span>Select Best Match</span>
+                    </button>
+                  )}
+                </div>
+
+                {isSearchingOnline ? (
+                  <div className="py-12 flex flex-col items-center justify-center text-stone-500 space-y-2">
+                    <RefreshCw className="w-6 h-6 animate-spin text-[#b8860b]" />
+                    <p className="text-xs font-medium">Scanning live web &amp; Google commercial index for "{searchQuery}"...</p>
+                  </div>
+                ) : filteredSearchResults.length === 0 ? (
+                  <div className="py-8 text-center text-stone-500 text-xs bg-stone-50 rounded-xl border border-stone-200">
+                    No images found for "{searchQuery}". Try modifying the keywords above or use "Google Images ↗" to find and copy any link.
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 max-h-72 overflow-y-auto p-1">
+                    {filteredSearchResults.map((img) => {
+                      const isSelected = selectedImageUrl === img.url;
+                      return (
+                        <div
+                          key={img.id}
+                          onClick={() => {
+                            setSelectedImageUrl(img.url);
+                            setSuccessNotice(`Selected: ${img.title}`);
+                          }}
+                          className={`group relative rounded-xl overflow-hidden border-2 cursor-pointer transition-all flex flex-col bg-white shadow-xs ${
+                            isSelected
+                              ? 'border-[#b8860b] ring-2 ring-[#b8860b]/40 shadow-md scale-98'
+                              : 'border-stone-200 hover:border-stone-400 hover:shadow-md'
+                          }`}
+                        >
+                          <div className="aspect-4/3 w-full bg-stone-100 overflow-hidden relative">
+                            <img
+                              src={img.thumbnail || img.url}
+                              alt={img.title}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                              referrerPolicy="no-referrer"
+                              loading="lazy"
+                            />
+                            <div className="absolute top-1 left-1 z-10 px-1.5 py-0.5 rounded text-[9px] font-black uppercase tracking-wider bg-stone-900/80 backdrop-blur-xs text-[#dfbc5e]">
+                              {img.source}
+                            </div>
+                            {isSelected && (
+                              <div className="absolute inset-0 bg-[#b8860b]/50 flex items-center justify-center text-white z-20">
+                                <Check className="w-6 h-6 stroke-[3]" />
+                              </div>
+                            )}
+                          </div>
+                          <div className="p-2">
+                            <div className="text-[11px] font-bold text-stone-900 line-clamp-1" title={img.title}>
+                              {img.title}
+                            </div>
+                            <div className="text-[10px] text-stone-400 mt-0.5 flex items-center justify-between">
+                              <span className="truncate">{img.domain || img.source}</span>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* TAB 2: UPLOAD FROM DEVICE */}
+          {activeTab === 'upload' && (
+            <div className="space-y-4 p-5 bg-stone-50 rounded-2xl border border-stone-200 text-center">
+              <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center mx-auto">
+                <Upload className="w-6 h-6" />
+              </div>
+              <div>
+                <h4 className="font-bold text-sm text-stone-900">Upload Image File from Your Device</h4>
+                <p className="text-xs text-stone-500 mt-1 max-w-md mx-auto">
+                  Select any high-resolution photo (JPG, PNG, WebP) from your phone or computer. It will automatically compress and sync to your Cloud Database.
+                </p>
+              </div>
+
+              <input
+                type="file"
+                ref={fileInputRef}
+                onChange={handleFileChange}
+                accept="image/png,image/jpeg,image/webp,image/svg+xml"
+                className="hidden"
+              />
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                disabled={isUploading}
+                className="px-6 py-2.5 bg-[#00473e] hover:bg-[#03554a] text-white rounded-xl text-xs font-bold transition-all shadow-sm inline-flex items-center gap-2 cursor-pointer"
+              >
+                <Upload className="w-4 h-4" />
+                <span>{isUploading ? 'Compressing & Syncing...' : 'Browse Device Files'}</span>
+              </button>
+            </div>
+          )}
+
+          {/* TAB 3: PASTE PINTEREST OR WEB URL */}
+          {activeTab === 'pinterest_url' && (
+            <div className="space-y-4 p-5 bg-rose-50/60 rounded-2xl border border-rose-200">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <LinkIcon className="w-4 h-4 text-rose-600" />
+                  <h4 className="font-bold text-xs uppercase tracking-wider text-rose-950">
+                    Paste Google Images, Pinterest, or Direct Image URL
+                  </h4>
+                </div>
+                <div className="flex items-center gap-2">
+                  <a
+                    href={googleImagesUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-2.5 py-1 bg-white hover:bg-blue-50 text-blue-700 border border-blue-200 rounded-lg text-[10px] font-bold flex items-center gap-1 shadow-2xs transition-colors"
+                  >
+                    <Globe className="w-3 h-3 text-blue-600" />
+                    <span>Search Google Images ↗</span>
+                  </a>
+                  <a
+                    href={pinterestUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-2.5 py-1 bg-white hover:bg-rose-50 text-rose-700 border border-rose-200 rounded-lg text-[10px] font-bold flex items-center gap-1 shadow-2xs transition-colors"
+                  >
+                    <LinkIcon className="w-3 h-3 text-rose-600" />
+                    <span>Search Pinterest ↗</span>
+                  </a>
+                </div>
+              </div>
+
+              <div className="p-3 bg-white rounded-xl border border-rose-200/80 text-[11px] text-stone-600 space-y-1">
+                <p className="font-bold text-stone-800">Quick Guide:</p>
+                <ul className="list-disc pl-4 space-y-0.5 text-stone-600">
+                  <li><strong>From Google Images:</strong> Click "Search Google Images ↗", right-click any image you like &gt; <em>"Copy image address"</em> &gt; paste below.</li>
+                  <li><strong>From Pinterest:</strong> Click "Search Pinterest ↗" or open any pin, right-click the photo &gt; <em>"Copy image address"</em> (starts with <code>i.pinimg.com/...</code>) &gt; paste below.</li>
+                  <li><strong>From any Website:</strong> Any direct image link (<code>.jpg</code>, <code>.png</code>, <code>.webp</code>) is supported.</li>
+                </ul>
+              </div>
+
+              <div className="flex gap-2">
+                <input
+                  type="url"
+                  placeholder="Paste image address here (e.g. https://... or https://i.pinimg.com/...)"
+                  value={customUrlInput}
+                  onChange={(e) => setCustomUrlInput(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+                      handleApplyCustomUrl();
+                    }
+                  }}
+                  className="flex-1 px-3 py-2 text-xs rounded-xl border border-rose-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-rose-500"
+                />
+                <button
+                  type="button"
+                  onClick={handleApplyCustomUrl}
+                  className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold cursor-pointer"
+                >
+                  Load Image
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 4: CLOUD LIBRARY */}
+          {activeTab === 'cloud' && (
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-stone-700 uppercase tracking-wider">
+                  Cloud Uploads from All Devices ({cloudImages.length})
+                </span>
+                <span className="text-[11px] text-emerald-700 font-medium">Click to select</span>
+              </div>
+
+              {cloudImages.length === 0 ? (
+                <div className="py-8 text-center text-stone-500 text-xs bg-stone-50 rounded-xl border border-stone-200">
+                  No cloud photos uploaded yet. Use the "Upload From Computer" tab to upload your first photo.
+                </div>
+              ) : (
+                <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2.5 max-h-60 overflow-y-auto p-1">
+                  {cloudImages.map((img) => {
+                    const isSelected = selectedImageUrl === img.dataUrl;
+                    return (
+                      <div
+                        key={img.id}
+                        onClick={() => {
+                          setSelectedImageUrl(img.dataUrl);
+                          setSuccessNotice(`Selected cloud image: ${img.name || 'Device photo'}`);
+                        }}
+                        className={`group relative rounded-xl overflow-hidden border-2 cursor-pointer transition-all aspect-square ${
+                          isSelected
+                            ? 'border-emerald-600 ring-2 ring-emerald-500/50 shadow-md scale-95'
+                            : 'border-stone-200 hover:border-emerald-400 bg-white'
+                        }`}
+                      >
+                        <img
+                          src={img.dataUrl}
+                          alt={img.name || 'Cloud upload'}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                          referrerPolicy="no-referrer"
+                        />
+                        {isSelected && (
+                          <div className="absolute inset-0 bg-emerald-600/60 flex items-center justify-center text-white">
+                            <Check className="w-5 h-5 stroke-[3]" />
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* TAB 5: PRESETS */}
+          {activeTab === 'presets' && (
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-stone-700 uppercase tracking-wider">
+                  Curated Commercial Presets
+                </span>
+
+                {/* Category Filter Chips */}
+                <div className="flex items-center gap-1.5 overflow-x-auto">
+                  {['all', 'banners', 'awards', 'packaging', 'stationery', 'gifts', 'signage'].map((cat) => (
+                    <button
+                      key={cat}
+                      type="button"
+                      onClick={() => setActivePresetCategory(cat)}
+                      className={`px-2.5 py-1 rounded-lg text-[11px] font-bold capitalize transition-colors cursor-pointer ${
+                        activePresetCategory === cat
+                          ? 'bg-[#b8860b] text-white'
+                          : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
+                      }`}
+                    >
+                      {cat}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2.5 max-h-60 overflow-y-auto p-1">
+                {filteredPresets.map((preset, index) => {
+                  const isSelected = selectedImageUrl === preset.url;
+                  return (
+                    <div
+                      key={index}
+                      onClick={() => setSelectedImageUrl(preset.url)}
+                      className={`group relative rounded-xl overflow-hidden border-2 cursor-pointer transition-all aspect-square ${
+                        isSelected
+                          ? 'border-[#00473e] ring-2 ring-[#00473e]/40 shadow-md scale-95'
+                          : 'border-stone-200 hover:border-stone-400 hover:shadow-xs'
+                      }`}
+                    >
+                      <img
+                        src={preset.url}
+                        alt={preset.label}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                        referrerPolicy="no-referrer"
+                      />
+                      {isSelected && (
+                        <div className="absolute inset-0 bg-[#00473e]/60 flex items-center justify-center text-white">
+                          <Check className="w-5 h-5 stroke-[3]" />
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
 
           {/* Details Editing (Rename and Change Description) */}
           {allowDetailsEdit && (
@@ -461,120 +948,14 @@ export const ImageManagerModal: React.FC<ImageManagerModalProps> = ({
               </div>
             </div>
           )}
-
-          {/* Cloud Uploads Gallery (Synced across all devices) */}
-          {cloudImages.length > 0 && (
-            <div className="space-y-2 p-3.5 bg-emerald-50/70 rounded-2xl border border-emerald-200/70">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-950 uppercase tracking-wider">
-                  <Cloud className="w-4 h-4 text-emerald-600" />
-                  <span>Cloud Uploads from All Devices ({cloudImages.length})</span>
-                </div>
-                <span className="text-[11px] text-emerald-700 font-medium">Click to select</span>
-              </div>
-              <div className="grid grid-cols-4 sm:grid-cols-6 gap-2 max-h-36 overflow-y-auto p-1">
-                {cloudImages.map((img) => {
-                  const isSelected = selectedImageUrl === img.dataUrl;
-                  return (
-                    <div
-                      key={img.id}
-                      onClick={() => {
-                        setSelectedImageUrl(img.dataUrl);
-                        setSuccessNotice(`Selected cloud image: ${img.name || 'Device photo'}`);
-                      }}
-                      className={`group relative rounded-xl overflow-hidden border-2 cursor-pointer transition-all aspect-square ${
-                        isSelected
-                          ? 'border-emerald-600 ring-2 ring-emerald-500/50 shadow-md scale-95'
-                          : 'border-emerald-200 hover:border-emerald-400 bg-white'
-                      }`}
-                      title={img.name || 'Cloud upload'}
-                    >
-                      <img
-                        src={img.dataUrl}
-                        alt={img.name || 'Cloud upload'}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                        referrerPolicy="no-referrer"
-                      />
-                      {isSelected && (
-                        <div className="absolute inset-0 bg-emerald-600/60 flex items-center justify-center text-white">
-                          <Check className="w-5 h-5 stroke-[3]" />
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-          {/* Preset Stock Photography Gallery */}
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-stone-700 uppercase tracking-wider">
-                Or Select from Print Image Presets
-              </span>
-
-              {/* Category Filter Chips */}
-              <div className="flex items-center gap-1.5 overflow-x-auto">
-                {['all', 'banners', 'awards', 'packaging', 'stationery', 'gifts', 'signage'].map((cat) => (
-                  <button
-                    key={cat}
-                    type="button"
-                    onClick={() => setActivePresetCategory(cat)}
-                    className={`px-2.5 py-1 rounded-lg text-[11px] font-bold capitalize transition-colors cursor-pointer ${
-                      activePresetCategory === cat
-                        ? 'bg-[#b8860b] text-white'
-                        : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
-                    }`}
-                  >
-                    {cat}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2.5 max-h-56 overflow-y-auto p-1">
-              {filteredPresets.map((preset, index) => {
-                const isSelected = selectedImageUrl === preset.url;
-                return (
-                  <div
-                    key={index}
-                    onClick={() => setSelectedImageUrl(preset.url)}
-                    className={`group relative rounded-xl overflow-hidden border-2 cursor-pointer transition-all aspect-square ${
-                      isSelected
-                        ? 'border-[#00473e] ring-2 ring-[#00473e]/40 shadow-md scale-95'
-                        : 'border-stone-200 hover:border-stone-400 hover:shadow-xs'
-                    }`}
-                  >
-                    <img
-                      src={preset.url}
-                      alt={preset.label}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      referrerPolicy="no-referrer"
-                    />
-                    {isSelected && (
-                      <div className="absolute inset-0 bg-[#00473e]/50 flex items-center justify-center text-white">
-                        <Check className="w-6 h-6 stroke-[3]" />
-                      </div>
-                    )}
-                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-1.5 text-center">
-                      <span className="text-[10px] text-white font-medium line-clamp-1">
-                        {preset.label}
-                      </span>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
         </div>
 
-        {/* Modal Footer Actions */}
+        {/* Footer */}
         <div className="px-6 py-4 bg-stone-50 border-t border-stone-200 flex items-center justify-between shrink-0">
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 rounded-xl border border-stone-300 bg-white hover:bg-stone-100 text-stone-700 font-bold text-xs cursor-pointer"
+            className="px-4 py-2 rounded-xl border border-stone-300 text-xs font-semibold text-stone-700 hover:bg-stone-100 transition-colors cursor-pointer"
           >
             Cancel
           </button>
@@ -582,18 +963,18 @@ export const ImageManagerModal: React.FC<ImageManagerModalProps> = ({
           <button
             type="button"
             onClick={handleSave}
-            disabled={isCloudSaving}
-            className="px-6 py-2 rounded-xl bg-[#00473e] hover:bg-[#03554a] active:scale-98 text-white font-bold text-xs shadow-md transition-all flex items-center gap-2 cursor-pointer disabled:opacity-60"
+            disabled={isCloudSaving || !selectedImageUrl}
+            className="px-6 py-2.5 rounded-xl bg-[#b8860b] hover:bg-[#996515] active:scale-98 text-white text-xs font-bold shadow-sm transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50"
           >
             {isCloudSaving ? (
               <>
-                <RefreshCw className="w-4 h-4 animate-spin" />
-                <span>Saving to Cloud Database...</span>
+                <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                <span>Saving to Cloud...</span>
               </>
             ) : (
               <>
                 <Check className="w-4 h-4" />
-                <span>Save &amp; Update Image Across All Devices</span>
+                <span>Save Selected Photo</span>
               </>
             )}
           </button>
