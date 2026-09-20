@@ -442,6 +442,26 @@ export default function App() {
     }
   };
 
+  const handleSectionItemSelect = (item: { id: string; title?: string; category?: string }) => {
+    const matchedProd =
+      products.find(
+        (p) =>
+          p.id === item.id ||
+          (item.title && p.name.trim().toLowerCase() === item.title.trim().toLowerCase())
+      ) ||
+      SAMPLE_PRODUCTS.find(
+        (p) =>
+          p.id === item.id ||
+          (item.title && p.name.trim().toLowerCase() === item.title.trim().toLowerCase())
+      );
+
+    if (matchedProd) {
+      handleOpenProductDetailPage(matchedProd);
+    } else {
+      handleOpenCategories(item.category || 'all', item.id);
+    }
+  };
+
   const totalCartCount = cartItems.reduce((acc, curr) => acc + curr.quantity, 0);
 
   return (
@@ -583,26 +603,23 @@ export default function App() {
 
             {/* Business Stationery & Office Printing Carousel (Matching Reference) */}
             <BusinessStationerySection
+              products={products}
               onViewProducts={() => handleOpenCategories('cards_invitations')}
-              onSelectItem={(item) => {
-                handleOpenCategories(item.category || 'cards_invitations', item.id);
-              }}
+              onSelectItem={handleSectionItemSelect}
             />
 
             {/* Banners, Display Stands & Advertising Materials Carousel (Matching Reference) */}
             <BannersDisplayStandsSection
+              products={products}
               onViewProducts={() => handleOpenCategories('banners_stands')}
-              onSelectItem={(item) => {
-                handleOpenCategories(item.category || 'banners_stands', item.id);
-              }}
+              onSelectItem={handleSectionItemSelect}
             />
 
             {/* Branded Corporate Gifts & Promotional Items (Matching Reference) */}
             <BrandedGiftsSection
+              products={products}
               onViewProducts={() => handleOpenCategories('gift_items_souvenirs')}
-              onSelectItem={(item) => {
-                handleOpenCategories(item.category || 'gift_items_souvenirs', item.id);
-              }}
+              onSelectItem={handleSectionItemSelect}
             />
 
             {/* Nigeria's Trusted Online Printing Company Feature (Matching Reference) */}
@@ -610,26 +627,23 @@ export default function App() {
 
             {/* Packaging, Labels & Stickers Printing Carousel (Matching Reference) */}
             <PackagingLabelsSection
+              products={products}
               onViewProducts={() => handleOpenCategories('packaging_shipping_cartons')}
-              onSelectItem={(item) => {
-                handleOpenCategories(item.category || 'packaging_shipping_cartons', item.id);
-              }}
+              onSelectItem={handleSectionItemSelect}
             />
 
             {/* Event, Exhibition and Activation Branding Materials (Matching Reference) */}
             <EventExhibitionSection
+              products={products}
               onViewProducts={() => handleOpenCategories('events_exhibitions')}
-              onSelectItem={(item) => {
-                handleOpenCategories(item.category || 'events_exhibitions', item.id);
-              }}
+              onSelectItem={handleSectionItemSelect}
             />
 
             {/* Signage Making Company in Lagos, Nigeria (Matching Reference) */}
             <SignageCompanySection
+              products={products}
               onViewProducts={() => handleOpenCategories('signages')}
-              onSelectItem={(item) => {
-                handleOpenCategories(item.category || 'signages', item.id);
-              }}
+              onSelectItem={handleSectionItemSelect}
             />
 
             {/* Why Businesses Choose SILVER & GOLD INKSHINE LTD */}
@@ -640,10 +654,9 @@ export default function App() {
 
             {/* Custom Award Plaques and Trophies Printing (Matching Reference) */}
             <CustomAwardsSection
+              products={products}
               onViewProducts={() => handleOpenCategories('awards')}
-              onSelectItem={(item) => {
-                handleOpenCategories(item.category || 'awards', item.id);
-              }}
+              onSelectItem={handleSectionItemSelect}
             />
 
             {/* Trust & Social Proof (Reviews, Client Logos, Completed Jobs) */}

@@ -1,55 +1,65 @@
-import React, { useRef } from 'react';
+import React, { useRef, useMemo } from 'react';
 import { ChevronRight, ChevronLeft, ArrowRight } from 'lucide-react';
+import { Product } from '../../types/schema';
+import { getSectionDisplayItems, SectionDisplayItem } from '../../utils/categoryUtils';
 
-interface EventItem {
-  id: string;
-  title: string;
-  price: string;
-  numericPrice: number;
-  category: string;
-}
+export interface EventItem extends SectionDisplayItem {}
 
 interface EventExhibitionSectionProps {
+  products?: Product[];
   onViewProducts?: () => void;
   onSelectItem?: (item: EventItem) => void;
 }
 
-const EVENT_ITEMS: EventItem[] = [
+const DEFAULT_EVENT_ITEMS: EventItem[] = [
   {
     id: 'event-a3-poster',
-    title: 'A3 Poster',
+    title: 'A3 Gloss Event Posters & Promotional Flyers',
     price: '₦370.00',
     numericPrice: 370,
+    imageUrl: 'https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=600&q=80',
     category: 'flyers_handbills',
   },
   {
     id: 'event-pos-banners',
-    title: 'POS Banners',
-    price: '₦4,900.00',
-    numericPrice: 4900,
-    category: 'banners_stands',
+    title: 'Exhibition Trade Booth Backdrop & POS Display Banners',
+    price: '₦45,000.00',
+    numericPrice: 45000,
+    imageUrl: 'https://cdn.hstockplus.org/uploads/public/img-1789638023483-0654f1a516c4673a.webp',
+    category: 'events_exhibitions',
   },
   {
     id: 'event-wall-frames',
-    title: 'Wall Pictures & Photo Frames',
+    title: 'Custom Branded Wall Frames & Event Photo Boards',
     price: '₦10,000.00',
     numericPrice: 10000,
+    imageUrl: 'https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=600&q=80',
     category: 'frames_wallarts',
   },
   {
     id: 'event-spin-wheel',
-    title: 'Spin To Win Wheel',
+    title: 'Spin To Win Prize Wheel & 360 Photo Booth Rental for Activations',
     price: '₦175,000.00',
     numericPrice: 175000,
+    imageUrl: 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=600&q=80',
     category: 'events_exhibitions',
   },
 ];
 
 export const EventExhibitionSection: React.FC<EventExhibitionSectionProps> = ({
+  products = [],
   onViewProducts,
   onSelectItem,
 }) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const displayItems = useMemo(() => {
+    return getSectionDisplayItems(
+      products,
+      ['events_exhibitions', 'flyers_handbills', 'frames_wallarts', 'events', 'exhibitions'],
+      DEFAULT_EVENT_ITEMS
+    );
+  }, [products]);
 
   const handleScroll = (direction: 'left' | 'right') => {
     if (scrollContainerRef.current) {
@@ -70,17 +80,14 @@ export const EventExhibitionSection: React.FC<EventExhibitionSectionProps> = ({
             </h2>
 
             <p className="text-xs sm:text-[13px] text-stone-600 leading-relaxed font-normal">
-              Make every occasion memorable with tailored{' '}
-              <span className="text-[#b8860b] font-semibold underline cursor-pointer hover:text-[#996515]">
-                event
-              </span>{' '}
-              printing solutions from SILVER &amp; GOLD INKSHINE LTD. We design and print wedding invitations, event programmes, birthday souvenirs, aso-ebi tags, table cards, backdrop banners, gazebo tents, promotional tables and branded display materials for weddings, corporate events, conferences, product launches and social gatherings across Nigeria.
+              Make every occasion memorable with tailored event printing solutions from SILVER &amp; GOLD INKSHINE LTD. We design and print wedding invitations, event programmes, birthday souvenirs, aso-ebi tags, table cards, backdrop banners, gazebo tents, promotional tables and branded display materials for weddings, corporate events, conferences, product launches and social gatherings across Nigeria.
             </p>
 
             <div>
               <button
+                type="button"
                 onClick={onViewProducts}
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#b8860b] hover:bg-[#996515] active:scale-98 text-white font-bold text-xs sm:text-sm rounded-md shadow-sm transition-all group"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#b8860b] hover:bg-[#996515] active:scale-98 text-white font-bold text-xs sm:text-sm rounded-md shadow-sm transition-all group cursor-pointer"
               >
                 <span>View Products</span>
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -93,16 +100,18 @@ export const EventExhibitionSection: React.FC<EventExhibitionSectionProps> = ({
             
             {/* Scroll buttons for desktop */}
             <button
+              type="button"
               onClick={() => handleScroll('left')}
-              className="absolute -left-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white shadow-md border border-stone-200 text-stone-700 flex items-center justify-center opacity-0 group-hover/carousel:opacity-100 transition-opacity z-20 hover:bg-stone-50"
+              className="absolute -left-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white shadow-md border border-stone-200 text-stone-700 flex items-center justify-center opacity-0 group-hover/carousel:opacity-100 transition-opacity z-20 hover:bg-stone-50 cursor-pointer"
               aria-label="Scroll left"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
 
             <button
+              type="button"
               onClick={() => handleScroll('right')}
-              className="absolute -right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white shadow-md border border-stone-200 text-stone-700 flex items-center justify-center opacity-80 group-hover/carousel:opacity-100 transition-opacity z-20 hover:bg-stone-50"
+              className="absolute -right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white shadow-md border border-stone-200 text-stone-700 flex items-center justify-center opacity-80 group-hover/carousel:opacity-100 transition-opacity z-20 hover:bg-stone-50 cursor-pointer"
               aria-label="Scroll right"
             >
               <ChevronRight className="w-4 h-4" />
@@ -114,179 +123,33 @@ export const EventExhibitionSection: React.FC<EventExhibitionSectionProps> = ({
               className="flex gap-4 sm:gap-6 overflow-x-auto scrollbar-none scroll-smooth pb-4 pt-1 px-1 -mx-1"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
-              {EVENT_ITEMS.map((item) => (
+              {displayItems.map((item) => (
                 <div
                   key={item.id}
                   onClick={() => onSelectItem?.(item)}
                   className="w-[200px] sm:w-[220px] shrink-0 flex flex-col group cursor-pointer"
                 >
-                  {/* Image Container with Exact Visual Representation from Image */}
+                  {/* Image Container */}
                   <div className="w-full h-[210px] sm:h-[230px] rounded-lg overflow-hidden bg-stone-50 border border-stone-100 group-hover:shadow-md transition-shadow relative flex items-center justify-center">
-                    
-                    {/* Item 1: A3 Poster (Person holding up Jomo Friday night food & drink poster) */}
-                    {item.id === 'event-a3-poster' && (
-                      <div className="w-full h-full p-2 flex items-center justify-center bg-stone-100">
-                        <div className="relative w-40 h-44 flex flex-col items-center justify-center">
-                          {/* Simulated Hands holding paper */}
-                          <div className="absolute -top-1 left-2 w-4 h-4 bg-stone-300 rounded-full border border-stone-400 z-15" />
-                          <div className="absolute -top-1 right-2 w-4 h-4 bg-stone-300 rounded-full border border-stone-400 z-15" />
-
-                          {/* A3 Poster Print */}
-                          <div className="w-32 h-42 bg-white rounded-xs shadow-xl border border-stone-200 p-2 flex flex-col justify-between items-center overflow-hidden">
-                            {/* Header Banner */}
-                            <div className="w-full text-center border-b border-stone-100 pb-1">
-                              <div className="font-serif italic text-base font-bold text-amber-900 leading-tight">
-                                Jomo
-                              </div>
-                              <div className="w-16 h-0.5 bg-amber-700 mx-auto" />
-                            </div>
-
-                            {/* Food & Wine Image */}
-                            <div className="w-full h-20 rounded-2xs overflow-hidden shadow-inner my-1">
-                              <img
-                                src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=300&q=80"
-                                alt="Food and Drinks Poster"
-                                className="w-full h-full object-cover"
-                                referrerPolicy="no-referrer"
-                              />
-                            </div>
-
-                            {/* Offer Text */}
-                            <div className="text-center">
-                              <div className="text-[5.5px] font-bold text-stone-800 leading-tight">
-                                Food &amp; drinks on Friday Nights
-                              </div>
-                              <div className="text-[4.5px] text-amber-800 font-semibold mt-0.5">
-                                with 20% discount on all items on menu
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+                    {item.badge && (
+                      <div className="absolute top-2 left-2 z-10 px-2 py-0.5 rounded text-[9.5px] font-black uppercase tracking-wider bg-stone-900/80 backdrop-blur-xs text-[#dfbc5e] border border-amber-500/30">
+                        {item.badge}
                       </div>
                     )}
 
-                    {/* Item 2: POS Banners (Bright yellow flex banner with red headers & cash options) */}
-                    {item.id === 'event-pos-banners' && (
-                      <div className="w-full h-full p-2 flex items-center justify-center bg-[#fafafa]">
-                        <div className="w-32 h-44 bg-[#fde047] rounded-xs shadow-xl border-2 border-stone-300 p-2 flex flex-col justify-between items-center relative overflow-hidden">
-                          {/* Corner eyelets / grommets */}
-                          <div className="w-2 h-2 rounded-full border-2 border-stone-500 bg-white absolute top-1 left-1" />
-                          <div className="w-2 h-2 rounded-full border-2 border-stone-500 bg-white absolute top-1 right-1" />
-                          <div className="w-2 h-2 rounded-full border-2 border-stone-500 bg-white absolute bottom-1 left-1" />
-                          <div className="w-2 h-2 rounded-full border-2 border-stone-500 bg-white absolute bottom-1 right-1" />
-
-                          {/* Big Bold Red Header */}
-                          <div className="text-center pt-1">
-                            <div className="text-xl font-black text-[#dc2626] leading-none tracking-tight">
-                              POS
-                            </div>
-                            <div className="text-[6.5px] font-black text-stone-900 uppercase tracking-wider">
-                              SERVICES AVAILABLE HERE
-                            </div>
-                          </div>
-
-                          {/* POS Machine & Naira banknotes illustration */}
-                          <div className="flex items-center justify-center gap-1 my-0.5">
-                            <div className="w-8 h-12 bg-stone-900 rounded-2xs border border-stone-700 p-0.5 flex flex-col justify-between">
-                              <div className="w-full h-4 bg-[#b8860b] rounded-2xs flex items-center justify-center text-[3.5px] font-bold text-white">
-                                READY
-                              </div>
-                              <div className="grid grid-cols-3 gap-0.5">
-                                {[...Array(9)].map((_, i) => (
-                                  <div key={i} className="w-1.5 h-1 bg-stone-600 rounded-2xs" />
-                                ))}
-                              </div>
-                            </div>
-                            <div className="w-12 h-8 bg-[#b8860b] rounded-2xs border border-amber-300 p-0.5 flex flex-col justify-center items-center shadow-xs">
-                              <div className="text-[6px] font-black text-white">₦1000</div>
-                              <div className="text-[3px] text-amber-100">CENTRAL BANK</div>
-                            </div>
-                          </div>
-
-                          {/* Service list items */}
-                          <div className="w-full space-y-0.5">
-                            <div className="bg-[#dc2626] text-white text-[5px] font-bold py-0.5 text-center rounded-2xs uppercase">
-                              CASH WITHDRAWAL
-                            </div>
-                            <div className="bg-[#dc2626] text-white text-[5px] font-bold py-0.5 text-center rounded-2xs uppercase">
-                              CASH TRANSFER
-                            </div>
-                            <div className="bg-[#dc2626] text-white text-[5px] font-bold py-0.5 text-center rounded-2xs uppercase">
-                              CASH DEPOSIT
-                            </div>
-                            <div className="bg-[#dc2626] text-white text-[5px] font-bold py-0.5 text-center rounded-2xs uppercase">
-                              BILLS PAYMENT
-                            </div>
-                          </div>
-                        </div>
+                    {item.imageUrl ? (
+                      <img
+                        src={item.imageUrl}
+                        alt={item.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        referrerPolicy="no-referrer"
+                      />
+                    ) : (
+                      <div className="w-full h-full p-4 flex flex-col items-center justify-center bg-stone-900 text-stone-300 text-center">
+                        <div className="text-xs font-bold text-amber-400 mb-1">Silver &amp; Gold</div>
+                        <div className="text-[11px] font-semibold">{item.title}</div>
                       </div>
                     )}
-
-                    {/* Item 3: Wall Pictures & Photo Frames (Gallery wrap stretched canvas 40in x 30in) */}
-                    {item.id === 'event-wall-frames' && (
-                      <div className="w-full h-full p-2 flex items-center justify-center bg-stone-100">
-                        <div className="relative w-44 h-36 flex items-center justify-center">
-                          {/* 3D Stretched Canvas Wrap */}
-                          <div className="relative w-36 h-28 bg-stone-900 rounded-2xs shadow-2xl overflow-hidden border border-stone-300 group-hover:scale-103 transition-transform duration-300">
-                            <img
-                              src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80"
-                              alt="Scenic Landscape Canvas"
-                              className="w-full h-full object-cover"
-                              referrerPolicy="no-referrer"
-                            />
-                            {/* Canvas texture overlay */}
-                            <div className="absolute inset-0 bg-black/10" />
-                          </div>
-
-                          {/* 3D Right Fold Depth */}
-                          <div className="w-2.5 h-28 bg-stone-700/80 transform skew-y-12 -ml-1 rounded-r-2xs shadow-md" />
-
-                          {/* Dimensions Label Tags */}
-                          <span className="absolute -bottom-2 text-[6px] font-bold text-stone-500">
-                            40in
-                          </span>
-                          <span className="absolute -right-2 top-1/2 -translate-y-1/2 text-[6px] font-bold text-stone-500 transform rotate-90">
-                            30in
-                          </span>
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Item 4: Spin To Win Wheel */}
-                    {item.id === 'event-spin-wheel' && (
-                      <div className="w-full h-full p-2 flex items-center justify-center bg-stone-100">
-                        <div className="relative w-36 h-46 flex flex-col items-center justify-between">
-                          {/* Top Prize Wheel with colorful wedges */}
-                          <div className="relative w-24 h-24 rounded-full border-4 border-[#b8860b] shadow-xl overflow-hidden flex items-center justify-center bg-white group-hover:rotate-45 transition-transform duration-700">
-                            {/* Conic wedge simulation */}
-                            <div className="absolute inset-0 bg-[conic-gradient(#f59e0b_0deg_45deg,#d4af37_45deg_90deg,#ef4444_90deg_135deg,#3b82f6_135deg_180deg,#8b5cf6_180deg_225deg,#ec4899_225deg_270deg,#b8860b_270deg_315deg,#eab308_315deg_360deg)] opacity-80" />
-                            {/* Wheel center hub */}
-                            <div className="w-6 h-6 rounded-full bg-white border-2 border-stone-800 shadow-md flex items-center justify-center text-[5px] font-black z-10 text-stone-900">
-                              WIN
-                            </div>
-                            {/* Top Indicator Arrow */}
-                            <div className="w-2 h-3 bg-[#dc2626] clip-triangle absolute top-0 z-20" />
-                          </div>
-
-                          {/* Standing Upright Pedestal Stand */}
-                          <div className="w-20 h-16 bg-[#b8860b] rounded-t-md p-1.5 flex flex-col justify-between items-center text-center shadow-md -mt-1 border border-amber-700">
-                            <div className="text-[6.5px] font-black text-white leading-tight uppercase">
-                              TAKE A<br />SPIN
-                            </div>
-                            <div className="flex items-center gap-1 bg-white/90 px-1 rounded-2xs">
-                              <div className="w-3 h-3 bg-stone-900 rounded-2xs" />
-                              <div className="text-[3.5px] font-bold text-stone-800">
-                                SCAN TO PLAY
-                              </div>
-                            </div>
-                          </div>
-
-                          {/* Floor Base */}
-                          <div className="w-26 h-2 bg-stone-400 rounded-full shadow-md" />
-                        </div>
-                      </div>
-                    )}
-
                   </div>
 
                   {/* Title */}
@@ -296,7 +159,7 @@ export const EventExhibitionSection: React.FC<EventExhibitionSectionProps> = ({
                     </h3>
                     
                     {/* Gold Price */}
-                    <div className="text-xs sm:text-[13.5px] font-bold text-[#b8860b] mt-1.5">
+                    <div className="text-xs sm:text-[13.5px] font-bold text-[#b8860b] mt-1.5 font-mono">
                       {item.price}
                     </div>
                   </div>

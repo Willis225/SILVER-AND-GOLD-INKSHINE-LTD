@@ -397,3 +397,105 @@ export function getProductCategoryTag(product: Product): string {
 
   return 'advertising_materials';
 }
+
+export interface SectionDisplayItem {
+  id: string;
+  title: string;
+  price: string;
+  numericPrice: number;
+  imageUrl: string;
+  category: string;
+  badge?: string;
+  isUploaded?: boolean;
+}
+
+/**
+ * Extracts exactly 4 items for a storefront category section.
+ * Prioritizes user-uploaded images and newly created products,
+ * filling with curated fallback items if fewer than 4 are available.
+ */
+export function getSectionDisplayItems(
+  allProducts: Product[] = [],
+  categoryKeys: string[],
+  fallbackItems: SectionDisplayItem[],
+  customExtraItems: SectionDisplayItem[] = []
+): SectionDisplayItem[] {
+  const normalizedKeys = categoryKeys.map((k) => k.toLowerCase());
+
+  // 1. Find all products that match any of the categoryKeys
+  const matchingProducts = (allProducts || []).filter((prod) => {
+    if (!prod) return false;
+    const tag = getProductCategoryTag(prod).toLowerCase();
+    const cat = String(prod.category || '').toLowerCase();
+    const cp = String(prod.categoryPlacement || '').toLowerCase();
+    return (
+      normalizedKeys.includes(tag) ||
+      normalizedKeys.includes(cat) ||
+      normalizedKeys.includes(cp)
+    );
+  });
+
+  // 2. Identify products uploaded or added via admin
+  const isUserUploaded = (p: Product) => {
+    const img = p.image || (p.images && p.images[0]) || '';
+    const isData = img.startsWith('data:');
+    const isCloud = img.includes('cdn.hstockplus.org') || img.includes('firebasestorage') || img.includes('storage.googleapis.com');
+    const isCustomId = p.id.startsWith('prod-') && !p.id.startsWith('prod-seed-');
+    return isData || isCloud || isCustomId;
+  };
+
+  const uploadedProducts = matchingProducts.filter(isUserUploaded);
+  const standardProducts = matchingProducts.filter((p) => !isUserUploaded(p));
+
+  // Sort uploaded products newest first (if timestamp in id)
+  uploadedProducts.sort((a, b) => {
+    const tA = Number(a.id.replace(/\D/g, '')) || 0;
+    const tB = Number(b.id.replace(/\D/g, '')) || 0;
+    return tB - tA;
+  });
+
+  const allPrioritizedProducts = [...uploadedProducts, ...standardProducts];
+
+  // Convert Product to SectionDisplayItem
+  const convertedProducts: SectionDisplayItem[] = allPrioritizedProducts.map((p) => {
+    const priceNum = Number(p.basePriceNgn) || 0;
+    return {
+      id: p.id,
+      title: p.name,
+      price: `₦${priceNum.toLocaleString('en-NG')}`,
+      numericPrice: priceNum,
+      imageUrl: p.image || (p.images && p.images[0]) || '',
+      category: getProductCategoryTag(p),
+      badge: p.badge || (isUserUploaded(p) ? 'Latest Job' : undefined),
+      isUploaded: isUserUploaded(p),
+    };
+  });
+
+  const result: SectionDisplayItem[] = [];
+
+  // Add custom extra items (e.g. from Hero/Media studio with matching category)
+  for (const item of customExtraItems) {
+    if (result.length >= 4) break;
+    if (item.imageUrl && !result.some((r) => r.id === item.id || r.imageUrl === item.imageUrl)) {
+      result.push(item);
+    }
+  }
+
+  // Add converted products (uploaded ones first)
+  for (const item of convertedProducts) {
+    if (result.length >= 4) break;
+    if (item.imageUrl && !result.some((r) => r.id === item.id || r.imageUrl === item.imageUrl)) {
+      result.push(item);
+    }
+  }
+
+  // Fill up to 4 using fallbacks
+  for (const fb of fallbackItems) {
+    if (result.length >= 4) break;
+    if (!result.some((r) => r.id === fb.id || r.title.toLowerCase() === fb.title.toLowerCase())) {
+      result.push(fb);
+    }
+  }
+
+  return result.slice(0, 4);
+}
