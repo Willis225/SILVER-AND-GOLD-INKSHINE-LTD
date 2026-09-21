@@ -12,11 +12,13 @@ import {
   Sparkles,
   Layers,
   Database,
-  Loader2
+  Loader2,
+  Lock
 } from 'lucide-react';
 import { HeroSlideItem } from '../../types/websiteContent';
 import { ImageManagerModal } from './ImageManagerModal';
 import { compressImageFile, saveUploadedImageToCloud } from '../../lib/firebase';
+import { lockHeroSlideImage } from '../../lib/imageLockRegistry';
 
 interface HeroSlidesManagerProps {
   slides: HeroSlideItem[];
@@ -79,6 +81,7 @@ export const HeroSlidesManager: React.FC<HeroSlidesManagerProps> = ({
 
   const handleSaveEditedSlide = (data: { imageUrl: string; title?: string; description?: string }) => {
     if (!editingSlide) return;
+    lockHeroSlideImage(editingSlide.id, data.imageUrl, data.title || editingSlide.title);
     const next = slides.map((s) => 
       s.id === editingSlide.id 
         ? {
@@ -107,6 +110,7 @@ export const HeroSlidesManager: React.FC<HeroSlidesManagerProps> = ({
       aspectRatio: '16/9'
     };
 
+    lockHeroSlideImage(newSlide.id, newSlide.imageUrl, newSlide.title);
     onUpdateSlides([...slides, newSlide]);
     setIsAddingSlide(false);
     setNewTitle('');
@@ -188,6 +192,13 @@ export const HeroSlidesManager: React.FC<HeroSlidesManagerProps> = ({
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"
                 />
+                <span 
+                  className="absolute top-1 left-1 bg-emerald-950/90 border border-emerald-400/80 text-[8px] font-extrabold text-emerald-300 px-1 py-0.5 rounded shadow-xs flex items-center gap-0.5 pointer-events-none"
+                  title="Hero slide image is permanently locked"
+                >
+                  <Lock className="w-2.5 h-2.5 text-emerald-400" />
+                  <span>Locked</span>
+                </span>
                 <button
                   type="button"
                   onClick={() => setEditingSlide(slide)}

@@ -22,12 +22,14 @@ import {
   Images,
   Layers,
   Eye,
-  EyeOff
+  EyeOff,
+  Lock
 } from 'lucide-react';
 import { Product, ProductCategory } from '../../types/schema';
 import { STORE_CATEGORIES, getProductCategoryTag } from '../../utils/categoryUtils';
 import { ImageManagerModal, PRINT_IMAGE_PRESETS } from './ImageManagerModal';
 import { compressImageFile, saveUploadedImageToCloud } from '../../lib/firebase';
+import { lockProductImage } from '../../lib/imageLockRegistry';
 
 interface ProductPricingManagerProps {
   products: Product[];
@@ -228,6 +230,9 @@ export const ProductPricingManager: React.FC<ProductPricingManagerProps> = ({
     const finalCover = editModalImage || (editModalImages.length > 0 ? editModalImages[0] : editingProductModal.image);
     const finalImages = editModalImages.length > 0 ? editModalImages : [finalCover];
 
+    // Lock image permanently in registry
+    lockProductImage(editingProductModal.id, finalCover, finalImages, editModalName.trim() || editingProductModal.name, true);
+
     onUpdateProduct(editingProductModal.id, {
       name: editModalName.trim() || editingProductModal.name,
       shortDescription: editModalShortDesc.trim(),
@@ -243,7 +248,7 @@ export const ProductPricingManager: React.FC<ProductPricingManagerProps> = ({
       ...(matchingCatDef ? { categoryLabel: matchingCatDef.label } : {}),
     });
 
-    setUploadSuccessMessage(`Successfully updated details for "${editModalName}" with ${finalImages.length} photo(s)!`);
+    setUploadSuccessMessage(`Successfully updated and locked details for "${editModalName}"!`);
     setEditingProductModal(null);
   };
 
@@ -339,9 +344,10 @@ export const ProductPricingManager: React.FC<ProductPricingManagerProps> = ({
           bulkPricingTiers: defaultBulkPricing,
           artworkRequirements: defaultArtworkReqs,
         };
+        lockProductImage(itemProduct.id, itemProduct.image, itemProduct.images, itemProduct.name, true);
         onAddProduct?.(itemProduct);
       });
-      setUploadSuccessMessage(`Successfully published ${newImages.length} separate jobs to "${resolvedCatLabel}"!`);
+      setUploadSuccessMessage(`Successfully published & locked ${newImages.length} separate jobs to "${resolvedCatLabel}"!`);
     } else {
       // Single product with multi-image gallery
       const newProduct: Product = {
@@ -366,10 +372,11 @@ export const ProductPricingManager: React.FC<ProductPricingManagerProps> = ({
         artworkRequirements: defaultArtworkReqs,
       };
 
+      lockProductImage(newProduct.id, newProduct.image, newProduct.images, newProduct.name, true);
       if (onAddProduct) {
         onAddProduct(newProduct);
       }
-      setUploadSuccessMessage(`Successfully added "${newProduct.name}" with ${finalImages.length} photo(s)! Allocated to "${resolvedCatLabel}".`);
+      setUploadSuccessMessage(`Successfully added and locked "${newProduct.name}" with ${finalImages.length} photo(s)! Allocated to "${resolvedCatLabel}".`);
     }
 
     setIsUploadModalOpen(false);
@@ -539,6 +546,12 @@ export const ProductPricingManager: React.FC<ProductPricingManagerProps> = ({
                             title="Click to replace image"
                             referrerPolicy="no-referrer"
                           />
+                          <span 
+                            className="absolute -top-1 -left-1 bg-emerald-950 border border-emerald-400/80 text-[7px] font-black text-emerald-300 p-0.5 rounded shadow-xs flex items-center justify-center pointer-events-none"
+                            title="Image is locked in storage and will not change"
+                          >
+                            <Lock className="w-2 h-2 text-emerald-400" />
+                          </span>
                           <button
                             type="button"
                             onClick={() => setReplacingImageProduct(product)}
@@ -1093,6 +1106,7 @@ export const ProductPricingManager: React.FC<ProductPricingManagerProps> = ({
           autoFetchOnOpen={true}
           allowDetailsEdit={false}
           onSave={(data) => {
+            lockProductImage(replacingImageProduct.id, data.imageUrl, [data.imageUrl], replacingImageProduct.name, true);
             onUpdateProduct(replacingImageProduct.id, {
               image: data.imageUrl,
             });
@@ -1100,7 +1114,7 @@ export const ProductPricingManager: React.FC<ProductPricingManagerProps> = ({
               setEditModalImage(data.imageUrl);
             }
             setReplacingImageProduct(null);
-            setUploadSuccessMessage(`Successfully updated photo for "${replacingImageProduct.name}"!`);
+            setUploadSuccessMessage(`Successfully updated and locked photo for "${replacingImageProduct.name}"!`);
           }}
         />
       )}

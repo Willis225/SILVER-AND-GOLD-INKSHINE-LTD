@@ -24,6 +24,11 @@ import {
   loadWebsiteContentFromIndexedDb,
   StoredMediaItem
 } from './indexedDbStorage';
+import {
+  applyImageLocksToProducts,
+  applyImageLocksToWebsiteContent,
+  lockProductImage
+} from './imageLockRegistry';
 
 // Initialize Firebase App
 const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
@@ -222,7 +227,8 @@ export function subscribeWebsiteContent(
   getDoc(WEBSITE_CONTENT_DOC)
     .then((snap) => {
       if (snap.exists()) {
-        const data = snap.data() as WebsiteContent;
+        const raw = snap.data() as WebsiteContent;
+        const data = applyImageLocksToWebsiteContent(raw);
         saveWebsiteContentToIndexedDb(data).catch(console.warn);
         onUpdate(data);
       }
@@ -239,7 +245,8 @@ export function subscribeWebsiteContent(
       WEBSITE_CONTENT_DOC,
       (snapshot) => {
         if (snapshot.exists()) {
-          const data = snapshot.data() as WebsiteContent;
+          const raw = snapshot.data() as WebsiteContent;
+          const data = applyImageLocksToWebsiteContent(raw);
           saveWebsiteContentToIndexedDb(data).catch(console.warn);
           onUpdate(data);
         }
@@ -430,7 +437,12 @@ export function subscribeUploadedImages(
 export async function saveSingleProductToCloud(product: Product): Promise<void> {
   if (!product || !product.id) return;
 
-  // 1. IndexedDB persistence (zero size limit, survives refresh & tab closure)
+  // 1. Lock image in persistent registry so it never changes until user explicitly updates it
+  if (product.image) {
+    lockProductImage(product.id, product.image, product.images, product.name, true);
+  }
+
+  // 2. IndexedDB persistence (zero size limit, survives refresh & tab closure)
   await saveSingleProductToIndexedDb(product);
 
   // 2. If product contains an image, also track it in the image gallery
@@ -517,17 +529,30 @@ export function subscribeProducts(
             items.push(d.data() as Product);
           });
           if (items.length > 0) {
-            // Merge with any offline products in IndexedDB
+            // Merge with any offline products in IndexedDB, strictly preserving local custom images
             loadProductsFromIndexedDb().then((localProds) => {
               const map = new Map<string, Product>();
               (localProds || []).forEach((lp) => map.set(lp.id, lp));
-              items.forEach((ip) => map.set(ip.id, ip));
-              const merged = Array.from(map.values());
+              items.forEach((ip) => {
+                const local = map.get(ip.id);
+                // If local product exists and has an image, preserve the local/saved image!
+                if (local && local.image) {
+                  map.set(ip.id, {
+                    ...ip,
+                    image: local.image,
+                    images: (local.images && local.images.length > 0) ? local.images : (ip.images || [local.image]),
+                  });
+                } else {
+                  map.set(ip.id, ip);
+                }
+              });
+              const merged = applyImageLocksToProducts(Array.from(map.values()));
               saveProductsToIndexedDb(merged).catch(console.warn);
               onUpdate(merged);
             }).catch(() => {
-              saveProductsToIndexedDb(items).catch(console.warn);
-              onUpdate(items);
+              const locked = applyImageLocksToProducts(items);
+              saveProductsToIndexedDb(locked).catch(console.warn);
+              onUpdate(locked);
             });
             return;
           }

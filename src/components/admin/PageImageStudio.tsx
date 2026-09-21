@@ -15,7 +15,8 @@ import {
   Eye,
   RefreshCw,
   Database,
-  Loader2
+  Loader2,
+  Lock
 } from 'lucide-react';
 import { Product } from '../../types/schema';
 import { HeroSlideItem, ShowcaseServiceItem } from '../../types/websiteContent';
@@ -26,6 +27,11 @@ import {
   subscribeUploadedImages, 
   CloudUploadedImage 
 } from '../../lib/firebase';
+import { 
+  lockHeroSlideImage, 
+  lockShowcaseServiceImage, 
+  lockProductImage 
+} from '../../lib/imageLockRegistry';
 
 interface PageImageStudioProps {
   heroSlides: HeroSlideItem[];
@@ -186,6 +192,7 @@ export const PageImageStudio: React.FC<PageImageStudioProps> = ({
     }).catch(console.warn);
 
     if (editingItem.type === 'hero') {
+      lockHeroSlideImage(editingItem.id, data.imageUrl, data.title || editingItem.name);
       const next = heroSlides.map((s) => 
         s.id === editingItem.id 
           ? { 
@@ -197,8 +204,9 @@ export const PageImageStudio: React.FC<PageImageStudioProps> = ({
           : s
       );
       onUpdateHeroSlides(next);
-      showToast(`Updated Hero Slide: ${data.title || editingItem.name}`);
+      showToast(`Updated and Locked Hero Slide: ${data.title || editingItem.name}`);
     } else if (editingItem.type === 'showcase') {
+      lockShowcaseServiceImage(editingItem.id, data.imageUrl, data.title || editingItem.name);
       const next = showcaseServices.map((sc) => 
         sc.id === editingItem.id 
           ? { 
@@ -210,14 +218,15 @@ export const PageImageStudio: React.FC<PageImageStudioProps> = ({
           : sc
       );
       onUpdateShowcaseServices(next);
-      showToast(`Updated Showcase Service: ${data.title || editingItem.name}`);
+      showToast(`Updated and Locked Showcase Service: ${data.title || editingItem.name}`);
     } else if (editingItem.type === 'product') {
+      lockProductImage(editingItem.id, data.imageUrl, [data.imageUrl], data.title || editingItem.name, true);
       onUpdateProduct(editingItem.id, {
         image: data.imageUrl,
         ...(data.title ? { name: data.title } : {}),
         ...(data.description ? { description: data.description } : {})
       });
-      showToast(`Updated Product: ${data.title || editingItem.name}`);
+      showToast(`Updated and Locked Product: ${data.title || editingItem.name}`);
     } else if (editingItem.type === 'upload') {
       showToast(`Updated Tracked Image: ${data.title || editingItem.name}`);
     }
@@ -269,8 +278,9 @@ export const PageImageStudio: React.FC<PageImageStudioProps> = ({
         category: 'banners',
         aspectRatio: '16/9'
       };
+      lockHeroSlideImage(newSlide.id, newSlide.imageUrl, newSlide.title);
       onUpdateHeroSlides([...heroSlides, newSlide]);
-      showToast(`Added new slide: "${newTitle}" to Hero Slider!`);
+      showToast(`Added and locked new slide: "${newTitle}"!`);
     } else {
       const newService: ShowcaseServiceItem = {
         id: newId,
@@ -280,8 +290,9 @@ export const PageImageStudio: React.FC<PageImageStudioProps> = ({
         imageUrl: newImageUrl,
         category: 'banners_stands'
       };
+      lockShowcaseServiceImage(newService.id, newService.imageUrl, newService.title);
       onUpdateShowcaseServices([...showcaseServices, newService]);
-      showToast(`Added new service: "${newTitle}" to Showcase!`);
+      showToast(`Added and locked new service: "${newTitle}"!`);
     }
 
     setIsAddingNew(false);
@@ -401,8 +412,8 @@ export const PageImageStudio: React.FC<PageImageStudioProps> = ({
                 referrerPolicy="no-referrer"
               />
 
-              {/* Section Badge */}
-              <div className="absolute top-2.5 left-2.5">
+              {/* Section Badge & Locked Status */}
+              <div className="absolute top-2.5 left-2.5 flex items-center gap-1.5">
                 <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider shadow-xs ${
                   item.type === 'hero' 
                     ? 'bg-[#b8860b] text-white' 
@@ -413,6 +424,10 @@ export const PageImageStudio: React.FC<PageImageStudioProps> = ({
                     : 'bg-stone-800 text-white'
                 }`}>
                   {item.type === 'hero' ? 'Hero Slide' : item.type === 'showcase' ? 'Showcase' : item.type === 'upload' ? 'Tracked Job Photo' : 'Product'}
+                </span>
+                <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md text-[9px] font-extrabold bg-emerald-950/90 text-emerald-300 border border-emerald-400/60 shadow-xs">
+                  <Lock className="w-2.5 h-2.5 text-emerald-400" />
+                  <span>Locked</span>
                 </span>
               </div>
 

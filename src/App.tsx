@@ -47,8 +47,17 @@ import {
   deleteProductFromCloud,
   safeLocalStorageSet
 } from './lib/firebase';
-import { loadProductsFromIndexedDb } from './lib/indexedDbStorage';
+import { loadProductsFromIndexedDb, loadWebsiteContentFromIndexedDb } from './lib/indexedDbStorage';
 import { ensureCompleteCatalog } from './data/homepageCatalogProducts';
+import {
+  applyImageLocksToProducts,
+  applyImageLocksToWebsiteContent,
+  lockProductImage,
+  lockHeroSlideImage,
+  lockHeroBackgroundImage,
+  lockShowcaseServiceImage,
+  lockAllCurrentState
+} from './lib/imageLockRegistry';
 
 export default function App() {
   // Global mutable catalog & orders state with local storage persistence
@@ -58,35 +67,44 @@ export default function App() {
       if (saved) {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          return ensureCompleteCatalog(parsed);
+          return applyImageLocksToProducts(ensureCompleteCatalog(parsed));
         }
       }
     } catch (e) {
       console.error('Error loading saved products:', e);
     }
-    return ensureCompleteCatalog(SAMPLE_PRODUCTS);
+    return applyImageLocksToProducts(ensureCompleteCatalog(SAMPLE_PRODUCTS));
   });
 
   const [orders, setOrders] = useState<Order[]>(INITIAL_ORDERS);
 
   // Dynamic Website CMS Content with local storage persistence
   const [websiteContent, setWebsiteContent] = useState<WebsiteContent>(() => {
-    return loadSavedWebsiteContent();
+    return applyImageLocksToWebsiteContent(loadSavedWebsiteContent());
   });
 
   // Real-time Cloud Database sync across all devices via Firebase Firestore + IndexedDB Fallback
   useEffect(() => {
-    // 1. Immediately hydrate catalog from high-capacity IndexedDB (survives tab close, refresh, and quota limits)
+    // 1. Immediately hydrate catalog & website content from high-capacity IndexedDB (survives tab close, refresh, and quota limits)
     loadProductsFromIndexedDb().then((storedProds) => {
       if (storedProds && storedProds.length > 0) {
-        setProducts(ensureCompleteCatalog(storedProds));
+        setProducts(applyImageLocksToProducts(ensureCompleteCatalog(storedProds)));
+      }
+    }).catch(console.warn);
+
+    loadWebsiteContentFromIndexedDb().then((storedContent) => {
+      if (storedContent) {
+        setWebsiteContent((prev) => applyImageLocksToWebsiteContent({
+          ...prev,
+          ...storedContent,
+        }));
       }
     }).catch(console.warn);
 
     const unsubscribeContent = subscribeWebsiteContent(
       (cloudContent: WebsiteContent) => {
         if (cloudContent) {
-          setWebsiteContent((prev) => ({
+          setWebsiteContent((prev) => applyImageLocksToWebsiteContent({
             ...prev,
             ...cloudContent,
           }));
@@ -98,7 +116,7 @@ export default function App() {
     const unsubscribeProducts = subscribeProducts(
       (cloudProducts: Product[]) => {
         if (cloudProducts && cloudProducts.length > 0) {
-          setProducts(ensureCompleteCatalog(cloudProducts));
+          setProducts(applyImageLocksToProducts(ensureCompleteCatalog(cloudProducts)));
         }
       },
       (err: any) => console.warn('Products sync notice:', err?.message || err)
@@ -111,9 +129,25 @@ export default function App() {
   }, []);
 
   const handleUpdateWebsiteContent = (newContent: WebsiteContent) => {
-    setWebsiteContent(newContent);
-    saveWebsiteContent(newContent);
-    saveWebsiteContentToCloud(newContent).catch((err) => {
+    // Lock all new content images permanently so they don't revert
+    if (newContent.heroSlides) {
+      newContent.heroSlides.forEach((s) => {
+        if (s.imageUrl) lockHeroSlideImage(s.id, s.imageUrl, s.title, true);
+      });
+    }
+    if (newContent.heroBackgroundImage) {
+      lockHeroBackgroundImage(newContent.heroBackgroundImage, true);
+    }
+    if (newContent.showcaseServices) {
+      newContent.showcaseServices.forEach((sc) => {
+        if (sc.imageUrl) lockShowcaseServiceImage(sc.id, sc.imageUrl, sc.title, true);
+      });
+    }
+
+    const lockedContent = applyImageLocksToWebsiteContent(newContent);
+    setWebsiteContent(lockedContent);
+    saveWebsiteContent(lockedContent);
+    saveWebsiteContentToCloud(lockedContent).catch((err) => {
       console.warn('Cloud website content sync notice:', err?.message || err);
     });
   };
@@ -298,6 +332,9 @@ export default function App() {
 
   // Product Add / Update / Delete Handlers with LocalStorage & Firestore Cloud Persistence
   const handleAddProduct = (newProduct: Product) => {
+    if (newProduct.image) {
+      lockProductImage(newProduct.id, newProduct.image, newProduct.images, newProduct.name, true);
+    }
     setProducts((prev) => {
       const next = [newProduct, ...prev];
       safeLocalStorageSet('inkshine_products', JSON.stringify(next));
@@ -326,6 +363,9 @@ export default function App() {
   };
 
   const handleUpdateProduct = (productId: string, updates: Partial<Product>) => {
+    if (updates.image) {
+      lockProductImage(productId, updates.image, updates.images, updates.name, true);
+    }
     setProducts((prev) => {
       const next = prev.map((p) => (p.id === productId ? { ...p, ...updates } : p));
       safeLocalStorageSet('inkshine_products', JSON.stringify(next));

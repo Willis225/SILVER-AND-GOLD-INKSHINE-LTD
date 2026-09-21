@@ -29,7 +29,8 @@ import {
   ChevronDown,
   Cloud,
   Smartphone,
-  CheckCheck
+  CheckCheck,
+  Lock
 } from 'lucide-react';
 import { Product, ProductCategory } from '../../types/schema';
 import { STORE_CATEGORIES, CategoryDefinition, getProductCategoryTag } from '../../utils/categoryUtils';
@@ -40,6 +41,7 @@ import {
   subscribeUploadedImages, 
   CloudUploadedImage 
 } from '../../lib/firebase';
+import { lockProductImage } from '../../lib/imageLockRegistry';
 import { 
   searchOnlineProductImages, 
   SearchResultImage, 
@@ -88,7 +90,9 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
   const [dragOver, setDragOver] = useState<boolean>(false);
   const multiFileInputRef = useRef<HTMLInputElement>(null);
   const appendFileInputRef = useRef<HTMLInputElement>(null);
+  const replaceFileInputRef = useRef<HTMLInputElement>(null);
   const [targetProductForAppend, setTargetProductForAppend] = useState<Product | null>(null);
+  const [targetProductForReplace, setTargetProductForReplace] = useState<Product | null>(null);
 
   // 3. Publishing Mode
   // 'batch' = each photo becomes its own product/job in this category
@@ -438,6 +442,9 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
         image: mergedImages[0], // ensure valid cover
       };
 
+      // Permanently lock images in registry
+      lockProductImage(updatedProd.id, updatedProd.image, updatedProd.images, updatedProd.name, true);
+
       onUpdateProduct(targetProductForAppend.id, {
         images: mergedImages,
         image: mergedImages[0],
@@ -449,8 +456,8 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
       );
 
       showToast(
-        'Product Gallery Expanded & Synced Across All Devices',
-        `Added ${newImageUrls.length} new photo(s) to "${targetProductForAppend.name}". It now has ${mergedImages.length} gallery images!`
+        'Product Gallery Expanded & Permanently Locked',
+        `Added ${newImageUrls.length} new photo(s) to "${targetProductForAppend.name}". Photos are locked and will not change until you update them.`
       );
       setTargetProductForAppend(null);
     } catch (err) {
@@ -459,6 +466,49 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
     } finally {
       setIsUploading(false);
       setUploadProgressText('');
+    }
+  };
+
+  // Replace primary cover photo of an existing product and lock it permanently
+  const handleReplaceProductCover = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !targetProductForReplace) return;
+
+    setIsUploading(true);
+    setUploadProgressText(`Optimizing & locking new cover photo for "${targetProductForReplace.name}"...`);
+    try {
+      const compressed = await compressImageFile(file, 1080, 0.78);
+      const existingImages = targetProductForReplace.images || [targetProductForReplace.image];
+      const updatedImages = [compressed, ...existingImages.filter((img) => img !== compressed)];
+
+      const updatedProd: Product = {
+        ...targetProductForReplace,
+        image: compressed,
+        images: updatedImages,
+      };
+
+      // Permanently lock image in registry
+      lockProductImage(updatedProd.id, updatedProd.image, updatedProd.images, updatedProd.name, true);
+
+      onUpdateProduct(targetProductForReplace.id, {
+        image: compressed,
+        images: updatedImages,
+      });
+
+      await saveSingleProductToCloud(updatedProd);
+
+      showToast(
+        'Cover Photo Replaced & Permanently Locked',
+        `"${targetProductForReplace.name}" now has your new photo locked in place. It will not change until you change it again.`
+      );
+      setTargetProductForReplace(null);
+    } catch (err) {
+      console.error('Error replacing cover photo:', err);
+      alert('Failed to replace cover photo. Please check connection and try again.');
+    } finally {
+      setIsUploading(false);
+      setUploadProgressText('');
+      if (e.target) e.target.value = '';
     }
   };
 
@@ -538,6 +588,8 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
         };
 
         if (onAddProduct) {
+          // Lock image permanently in registry
+          lockProductImage(newProduct.id, newProduct.image, newProduct.images, newProduct.name, true);
           onAddProduct(newProduct);
         }
         // Securely sync to Cloud Firestore across all devices
@@ -547,8 +599,8 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
       });
 
       showToast(
-        'Batch Published & Synced Across All Devices!',
-        `Successfully published ${stagedPhotos.length} separate items under "${resolvedCatLabel}". They are now live on the storefront and backed up in Cloud Database!`
+        'Batch Published & Permanently Locked!',
+        `Successfully published ${stagedPhotos.length} separate items under "${resolvedCatLabel}". Photos are locked and will not change automatically!`
       );
     } else {
       // 2. Single Gallery Mode: merge all photos into 1 product
@@ -604,6 +656,8 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
       };
 
       if (onAddProduct) {
+        // Lock gallery images permanently in registry
+        lockProductImage(newProduct.id, newProduct.image, newProduct.images, newProduct.name, true);
         onAddProduct(newProduct);
       }
       // Securely sync to Cloud Firestore across all devices
@@ -612,7 +666,7 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
       );
 
       showToast(
-        'Product Gallery Created & Synced Across All Devices!',
+        'Product Gallery Created & Permanently Locked!',
         `Successfully published "${title}" with an interactive gallery of ${allImages.length} photos under "${resolvedCatLabel}"!`
       );
     }
@@ -653,6 +707,15 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
         onChange={handleAppendToExistingProduct}
         accept="image/*"
         multiple
+        className="hidden"
+      />
+
+      {/* Hidden file input for replacing cover photo of a specific product */}
+      <input
+        type="file"
+        ref={replaceFileInputRef}
+        onChange={handleReplaceProductCover}
+        accept="image/*"
         className="hidden"
       />
 
@@ -1382,6 +1445,15 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
                             className="w-full h-full object-cover"
                             referrerPolicy="no-referrer"
                           />
+                          {/* Locked Badge */}
+                          <span 
+                            className="absolute top-1 left-1 bg-emerald-950/90 border border-emerald-400/60 text-[8px] font-extrabold text-emerald-200 px-1 py-0.5 rounded shadow-xs flex items-center gap-0.5 pointer-events-none"
+                            title="Image locked in local storage and protected from cloud resets"
+                          >
+                            <Lock className="w-2.5 h-2.5 text-emerald-300" />
+                            <span>Locked</span>
+                          </span>
+
                           {hasMultiple && (
                             <span className="absolute bottom-0 inset-x-0 bg-stone-950/80 text-[9px] font-bold text-amber-300 text-center py-0.5">
                               {galleryImages.length} Photos
@@ -1450,18 +1522,33 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
 
                       {/* Action Bar */}
                       <div className="flex items-center justify-between pt-2 border-t border-stone-200 text-xs">
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setTargetProductForAppend(prod);
-                            appendFileInputRef.current?.click();
-                          }}
-                          className="text-[#00473e] hover:text-[#03554a] font-bold text-[11px] flex items-center gap-1 cursor-pointer"
-                          title="Add more angle photos to this product's gallery"
-                        >
-                          <Plus className="w-3.5 h-3.5" />
-                          <span>Add More Photos</span>
-                        </button>
+                        <div className="flex items-center gap-3">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setTargetProductForReplace(prod);
+                              replaceFileInputRef.current?.click();
+                            }}
+                            className="text-amber-700 hover:text-amber-800 font-bold text-[11px] flex items-center gap-1 cursor-pointer"
+                            title="Replace this product's cover photo and lock it"
+                          >
+                            <Upload className="w-3 h-3" />
+                            <span>Replace Photo</span>
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setTargetProductForAppend(prod);
+                              appendFileInputRef.current?.click();
+                            }}
+                            className="text-[#00473e] hover:text-[#03554a] font-bold text-[11px] flex items-center gap-1 cursor-pointer"
+                            title="Add more angle photos to this product's gallery"
+                          >
+                            <Plus className="w-3.5 h-3.5" />
+                            <span>Add Photos</span>
+                          </button>
+                        </div>
 
                         <div className="flex items-center gap-2">
                           {/* 1-Click Price Visibility Toggle */}

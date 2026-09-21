@@ -1,5 +1,6 @@
 import { Product } from '../types/schema';
 import { SAMPLE_PRODUCTS } from './seedData';
+import { applyImageLocksToProducts } from '../lib/imageLockRegistry';
 
 /**
  * Complete catalog products for all homepage showcase sections.
@@ -990,5 +991,5 @@ export function ensureCompleteCatalog(baseProducts: Product[]): Product[] {
     }
   });
 
-  return Array.from(existingMap.values());
+  return applyImageLocksToProducts(Array.from(existingMap.values()));
 }

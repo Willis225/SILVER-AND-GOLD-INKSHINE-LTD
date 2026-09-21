@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   ShoppingBag, 
   Search, 
@@ -27,7 +27,9 @@ import {
   ImageIcon,
   Sliders,
   RotateCcw,
-  FolderTree
+  FolderTree,
+  Lock,
+  Shield
 } from 'lucide-react';
 import { Order, OrderStatus, PaymentStatus, Product } from '../../types/schema';
 import { WebsiteContent, HeroSlideItem, ShowcaseServiceItem } from '../../types/websiteContent';
@@ -40,6 +42,11 @@ import { PageImageStudio } from './PageImageStudio';
 import { HeroSlidesManager } from './HeroSlidesManager';
 import { PageTextManager } from './PageTextManager';
 import { CategoryAdmin } from './CategoryAdmin';
+import { 
+  lockAllCurrentState, 
+  getLockedImagesCount, 
+  exportLockedImagesBackup 
+} from '../../lib/imageLockRegistry';
 
 interface AdminDashboardProps {
   orders: Order[];
@@ -94,6 +101,33 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   // Safe arrays
   const safeOrders = Array.isArray(orders) ? orders : [];
   const safeProducts = Array.isArray(products) ? products : [];
+
+  // Persistent Image Lock & Protection State
+  const [lockedCount, setLockedCount] = useState<number>(() => getLockedImagesCount());
+  const [isLocking, setIsLocking] = useState<boolean>(false);
+  const [lockNotice, setLockNotice] = useState<string | null>(null);
+
+  useEffect(() => {
+    const handleLocksUpdated = () => {
+      setLockedCount(getLockedImagesCount());
+    };
+    window.addEventListener('inkshine-image-locks-updated', handleLocksUpdated);
+    return () => window.removeEventListener('inkshine-image-locks-updated', handleLocksUpdated);
+  }, []);
+
+  const handleLockAllCurrentImages = async () => {
+    setIsLocking(true);
+    try {
+      const count = await lockAllCurrentState(safeProducts, websiteContent);
+      setLockedCount(count);
+      setLockNotice(`✓ All ${count} images are permanently locked & protected! They will NOT change until you manually replace them.`);
+      setTimeout(() => setLockNotice(null), 8000);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsLocking(false);
+    }
+  };
 
   // Selected order for deep inspection drawer
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
@@ -190,7 +224,22 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             </div>
 
             {/* Quick Actions & Storefront Link */}
-            <div className="flex items-center gap-2 self-stretch sm:self-auto">
+            <div className="flex items-center gap-2 self-stretch sm:self-auto flex-wrap sm:flex-nowrap">
+              {/* Permanent Image Protection Button */}
+              <button
+                type="button"
+                onClick={handleLockAllCurrentImages}
+                disabled={isLocking}
+                className="px-3 py-2 rounded-xl bg-emerald-950/80 border border-emerald-500/60 hover:bg-emerald-900/90 text-emerald-300 hover:text-emerald-100 font-bold text-xs transition-all flex items-center gap-1.5 cursor-pointer shadow-xs active:scale-95"
+                title="Lock all current product photos, hero banners, and showcase images into permanent protected storage so they NEVER change automatically."
+              >
+                <Lock className={`w-3.5 h-3.5 text-emerald-400 ${isLocking ? 'animate-spin' : ''}`} />
+                <span>{isLocking ? 'Locking Images...' : 'Lock All Images'}</span>
+                <span className="px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-extrabold">
+                  {lockedCount}
+                </span>
+              </button>
+
               {onResetAllWebsiteContentToDefaults && (
                 <button
                   type="button"
@@ -218,6 +267,22 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             </div>
           </div>
         </div>
+
+        {/* Reassuring Image Lock Banner */}
+        {lockNotice && (
+          <div className="bg-emerald-900/90 border-t border-b border-emerald-500/60 px-4 py-2.5 text-xs text-emerald-100 flex items-center justify-between shadow-inner">
+            <div className="flex items-center gap-2 max-w-7xl mx-auto w-full">
+              <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+              <span className="font-semibold">{lockNotice}</span>
+            </div>
+            <button
+              onClick={() => setLockNotice(null)}
+              className="text-emerald-300 hover:text-white font-bold text-xs ml-4 cursor-pointer"
+            >
+              ✕
+            </button>
+          </div>
+        )}
 
         {/* Primary Sub-Navigation Tabs */}
         <div className="bg-stone-900 border-t border-stone-800/80 px-4 sm:px-6 lg:px-8">

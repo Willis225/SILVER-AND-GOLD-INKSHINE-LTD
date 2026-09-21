@@ -183,31 +183,16 @@ export function loadSavedWebsiteContent(): WebsiteContent {
     }
     if (saved) {
       const parsed = JSON.parse(saved);
-      // If previous version saved the temporary Unsplash slides or changed headline, revert to original
-      const hasUnsplashHero = Array.isArray(parsed.heroSlides) && parsed.heroSlides.some((s: any) => 
-        typeof s?.imageUrl === 'string' && s.imageUrl.includes('images.unsplash.com/photo-1541701494587')
-      );
-      const hasTemporaryHeadline = parsed.heroHeadline === "Nigeria's #1 Online Printing Platform" || parsed.heroHeadline === 'SILVER & GOLD INKSHINE LTD';
 
-      const heroSlides = (!parsed.heroSlides || parsed.heroSlides.length === 0 || hasUnsplashHero)
-        ? DEFAULT_HERO_SLIDES
-        : parsed.heroSlides;
+      // Preserve existing user-saved hero slides with absolute priority
+      const heroSlides = (Array.isArray(parsed.heroSlides) && parsed.heroSlides.length > 0)
+        ? parsed.heroSlides
+        : DEFAULT_HERO_SLIDES;
 
-      const heroHeadline = hasTemporaryHeadline 
-        ? DEFAULT_WEBSITE_CONTENT.heroHeadline 
-        : (parsed.heroHeadline || DEFAULT_WEBSITE_CONTENT.heroHeadline);
-
-      const heroSubheadline = hasTemporaryHeadline 
-        ? DEFAULT_WEBSITE_CONTENT.heroSubheadline 
-        : (parsed.heroSubheadline || DEFAULT_WEBSITE_CONTENT.heroSubheadline);
-
-      const heroEyebrow = hasTemporaryHeadline 
-        ? DEFAULT_WEBSITE_CONTENT.heroEyebrow 
-        : (parsed.heroEyebrow || DEFAULT_WEBSITE_CONTENT.heroEyebrow);
-
-      const heroDescription = hasTemporaryHeadline 
-        ? DEFAULT_WEBSITE_CONTENT.heroDescription 
-        : (parsed.heroDescription || DEFAULT_WEBSITE_CONTENT.heroDescription);
+      const heroHeadline = parsed.heroHeadline || DEFAULT_WEBSITE_CONTENT.heroHeadline;
+      const heroSubheadline = parsed.heroSubheadline || DEFAULT_WEBSITE_CONTENT.heroSubheadline;
+      const heroEyebrow = parsed.heroEyebrow || DEFAULT_WEBSITE_CONTENT.heroEyebrow;
+      const heroDescription = parsed.heroDescription || DEFAULT_WEBSITE_CONTENT.heroDescription;
 
       const hasOldMapUrl = parsed.googleMapsUrl === 'https://maps.app.goo.gl/LSvreepfyxDCE4246';
       const resolvedMapUrl = (!parsed.googleMapsUrl || hasOldMapUrl)
@@ -226,15 +211,12 @@ export function loadSavedWebsiteContent(): WebsiteContent {
         heroDescription,
         heroBackgroundImage: parsed.heroBackgroundImage || DEFAULT_WEBSITE_CONTENT.heroBackgroundImage,
         heroSlides,
-        showcaseServices: Array.isArray(parsed.showcaseServices) && parsed.showcaseServices.length > 0 ? parsed.showcaseServices : DEFAULT_SHOWCASE_SERVICES,
+        showcaseServices: Array.isArray(parsed.showcaseServices) && parsed.showcaseServices.length > 0 
+          ? parsed.showcaseServices 
+          : DEFAULT_SHOWCASE_SERVICES,
         googleMapsUrl: resolvedMapUrl,
         googleMapsEmbedUrl: resolvedEmbedUrl,
       };
-
-      // If we sanitized or updated, persist to storage
-      if (hasUnsplashHero || hasTemporaryHeadline || hasOldMapUrl || !localStorage.getItem(STORAGE_KEY)) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(mergedContent));
-      }
 
       return mergedContent;
     }
