@@ -593,9 +593,9 @@ export async function saveProductsToCloud(products: Product[]): Promise<void> {
   // 2. Try lightweight localStorage for small metadata
   try {
     const compactCatalog = products.map((p) => {
-      // Strip base64 image strings for localStorage to prevent 5MB crash
-      if (p.image && p.image.startsWith('data:image')) {
-        return { ...p, image: p.image.slice(0, 100) + '...[cached_in_indexeddb]' };
+      // If it's a web URL (http, https, //), it's tiny (~80 bytes), preserve it completely!
+      if (p.image && !p.image.startsWith('data:image')) {
+        return p;
       }
       return p;
     });

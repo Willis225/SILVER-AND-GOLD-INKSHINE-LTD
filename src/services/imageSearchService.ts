@@ -377,24 +377,40 @@ export async function searchOnlineProductImages(
 }
 
 /**
- * Validates and converts Pinterest / Web image URLs so they load reliably
+ * Validates and converts Pinterest / Web / Google / Cloud image URLs so they load reliably
  */
 export function processExternalImageUrl(inputUrl: string): {
   valid: boolean;
   cleanUrl: string;
-  source: 'Pinterest' | 'Web';
+  source: 'Pinterest' | 'Web' | 'Google';
   error?: string;
 } {
-  const trimmed = inputUrl.trim();
+  let trimmed = inputUrl.trim();
   if (!trimmed) {
-    return { valid: false, cleanUrl: '', source: 'Web', error: 'Please provide a URL' };
+    return { valid: false, cleanUrl: '', source: 'Web', error: 'Please provide an image link' };
+  }
+
+  // Prepend https:// if protocol omitted (e.g. i.pinimg.com/... or images.unsplash.com/...)
+  if (!/^https?:\/\//i.test(trimmed) && !trimmed.startsWith('//') && !trimmed.startsWith('data:')) {
+    trimmed = 'https://' + trimmed;
   }
 
   try {
     const parsed = new URL(trimmed);
-    const isPinterest = parsed.hostname.includes('pinterest.com') || parsed.hostname.includes('pinimg.com');
 
-    // If it's a direct pinimg link (e.g. i.pinimg.com/736x/... or /originals/...)
+    // 1. Check if user copied a Google Images search result link (contains ?imgurl=...)
+    if (parsed.hostname.includes('google.') && parsed.searchParams.has('imgurl')) {
+      const directImg = parsed.searchParams.get('imgurl');
+      if (directImg) {
+        return {
+          valid: true,
+          cleanUrl: decodeURIComponent(directImg),
+          source: 'Google'
+        };
+      }
+    }
+
+    // 2. Direct Pinterest image CDN (i.pinimg.com/originals/... or /736x/...)
     if (parsed.hostname.includes('pinimg.com')) {
       return {
         valid: true,
@@ -403,27 +419,41 @@ export function processExternalImageUrl(inputUrl: string): {
       };
     }
 
-    // If standard image extension
-    if (/\.(jpg|jpeg|png|webp|svg|gif)(\?.*)?$/i.test(parsed.pathname)) {
+    // 3. Dropbox direct raw link conversion
+    if (parsed.hostname.includes('dropbox.com')) {
+      parsed.searchParams.set('raw', '1');
+      parsed.searchParams.delete('dl');
       return {
         valid: true,
-        cleanUrl: trimmed,
-        source: isPinterest ? 'Pinterest' : 'Web'
+        cleanUrl: parsed.toString(),
+        source: 'Web'
       };
     }
 
-    // If it's a web URL without extension, still allow if starts with https://
+    // 4. Google Drive direct view link conversion
+    if (parsed.hostname.includes('drive.google.com')) {
+      const match = parsed.pathname.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+      if (match && match[1]) {
+        return {
+          valid: true,
+          cleanUrl: `https://drive.google.com/uc?export=view&id=${match[1]}`,
+          source: 'Web'
+        };
+      }
+    }
+
+    // 5. Standard direct image or web URL
     return {
       valid: true,
       cleanUrl: trimmed,
-      source: isPinterest ? 'Pinterest' : 'Web'
+      source: parsed.hostname.includes('pinterest.com') ? 'Pinterest' : 'Web'
     };
   } catch {
     return {
       valid: false,
       cleanUrl: '',
       source: 'Web',
-      error: 'Invalid URL format. Please start with https://'
+      error: 'Invalid URL format. Please make sure the link starts with http:// or https://'
     };
   }
 }

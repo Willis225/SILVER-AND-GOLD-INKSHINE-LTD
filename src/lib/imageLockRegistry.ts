@@ -200,16 +200,36 @@ export function getLockedImageForProduct(productId: string): LockedImageEntry | 
 }
 
 /**
+ * Checks if a string is a genuine, renderable image URL or data URI
+ */
+export function isValidImageUrl(url?: string): boolean {
+  if (!url || typeof url !== 'string') return false;
+  const trimmed = url.trim();
+  if (trimmed.length < 5) return false;
+  if (trimmed.includes('[cached_in_indexeddb]') || trimmed.includes('[full_image_saved_in_indexeddb]')) {
+    return false;
+  }
+  return (
+    trimmed.startsWith('http://') ||
+    trimmed.startsWith('https://') ||
+    trimmed.startsWith('//') ||
+    trimmed.startsWith('data:image/') ||
+    trimmed.startsWith('/')
+  );
+}
+
+/**
  * Apply locked image to a single product if a lock exists
  */
 export function applyImageLocksToProduct(product: Product): Product {
   if (!product || !product.id) return product;
   const lock = getLockedImageForProduct(product.id);
-  if (lock && lock.imageUrl) {
+  if (lock && isValidImageUrl(lock.imageUrl)) {
+    const validImages = (lock.images || []).filter(isValidImageUrl);
     return {
       ...product,
       image: lock.imageUrl,
-      images: (lock.images && lock.images.length > 0) ? lock.images : (product.images || [lock.imageUrl]),
+      images: validImages.length > 0 ? validImages : [lock.imageUrl],
     };
   }
   return product;
@@ -227,11 +247,12 @@ export function applyImageLocksToProducts(products: Product[]): Product[] {
   return products.map((p) => {
     if (!p || !p.id) return p;
     const lock = map[p.id];
-    if (lock && lock.imageUrl) {
+    if (lock && isValidImageUrl(lock.imageUrl)) {
+      const validImages = (lock.images || []).filter(isValidImageUrl);
       return {
         ...p,
         image: lock.imageUrl,
-        images: (lock.images && lock.images.length > 0) ? lock.images : (p.images || [lock.imageUrl]),
+        images: validImages.length > 0 ? validImages : [lock.imageUrl],
       };
     }
     return p;

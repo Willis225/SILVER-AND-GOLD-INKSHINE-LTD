@@ -30,7 +30,8 @@ import {
   Cloud,
   Smartphone,
   CheckCheck,
-  Lock
+  Lock,
+  Link as LinkIcon
 } from 'lucide-react';
 import { Product, ProductCategory } from '../../types/schema';
 import { STORE_CATEGORIES, CategoryDefinition, getProductCategoryTag } from '../../utils/categoryUtils';
@@ -49,6 +50,8 @@ import {
   getGoogleImagesSearchUrl,
   getPinterestSearchUrl
 } from '../../services/imageSearchService';
+import { ImageManagerModal } from './ImageManagerModal';
+import { ImageUrlInputWithPreview } from '../common/ImageUrlInputWithPreview';
 
 interface CategoryAdminProps {
   products: Product[];
@@ -123,6 +126,10 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
   const [autoSearchResults, setAutoSearchResults] = useState<SearchResultImage[]>([]);
   const [selectedAutoPhotos, setSelectedAutoPhotos] = useState<SearchResultImage[]>([]);
   const [pinterestInputUrl, setPinterestInputUrl] = useState<string>('');
+
+  // Direct URL Image Link Staging Modal & Active Product Image Manager
+  const [isUrlLinkModalOpen, setIsUrlLinkModalOpen] = useState<boolean>(false);
+  const [activeProductForImageManager, setActiveProductForImageManager] = useState<Product | null>(null);
 
   // Notifications
   const [toastMessage, setToastMessage] = useState<{ title: string; desc: string } | null>(null);
@@ -255,6 +262,59 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
       `${processed.source} Image Added`,
       `Added photo from ${processed.source} to staging area. Ready to publish!`
     );
+  };
+
+  // Stage a photo from a direct image link with preview
+  const handleStageFromUrl = (url: string) => {
+    const processed = processExternalImageUrl(url);
+    const cleanUrl = processed.valid ? processed.cleanUrl : url;
+    const newItem: StagedPhotoItem = {
+      id: `url-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+      dataUrl: cleanUrl,
+      fileName: `${processed.source || 'Web'} Image`,
+      title: `${currentCategoryDef.label} Project #${stagedPhotos.length + 1}`,
+      isCover: stagedPhotos.length === 0,
+      priceNgn: batchBasePrice || 20000,
+    };
+    setStagedPhotos((prev) => [...prev, newItem]);
+    setIsUrlLinkModalOpen(false);
+    showToast(
+      'Image Link Staged',
+      `Added image link with zero storage quota needed. Ready to publish!`
+    );
+  };
+
+  // Handle saving image from ImageManagerModal directly into an active product
+  const handleProductImageManagerSave = async (data: { imageUrl: string; title?: string; description?: string }) => {
+    if (!activeProductForImageManager) return;
+    const existingImages = activeProductForImageManager.images || [activeProductForImageManager.image];
+    const updatedImages = [data.imageUrl, ...existingImages.filter((img) => img !== data.imageUrl)];
+    
+    const updatedProd: Product = {
+      ...activeProductForImageManager,
+      image: data.imageUrl,
+      images: updatedImages,
+      ...(data.title ? { name: data.title } : {}),
+      ...(data.description ? { shortDescription: data.description } : {}),
+    };
+
+    // Permanently lock image in registry
+    lockProductImage(updatedProd.id, updatedProd.image, updatedProd.images, updatedProd.name, true);
+
+    onUpdateProduct(activeProductForImageManager.id, {
+      image: data.imageUrl,
+      images: updatedImages,
+      ...(data.title ? { name: data.title } : {}),
+      ...(data.description ? { shortDescription: data.description } : {}),
+    });
+
+    await saveSingleProductToCloud(updatedProd);
+
+    showToast(
+      'Photo Replaced & Locked',
+      `"${updatedProd.name}" now displays your image link directly. Zero platform storage used!`
+    );
+    setActiveProductForImageManager(null);
   };
 
   // Stage selected photos from the Cloud / Mobile uploads gallery
@@ -890,6 +950,16 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
             <div className="flex flex-wrap items-center gap-2">
               <button
                 type="button"
+                onClick={() => setIsUrlLinkModalOpen(true)}
+                className="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs font-bold flex items-center gap-2 shadow-sm transition-all cursor-pointer"
+                title="Add photo via direct web image link with live preview (zero storage quota)"
+              >
+                <LinkIcon className="w-4 h-4" />
+                <span>Add by Image Link (No Storage)</span>
+              </button>
+
+              <button
+                type="button"
                 onClick={() => setIsCloudGalleryOpen(true)}
                 className="px-4 py-2 bg-stone-900 hover:bg-stone-800 text-white rounded-xl text-xs font-bold flex items-center gap-2 shadow-sm transition-all cursor-pointer"
                 title="View and stage photos saved from phone or other devices"
@@ -1522,18 +1592,15 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
 
                       {/* Action Bar */}
                       <div className="flex items-center justify-between pt-2 border-t border-stone-200 text-xs">
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-2">
                           <button
                             type="button"
-                            onClick={() => {
-                              setTargetProductForReplace(prod);
-                              replaceFileInputRef.current?.click();
-                            }}
-                            className="text-amber-700 hover:text-amber-800 font-bold text-[11px] flex items-center gap-1 cursor-pointer"
-                            title="Replace this product's cover photo and lock it"
+                            onClick={() => setActiveProductForImageManager(prod)}
+                            className="bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 px-2.5 py-1 rounded-lg font-bold text-[11px] flex items-center gap-1.5 cursor-pointer transition-colors shadow-2xs"
+                            title="Replace photo using image link, online search, or file upload"
                           >
-                            <Upload className="w-3 h-3" />
-                            <span>Replace Photo</span>
+                            <LinkIcon className="w-3 h-3 text-amber-700" />
+                            <span>Change Photo / Link</span>
                           </button>
 
                           <button
@@ -1722,28 +1789,19 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
                 </div>
               </div>
 
-              {/* Paste Pinterest / Direct Image Link Box */}
-              <div className="p-3 bg-amber-50/50 border border-amber-200/80 rounded-xl flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-                <div className="flex-1">
-                  <label className="block text-[11px] font-bold text-amber-950 mb-0.5">
-                    Have a Google Images, Pinterest, or Direct Image URL?
-                  </label>
-                  <input
-                    type="url"
-                    value={pinterestInputUrl}
-                    onChange={(e) => setPinterestInputUrl(e.target.value)}
-                    placeholder="Paste image address from Google Images, Pinterest, or any website..."
-                    className="w-full px-3 py-1.5 bg-white border border-amber-300 rounded-lg text-xs focus:ring-2 focus:ring-[#b8860b] focus:outline-hidden"
-                  />
-                </div>
-                <button
-                  type="button"
-                  onClick={handleApplyPinterestUrl}
-                  disabled={!pinterestInputUrl.trim()}
-                  className="px-4 py-2 bg-stone-900 hover:bg-stone-800 disabled:opacity-50 text-white rounded-lg text-xs font-bold cursor-pointer whitespace-nowrap self-end sm:self-auto"
-                >
-                  Stage Link
-                </button>
+              {/* Paste Direct Image Link with Live Preview Box */}
+              <div className="p-3 bg-amber-50/50 border border-amber-200/80 rounded-xl space-y-2">
+                <label className="block text-[11px] font-bold text-amber-950">
+                  Or Paste an Image URL Directly (Preview &amp; Zero Storage Used):
+                </label>
+                <ImageUrlInputWithPreview
+                  onSelectUrl={(url) => {
+                    handleStageFromUrl(url);
+                    setIsAutoFetchModalOpen(false);
+                  }}
+                  searchKeywords={currentCategoryDef.label}
+                  placeholder="Paste image address from Google Images, Pinterest, or any website..."
+                />
               </div>
 
               {/* Search Results Grid */}
@@ -2060,6 +2118,74 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
             </div>
           </div>
         </div>
+      )}
+
+      {/* Direct Image Link Staging Modal */}
+      {isUrlLinkModalOpen && (
+        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-xl w-full p-6 space-y-4 shadow-2xl border border-stone-200 animate-in fade-in zoom-in-95 duration-200">
+            <div className="flex items-center justify-between border-b border-stone-200 pb-3">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center text-emerald-700">
+                  <LinkIcon className="w-4 h-4" />
+                </div>
+                <div>
+                  <h3 className="font-black text-sm text-stone-900">
+                    Add Photo via Direct Link
+                  </h3>
+                  <p className="text-[11px] text-stone-500">
+                    Target Category: {currentCategoryDef.label}
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsUrlLinkModalOpen(false)}
+                className="text-stone-400 hover:text-stone-700 p-1.5 rounded-lg hover:bg-stone-100 cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <p className="text-xs text-stone-600 leading-relaxed">
+              Paste any Google Images, Pinterest, or direct image link below. You can preview and test it before adding. 
+              The image displays directly from the link, <strong>bypassing storage limits entirely</strong>.
+            </p>
+
+            <ImageUrlInputWithPreview
+              onSelectUrl={(url) => {
+                handleStageFromUrl(url);
+              }}
+              searchKeywords={currentCategoryDef.label}
+              placeholder="Paste image link here (e.g. https://... or https://i.pinimg.com/...)"
+            />
+
+            <div className="pt-2 flex justify-end">
+              <button
+                type="button"
+                onClick={() => setIsUrlLinkModalOpen(false)}
+                className="px-4 py-2 border border-stone-300 rounded-xl text-xs font-bold text-stone-600 hover:bg-stone-100 cursor-pointer"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Image Manager Modal for Active Product Photo Replacement */}
+      {activeProductForImageManager && (
+        <ImageManagerModal
+          isOpen={!!activeProductForImageManager}
+          onClose={() => setActiveProductForImageManager(null)}
+          currentImageUrl={activeProductForImageManager.image}
+          title={activeProductForImageManager.name}
+          currentTitle={activeProductForImageManager.name}
+          currentDescription={activeProductForImageManager.shortDescription}
+          categoryKey={activeProductForImageManager.categoryPlacement || selectedCategoryKey}
+          allowDetailsEdit={true}
+          onSave={handleProductImageManagerSave}
+        />
       )}
     </div>
   );

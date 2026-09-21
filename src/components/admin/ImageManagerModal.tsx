@@ -28,6 +28,7 @@ import {
   getGoogleImagesSearchUrl,
   getPinterestSearchUrl
 } from '../../services/imageSearchService';
+import { ImageUrlInputWithPreview } from '../common/ImageUrlInputWithPreview';
 
 export interface PresetImage {
   url: string;
@@ -200,7 +201,7 @@ export const ImageManagerModal: React.FC<ImageManagerModalProps> = ({
   onClose,
   currentImageUrl,
   title,
-  subtitle = 'Replace existing image, auto-fetch matching online images, or upload from your device.',
+  subtitle = 'Provide an image link, auto-fetch online photos, or upload from your device.',
   currentTitle = '',
   currentDescription = '',
   categoryKey,
@@ -208,15 +209,15 @@ export const ImageManagerModal: React.FC<ImageManagerModalProps> = ({
   autoFetchOnOpen = false,
   onSave,
 }) => {
-  const [activeTab, setActiveTab] = useState<'auto_fetch' | 'upload' | 'pinterest_url' | 'cloud' | 'presets'>(
-    autoFetchOnOpen ? 'auto_fetch' : 'auto_fetch'
+  const [activeTab, setActiveTab] = useState<'url_link' | 'auto_fetch' | 'upload' | 'cloud' | 'presets'>(
+    autoFetchOnOpen ? 'auto_fetch' : 'url_link'
   );
   const [selectedImageUrl, setSelectedImageUrl] = useState<string>(currentImageUrl);
   const [editedTitle, setEditedTitle] = useState<string>(currentTitle);
   const [editedDescription, setEditedDescription] = useState<string>(currentDescription);
   
-  // Custom URL / Pinterest Link Input
-  const [customUrlInput, setCustomUrlInput] = useState<string>('');
+  // Custom URL / Direct Link Input
+  const [customUrlInput, setCustomUrlInput] = useState<string>(currentImageUrl || '');
 
   // Online Image Auto-Fetch State (Option 2)
   const [searchQuery, setSearchQuery] = useState<string>(currentTitle || title);
@@ -418,6 +419,20 @@ export const ImageManagerModal: React.FC<ImageManagerModalProps> = ({
         <div className="px-6 pt-3 border-b border-stone-200 bg-stone-50 flex items-center gap-2 overflow-x-auto shrink-0">
           <button
             type="button"
+            onClick={() => setActiveTab('url_link')}
+            className={`pb-2.5 px-3 text-xs font-bold transition-all border-b-2 flex items-center gap-1.5 cursor-pointer shrink-0 ${
+              activeTab === 'url_link'
+                ? 'border-[#00473e] text-[#00473e]'
+                : 'border-transparent text-stone-600 hover:text-stone-900'
+            }`}
+          >
+            <LinkIcon className="w-3.5 h-3.5" />
+            <span>Image Link / URL</span>
+            <span className="px-1.5 py-0.2 rounded-full bg-emerald-100 text-emerald-800 text-[9px] font-extrabold">RECOMMENDED</span>
+          </button>
+
+          <button
+            type="button"
             onClick={() => setActiveTab('auto_fetch')}
             className={`pb-2.5 px-3 text-xs font-bold transition-all border-b-2 flex items-center gap-1.5 cursor-pointer shrink-0 ${
               activeTab === 'auto_fetch'
@@ -426,47 +441,7 @@ export const ImageManagerModal: React.FC<ImageManagerModalProps> = ({
             }`}
           >
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Auto-Fetch Online (Option 2)</span>
-            <span className="px-1.5 py-0.2 rounded-full bg-amber-100 text-amber-800 text-[9px] font-extrabold">NEW</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setActiveTab('upload')}
-            className={`pb-2.5 px-3 text-xs font-bold transition-all border-b-2 flex items-center gap-1.5 cursor-pointer shrink-0 ${
-              activeTab === 'upload'
-                ? 'border-[#00473e] text-[#00473e]'
-                : 'border-transparent text-stone-600 hover:text-stone-900'
-            }`}
-          >
-            <Upload className="w-3.5 h-3.5" />
-            <span>Upload From Computer</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setActiveTab('pinterest_url')}
-            className={`pb-2.5 px-3 text-xs font-bold transition-all border-b-2 flex items-center gap-1.5 cursor-pointer shrink-0 ${
-              activeTab === 'pinterest_url'
-                ? 'border-rose-600 text-rose-600'
-                : 'border-transparent text-stone-600 hover:text-stone-900'
-            }`}
-          >
-            <LinkIcon className="w-3.5 h-3.5" />
-            <span>Paste Pinterest / Web URL</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setActiveTab('cloud')}
-            className={`pb-2.5 px-3 text-xs font-bold transition-all border-b-2 flex items-center gap-1.5 cursor-pointer shrink-0 ${
-              activeTab === 'cloud'
-                ? 'border-emerald-600 text-emerald-600'
-                : 'border-transparent text-stone-600 hover:text-stone-900'
-            }`}
-          >
-            <Cloud className="w-3.5 h-3.5" />
-            <span>Cloud Library ({cloudImages.length})</span>
+            <span>Auto-Fetch Online</span>
           </button>
 
           <button
@@ -480,6 +455,32 @@ export const ImageManagerModal: React.FC<ImageManagerModalProps> = ({
           >
             <ImageIcon className="w-3.5 h-3.5" />
             <span>Curated Presets</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab('upload')}
+            className={`pb-2.5 px-3 text-xs font-bold transition-all border-b-2 flex items-center gap-1.5 cursor-pointer shrink-0 ${
+              activeTab === 'upload'
+                ? 'border-stone-700 text-stone-700'
+                : 'border-transparent text-stone-600 hover:text-stone-900'
+            }`}
+          >
+            <Upload className="w-3.5 h-3.5" />
+            <span>Upload From Computer</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab('cloud')}
+            className={`pb-2.5 px-3 text-xs font-bold transition-all border-b-2 flex items-center gap-1.5 cursor-pointer shrink-0 ${
+              activeTab === 'cloud'
+                ? 'border-emerald-600 text-emerald-600'
+                : 'border-transparent text-stone-600 hover:text-stone-900'
+            }`}
+          >
+            <Cloud className="w-3.5 h-3.5" />
+            <span>Cloud Library ({cloudImages.length})</span>
           </button>
         </div>
 
@@ -541,7 +542,40 @@ export const ImageManagerModal: React.FC<ImageManagerModalProps> = ({
             </div>
           </div>
 
-          {/* TAB 1: AUTO-FETCH ONLINE IMAGES (Option 2) */}
+          {/* TAB 1: DIRECT IMAGE URL / LINK (ZERO STORAGE) */}
+          {activeTab === 'url_link' && (
+            <div className="space-y-4">
+              <div className="p-4 bg-emerald-50/80 border border-emerald-200 rounded-2xl space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <LinkIcon className="w-4 h-4 text-emerald-700" />
+                    <span className="text-xs font-bold text-emerald-950 uppercase tracking-wider">
+                      Direct Image Link (Zero Storage Quota Required)
+                    </span>
+                  </div>
+                  <span className="text-[11px] text-emerald-800 font-semibold bg-emerald-100/90 px-2 py-0.5 rounded-full">
+                    No uploads • No quota limits
+                  </span>
+                </div>
+                <p className="text-xs text-emerald-900/80">
+                  Provide any public web image URL (Google Images, Pinterest, Imgur, Dropbox, Google Drive, or any website). 
+                  The site loads and displays the photo directly from the link with instant live preview.
+                </p>
+              </div>
+
+              <ImageUrlInputWithPreview
+                initialUrl={selectedImageUrl.startsWith('http') ? selectedImageUrl : ''}
+                onSelectUrl={(url) => {
+                  setSelectedImageUrl(url);
+                  setErrorNotice(null);
+                  setSuccessNotice('Image link validated and ready to save!');
+                }}
+                searchKeywords={title || currentTitle}
+              />
+            </div>
+          )}
+
+          {/* TAB 2: AUTO-FETCH ONLINE IMAGES (Option 2) */}
           {activeTab === 'auto_fetch' && (
             <div className="space-y-4">
               <div className="p-4 bg-amber-50/70 border border-amber-200 rounded-2xl space-y-3">
@@ -749,72 +783,6 @@ export const ImageManagerModal: React.FC<ImageManagerModalProps> = ({
                 <Upload className="w-4 h-4" />
                 <span>{isUploading ? 'Compressing & Syncing...' : 'Browse Device Files'}</span>
               </button>
-            </div>
-          )}
-
-          {/* TAB 3: PASTE PINTEREST OR WEB URL */}
-          {activeTab === 'pinterest_url' && (
-            <div className="space-y-4 p-5 bg-rose-50/60 rounded-2xl border border-rose-200">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <LinkIcon className="w-4 h-4 text-rose-600" />
-                  <h4 className="font-bold text-xs uppercase tracking-wider text-rose-950">
-                    Paste Google Images, Pinterest, or Direct Image URL
-                  </h4>
-                </div>
-                <div className="flex items-center gap-2">
-                  <a
-                    href={googleImagesUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-2.5 py-1 bg-white hover:bg-blue-50 text-blue-700 border border-blue-200 rounded-lg text-[10px] font-bold flex items-center gap-1 shadow-2xs transition-colors"
-                  >
-                    <Globe className="w-3 h-3 text-blue-600" />
-                    <span>Search Google Images ↗</span>
-                  </a>
-                  <a
-                    href={pinterestUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-2.5 py-1 bg-white hover:bg-rose-50 text-rose-700 border border-rose-200 rounded-lg text-[10px] font-bold flex items-center gap-1 shadow-2xs transition-colors"
-                  >
-                    <LinkIcon className="w-3 h-3 text-rose-600" />
-                    <span>Search Pinterest ↗</span>
-                  </a>
-                </div>
-              </div>
-
-              <div className="p-3 bg-white rounded-xl border border-rose-200/80 text-[11px] text-stone-600 space-y-1">
-                <p className="font-bold text-stone-800">Quick Guide:</p>
-                <ul className="list-disc pl-4 space-y-0.5 text-stone-600">
-                  <li><strong>From Google Images:</strong> Click "Search Google Images ↗", right-click any image you like &gt; <em>"Copy image address"</em> &gt; paste below.</li>
-                  <li><strong>From Pinterest:</strong> Click "Search Pinterest ↗" or open any pin, right-click the photo &gt; <em>"Copy image address"</em> (starts with <code>i.pinimg.com/...</code>) &gt; paste below.</li>
-                  <li><strong>From any Website:</strong> Any direct image link (<code>.jpg</code>, <code>.png</code>, <code>.webp</code>) is supported.</li>
-                </ul>
-              </div>
-
-              <div className="flex gap-2">
-                <input
-                  type="url"
-                  placeholder="Paste image address here (e.g. https://... or https://i.pinimg.com/...)"
-                  value={customUrlInput}
-                  onChange={(e) => setCustomUrlInput(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                      e.preventDefault();
-                      handleApplyCustomUrl();
-                    }
-                  }}
-                  className="flex-1 px-3 py-2 text-xs rounded-xl border border-rose-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-rose-500"
-                />
-                <button
-                  type="button"
-                  onClick={handleApplyCustomUrl}
-                  className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold cursor-pointer"
-                >
-                  Load Image
-                </button>
-              </div>
             </div>
           )}
 
