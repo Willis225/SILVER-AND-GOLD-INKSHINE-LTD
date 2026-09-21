@@ -433,7 +433,11 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                               {tier.discountPercentage > 0 ? `${tier.discountPercentage}% OFF` : 'Base Price'}
                             </td>
                             <td className="p-2.5 text-right font-mono">
-                              {formatNaira(tierPrice)}
+                              {product.hidePrice ? (
+                                <span className="text-amber-800 text-[11px] font-sans font-semibold">Quote on Request</span>
+                              ) : (
+                                formatNaira(tierPrice)
+                              )}
                             </td>
                             <td className="p-2.5 text-right">
                               {isTierActive ? (
@@ -468,68 +472,112 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
             <div className="bg-stone-900 text-white rounded-3xl p-6 sm:p-7 shadow-xl space-y-5 border border-stone-800">
               <div className="flex items-center justify-between border-b border-stone-800 pb-3">
                 <span className="text-xs font-bold uppercase tracking-wider text-amber-400">
-                  Dynamic Order Subtotal
+                  {product.hidePrice ? 'Pricing on Request' : 'Dynamic Order Subtotal'}
                 </span>
                 <span className="text-xs text-stone-400 font-mono">
                   {quantity} unit{quantity > 1 ? 's' : ''} configured
                 </span>
               </div>
 
-              <div className="space-y-2 text-xs">
-                <div className="flex justify-between text-stone-300">
-                  <span>Unit Price Before Discount:</span>
-                  <span className="font-mono text-stone-200">
-                    {formatNaira(pricing.unitPriceBeforeDiscount)}
-                  </span>
-                </div>
-
-                {pricing.bulkDiscountPercentage > 0 && (
-                  <div className="flex justify-between text-amber-400 font-bold">
-                    <span>Bulk Tier Savings ({pricing.bulkDiscountPercentage}% Off):</span>
-                    <span className="font-mono">-{formatNaira(pricing.savingsNgn)}</span>
+              {product.hidePrice ? (
+                <div className="p-4 rounded-2xl bg-stone-800/80 border border-stone-700 space-y-3 text-xs">
+                  <div className="flex items-center gap-2">
+                    <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-bold text-[10px] uppercase tracking-wider">
+                      Fluctuating Market Rate
+                    </span>
                   </div>
-                )}
-
-                <div className="flex justify-between text-stone-300">
-                  <span>Effective Unit Rate:</span>
-                  <span className="font-mono font-bold text-white">
-                    {formatNaira(pricing.unitPriceAfterDiscount)} / unit
-                  </span>
-                </div>
-
-                {designerFeeNgn > 0 && (
-                  <div className="flex justify-between text-amber-400 font-bold">
-                    <span>In-House Pre-Press Creative Desk:</span>
-                    <span className="font-mono">+{formatNaira(designerFeeNgn)}</span>
-                  </div>
-                )}
-
-                <div className="pt-3 border-t border-stone-800 flex items-baseline justify-between">
                   <div>
-                    <span className="text-xs uppercase font-bold text-stone-400 block">
-                      Total Print Amount:
+                    <span className="text-xs uppercase font-bold text-stone-400 block mb-1">
+                      Storefront Rate:
                     </span>
-                    <span className="text-2xl sm:text-3xl font-black text-amber-400 font-mono tracking-tight">
-                      {formatNaira(grandTotalWithDesign)}
+                    <span className="text-2xl sm:text-3xl font-black text-amber-400 tracking-tight">
+                      {product.priceCustomLabel || 'Price on Request'}
+                    </span>
+                  </div>
+                  <p className="text-stone-300 text-xs leading-relaxed">
+                    Due to variable material, paper stock, and finishing costs, our print desk confirms quotes directly via WhatsApp or phone within minutes.
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-2 text-xs">
+                  <div className="flex justify-between text-stone-300">
+                    <span>Unit Price Before Discount:</span>
+                    <span className="font-mono text-stone-200">
+                      {formatNaira(pricing.unitPriceBeforeDiscount)}
                     </span>
                   </div>
 
-                  <span className="text-[11px] text-stone-400 text-right">
-                    Excludes shipping fee<br />(Calculated in Cart)
-                  </span>
-                </div>
-              </div>
+                  {pricing.bulkDiscountPercentage > 0 && (
+                    <div className="flex justify-between text-amber-400 font-bold">
+                      <span>Bulk Tier Savings ({pricing.bulkDiscountPercentage}% Off):</span>
+                      <span className="font-mono">-{formatNaira(pricing.savingsNgn)}</span>
+                    </div>
+                  )}
 
-              {/* Add to Cart CTA */}
-              <button
-                id="pdp-add-to-cart-btn"
-                type="button"
-                onClick={handleAddToCartClick}
-                className="w-full py-4 px-6 rounded-2xl bg-amber-600 hover:bg-amber-500 active:scale-98 text-white font-black text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-lg shadow-amber-600/30 transition-all"
-              >
-                <ShoppingBag className="w-5 h-5 text-white" />
-                <span>Add to Cart • {formatNaira(grandTotalWithDesign)}</span>
-              </button>
+                  <div className="flex justify-between text-stone-300">
+                    <span>Effective Unit Rate:</span>
+                    <span className="font-mono font-bold text-white">
+                      {formatNaira(pricing.unitPriceAfterDiscount)} / unit
+                    </span>
+                  </div>
+
+                  {designerFeeNgn > 0 && (
+                    <div className="flex justify-between text-amber-400 font-bold">
+                      <span>In-House Pre-Press Creative Desk:</span>
+                      <span className="font-mono">+{formatNaira(designerFeeNgn)}</span>
+                    </div>
+                  )}
+
+                  <div className="pt-3 border-t border-stone-800 flex items-baseline justify-between">
+                    <div>
+                      <span className="text-xs uppercase font-bold text-stone-400 block">
+                        Total Print Amount:
+                      </span>
+                      <span className="text-2xl sm:text-3xl font-black text-amber-400 font-mono tracking-tight">
+                        {formatNaira(grandTotalWithDesign)}
+                      </span>
+                    </div>
+
+                    <span className="text-[11px] text-stone-400 text-right">
+                      Excludes shipping fee<br />(Calculated in Cart)
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              {/* Action Buttons: WhatsApp Instant Quote + Add to Cart */}
+              {product.hidePrice ? (
+                <div className="space-y-2.5">
+                  <a
+                    href={`https://wa.me/2347030372539?text=${encodeURIComponent(`Hello Silver & Gold Inkshine Ltd, I would like to request an instant price quote for: "${product.name}" (${quantity} units, specs: ${Object.entries(selectedOptions).map(([k, v]) => `${k}: ${v}`).join(', ')}).`)}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="w-full py-4 px-6 rounded-2xl bg-emerald-600 hover:bg-emerald-500 active:scale-98 text-white font-black text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-lg shadow-emerald-600/30 transition-all cursor-pointer"
+                  >
+                    <MessageSquare className="w-5 h-5 text-white" />
+                    <span>Request Instant Quote on WhatsApp</span>
+                  </a>
+
+                  <button
+                    type="button"
+                    onClick={handleAddToCartClick}
+                    className="w-full py-2.5 px-4 rounded-xl bg-stone-800 hover:bg-stone-700 active:scale-98 text-stone-200 hover:text-white font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer border border-stone-700"
+                  >
+                    <ShoppingBag className="w-4 h-4" />
+                    <span>Save Order Specs to Cart</span>
+                  </button>
+                </div>
+              ) : (
+                <button
+                  id="pdp-add-to-cart-btn"
+                  type="button"
+                  onClick={handleAddToCartClick}
+                  className="w-full py-4 px-6 rounded-2xl bg-amber-600 hover:bg-amber-500 active:scale-98 text-white font-black text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-lg shadow-amber-600/30 transition-all cursor-pointer"
+                >
+                  <ShoppingBag className="w-5 h-5 text-white" />
+                  <span>Add to Cart • {formatNaira(grandTotalWithDesign)}</span>
+                </button>
+              )}
 
               {addedToast && (
                 <div className="text-center text-xs text-amber-400 font-bold flex items-center justify-center gap-1.5 animate-in fade-in">

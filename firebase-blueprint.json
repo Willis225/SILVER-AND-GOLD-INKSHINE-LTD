@@ -45,6 +45,8 @@
         "name": { "type": "string" },
         "category": { "type": "string" },
         "basePriceNgn": { "type": "number" },
+        "hidePrice": { "type": "boolean" },
+        "priceCustomLabel": { "type": "string" },
         "image": { "type": "string" },
         "images": { "type": "array" },
         "description": { "type": "string" }

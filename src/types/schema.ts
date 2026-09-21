@@ -80,6 +80,8 @@ export interface Product {
   description: string;
   shortDescription: string;
   basePriceNgn: number;
+  hidePrice?: boolean; // When true, price is hidden on storefront (shows "Price on Request / Contact for Quote")
+  priceCustomLabel?: string; // Optional custom text e.g. "Price on Request"
   minQuantity: number;
   turnaroundDays: number;
   badge?: string;

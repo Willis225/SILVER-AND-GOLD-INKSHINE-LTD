@@ -286,13 +286,15 @@ export const ImageManagerModal: React.FC<ImageManagerModalProps> = ({
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (!file.type.startsWith('image/')) {
-      setErrorNotice('Please choose a valid image file (JPG, PNG, WebP, SVG).');
+    // Mobile photo validation (handles iPhone HEIC and missing MIME types)
+    const isValidImage = (file.type && file.type.startsWith('image/')) || /\.(jpe?g|png|webp|heic|heif|gif|svg|tiff?)$/i.test(file.name || '');
+    if (!isValidImage) {
+      setErrorNotice('Please choose a valid image file (JPG, PNG, WebP, HEIC, SVG).');
       return;
     }
 
-    if (file.size > 20 * 1024 * 1024) {
-      setErrorNotice('Image file size must be less than 20MB.');
+    if (file.size > 50 * 1024 * 1024) {
+      setErrorNotice('Image file size must be less than 50MB.');
       return;
     }
 
@@ -301,7 +303,7 @@ export const ImageManagerModal: React.FC<ImageManagerModalProps> = ({
     setSuccessNotice(null);
 
     try {
-      const optimizedUrl = await compressImageFile(file, 1200, 0.76);
+      const optimizedUrl = await compressImageFile(file, 1080, 0.78);
       setSelectedImageUrl(optimizedUrl);
 
       const imageId = `img-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
@@ -312,7 +314,7 @@ export const ImageManagerModal: React.FC<ImageManagerModalProps> = ({
         uploadedAt: new Date().toISOString()
       });
 
-      setSuccessNotice('Image compressed & uploaded to Cloud Database! Available across all devices.');
+      setSuccessNotice('Photo optimized & securely saved to Cloud Database! Available across all devices.');
       setIsUploading(false);
     } catch (err) {
       console.error('Image processing error:', err);
@@ -725,7 +727,7 @@ export const ImageManagerModal: React.FC<ImageManagerModalProps> = ({
                 type="file"
                 ref={fileInputRef}
                 onChange={handleFileChange}
-                accept="image/png,image/jpeg,image/webp,image/svg+xml"
+                accept="image/*"
                 className="hidden"
               />
               <button

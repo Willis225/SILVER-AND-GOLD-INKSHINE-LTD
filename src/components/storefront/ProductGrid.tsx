@@ -259,10 +259,10 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
                     <div className="flex items-baseline justify-between py-2">
                       <div>
                         <span className="text-[10px] text-stone-400 uppercase font-medium block">
-                          Starting at
+                          {product.hidePrice ? 'Pricing' : 'Starting at'}
                         </span>
-                        <div className="text-lg font-black text-stone-900 font-mono tracking-tight">
-                          {formatNaira(product.basePriceNgn)}
+                        <div className={`font-black tracking-tight ${product.hidePrice ? 'text-sm text-amber-800' : 'text-lg text-stone-900 font-mono'}`}>
+                          {product.hidePrice ? (product.priceCustomLabel || 'Price on Request') : formatNaira(product.basePriceNgn)}
                         </div>
                       </div>
 
@@ -287,7 +287,7 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
                         onClick={() => onOpenQuickView(product)}
                         className="py-2 px-2.5 rounded-xl bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white text-xs font-bold flex items-center justify-center gap-1 shadow-xs transition-colors cursor-pointer"
                       >
-                        <span>Order Now</span>
+                        <span>{product.hidePrice ? 'Get Quote' : 'Order Now'}</span>
                         <ArrowRight className="w-3.5 h-3.5" />
                       </button>
                     </div>

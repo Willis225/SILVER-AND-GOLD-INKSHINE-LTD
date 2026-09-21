@@ -20,7 +20,9 @@ import {
   DollarSign,
   Star,
   Images,
-  Layers
+  Layers,
+  Eye,
+  EyeOff
 } from 'lucide-react';
 import { Product, ProductCategory } from '../../types/schema';
 import { STORE_CATEGORIES, getProductCategoryTag } from '../../utils/categoryUtils';
@@ -77,6 +79,7 @@ export const ProductPricingManager: React.FC<ProductPricingManagerProps> = ({
   const [newMinQuantity, setNewMinQuantity] = useState<number>(1);
   const [newTurnaroundDays, setNewTurnaroundDays] = useState<number>(2);
   const [newBadge, setNewBadge] = useState<string>('Best Seller');
+  const [newHidePrice, setNewHidePrice] = useState<boolean>(false);
   const [newImageUrl, setNewImageUrl] = useState<string>(PRINT_IMAGE_PRESETS[0].url);
   const [newImages, setNewImages] = useState<string[]>([]);
   const [batchUploadMode, setBatchUploadMode] = useState<boolean>(false);
@@ -85,7 +88,8 @@ export const ProductPricingManager: React.FC<ProductPricingManagerProps> = ({
   const [isUploadingProductImg, setIsUploadingProductImg] = useState<boolean>(false);
   const newProductFileInputRef = useRef<HTMLInputElement>(null);
 
-  // Edit product modal state for multiple images
+  // Edit product modal state for multiple images & details
+  const [editModalHidePrice, setEditModalHidePrice] = useState<boolean>(false);
   const [editModalImages, setEditModalImages] = useState<string[]>([]);
   const [isUploadingEditImages, setIsUploadingEditImages] = useState<boolean>(false);
   const editProductFileInputRef = useRef<HTMLInputElement>(null);
@@ -203,6 +207,7 @@ export const ProductPricingManager: React.FC<ProductPricingManagerProps> = ({
     setEditModalShortDesc(product.shortDescription || '');
     setEditModalDesc(product.description || '');
     setEditModalPrice(product.basePriceNgn);
+    setEditModalHidePrice(Boolean(product.hidePrice));
     setEditModalTurnaround(product.turnaroundDays);
     setEditModalMinQty(product.minQuantity || 1);
     setEditModalBadge(product.badge || '');
@@ -228,6 +233,7 @@ export const ProductPricingManager: React.FC<ProductPricingManagerProps> = ({
       shortDescription: editModalShortDesc.trim(),
       description: editModalDesc.trim(),
       basePriceNgn: Number(editModalPrice) || editingProductModal.basePriceNgn,
+      hidePrice: editModalHidePrice,
       turnaroundDays: Number(editModalTurnaround) || editingProductModal.turnaroundDays,
       minQuantity: Number(editModalMinQty) || 1,
       badge: editModalBadge.trim() || undefined,
@@ -321,6 +327,7 @@ export const ProductPricingManager: React.FC<ProductPricingManagerProps> = ({
           categoryLabel: resolvedCatLabel,
           categoryPlacement: newCategoryPlacement,
           basePriceNgn: Number(newBasePrice) || 10000,
+          hidePrice: newHidePrice,
           minQuantity: Number(newMinQuantity) || 1,
           turnaroundDays: Number(newTurnaroundDays) || 2,
           badge: newBadge.trim() || undefined,
@@ -346,6 +353,7 @@ export const ProductPricingManager: React.FC<ProductPricingManagerProps> = ({
         categoryLabel: resolvedCatLabel,
         categoryPlacement: newCategoryPlacement,
         basePriceNgn: Number(newBasePrice) || 10000,
+        hidePrice: newHidePrice,
         minQuantity: Number(newMinQuantity) || 1,
         turnaroundDays: Number(newTurnaroundDays) || 2,
         badge: newBadge.trim() || undefined,
@@ -582,19 +590,45 @@ export const ProductPricingManager: React.FC<ProductPricingManagerProps> = ({
                     {/* Price */}
                     <td className="py-3 px-4 font-mono">
                       {isQuickEditing ? (
-                        <div className="flex items-center gap-1">
-                          <span className="text-stone-500 font-bold">₦</span>
-                          <input
-                            type="number"
-                            value={priceInput}
-                            onChange={(e) => setPriceInput(Number(e.target.value))}
-                            className="w-24 p-1 bg-amber-50 border border-amber-300 rounded text-xs font-bold text-stone-900"
-                          />
+                        <div className="space-y-1.5">
+                          <div className="flex items-center gap-1">
+                            <span className="text-stone-500 font-bold">₦</span>
+                            <input
+                              type="number"
+                              value={priceInput}
+                              onChange={(e) => setPriceInput(Number(e.target.value))}
+                              className="w-24 p-1 bg-amber-50 border border-amber-300 rounded text-xs font-bold text-stone-900"
+                            />
+                          </div>
+                          <label className="flex items-center gap-1.5 text-[10px] text-stone-600 cursor-pointer">
+                            <input
+                              type="checkbox"
+                              checked={Boolean(product.hidePrice)}
+                              onChange={(e) => {
+                                onUpdateProduct(product.id, { hidePrice: e.target.checked });
+                              }}
+                              className="rounded text-amber-600 focus:ring-amber-500"
+                            />
+                            <span>Hide on store</span>
+                          </label>
                         </div>
                       ) : (
-                        <span className="text-sm font-bold text-stone-900">
-                          ₦{(product.basePriceNgn ?? 0).toLocaleString()}
-                        </span>
+                        <div className="space-y-1">
+                          {product.hidePrice ? (
+                            <span className="inline-flex items-center gap-1 text-[10px] font-bold text-amber-900 bg-amber-100 px-1.5 py-0.5 rounded border border-amber-300">
+                              <EyeOff className="w-2.5 h-2.5" /> Price Hidden
+                            </span>
+                          ) : (
+                            <span className="text-sm font-bold text-stone-900">
+                              ₦{(product.basePriceNgn ?? 0).toLocaleString()}
+                            </span>
+                          )}
+                          {product.hidePrice && (
+                            <div className="text-[10px] text-stone-400 font-mono">
+                              Ref: ₦{(product.basePriceNgn ?? 0).toLocaleString()}
+                            </div>
+                          )}
+                        </div>
                       )}
                     </td>
 
@@ -626,6 +660,29 @@ export const ProductPricingManager: React.FC<ProductPricingManagerProps> = ({
 
                     {/* Actions */}
                     <td className="py-3 px-4 text-right space-x-1.5 whitespace-nowrap">
+                      {/* 1-Click Hide/Show Price Toggle */}
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const next = !product.hidePrice;
+                          onUpdateProduct(product.id, { hidePrice: next });
+                          setUploadSuccessMessage(
+                            next
+                              ? `Price hidden for "${product.name}". Storefront displays "Price on Request".`
+                              : `Price visible for "${product.name}" (₦${(product.basePriceNgn ?? 0).toLocaleString()}).`
+                          );
+                        }}
+                        className={`px-2 py-1 rounded font-bold text-xs inline-flex items-center gap-1 transition-colors cursor-pointer border ${
+                          product.hidePrice
+                            ? 'bg-amber-100 hover:bg-amber-200 text-amber-900 border-amber-300'
+                            : 'bg-stone-100 hover:bg-stone-200 text-stone-700 border-stone-300'
+                        }`}
+                        title={product.hidePrice ? 'Click to make price visible on storefront' : 'Click to hide price on storefront'}
+                      >
+                        {product.hidePrice ? <Eye className="w-3 h-3 text-amber-800" /> : <EyeOff className="w-3 h-3 text-stone-500" />}
+                        <span>{product.hidePrice ? 'Show Price' : 'Hide Price'}</span>
+                      </button>
+
                       {isQuickEditing ? (
                         <button
                           type="button"
@@ -968,6 +1025,37 @@ export const ProductPricingManager: React.FC<ProductPricingManagerProps> = ({
                 </div>
               </div>
 
+              {/* Hide Price on Storefront Toggle */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-xl bg-amber-50/70 border border-amber-200">
+                <div className="flex items-start gap-2.5">
+                  <div className={`p-1.5 rounded-lg shrink-0 mt-0.5 ${editModalHidePrice ? 'bg-amber-600 text-white shadow-xs' : 'bg-stone-200 text-stone-600'}`}>
+                    {editModalHidePrice ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-bold text-stone-900">
+                        Hide Price on Storefront
+                      </span>
+                      <span className="text-[10px] font-bold px-1.5 py-0.2 rounded bg-amber-200 text-amber-900">
+                        {editModalHidePrice ? 'Active: "Price on Request"' : 'Off: Numeric Price Visible'}
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-stone-600 mt-0.5 leading-relaxed">
+                      Enable this when paper, ink, or material prices fluctuate. The storefront displays <span className="font-semibold text-amber-900">"Price on Request"</span> with a direct WhatsApp order button.
+                    </p>
+                  </div>
+                </div>
+                <label className="relative inline-flex items-center cursor-pointer shrink-0 self-end sm:self-center">
+                  <input
+                    type="checkbox"
+                    checked={editModalHidePrice}
+                    onChange={(e) => setEditModalHidePrice(e.target.checked)}
+                    className="sr-only peer"
+                  />
+                  <div className="w-11 h-6 bg-stone-300 peer-focus:outline-hidden rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-stone-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-600"></div>
+                </label>
+              </div>
+
               {/* Modal Actions */}
               <div className="pt-4 border-t border-stone-200 flex items-center justify-between">
                 <button
@@ -1135,6 +1223,37 @@ export const ProductPricingManager: React.FC<ProductPricingManagerProps> = ({
                     className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs font-mono font-bold focus:ring-2 focus:ring-[#b8860b]"
                   />
                 </div>
+              </div>
+
+              {/* Hide Price on Storefront Toggle (New Upload) */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-xl bg-amber-50/70 border border-amber-200">
+                <div className="flex items-start gap-2.5">
+                  <div className={`p-1.5 rounded-lg shrink-0 mt-0.5 ${newHidePrice ? 'bg-amber-600 text-white shadow-xs' : 'bg-stone-200 text-stone-600'}`}>
+                    {newHidePrice ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-bold text-stone-900">
+                        Hide Price on Storefront
+                      </span>
+                      <span className="text-[10px] font-bold px-1.5 py-0.2 rounded bg-amber-200 text-amber-900">
+                        {newHidePrice ? 'Active: "Price on Request"' : 'Off: Numeric Price Visible'}
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-stone-600 mt-0.5 leading-relaxed">
+                      Recommended when prices of jobs fluctuate. Storefront will show <span className="font-semibold text-amber-900">"Price on Request"</span> with a direct WhatsApp order button, while your base reference price remains stored internally.
+                    </p>
+                  </div>
+                </div>
+                <label className="relative inline-flex items-center cursor-pointer shrink-0 self-end sm:self-center">
+                  <input
+                    type="checkbox"
+                    checked={newHidePrice}
+                    onChange={(e) => setNewHidePrice(e.target.checked)}
+                    className="sr-only peer"
+                  />
+                  <div className="w-11 h-6 bg-stone-300 peer-focus:outline-hidden rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-stone-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-600"></div>
+                </label>
               </div>
 
               <div>

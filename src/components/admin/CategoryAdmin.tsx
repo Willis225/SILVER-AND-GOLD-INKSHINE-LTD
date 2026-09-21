@@ -21,15 +21,25 @@ import {
   Grid, 
   List, 
   Eye, 
+  EyeOff,
   Sparkles, 
   AlertCircle,
   Database,
   ArrowUpRight,
-  ChevronDown
+  ChevronDown,
+  Cloud,
+  Smartphone,
+  CheckCheck
 } from 'lucide-react';
 import { Product, ProductCategory } from '../../types/schema';
 import { STORE_CATEGORIES, CategoryDefinition, getProductCategoryTag } from '../../utils/categoryUtils';
-import { compressImageFile, saveUploadedImageToCloud } from '../../lib/firebase';
+import { 
+  compressImageFile, 
+  saveUploadedImageToCloud, 
+  saveSingleProductToCloud,
+  subscribeUploadedImages, 
+  CloudUploadedImage 
+} from '../../lib/firebase';
 import { 
   searchOnlineProductImages, 
   SearchResultImage, 
@@ -54,6 +64,7 @@ interface StagedPhotoItem {
   title: string;
   isCover: boolean;
   priceNgn: number;
+  hidePrice?: boolean;
 }
 
 export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
@@ -89,12 +100,14 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
   const [singleGalleryTitle, setSingleGalleryTitle] = useState<string>('');
   const [singleGalleryDescription, setSingleGalleryDescription] = useState<string>('');
   const [singleGalleryPrice, setSingleGalleryPrice] = useState<number>(25000);
+  const [singleGalleryHidePrice, setSingleGalleryHidePrice] = useState<boolean>(false);
   const [singleGalleryTurnaround, setSingleGalleryTurnaround] = useState<number>(2);
   const [singleGalleryMinQty, setSingleGalleryMinQty] = useState<number>(1);
   const [singleGalleryBadge, setSingleGalleryBadge] = useState<string>('Featured Job');
 
   // Common batch configuration state
   const [batchBasePrice, setBatchBasePrice] = useState<number>(20000);
+  const [batchHidePrice, setBatchHidePrice] = useState<boolean>(false);
   const [batchNamingPrefix, setBatchNamingPrefix] = useState<string>('');
   const [batchTurnaroundDays, setBatchTurnaroundDays] = useState<number>(2);
   const [batchMinQty, setBatchMinQty] = useState<number>(1);
@@ -109,6 +122,21 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
 
   // Notifications
   const [toastMessage, setToastMessage] = useState<{ title: string; desc: string } | null>(null);
+
+  // Cloud & Mobile Phone Uploads Library
+  const [cloudLibraryImages, setCloudLibraryImages] = useState<CloudUploadedImage[]>([]);
+  const [isCloudGalleryOpen, setIsCloudGalleryOpen] = useState<boolean>(false);
+  const [selectedCloudIds, setSelectedCloudIds] = useState<string[]>([]);
+
+  // Subscribe to real-time cloud uploaded images across all devices (phone, laptop, tablet)
+  React.useEffect(() => {
+    const unsubscribe = subscribeUploadedImages((images) => {
+      setCloudLibraryImages(images || []);
+    });
+    return () => {
+      if (typeof unsubscribe === 'function') unsubscribe();
+    };
+  }, []);
 
   // Filter categories
   const filteredCategories = useMemo(() => {
@@ -225,15 +253,54 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
     );
   };
 
+  // Stage selected photos from the Cloud / Mobile uploads gallery
+  const handleStageCloudPhotos = (cloudPhotos: CloudUploadedImage[]) => {
+    if (!cloudPhotos || cloudPhotos.length === 0) return;
+
+    const newStaged: StagedPhotoItem[] = cloudPhotos.map((img, i) => {
+      const cleanName = (img.name || 'Cloud Photo')
+        .replace(/\.[^/.]+$/, '')
+        .replace(/[-_]/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+
+      const formattedTitle = cleanName.length > 3
+        ? cleanName.charAt(0).toUpperCase() + cleanName.slice(1)
+        : `${currentCategoryDef.shortLabel} Work #${stagedPhotos.length + i + 1}`;
+
+      return {
+        id: img.id || `cloud-staged-${Date.now()}-${i}`,
+        dataUrl: img.dataUrl,
+        fileName: img.name || 'Cloud Upload.jpg',
+        title: formattedTitle,
+        isCover: stagedPhotos.length === 0 && i === 0,
+        priceNgn: batchBasePrice,
+      };
+    });
+
+    setStagedPhotos((prev) => [...prev, ...newStaged]);
+    setIsCloudGalleryOpen(false);
+    setSelectedCloudIds([]);
+    showToast(
+      'Phone & Cloud Uploads Staged',
+      `Added ${newStaged.length} photo(s) from your Cloud Database to "${currentCategoryDef.label}". Ready to publish!`
+    );
+  };
+
   // Process multiple image files from input or drag-and-drop
   const processFiles = async (files: FileList | File[]) => {
     if (!files || files.length === 0) return;
 
     setIsUploading(true);
-    const fileArray: File[] = Array.from(files).filter((f: any): f is File => Boolean(f && typeof f.type === 'string' && f.type.startsWith('image/')));
+    // Safe validation supporting iPhone HEIC/HEIF, camera uploads, and standard images
+    const fileArray: File[] = Array.from(files).filter((f: any): f is File => {
+      if (!f) return false;
+      if (typeof f.type === 'string' && f.type.startsWith('image/')) return true;
+      return /\.(jpe?g|png|webp|heic|heif|gif|svg|bmp|tiff?)$/i.test(f.name || '');
+    });
     
     if (fileArray.length === 0) {
-      alert('Please select valid image files (JPG, PNG, WEBP).');
+      alert('Please select valid image files (JPG, PNG, WEBP, HEIC).');
       setIsUploading(false);
       return;
     }
@@ -244,19 +311,19 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
     try {
       for (let i = 0; i < totalFiles; i++) {
         const file = fileArray[i];
-        setUploadProgressText(`Optimizing photo ${i + 1} of ${totalFiles}: "${file.name.slice(0, 20)}..."`);
+        setUploadProgressText(`Optimizing & saving to Cloud Database (${i + 1} of ${totalFiles}): "${file.name.slice(0, 24)}..."`);
         
-        // Compress for web high-res & fast sync
-        const compressedDataUrl = await compressImageFile(file, 1200, 0.78);
+        // Multi-pass mobile-optimized compression (<120KB, crystal clear Retina clarity)
+        const compressedDataUrl = await compressImageFile(file, 1080, 0.78);
         
-        // Push to cloud background storage
+        // Push to cloud background storage with retry for mobile devices
         const imageId = `cat-img-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`;
-        saveUploadedImageToCloud({
+        await saveUploadedImageToCloud({
           id: imageId,
           name: file.name,
           dataUrl: compressedDataUrl,
           uploadedAt: new Date().toISOString()
-        }).catch((err) => console.warn('Cloud sync background error:', err));
+        });
 
         // Generate clean title from file name
         const cleanName = file.name
@@ -287,12 +354,12 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
       }
 
       showToast(
-        'Images Ready for Category Publish',
-        `Successfully loaded and optimized ${newStaged.length} image(s) for "${currentCategoryDef.label}".`
+        'Saved to Cloud & Staged Across All Devices',
+        `Successfully optimized and saved ${newStaged.length} image(s) to Cloud Database for "${currentCategoryDef.label}".`
       );
     } catch (err) {
       console.error('Error processing multiple category images:', err);
-      alert('Error reading or compressing image files. Please try again with standard JPG or PNG images.');
+      alert('Error reading or uploading image files. Please check connection and try again.');
     } finally {
       setIsUploading(false);
       setUploadProgressText('');
@@ -340,40 +407,55 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
     if (!files || files.length === 0 || !targetProductForAppend) return;
 
     setIsUploading(true);
-    const fileArray: File[] = Array.from(files).filter((f: any): f is File => f && typeof f.type === 'string' && f.type.startsWith('image/'));
+    const fileArray: File[] = Array.from(files).filter((f: any): f is File => {
+      if (!f) return false;
+      if (typeof f.type === 'string' && f.type.startsWith('image/')) return true;
+      return /\.(jpe?g|png|webp|heic|heif|gif|svg|bmp|tiff?)$/i.test(f.name || '');
+    });
     const newImageUrls: string[] = [];
 
     try {
       for (let i = 0; i < fileArray.length; i++) {
         const file = fileArray[i];
-        setUploadProgressText(`Uploading photo ${i + 1} of ${fileArray.length}...`);
-        const compressed = await compressImageFile(file, 1200, 0.78);
+        setUploadProgressText(`Optimizing & syncing photo ${i + 1} of ${fileArray.length}...`);
+        const compressed = await compressImageFile(file, 1080, 0.78);
         newImageUrls.push(compressed);
         
-        saveUploadedImageToCloud({
+        await saveUploadedImageToCloud({
           id: `prod-extra-${Date.now()}-${i}`,
           name: file.name,
           dataUrl: compressed,
           uploadedAt: new Date().toISOString(),
-        }).catch(console.warn);
+        });
       }
 
       const existingImages = targetProductForAppend.images || [targetProductForAppend.image];
       const mergedImages = Array.from(new Set([...existingImages, ...newImageUrls]));
 
-      onUpdateProduct(targetProductForAppend.id, {
+      const updatedProd: Product = {
+        ...targetProductForAppend,
         images: mergedImages,
         image: mergedImages[0], // ensure valid cover
+      };
+
+      onUpdateProduct(targetProductForAppend.id, {
+        images: mergedImages,
+        image: mergedImages[0],
       });
 
+      // Synchronize with Firestore cloud so all devices see the new photos
+      saveSingleProductToCloud(updatedProd).catch((err) =>
+        console.warn('Cloud sync error for updated product:', err)
+      );
+
       showToast(
-        'Product Gallery Expanded',
+        'Product Gallery Expanded & Synced Across All Devices',
         `Added ${newImageUrls.length} new photo(s) to "${targetProductForAppend.name}". It now has ${mergedImages.length} gallery images!`
       );
       setTargetProductForAppend(null);
     } catch (err) {
       console.error('Error appending photos to product:', err);
-      alert('Failed to upload photos to product. Please try again.');
+      alert('Failed to upload photos to product. Please check connection and try again.');
     } finally {
       setIsUploading(false);
       setUploadProgressText('');
@@ -412,6 +494,7 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
           categoryLabel: resolvedCatLabel,
           categoryPlacement: selectedCategoryKey,
           basePriceNgn: Number(photo.priceNgn) || batchBasePrice || 20000,
+          hidePrice: photo.hidePrice !== undefined ? photo.hidePrice : batchHidePrice,
           minQuantity: batchMinQty || 1,
           turnaroundDays: batchTurnaroundDays || 2,
           badge: 'Latest Project',
@@ -457,11 +540,15 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
         if (onAddProduct) {
           onAddProduct(newProduct);
         }
+        // Securely sync to Cloud Firestore across all devices
+        saveSingleProductToCloud(newProduct).catch((err) =>
+          console.warn('Failed to save new product to cloud:', err)
+        );
       });
 
       showToast(
-        'Batch Published to Category!',
-        `Successfully published ${stagedPhotos.length} separate items under "${resolvedCatLabel}". They are now live on the storefront!`
+        'Batch Published & Synced Across All Devices!',
+        `Successfully published ${stagedPhotos.length} separate items under "${resolvedCatLabel}". They are now live on the storefront and backed up in Cloud Database!`
       );
     } else {
       // 2. Single Gallery Mode: merge all photos into 1 product
@@ -484,6 +571,7 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
         categoryLabel: resolvedCatLabel,
         categoryPlacement: selectedCategoryKey,
         basePriceNgn: Number(singleGalleryPrice) || 25000,
+        hidePrice: singleGalleryHidePrice,
         minQuantity: singleGalleryMinQty || 1,
         turnaroundDays: singleGalleryTurnaround || 2,
         badge: singleGalleryBadge.trim() || 'Multi-Photo Showcase',
@@ -518,9 +606,13 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
       if (onAddProduct) {
         onAddProduct(newProduct);
       }
+      // Securely sync to Cloud Firestore across all devices
+      saveSingleProductToCloud(newProduct).catch((err) =>
+        console.warn('Failed to save gallery product to cloud:', err)
+      );
 
       showToast(
-        'Product Gallery Created!',
+        'Product Gallery Created & Synced Across All Devices!',
         `Successfully published "${title}" with an interactive gallery of ${allImages.length} photos under "${resolvedCatLabel}"!`
       );
     }
@@ -735,6 +827,16 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
             <div className="flex flex-wrap items-center gap-2">
               <button
                 type="button"
+                onClick={() => setIsCloudGalleryOpen(true)}
+                className="px-4 py-2 bg-stone-900 hover:bg-stone-800 text-white rounded-xl text-xs font-bold flex items-center gap-2 shadow-sm transition-all cursor-pointer"
+                title="View and stage photos saved from phone or other devices"
+              >
+                <Cloud className="w-4 h-4 text-emerald-400" />
+                <span>Phone &amp; Cloud Uploads ({cloudLibraryImages.length})</span>
+              </button>
+
+              <button
+                type="button"
                 onClick={handleOpenAutoFetchModal}
                 className="px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-stone-950 rounded-xl text-xs font-black flex items-center gap-2 shadow-sm transition-all cursor-pointer"
                 title="Auto-fetch matching photos for this category (Option 2)"
@@ -788,11 +890,20 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
                   Drag &amp; Drop Multiple Photos Here
                 </h4>
                 <p className="text-xs text-stone-500 mt-1">
-                  Or click below to select 1, 5, 10, or 20+ images from your computer or phone gallery.
+                  Or click below to select 1, 5, 10, or 20+ images from your phone gallery or computer.
                 </p>
               </div>
 
               <div className="flex flex-wrap items-center justify-center gap-3 pt-1">
+                <button
+                  type="button"
+                  onClick={() => setIsCloudGalleryOpen(true)}
+                  className="px-5 py-2.5 bg-stone-100 hover:bg-stone-200 border border-stone-300 text-stone-900 rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2 cursor-pointer"
+                >
+                  <Cloud className="w-4 h-4 text-emerald-600" />
+                  <span>Phone &amp; Cloud Uploads ({cloudLibraryImages.length})</span>
+                </button>
+
                 <button
                   type="button"
                   onClick={handleOpenAutoFetchModal}
@@ -949,6 +1060,41 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
                     </div>
                   </div>
 
+                  {/* Hide Price on Storefront Toggle (Batch) */}
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 rounded-xl bg-amber-50/70 border border-amber-200">
+                    <div className="flex items-start gap-2.5">
+                      <div className={`p-1.5 rounded-lg shrink-0 mt-0.5 ${batchHidePrice ? 'bg-amber-600 text-white shadow-xs' : 'bg-stone-200 text-stone-600'}`}>
+                        {batchHidePrice ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-bold text-stone-900">
+                            Hide Price on Storefront
+                          </span>
+                          <span className="text-[10px] font-bold px-1.5 py-0.2 rounded bg-amber-200 text-amber-900">
+                            {batchHidePrice ? 'Active: "Price on Request"' : 'Off: Numeric Price Visible'}
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-stone-600 mt-0.5 leading-relaxed">
+                          Recommended when paper and material costs fluctuate. Storefront displays <span className="font-semibold text-amber-900">"Price on Request"</span> with a direct WhatsApp quote button.
+                        </p>
+                      </div>
+                    </div>
+                    <label className="relative inline-flex items-center cursor-pointer shrink-0 self-end sm:self-center">
+                      <input
+                        type="checkbox"
+                        checked={batchHidePrice}
+                        onChange={(e) => {
+                          const checked = e.target.checked;
+                          setBatchHidePrice(checked);
+                          setStagedPhotos((prev) => prev.map((p) => ({ ...p, hidePrice: checked })));
+                        }}
+                        className="sr-only peer"
+                      />
+                      <div className="w-11 h-6 bg-stone-300 peer-focus:outline-hidden rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-stone-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-600"></div>
+                    </label>
+                  </div>
+
                   <div>
                     <label className="block text-[11px] font-bold text-stone-600 mb-1">
                       Batch Naming Prefix (Optional)
@@ -982,7 +1128,7 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
                     </div>
                     <div>
                       <label className="block text-[11px] font-bold text-stone-600 mb-1">
-                        Base Price (₦ NGN) <span className="text-red-500">*</span>
+                        Base Price (₦ NGN) {singleGalleryHidePrice && <span className="text-amber-700 font-normal">(Internal reference)</span>} <span className="text-red-500">*</span>
                       </label>
                       <input
                         type="number"
@@ -991,6 +1137,37 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
                         className="w-full px-3 py-1.5 bg-white border border-stone-300 rounded-lg text-xs font-mono font-bold"
                       />
                     </div>
+                  </div>
+
+                  {/* Hide Price on Storefront Toggle (Single Gallery) */}
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 rounded-xl bg-amber-50/70 border border-amber-200">
+                    <div className="flex items-start gap-2.5">
+                      <div className={`p-1.5 rounded-lg shrink-0 mt-0.5 ${singleGalleryHidePrice ? 'bg-amber-600 text-white shadow-xs' : 'bg-stone-200 text-stone-600'}`}>
+                        {singleGalleryHidePrice ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-bold text-stone-900">
+                            Hide Price on Storefront
+                          </span>
+                          <span className="text-[10px] font-bold px-1.5 py-0.2 rounded bg-amber-200 text-amber-900">
+                            {singleGalleryHidePrice ? 'Active: "Price on Request"' : 'Off: Numeric Price Visible'}
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-stone-600 mt-0.5 leading-relaxed">
+                          Keeps pricing flexible when raw material rates fluctuate. Buyers can immediately request an official quote.
+                        </p>
+                      </div>
+                    </div>
+                    <label className="relative inline-flex items-center cursor-pointer shrink-0 self-end sm:self-center">
+                      <input
+                        type="checkbox"
+                        checked={singleGalleryHidePrice}
+                        onChange={(e) => setSingleGalleryHidePrice(e.target.checked)}
+                        className="sr-only peer"
+                      />
+                      <div className="w-11 h-6 bg-stone-300 peer-focus:outline-hidden rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-stone-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-600"></div>
+                    </label>
                   </div>
 
                   <div>
@@ -1042,10 +1219,42 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
                         </span>
                       )}
 
-                      <div className="p-1.5 bg-white border-t border-stone-200">
+                      <div className="p-1.5 bg-white border-t border-stone-200 space-y-1">
                         <p className="text-[10px] font-bold text-stone-800 truncate" title={photo.title}>
                           {photo.title}
                         </p>
+                        {uploadMode === 'batch' && (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setStagedPhotos((prev) =>
+                                prev.map((p) => {
+                                  if (p.id !== photo.id) return p;
+                                  const currentHidden = p.hidePrice !== undefined ? p.hidePrice : batchHidePrice;
+                                  return { ...p, hidePrice: !currentHidden };
+                                })
+                              );
+                            }}
+                            className={`w-full py-0.5 px-1 rounded text-[9px] font-bold flex items-center justify-center gap-1 cursor-pointer transition-colors ${
+                              (photo.hidePrice !== undefined ? photo.hidePrice : batchHidePrice)
+                                ? 'bg-amber-100 text-amber-900 border border-amber-300'
+                                : 'bg-stone-100 text-stone-700 hover:bg-stone-200 border border-stone-200'
+                            }`}
+                            title="Toggle whether price is hidden on storefront for this item"
+                          >
+                            {(photo.hidePrice !== undefined ? photo.hidePrice : batchHidePrice) ? (
+                              <>
+                                <EyeOff className="w-2.5 h-2.5" />
+                                <span>Price Hidden</span>
+                              </>
+                            ) : (
+                              <>
+                                <Eye className="w-2.5 h-2.5" />
+                                <span>₦{(photo.priceNgn || batchBasePrice).toLocaleString()}</span>
+                              </>
+                            )}
+                          </button>
+                        )}
                       </div>
 
                       {/* Action buttons overlay */}
@@ -1197,9 +1406,25 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
                             {prod.name}
                           </h5>
 
-                          <p className="text-xs font-mono font-black text-amber-700 mt-1">
-                            ₦{(prod.basePriceNgn ?? 0).toLocaleString()}
-                          </p>
+                          {prod.hidePrice ? (
+                            <div className="flex items-center gap-1.5 mt-1">
+                              <span className="inline-flex items-center gap-1 text-[10px] font-bold text-amber-800 bg-amber-100 px-2 py-0.5 rounded border border-amber-300">
+                                <EyeOff className="w-3 h-3" /> Price Hidden (On Request)
+                              </span>
+                              <span className="text-[10px] text-stone-400 font-mono line-through">
+                                ₦{(prod.basePriceNgn ?? 0).toLocaleString()}
+                              </span>
+                            </div>
+                          ) : (
+                            <div className="flex items-center gap-1.5 mt-1">
+                              <p className="text-xs font-mono font-black text-amber-700">
+                                ₦{(prod.basePriceNgn ?? 0).toLocaleString()}
+                              </p>
+                              <span className="text-[9px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-200">
+                                Visible
+                              </span>
+                            </div>
+                          )}
 
                           {/* Gallery Thumbnail Strip */}
                           {hasMultiple && (
@@ -1239,6 +1464,33 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
                         </button>
 
                         <div className="flex items-center gap-2">
+                          {/* 1-Click Price Visibility Toggle */}
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const nextHide = !prod.hidePrice;
+                              if (onUpdateProduct) {
+                                onUpdateProduct(prod.id, { hidePrice: nextHide });
+                              }
+                              saveSingleProductToCloud({ ...prod, hidePrice: nextHide }).catch((err) =>
+                                console.warn('Failed to update product hidePrice in cloud:', err)
+                              );
+                              showToast(
+                                nextHide ? 'Price Hidden from Storefront' : 'Price Made Visible on Storefront',
+                                `"${prod.name}" now ${nextHide ? 'displays "Price on Request"' : `displays ₦${(prod.basePriceNgn ?? 0).toLocaleString()}`} on all devices.`
+                              );
+                            }}
+                            className={`px-2 py-1 rounded-lg text-[10.5px] font-bold flex items-center gap-1 cursor-pointer transition-colors border ${
+                              prod.hidePrice
+                                ? 'bg-amber-100 hover:bg-amber-200 text-amber-900 border-amber-300'
+                                : 'bg-stone-100 hover:bg-stone-200 text-stone-700 border-stone-300'
+                            }`}
+                            title={prod.hidePrice ? 'Click to make price visible on storefront' : 'Click to hide price from storefront'}
+                          >
+                            {prod.hidePrice ? <Eye className="w-3 h-3 text-amber-800" /> : <EyeOff className="w-3 h-3 text-stone-500" />}
+                            <span>{prod.hidePrice ? 'Show Price' : 'Hide Price'}</span>
+                          </button>
+
                           {onDeleteProduct && (
                             <button
                               type="button"
@@ -1521,6 +1773,201 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
                 >
                   <Sparkles className="w-4 h-4" />
                   <span>Stage {selectedAutoPhotos.length} Selected Photo{selectedAutoPhotos.length !== 1 ? 's' : ''}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL: PHONE & CLOUD UPLOADED IMAGES GALLERY */}
+      {isCloudGalleryOpen && (
+        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden animate-in fade-in zoom-in-95">
+            {/* Header */}
+            <div className="p-5 border-b border-stone-200 flex items-center justify-between bg-stone-900 text-white">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+                  <Cloud className="w-5 h-5" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h3 className="font-black text-base">Phone &amp; Cloud Uploads Gallery</h3>
+                    <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-bold">
+                      Synced in Firestore
+                    </span>
+                  </div>
+                  <p className="text-xs text-stone-400 mt-0.5">
+                    All photos uploaded from mobile phones, tablets, or computers are stored securely and remain saved across all devices.
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setIsCloudGalleryOpen(false);
+                  setSelectedCloudIds([]);
+                }}
+                className="p-2 text-stone-400 hover:text-white rounded-xl transition-colors cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Body content */}
+            <div className="p-5 overflow-y-auto space-y-4 flex-1">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-emerald-50 border border-emerald-200/80 rounded-2xl p-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0">
+                    <Smartphone className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold text-emerald-950">
+                      Cross-Device Image Persistence
+                    </h4>
+                    <p className="text-[11px] text-emerald-800 mt-0.5">
+                      {cloudLibraryImages.length} image(s) currently saved in your Cloud Database. Select any photo below to stage it directly in "{currentCategoryDef.label}".
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => multiFileInputRef.current?.click()}
+                    className="px-3.5 py-1.5 bg-emerald-800 hover:bg-emerald-900 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 cursor-pointer shadow-xs"
+                  >
+                    <Upload className="w-3.5 h-3.5" />
+                    <span>Upload New Photo</span>
+                  </button>
+                </div>
+              </div>
+
+              {cloudLibraryImages.length === 0 ? (
+                <div className="py-16 text-center border-2 border-dashed border-stone-200 rounded-2xl space-y-3">
+                  <Cloud className="w-10 h-10 mx-auto text-stone-300" />
+                  <p className="text-xs font-bold text-stone-700">No photos in cloud database yet.</p>
+                  <p className="text-[11px] text-stone-400 max-w-sm mx-auto">
+                    Upload any photo from your phone or device — it will be compressed, saved to Firestore, and displayed here automatically.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => multiFileInputRef.current?.click()}
+                    className="px-4 py-2 bg-[#00473e] hover:bg-[#03554a] text-white rounded-xl text-xs font-bold inline-flex items-center gap-2 cursor-pointer"
+                  >
+                    <Upload className="w-4 h-4" />
+                    <span>Upload Photo from This Device</span>
+                  </button>
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 max-h-[460px] overflow-y-auto p-1">
+                  {cloudLibraryImages.map((img) => {
+                    const isSelected = selectedCloudIds.includes(img.id);
+
+                    return (
+                      <div
+                        key={img.id}
+                        onClick={() => {
+                          if (isSelected) {
+                            setSelectedCloudIds(selectedCloudIds.filter((id) => id !== img.id));
+                          } else {
+                            setSelectedCloudIds([...selectedCloudIds, img.id]);
+                          }
+                        }}
+                        className={`group relative rounded-xl overflow-hidden border-2 cursor-pointer transition-all ${
+                          isSelected
+                            ? 'border-emerald-600 ring-2 ring-emerald-500/30 shadow-md scale-[0.99]'
+                            : 'border-stone-200 hover:border-stone-400 hover:shadow-xs'
+                        }`}
+                      >
+                        <div className="aspect-square bg-stone-100 relative overflow-hidden">
+                          <img
+                            src={img.dataUrl}
+                            alt={img.name}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            loading="lazy"
+                          />
+                          {/* Device Badge */}
+                          <span className="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded bg-black/75 text-white font-sans text-[9px] font-bold flex items-center gap-1 backdrop-blur-xs">
+                            {img.deviceType === 'phone' ? (
+                              <Smartphone className="w-2.5 h-2.5 text-emerald-400" />
+                            ) : (
+                              <Cloud className="w-2.5 h-2.5 text-amber-400" />
+                            )}
+                            <span className="capitalize">{img.deviceType || 'Cloud'}</span>
+                          </span>
+
+                          {/* Checkmark Selection */}
+                          <div
+                            className={`absolute top-1.5 right-1.5 w-5 h-5 rounded-full flex items-center justify-center transition-colors ${
+                              isSelected ? 'bg-emerald-600 text-white shadow-xs' : 'bg-white/80 text-stone-400 border border-stone-300'
+                            }`}
+                          >
+                            <Check className="w-3 h-3" />
+                          </div>
+                        </div>
+
+                        <div className="p-2 bg-white">
+                          <p className="text-[11px] font-bold text-stone-900 truncate" title={img.name}>
+                            {img.name}
+                          </p>
+                          <p className="text-[10px] text-stone-400 mt-0.5">
+                            {img.uploadedAt ? new Date(img.uploadedAt).toLocaleDateString() : 'Cloud saved'}
+                          </p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+
+            {/* Footer */}
+            <div className="p-4 border-t border-stone-200 bg-stone-50 flex items-center justify-between">
+              <div className="text-xs text-stone-600">
+                <span className="font-bold text-stone-900">{selectedCloudIds.length}</span> of{' '}
+                {cloudLibraryImages.length} photo(s) selected
+              </div>
+
+              <div className="flex items-center gap-2">
+                {cloudLibraryImages.length > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (selectedCloudIds.length === cloudLibraryImages.length) {
+                        setSelectedCloudIds([]);
+                      } else {
+                        setSelectedCloudIds(cloudLibraryImages.map((c) => c.id));
+                      }
+                    }}
+                    className="text-xs font-bold text-stone-600 hover:text-stone-900 px-3 py-2 cursor-pointer"
+                  >
+                    {selectedCloudIds.length === cloudLibraryImages.length ? 'Deselect All' : 'Select All'}
+                  </button>
+                )}
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsCloudGalleryOpen(false);
+                    setSelectedCloudIds([]);
+                  }}
+                  className="px-4 py-2 border border-stone-300 rounded-xl text-xs font-bold text-stone-700 bg-white hover:bg-stone-50 cursor-pointer"
+                >
+                  Cancel
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    const selectedPhotos = cloudLibraryImages.filter((c) => selectedCloudIds.includes(c.id));
+                    handleStageCloudPhotos(selectedPhotos);
+                  }}
+                  disabled={selectedCloudIds.length === 0}
+                  className="px-5 py-2 bg-emerald-800 hover:bg-emerald-900 disabled:opacity-40 text-white rounded-xl text-xs font-bold shadow-md flex items-center gap-2 cursor-pointer transition-all"
+                >
+                  <CheckCheck className="w-4 h-4" />
+                  <span>Stage {selectedCloudIds.length} Selected into Category</span>
                 </button>
               </div>
             </div>

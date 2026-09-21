@@ -1,4 +1,5 @@
 import { Product } from '../types/schema';
+import { SAMPLE_PRODUCTS } from './seedData';
 
 /**
  * Complete catalog products for all homepage showcase sections.
@@ -961,20 +962,30 @@ export function normalizeCategoryKey(key: any): string {
 }
 
 /**
- * Ensures that any products array always contains every single homepage showcase product.
- * Avoids missing products when loaded from old local storage or cloud databases.
+ * Ensures that any products array always contains every single homepage showcase product
+ * and seed sample product, while strictly preserving all custom products and photos uploaded
+ * from mobile phones or desktop computers.
  */
 export function ensureCompleteCatalog(baseProducts: Product[]): Product[] {
   const existingMap = new Map<string, Product>();
   
-  // First insert base products
+  // 1. First insert all base products (user edits, phone uploads, and Firestore documents take highest priority)
   (baseProducts || []).forEach((p) => {
-    existingMap.set(p.id, p);
+    if (p && p.id) {
+      existingMap.set(p.id, p);
+    }
   });
 
-  // Then ensure every showcase product is present
+  // 2. Add any seed products from SAMPLE_PRODUCTS not yet present
+  (SAMPLE_PRODUCTS || []).forEach((sp) => {
+    if (sp && sp.id && !existingMap.has(sp.id)) {
+      existingMap.set(sp.id, sp);
+    }
+  });
+
+  // 3. Ensure every showcase product is present
   HOMEPAGE_SHOWCASE_PRODUCTS.forEach((hp) => {
-    if (!existingMap.has(hp.id)) {
+    if (hp && hp.id && !existingMap.has(hp.id)) {
       existingMap.set(hp.id, hp);
     }
   });

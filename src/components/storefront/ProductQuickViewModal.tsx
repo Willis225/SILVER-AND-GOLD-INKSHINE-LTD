@@ -11,7 +11,8 @@ import {
   AlertCircle,
   Percent,
   Plus,
-  Minus
+  Minus,
+  MessageSquare
 } from 'lucide-react';
 import { Product, calculateDynamicPrice } from '../../types/schema';
 
@@ -365,50 +366,87 @@ export const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
 
           {/* Pricing & Add to Cart Action */}
           <div className="pt-4 border-t border-stone-200 space-y-3">
-            <div className="flex items-baseline justify-between">
-              <div>
-                <span className="text-[10px] text-stone-400 uppercase tracking-wider block font-bold">
-                  Dynamic Price Breakdown
+            {product.hidePrice ? (
+              <div className="p-3 bg-amber-50/80 rounded-xl border border-amber-200 space-y-1">
+                <span className="text-[10px] text-amber-800 uppercase tracking-wider block font-bold">
+                  Pricing Policy
                 </span>
-                <div className="flex items-baseline gap-2">
-                  <span className="text-2xl font-black text-stone-900 font-mono tracking-tight">
-                    {formatNaira(pricing.grandTotalNgn)}
-                  </span>
-                  <span className="text-xs text-stone-500 font-mono">
-                    ({formatNaira(pricing.unitPriceNgn)} / unit)
-                  </span>
+                <div className="text-xl font-black text-amber-900">
+                  {product.priceCustomLabel || 'Price on Request'}
                 </div>
+                <p className="text-[11px] text-stone-600 leading-relaxed">
+                  Due to fluctuating market costs for substrates &amp; materials, please request a live quote. We respond within minutes!
+                </p>
               </div>
-
-              {pricing.bulkDiscountPercentage > 0 && (
-                <div className="text-right">
-                  <span className="inline-flex items-center gap-1 text-xs font-bold text-amber-800 bg-amber-100 px-2.5 py-1 rounded-lg">
-                    <Percent className="w-3 h-3" />
-                    Saved {formatNaira(pricing.savingsNgn)} ({pricing.bulkDiscountPercentage}% off)
+            ) : (
+              <div className="flex items-baseline justify-between">
+                <div>
+                  <span className="text-[10px] text-stone-400 uppercase tracking-wider block font-bold">
+                    Dynamic Price Breakdown
                   </span>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-2xl font-black text-stone-900 font-mono tracking-tight">
+                      {formatNaira(pricing.grandTotalNgn)}
+                    </span>
+                    <span className="text-xs text-stone-500 font-mono">
+                      ({formatNaira(pricing.unitPriceNgn)} / unit)
+                    </span>
+                  </div>
                 </div>
-              )}
-            </div>
 
-            <button
-              id="add-to-cart-modal-btn"
-              type="button"
-              onClick={handleAdd}
-              disabled={addedNotice}
-              className="w-full py-3.5 px-6 rounded-2xl bg-[#b8860b] hover:bg-[#996515] active:scale-98 text-white font-bold text-sm sm:text-base flex items-center justify-center gap-2 shadow-lg shadow-[#b8860b]/20 transition-all"
-            >
-              {addedNotice ? (
-                <>
-                  <Check className="w-5 h-5 text-white" />
-                  <span>Added to Cart!</span>
-                </>
-              ) : (
-                <>
-                  <ShoppingBag className="w-5 h-5 text-white" />
-                  <span>Add to Cart • {formatNaira(pricing.grandTotalNgn)}</span>
-                </>
-              )}
-            </button>
+                {pricing.bulkDiscountPercentage > 0 && (
+                  <div className="text-right">
+                    <span className="inline-flex items-center gap-1 text-xs font-bold text-amber-800 bg-amber-100 px-2.5 py-1 rounded-lg">
+                      <Percent className="w-3 h-3" />
+                      Saved {formatNaira(pricing.savingsNgn)} ({pricing.bulkDiscountPercentage}% off)
+                    </span>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {product.hidePrice ? (
+              <div className="space-y-2">
+                <a
+                  href={`https://wa.me/2347030372539?text=${encodeURIComponent(`Hello Silver & Gold Inkshine Ltd, I would like to request an instant price quote for: "${product.name}" (Configured Quantity: ${quantity} units, Specs: ${Object.entries(selectedOptions).map(([k, v]) => `${k}: ${v}`).join(', ')}).`)}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-full py-3.5 px-6 rounded-2xl bg-emerald-600 hover:bg-emerald-700 active:scale-98 text-white font-bold text-sm sm:text-base flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/20 transition-all cursor-pointer"
+                >
+                  <MessageSquare className="w-5 h-5 text-white" />
+                  <span>Request Instant Quote on WhatsApp</span>
+                </a>
+                <button
+                  type="button"
+                  onClick={handleAdd}
+                  disabled={addedNotice}
+                  className="w-full py-2.5 px-4 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                >
+                  <ShoppingBag className="w-4 h-4" />
+                  <span>{addedNotice ? 'Added to Cart / Inquiry Desk' : 'Save Configuration to Cart for Quote'}</span>
+                </button>
+              </div>
+            ) : (
+              <button
+                id="add-to-cart-modal-btn"
+                type="button"
+                onClick={handleAdd}
+                disabled={addedNotice}
+                className="w-full py-3.5 px-6 rounded-2xl bg-[#b8860b] hover:bg-[#996515] active:scale-98 text-white font-bold text-sm sm:text-base flex items-center justify-center gap-2 shadow-lg shadow-[#b8860b]/20 transition-all cursor-pointer"
+              >
+                {addedNotice ? (
+                  <>
+                    <Check className="w-5 h-5 text-white" />
+                    <span>Added to Cart!</span>
+                  </>
+                ) : (
+                  <>
+                    <ShoppingBag className="w-5 h-5 text-white" />
+                    <span>Add to Cart • {formatNaira(pricing.grandTotalNgn)}</span>
+                  </>
+                )}
+              </button>
+            )}
           </div>
         </div>
       </div>
