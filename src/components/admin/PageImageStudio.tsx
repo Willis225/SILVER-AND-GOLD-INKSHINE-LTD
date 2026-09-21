@@ -20,7 +20,12 @@ import {
 import { Product } from '../../types/schema';
 import { HeroSlideItem, ShowcaseServiceItem } from '../../types/websiteContent';
 import { ImageManagerModal } from './ImageManagerModal';
-import { compressImageFile, saveUploadedImageToCloud } from '../../lib/firebase';
+import { 
+  compressImageFile, 
+  saveUploadedImageToCloud, 
+  subscribeUploadedImages, 
+  CloudUploadedImage 
+} from '../../lib/firebase';
 
 interface PageImageStudioProps {
   heroSlides: HeroSlideItem[];
@@ -34,10 +39,10 @@ interface PageImageStudioProps {
   onOpenStorefront?: () => void;
 }
 
-type MediaFilter = 'all' | 'hero' | 'showcase' | 'products';
+type MediaFilter = 'all' | 'uploads' | 'hero' | 'showcase' | 'products';
 
 interface ActiveEditItem {
-  type: 'hero' | 'showcase' | 'product';
+  type: 'hero' | 'showcase' | 'product' | 'upload';
   id: string;
   name: string;
   description: string;
@@ -61,6 +66,15 @@ export const PageImageStudio: React.FC<PageImageStudioProps> = ({
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [editingItem, setEditingItem] = useState<ActiveEditItem | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [trackedUploads, setTrackedUploads] = useState<CloudUploadedImage[]>([]);
+
+  // Subscribe to real-time tracked uploads & replaced images
+  React.useEffect(() => {
+    const unsub = subscribeUploadedImages((imgs) => {
+      setTrackedUploads(imgs);
+    });
+    return () => unsub();
+  }, []);
 
   // New item modal states
   const [isAddingNew, setIsAddingNew] = useState<boolean>(false);
@@ -127,6 +141,15 @@ export const PageImageStudio: React.FC<PageImageStudioProps> = ({
       imageUrl: p.image,
       badge: p.badge || 'Product',
       category: p.category
+    })),
+    ...trackedUploads.map((u) => ({
+      type: 'upload' as const,
+      id: u.id,
+      name: u.name || 'Uploaded Photo',
+      description: `Uploaded on ${new Date(u.uploadedAt).toLocaleDateString()} • Device: ${u.deviceType || 'device'}`,
+      imageUrl: u.dataUrl,
+      badge: 'Tracked Upload',
+      category: u.category
     }))
   ];
 
@@ -134,6 +157,7 @@ export const PageImageStudio: React.FC<PageImageStudioProps> = ({
   const filteredItems = allMediaItems.filter((item) => {
     const matchesFilter = 
       activeFilter === 'all' ||
+      (activeFilter === 'uploads' && item.type === 'upload') ||
       (activeFilter === 'hero' && item.type === 'hero') ||
       (activeFilter === 'showcase' && item.type === 'showcase') ||
       (activeFilter === 'products' && item.type === 'product');
@@ -151,6 +175,15 @@ export const PageImageStudio: React.FC<PageImageStudioProps> = ({
   // Handle replace / edit save
   const handleSaveEdit = (data: { imageUrl: string; title?: string; description?: string }) => {
     if (!editingItem) return;
+
+    // Track the replacement in the gallery repository
+    saveUploadedImageToCloud({
+      id: `img-replaced-${Date.now()}`,
+      name: data.title || editingItem.name || 'Replaced Photo',
+      dataUrl: data.imageUrl,
+      uploadedAt: new Date().toISOString(),
+      category: editingItem.category
+    }).catch(console.warn);
 
     if (editingItem.type === 'hero') {
       const next = heroSlides.map((s) => 
@@ -185,6 +218,8 @@ export const PageImageStudio: React.FC<PageImageStudioProps> = ({
         ...(data.description ? { description: data.description } : {})
       });
       showToast(`Updated Product: ${data.title || editingItem.name}`);
+    } else if (editingItem.type === 'upload') {
+      showToast(`Updated Tracked Image: ${data.title || editingItem.name}`);
     }
 
     setEditingItem(null);
@@ -317,6 +352,7 @@ export const PageImageStudio: React.FC<PageImageStudioProps> = ({
         <div className="flex items-center gap-1.5 overflow-x-auto w-full md:w-auto pb-1 md:pb-0">
           {[
             { id: 'all', label: `All Images (${allMediaItems.length})` },
+            { id: 'uploads', label: `Tracked Uploads & Replacements (${trackedUploads.length})` },
             { id: 'hero', label: `Hero Slides (${heroSlides.length})` },
             { id: 'showcase', label: `Showcase Services (${showcaseServices.length})` },
             { id: 'products', label: `Product Catalog (${products.length})` },
@@ -372,9 +408,11 @@ export const PageImageStudio: React.FC<PageImageStudioProps> = ({
                     ? 'bg-[#b8860b] text-white' 
                     : item.type === 'showcase' 
                     ? 'bg-[#00473e] text-white' 
+                    : item.type === 'upload'
+                    ? 'bg-emerald-700 text-white'
                     : 'bg-stone-800 text-white'
                 }`}>
-                  {item.type === 'hero' ? 'Hero Slide' : item.type === 'showcase' ? 'Showcase' : 'Product'}
+                  {item.type === 'hero' ? 'Hero Slide' : item.type === 'showcase' ? 'Showcase' : item.type === 'upload' ? 'Tracked Job Photo' : 'Product'}
                 </span>
               </div>
 

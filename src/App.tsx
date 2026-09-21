@@ -44,8 +44,10 @@ import {
   subscribeProducts,
   saveProductsToCloud,
   saveSingleProductToCloud,
-  deleteProductFromCloud
+  deleteProductFromCloud,
+  safeLocalStorageSet
 } from './lib/firebase';
+import { loadProductsFromIndexedDb } from './lib/indexedDbStorage';
 import { ensureCompleteCatalog } from './data/homepageCatalogProducts';
 
 export default function App() {
@@ -72,8 +74,15 @@ export default function App() {
     return loadSavedWebsiteContent();
   });
 
-  // Real-time Cloud Database sync across all devices via Firebase Firestore
+  // Real-time Cloud Database sync across all devices via Firebase Firestore + IndexedDB Fallback
   useEffect(() => {
+    // 1. Immediately hydrate catalog from high-capacity IndexedDB (survives tab close, refresh, and quota limits)
+    loadProductsFromIndexedDb().then((storedProds) => {
+      if (storedProds && storedProds.length > 0) {
+        setProducts(ensureCompleteCatalog(storedProds));
+      }
+    }).catch(console.warn);
+
     const unsubscribeContent = subscribeWebsiteContent(
       (cloudContent: WebsiteContent) => {
         if (cloudContent) {
@@ -83,7 +92,7 @@ export default function App() {
           }));
         }
       },
-      (err: any) => console.error('Website content sync listener error:', err)
+      (err: any) => console.warn('Website content sync notice:', err?.message || err)
     );
 
     const unsubscribeProducts = subscribeProducts(
@@ -92,7 +101,7 @@ export default function App() {
           setProducts(ensureCompleteCatalog(cloudProducts));
         }
       },
-      (err: any) => console.error('Products sync listener error:', err)
+      (err: any) => console.warn('Products sync notice:', err?.message || err)
     );
 
     return () => {
@@ -105,7 +114,7 @@ export default function App() {
     setWebsiteContent(newContent);
     saveWebsiteContent(newContent);
     saveWebsiteContentToCloud(newContent).catch((err) => {
-      console.error('Cloud website content sync error:', err);
+      console.warn('Cloud website content sync notice:', err?.message || err);
     });
   };
 
@@ -113,7 +122,7 @@ export default function App() {
     const defaults = resetWebsiteContentToDefaults();
     setWebsiteContent(defaults);
     saveWebsiteContentToCloud(defaults).catch((err) => {
-      console.error('Cloud reset sync error:', err);
+      console.warn('Cloud reset sync notice:', err?.message || err);
     });
   };
 
@@ -291,16 +300,12 @@ export default function App() {
   const handleAddProduct = (newProduct: Product) => {
     setProducts((prev) => {
       const next = [newProduct, ...prev];
-      try {
-        localStorage.setItem('inkshine_products', JSON.stringify(next));
-      } catch (e) {
-        console.error(e);
-      }
+      safeLocalStorageSet('inkshine_products', JSON.stringify(next));
       saveSingleProductToCloud(newProduct).catch((err) => {
-        console.error('Failed to sync new product to Firestore collection:', err);
+        console.warn('Product cloud sync notice:', err?.message || err);
       });
       saveProductsToCloud(next).catch((err) => {
-        console.error('Failed to sync catalog summary to Firestore:', err);
+        console.warn('Catalog cloud sync notice:', err?.message || err);
       });
       return next;
     });
@@ -309,16 +314,12 @@ export default function App() {
   const handleDeleteProduct = (productId: string) => {
     setProducts((prev) => {
       const next = prev.filter((p) => p.id !== productId);
-      try {
-        localStorage.setItem('inkshine_products', JSON.stringify(next));
-      } catch (e) {
-        console.error(e);
-      }
+      safeLocalStorageSet('inkshine_products', JSON.stringify(next));
       deleteProductFromCloud(productId).catch((err) => {
-        console.error('Failed to delete product from Firestore collection:', err);
+        console.warn('Product delete cloud notice:', err?.message || err);
       });
       saveProductsToCloud(next).catch((err) => {
-        console.error('Failed to sync catalog summary to Firestore:', err);
+        console.warn('Catalog cloud sync notice:', err?.message || err);
       });
       return next;
     });
@@ -327,19 +328,15 @@ export default function App() {
   const handleUpdateProduct = (productId: string, updates: Partial<Product>) => {
     setProducts((prev) => {
       const next = prev.map((p) => (p.id === productId ? { ...p, ...updates } : p));
-      try {
-        localStorage.setItem('inkshine_products', JSON.stringify(next));
-      } catch (e) {
-        console.error(e);
-      }
+      safeLocalStorageSet('inkshine_products', JSON.stringify(next));
       const updatedProduct = next.find((p) => p.id === productId);
       if (updatedProduct) {
         saveSingleProductToCloud(updatedProduct).catch((err) => {
-          console.error('Failed to sync updated product to Firestore collection:', err);
+          console.warn('Product update cloud notice:', err?.message || err);
         });
       }
       saveProductsToCloud(next).catch((err) => {
-        console.error('Failed to sync catalog summary to Firestore:', err);
+        console.warn('Catalog cloud sync notice:', err?.message || err);
       });
       return next;
     });

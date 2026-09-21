@@ -346,6 +346,16 @@ export const ImageManagerModal: React.FC<ImageManagerModalProps> = ({
 
     setIsCloudSaving(true);
     try {
+      // 1. Permanently track and store replaced/selected photo in IndexedDB & Cloud repository
+      const imageId = `img-saved-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
+      await saveUploadedImageToCloud({
+        id: imageId,
+        name: editedTitle.trim() || currentTitle || title || 'Saved Job Photo',
+        dataUrl: selectedImageUrl,
+        uploadedAt: new Date().toISOString(),
+        category: categoryKey
+      }).catch(console.warn);
+
       await onSave({
         imageUrl: selectedImageUrl,
         ...(allowDetailsEdit ? { title: editedTitle.trim(), description: editedDescription.trim() } : {})
