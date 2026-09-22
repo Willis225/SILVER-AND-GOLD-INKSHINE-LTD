@@ -114,6 +114,9 @@ export function subscribeWebsiteContent(
   // 1. Instantly read from IndexedDB first for 0ms loading time
   loadWebsiteContentFromIndexedDb().then((localContent) => {
     if (localContent) {
+      if (!localContent.heroBackgroundImage || localContent.heroBackgroundImage === '/homepage-bg.jpg') {
+        localContent.heroBackgroundImage = '/7aa493911d023086a5442472c889df70.jpg';
+      }
       const locked = applyImageLocksToWebsiteContent(localContent);
       onUpdate(locked);
     }
@@ -122,6 +125,9 @@ export function subscribeWebsiteContent(
   // 2. React to local content updates across the app
   const handleLocalUpdate = (e: CustomEvent<WebsiteContent>) => {
     if (e.detail) {
+      if (!e.detail.heroBackgroundImage || e.detail.heroBackgroundImage === '/homepage-bg.jpg') {
+        e.detail.heroBackgroundImage = '/7aa493911d023086a5442472c889df70.jpg';
+      }
       const locked = applyImageLocksToWebsiteContent(e.detail);
       onUpdate(locked);
     }

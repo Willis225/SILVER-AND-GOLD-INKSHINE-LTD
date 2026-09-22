@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { motion } from 'motion/react';
 import { Header } from './components/layout/Header';
 import { HeroSection } from './components/storefront/HeroSection';
 import { BrandIntroSection } from './components/storefront/BrandIntroSection';
@@ -503,15 +504,39 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#08080a] text-stone-100 font-sans antialiased flex flex-col justify-between selection:bg-[#f5be38] selection:text-black bg-grid-pattern relative">
-      {/* Ambient background overlay for homepage storefront */}
+      {/* Ambient animated background overlay for homepage storefront */}
       {viewMode === 'storefront' && (
         <div className="fixed inset-0 pointer-events-none select-none z-0 overflow-hidden">
-          <img
-            src={websiteContent.heroBackgroundImage || '/7aa493911d023086a5442472c889df70.jpg'}
-            alt=""
-            className="w-full h-full object-cover opacity-[0.05] scale-110 blur-xs mix-blend-screen"
-            referrerPolicy="no-referrer"
-          />
+          <motion.div
+            animate={{
+              scale: [1, 1.05, 1],
+              opacity: [0.12, 0.20, 0.12],
+            }}
+            transition={{
+              duration: 20,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="w-full h-full"
+          >
+            <img
+              src={
+                websiteContent.heroBackgroundImage && websiteContent.heroBackgroundImage !== '/homepage-bg.jpg'
+                  ? websiteContent.heroBackgroundImage
+                  : '/7aa493911d023086a5442472c889df70.jpg'
+              }
+              alt=""
+              className="w-full h-full object-cover blur-[1.5px] mix-blend-screen brightness-125"
+              referrerPolicy="no-referrer"
+              onError={(e) => {
+                const target = e.currentTarget;
+                if (target.src !== window.location.origin + '/hero-banner-main.webp') {
+                  target.src = '/hero-banner-main.webp';
+                }
+              }}
+            />
+          </motion.div>
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#08080a]/60 to-[#08080a] pointer-events-none" />
         </div>
       )}
 
@@ -629,7 +654,11 @@ export default function App() {
               subheadline={websiteContent.heroSubheadline}
               eyebrow={websiteContent.heroEyebrow}
               description={websiteContent.heroDescription}
-              backgroundImageUrl={websiteContent.heroBackgroundImage}
+              backgroundImageUrl={
+                websiteContent.heroBackgroundImage && websiteContent.heroBackgroundImage !== '/homepage-bg.jpg'
+                  ? websiteContent.heroBackgroundImage
+                  : '/7aa493911d023086a5442472c889df70.jpg'
+              }
             />
 
             {/* Brand Introduction & Promotions Overview (Matching Reference) */}
