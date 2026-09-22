@@ -65,9 +65,17 @@ export const SignageCompanySection: React.FC<SignageCompanySectionProps> = ({
   }, [products]);
 
   return (
-    <section className="bg-white text-stone-900 py-16 sm:py-24 border-b border-stone-200 relative overflow-hidden">
-      {/* Subtle ambient warm dot pattern */}
-      <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:20px_20px] opacity-60 pointer-events-none" />
+    <section className="relative text-stone-900 py-16 sm:py-24 border-b border-stone-200 overflow-hidden bg-stone-50">
+      {/* Provided Section Background Image Layer */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src="https://cdn.hstockplus.org/uploads/public/img-1790091847996-3aa2bb1c6a4e12cd.webp"
+          alt="Section Background"
+          className="w-full h-full object-cover object-center pointer-events-none"
+          referrerPolicy="no-referrer"
+        />
+        <div className="absolute inset-0 bg-white/70 backdrop-blur-[0.5px]" />
+      </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-10">
         
