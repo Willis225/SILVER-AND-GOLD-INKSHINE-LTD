@@ -79,7 +79,7 @@ export const WhyChooseUsSection: React.FC<WhyChooseUsSectionProps> = ({
         <img
           src={overlaySrc}
           alt="Silver & Gold Inkshine Background Overlay"
-          className="w-full h-full object-cover object-center opacity-70 scale-100 transition-transform duration-1000"
+          className="w-full h-full object-cover object-center opacity-85 scale-100 transition-transform duration-1000"
           referrerPolicy="no-referrer"
           onError={() => {
             if (overlaySrc !== '/why-choose-overlay.webp') {
@@ -87,9 +87,9 @@ export const WhyChooseUsSection: React.FC<WhyChooseUsSectionProps> = ({
             }
           }}
         />
-        {/* Balanced Dark Vignette & Gradient Overlays for High Visibility & Pristine Legibility */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#070709]/80 via-[#070709]/45 to-[#070709]/85" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_25%,#070709_95%)]" />
+        {/* Soft Dark Vignette for balanced translucency and supreme text legibility */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#070709]/60 via-[#070709]/30 to-[#070709]/70" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,#070709_90%)] opacity-80" />
       </div>
 
       {/* Classic Animated Ambient Glow Orbs */}
@@ -114,23 +114,23 @@ export const WhyChooseUsSection: React.FC<WhyChooseUsSectionProps> = ({
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* Top Header Card: Eyebrow, Main Heading, Overview Narrative & Primary CTA with Classic Animated Beam */}
+        {/* Top Header Card: Transparent Frosted Glass letting overlay show through */}
         <motion.div 
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-40px" }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="rounded-3xl bg-gradient-to-b from-[#14141a]/95 via-[#0e0e14]/95 to-[#09090d]/95 border border-white/10 p-6 sm:p-10 lg:p-12 backdrop-blur-xl mb-12 shadow-[0_20px_60px_rgba(0,0,0,0.7)] relative overflow-hidden group hover:border-[#f5be38]/40 transition-all duration-500"
+          className="rounded-3xl bg-[#09090e]/40 hover:bg-[#09090e]/55 border border-white/20 p-6 sm:p-10 lg:p-12 backdrop-blur-md mb-12 shadow-[0_20px_50px_rgba(0,0,0,0.5)] relative overflow-hidden group hover:border-[#f5be38]/50 transition-all duration-500"
         >
           {/* Classic Animated Gold Border Beam along the top */}
-          <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-transparent via-[#f5be38] to-transparent opacity-80" />
+          <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-transparent via-[#f5be38] to-transparent opacity-90" />
           
           {/* Sweeping ambient light beam across the header on hover */}
           <motion.div 
             initial={{ x: '-100%' }}
             animate={{ x: '200%' }}
             transition={{ duration: 5, repeat: Infinity, ease: "linear", repeatDelay: 4 }}
-            className="absolute inset-y-0 w-1/3 bg-gradient-to-r from-transparent via-white/[0.04] to-transparent skew-x-12 pointer-events-none"
+            className="absolute inset-y-0 w-1/3 bg-gradient-to-r from-transparent via-white/[0.05] to-transparent skew-x-12 pointer-events-none"
           />
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
@@ -141,7 +141,7 @@ export const WhyChooseUsSection: React.FC<WhyChooseUsSectionProps> = ({
               {/* Animated Badge */}
               <motion.div 
                 whileHover={{ scale: 1.02 }}
-                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#f5be38]/10 border border-[#f5be38]/30 text-[#f5be38] text-xs font-bold uppercase tracking-wider shadow-[0_0_15px_rgba(245,190,56,0.15)]"
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#f5be38]/15 border border-[#f5be38]/40 text-[#f5be38] text-xs font-bold uppercase tracking-wider shadow-[0_0_15px_rgba(245,190,56,0.2)] backdrop-blur-sm"
               >
                 <motion.div
                   animate={{ rotate: [0, 15, -15, 0] }}
@@ -152,35 +152,35 @@ export const WhyChooseUsSection: React.FC<WhyChooseUsSectionProps> = ({
                 <span>Why Businesses Choose SILVER &amp; GOLD INKSHINE LTD</span>
               </motion.div>
 
-              {/* Main Headline with subtle gold gradient flair */}
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight leading-[1.2]">
+              {/* Main Headline with high contrast */}
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight leading-[1.2] drop-shadow-md">
                 {title}
               </h2>
 
               {/* Narrative Text */}
-              <p className="text-stone-300 text-sm sm:text-base leading-relaxed font-normal max-w-3xl">
+              <p className="text-stone-200 text-sm sm:text-base leading-relaxed font-normal max-w-3xl drop-shadow-sm">
                 {description}
               </p>
 
               {/* Quick Trust Badges with smooth hover micro-animations */}
-              <div className="flex flex-wrap items-center gap-4 pt-2 text-xs sm:text-sm text-stone-300 font-medium">
+              <div className="flex flex-wrap items-center gap-4 pt-2 text-xs sm:text-sm text-stone-200 font-medium">
                 <motion.div 
                   whileHover={{ scale: 1.05, x: 2 }}
-                  className="flex items-center gap-1.5 text-stone-200 bg-white/5 px-3 py-1 rounded-lg border border-white/5 transition-colors hover:border-[#f5be38]/30"
+                  className="flex items-center gap-1.5 text-stone-100 bg-black/40 px-3 py-1 rounded-lg border border-white/10 transition-colors hover:border-[#f5be38]/40 backdrop-blur-sm shadow-sm"
                 >
                   <CheckCircle2 className="w-4 h-4 text-[#f5be38]" />
                   <span>Zero-Defect Guarantee</span>
                 </motion.div>
                 <motion.div 
                   whileHover={{ scale: 1.05, x: 2 }}
-                  className="flex items-center gap-1.5 text-stone-200 bg-white/5 px-3 py-1 rounded-lg border border-white/5 transition-colors hover:border-[#f5be38]/30"
+                  className="flex items-center gap-1.5 text-stone-100 bg-black/40 px-3 py-1 rounded-lg border border-white/10 transition-colors hover:border-[#f5be38]/40 backdrop-blur-sm shadow-sm"
                 >
                   <Clock className="w-4 h-4 text-[#f5be38]" />
                   <span>3–5 Days Doorstep Delivery</span>
                 </motion.div>
                 <motion.div 
                   whileHover={{ scale: 1.05, x: 2 }}
-                  className="flex items-center gap-1.5 text-stone-200 bg-white/5 px-3 py-1 rounded-lg border border-white/5 transition-colors hover:border-[#f5be38]/30"
+                  className="flex items-center gap-1.5 text-stone-100 bg-black/40 px-3 py-1 rounded-lg border border-white/10 transition-colors hover:border-[#f5be38]/40 backdrop-blur-sm shadow-sm"
                 >
                   <MapPin className="w-4 h-4 text-[#f5be38]" />
                   <span>Bayelsa, Lagos &amp; All 36 States</span>
@@ -189,9 +189,9 @@ export const WhyChooseUsSection: React.FC<WhyChooseUsSectionProps> = ({
             </div>
 
             {/* Right Action Column */}
-            <div className="lg:col-span-4 flex flex-col items-start lg:items-end justify-center pt-4 lg:pt-0 border-t lg:border-t-0 lg:border-l border-white/10 lg:pl-8">
+            <div className="lg:col-span-4 flex flex-col items-start lg:items-end justify-center pt-4 lg:pt-0 border-t lg:border-t-0 lg:border-l border-white/15 lg:pl-8">
               <div className="space-y-3 w-full sm:w-auto">
-                <div className="text-xs font-semibold text-stone-400 uppercase tracking-wider text-left lg:text-right">
+                <div className="text-xs font-semibold text-stone-300 uppercase tracking-wider text-left lg:text-right">
                   Ready to print your order?
                 </div>
                 
@@ -203,7 +203,7 @@ export const WhyChooseUsSection: React.FC<WhyChooseUsSectionProps> = ({
                   target="_blank"
                   rel="noreferrer"
                   onClick={onSendFile}
-                  className="relative overflow-hidden w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-3.5 bg-gradient-to-r from-[#f5be38] via-[#ffd15c] to-[#e5ab20] hover:from-[#ffd15c] hover:to-[#f5be38] text-black font-black text-sm rounded-xl shadow-[0_4px_25px_rgba(245,190,56,0.4)] transition-all group cursor-pointer"
+                  className="relative overflow-hidden w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-3.5 bg-gradient-to-r from-[#f5be38] via-[#ffd15c] to-[#e5ab20] hover:from-[#ffd15c] hover:to-[#f5be38] text-black font-black text-sm rounded-xl shadow-[0_4px_25px_rgba(245,190,56,0.45)] transition-all group cursor-pointer"
                 >
                   {/* Button Sheen Sweep Effect */}
                   <motion.div 
@@ -216,7 +216,7 @@ export const WhyChooseUsSection: React.FC<WhyChooseUsSectionProps> = ({
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1 relative z-10" />
                 </motion.a>
 
-                <p className="text-[11px] text-stone-400 text-left lg:text-right flex items-center gap-1.5 lg:justify-end">
+                <p className="text-[11px] text-stone-300 text-left lg:text-right flex items-center gap-1.5 lg:justify-end">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                   <span>Fast WhatsApp pre-press review in minutes</span>
                 </p>
@@ -226,7 +226,7 @@ export const WhyChooseUsSection: React.FC<WhyChooseUsSectionProps> = ({
           </div>
         </motion.div>
 
-        {/* 4 Pillars Grid with Classic Staggered Animated Cards */}
+        {/* 4 Pillars Grid with Transparent Frosted Glass Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
           {pillars.map((pillar, idx) => {
             const Icon = pillar.icon;
@@ -238,7 +238,7 @@ export const WhyChooseUsSection: React.FC<WhyChooseUsSectionProps> = ({
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ duration: 0.6, delay: idx * 0.12, ease: [0.16, 1, 0.3, 1] }}
                 whileHover={{ y: -6, scale: 1.008 }}
-                className="group relative rounded-2xl sm:rounded-3xl bg-gradient-to-b from-[#131318] to-[#0c0c10] border border-white/10 hover:border-[#f5be38]/60 p-6 sm:p-8 transition-all duration-500 shadow-xl hover:shadow-[0_20px_45px_rgba(245,190,56,0.14)] flex flex-col justify-between overflow-hidden"
+                className="group relative rounded-2xl sm:rounded-3xl bg-[#0a0a10]/45 hover:bg-[#0a0a10]/65 border border-white/15 hover:border-[#f5be38]/60 p-6 sm:p-8 backdrop-blur-md transition-all duration-500 shadow-xl hover:shadow-[0_20px_45px_rgba(245,190,56,0.18)] flex flex-col justify-between overflow-hidden"
               >
                 {/* Classic Corner Radial Light Accent */}
                 <div className={`absolute top-0 right-0 w-52 h-52 bg-gradient-to-bl ${pillar.accentGradient} rounded-full blur-3xl opacity-40 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none`} />
