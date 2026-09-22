@@ -14,7 +14,6 @@ import { CompanyLogoMark } from '../common/CompanyLogo';
 
 interface FooterProps {
   onSelectCategory: (cat: ProductCategory | 'all') => void;
-  onOpenAdmin?: () => void;
   onOpenInfoModal?: (tab?: InfoModalTab) => void;
   onOpenCategoriesPage?: (catKey?: string) => void;
   onOpenQuoteModal?: () => void;
@@ -22,7 +21,6 @@ interface FooterProps {
 
 export const Footer: React.FC<FooterProps> = ({ 
   onSelectCategory, 
-  onOpenAdmin, 
   onOpenInfoModal,
   onOpenCategoriesPage,
   onOpenQuoteModal 
@@ -605,20 +603,6 @@ export const Footer: React.FC<FooterProps> = ({
                 </div>
               </div>
             </div>
-
-            {/* Discreet Admin Desk Link */}
-            {onOpenAdmin && (
-              <div className="pt-2">
-                <button
-                  type="button"
-                  onClick={onOpenAdmin}
-                  className="text-[11px] text-stone-400 hover:text-stone-200 transition-colors flex items-center gap-1 cursor-pointer"
-                >
-                  <ShieldCheck className="w-3 h-3 text-[#10b981]" />
-                  <span>Admin &amp; Operations Desk</span>
-                </button>
-              </div>
-            )}
           </div>
 
         </div>

@@ -133,7 +133,6 @@ interface CategoriesPageProps {
   onSelectProduct: (product: Product) => void;
   onOpenCart?: () => void;
   cartCount?: number;
-  onOpenAdmin?: (categoryKey?: string) => void;
 }
 
 export const CategoriesPage: React.FC<CategoriesPageProps> = ({
@@ -145,7 +144,6 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
   onSelectProduct,
   onOpenCart,
   cartCount = 0,
-  onOpenAdmin,
 }) => {
   // Navigation & filter states
   const [selectedCategoryKey, setSelectedCategoryKey] = useState<string>(() => normalizeCategoryKey(initialCategory || 'all'));
@@ -394,20 +392,8 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
             )}
           </div>
 
-          {/* Quick Actions (Call, WhatsApp, Categories Admin, Cart) */}
+          {/* Quick Actions (Call, WhatsApp, Cart) */}
           <div className="flex items-center gap-3">
-            {onOpenAdmin && (
-              <button
-                type="button"
-                onClick={() => onOpenAdmin(selectedCategoryKey !== 'all' ? selectedCategoryKey : undefined)}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-50 text-amber-900 border border-amber-300 text-xs font-bold hover:bg-amber-100 transition-colors shadow-xs cursor-pointer"
-                title="Open Categories Admin to upload multiple photos"
-              >
-                <FolderTree className="w-3.5 h-3.5 text-[#b8860b]" />
-                <span className="hidden sm:inline">Categories Admin (Multi-Photo)</span>
-                <span className="sm:hidden">Admin Upload</span>
-              </button>
-            )}
 
             <a
               href="https://wa.me/2347030372539?text=Hello%20Silver%20and%20Gold%20Inkshine,%20I%20am%20browsing%20the%20categories%20page%20and%20need%20assistance"

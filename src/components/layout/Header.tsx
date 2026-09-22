@@ -52,7 +52,6 @@ interface HeaderProps {
   searchQuery: string;
   onSearchChange: (query: string) => void;
   onNavigateHome: () => void;
-  onOpenAdmin?: () => void;
   onOpenInfoModal?: (tab?: InfoModalTab) => void;
   onOpenBookOnline?: () => void;
   onOpenCatalog?: () => void;
@@ -96,7 +95,6 @@ export const Header: React.FC<HeaderProps> = ({
   searchQuery,
   onSearchChange,
   onNavigateHome,
-  onOpenAdmin,
   onOpenInfoModal,
   onOpenBookOnline,
   onOpenCatalog,
@@ -196,18 +194,7 @@ export const Header: React.FC<HeaderProps> = ({
                 <Mail className="w-3.5 h-3.5" />
               </a>
 
-              {/* Discreet Staff & Admin Portal in Top Bar (Not in the main button bar) */}
-              {onOpenAdmin && (
-                <button 
-                  type="button"
-                  onClick={onOpenAdmin}
-                  className="hidden md:inline-flex items-center gap-1 text-stone-950 font-bold hover:text-black hover:underline transition-all drop-shadow-[0_1px_0_rgba(255,255,255,0.4)] ml-2 pl-2 border-l border-black/25 text-[11px] cursor-pointer"
-                  title="Staff Portal & Admin Operations"
-                >
-                  <ShieldCheck className="w-3 h-3 text-stone-950" />
-                  <span>Admin Portal</span>
-                </button>
-              )}
+              {/* Discreet Staff Portal in Top Bar */}
             </div>
           </div>
         </div>
@@ -803,20 +790,6 @@ export const Header: React.FC<HeaderProps> = ({
                     </div>
                   </button>
 
-                  {onOpenAdmin && (
-                    <div className="pt-1 mt-1 border-t border-white/10">
-                      <button
-                        onClick={() => {
-                          setActiveDropdown(null);
-                          onOpenAdmin();
-                        }}
-                        className="w-full text-left px-4 py-2 text-xs font-semibold text-amber-400 hover:bg-white/10 transition-colors flex items-center justify-between"
-                      >
-                        <span>Press &amp; Admin Desk</span>
-                        <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
-                      </button>
-                    </div>
-                  )}
                 </div>
               )}
             </div>
@@ -1037,18 +1010,6 @@ export const Header: React.FC<HeaderProps> = ({
             >
               📞 +234 703 037 2539
             </a>
-            {onOpenAdmin && (
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenAdmin();
-                }}
-                className="text-amber-400 hover:text-amber-300 font-semibold flex items-center gap-1"
-              >
-                <ShieldCheck className="w-3.5 h-3.5" />
-                <span>Admin Desk</span>
-              </button>
-            )}
             <a
               href="https://wa.me/2347030372539"
               target="_blank"

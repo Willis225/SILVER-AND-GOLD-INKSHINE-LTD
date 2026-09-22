@@ -522,7 +522,6 @@ export default function App() {
             setViewMode('storefront');
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
-          onOpenAdmin={() => handleOpenAdmin()}
           onOpenInfoModal={handleOpenInfoModal}
           onOpenBookOnline={() => handleOpenBookOnline()}
           onOpenCatalog={() => handleOpenCategoriesPage('all')}
@@ -550,7 +549,6 @@ export default function App() {
             }}
             onOpenCart={() => setIsCartOpen(true)}
             cartCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
-            onOpenAdmin={handleOpenAdmin}
           />
         )}
 
@@ -716,7 +714,6 @@ export default function App() {
             setSelectedCategory(cat);
             handleOpenCategoriesPage(cat);
           }}
-          onOpenAdmin={() => handleOpenAdmin()}
           onOpenInfoModal={handleOpenInfoModal}
           onOpenCategoriesPage={handleOpenCategoriesPage}
           onOpenQuoteModal={() => setIsQuoteModalOpen(true)}

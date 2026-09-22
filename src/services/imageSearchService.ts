@@ -244,39 +244,7 @@ export async function searchOnlineProductImages(
   const results: SearchResultImage[] = [];
   const seenUrls = new Set<string>();
 
-  // 1. Live Online Web Search (Google & Web Index)
-  try {
-    const webApiRes = await fetch(`/api/search-images?q=${encodeURIComponent(query)}`);
-    if (webApiRes.ok) {
-      const data = await webApiRes.json();
-      const webResults = (data.results || []) as Array<{
-        id: string;
-        title: string;
-        url: string;
-        thumbnail: string;
-        source: string;
-        domain?: string;
-      }>;
-      webResults.forEach((item) => {
-        if (item.url && !seenUrls.has(item.url)) {
-          seenUrls.add(item.url);
-          results.push({
-            id: item.id || `web-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
-            title: item.title || `${query} Photo`,
-            url: item.url,
-            thumbnail: item.thumbnail || item.url,
-            source: 'Google / Live Web',
-            domain: item.domain || 'Live Web',
-            category: categoryKey
-          });
-        }
-      });
-    }
-  } catch (webErr) {
-    console.warn('Live web image search notice (falling back to curated/open sources):', webErr);
-  }
-
-  // 2. Check Curated High-Definition Commercial Print Collection matching category or keywords
+  // 1. Check Curated High-Definition Commercial Print Collection matching category or keywords
   const matchedCategoryKey = categoryKey || 'cards_invitations';
   const curatedList = CURATED_PRINT_GALLERY[matchedCategoryKey] || [];
   

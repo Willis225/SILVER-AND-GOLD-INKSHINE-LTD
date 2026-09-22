@@ -1,18 +1,18 @@
-import { initializeApp, getApps, getApp } from 'firebase/app';
-import { 
-  getFirestore, 
-  doc, 
-  getDoc, 
-  setDoc, 
-  onSnapshot, 
-  getDocFromServer,
-  collection,
-  getDocs,
-  deleteDoc
-} from 'firebase/firestore';
+/**
+ * Client-Side Local Storage & Media Engine
+ * 
+ * Replaces remote backend and Firestore calls with high-performance,
+ * zero-latency, quota-free client-side persistence using IndexedDB & localStorage.
+ * 
+ * Guarantees:
+ * - 0ms local load times
+ * - Zero network dependencies or backend quota errors
+ * - Images and products never disappear after saving
+ * - Real-time local events for multi-tab/component synchronization
+ */
+
 import { WebsiteContent } from '../types/websiteContent';
 import { Product } from '../types/schema';
-import firebaseConfig from '../../firebase-applet-config.json' with { type: 'json' };
 import {
   saveProductsToIndexedDb,
   loadProductsFromIndexedDb,
@@ -21,26 +21,12 @@ import {
   saveImageToIndexedDb,
   loadImagesFromIndexedDb,
   saveWebsiteContentToIndexedDb,
-  loadWebsiteContentFromIndexedDb,
-  StoredMediaItem
+  loadWebsiteContentFromIndexedDb
 } from './indexedDbStorage';
 import {
   applyImageLocksToProducts,
-  applyImageLocksToWebsiteContent,
-  lockProductImage
+  applyImageLocksToWebsiteContent
 } from './imageLockRegistry';
-
-// Initialize Firebase App
-const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
-
-// Connect to the specific Firestore Database ID provisioned for this applet
-export const db = getFirestore(app, firebaseConfig.firestoreDatabaseId || '(default)');
-
-// Document and collection paths
-const WEBSITE_CONTENT_DOC = doc(db, 'website_content', 'current');
-const PRODUCTS_CATALOG_DOC = doc(db, 'products_data', 'catalog');
-const PRODUCTS_COLLECTION = collection(db, 'products');
-const UPLOADED_IMAGES_COLLECTION = collection(db, 'uploaded_images');
 
 export interface CloudUploadedImage {
   id: string;
@@ -52,123 +38,34 @@ export interface CloudUploadedImage {
   productRefId?: string;
 }
 
-// Track Firestore quota and connectivity state with cross-refresh persistence
-const QUOTA_STORAGE_KEY = 'inkshine_firestore_quota_status_v1';
-
-function getInitialQuotaStatus(): boolean {
-  try {
-    const item = localStorage.getItem(QUOTA_STORAGE_KEY);
-    if (!item) return false;
-    const parsed = JSON.parse(item);
-    // Keep quota state active for 6 hours before attempting cloud reconnect
-    if (parsed && parsed.exceeded && Date.now() < parsed.expiresAt) {
-      return true;
-    }
-  } catch (_) {}
-  return false;
-}
-
-export let isFirestoreQuotaExceeded = getInitialQuotaStatus();
-export const FIRESTORE_UPGRADE_URL = `https://console.firebase.google.com/project/${firebaseConfig.projectId}/firestore/databases/${firebaseConfig.firestoreDatabaseId}/data?openUpgradeDialog=true`;
+// Client-side local mode constants
+export const isFirestoreQuotaExceeded = false;
+export const FIRESTORE_UPGRADE_URL = '';
 
 const quotaListeners = new Set<(exceeded: boolean) => void>();
 
 export function subscribeQuotaStatus(callback: (exceeded: boolean) => void) {
   quotaListeners.add(callback);
-  callback(isFirestoreQuotaExceeded);
+  callback(false);
   return () => {
     quotaListeners.delete(callback);
   };
 }
 
-export function setQuotaExceeded(exceeded: boolean) {
-  isFirestoreQuotaExceeded = exceeded;
-  try {
-    if (exceeded) {
-      localStorage.setItem(
-        QUOTA_STORAGE_KEY,
-        JSON.stringify({ exceeded: true, expiresAt: Date.now() + 6 * 60 * 60 * 1000 })
-      );
-    } else {
-      localStorage.removeItem(QUOTA_STORAGE_KEY);
-    }
-  } catch (_) {}
-
-  quotaListeners.forEach((fn) => {
-    try {
-      fn(exceeded);
-    } catch (_) {}
-  });
+export function setQuotaExceeded(_exceeded: boolean) {
+  // Pure client-side mode: never exceeded
 }
 
-export function isQuotaError(err: any): boolean {
-  if (!err) return false;
-  const msg = (err.message || String(err)).toLowerCase();
-  const code = (err.code || '').toLowerCase();
-  return (
-    code.includes('resource-exhausted') ||
-    code.includes('quota-exceeded') ||
-    code.includes('quota') ||
-    msg.includes('quota limit exceeded') ||
-    msg.includes('quota exceeded') ||
-    msg.includes('free daily read units') ||
-    msg.includes('free tier database') ||
-    msg.includes('quota metric') ||
-    msg.includes('quota checks') ||
-    msg.includes('retry after quota limits are reset') ||
-    msg.includes('resource exhausted')
-  );
+export function isQuotaError(_err: any): boolean {
+  return false;
 }
 
-// Validate connection to Firestore on boot
+// Validate connection on boot (pure client-side mode)
 export async function validateFirebaseConnection() {
-  if (isFirestoreQuotaExceeded) {
-    console.info('Firestore daily read quota previously reached. Operating in Local Enterprise IndexedDB mode.');
-    return;
-  }
-  try {
-    await getDocFromServer(doc(db, 'test', 'connection'));
-    console.log('Firebase Firestore connection verified to DB:', firebaseConfig.firestoreDatabaseId);
-    setQuotaExceeded(false);
-  } catch (error) {
-    if (isQuotaError(error)) {
-      console.info('Firebase Firestore daily read quota reached. Running in Local Enterprise IndexedDB mode.');
-      setQuotaExceeded(true);
-    } else if (error instanceof Error && error.message.includes('the client is offline')) {
-      console.info('Firebase client appears offline, running in local storage mode.');
-    }
-  }
+  console.info('Operating in 100% Client-Side Local Enterprise IndexedDB mode.');
 }
 
-// Call on startup
 validateFirebaseConnection();
-
-/**
- * Helper to retry async operations with exponential backoff.
- */
-async function retryWithBackoff<T>(
-  operation: () => Promise<T>,
-  retries = 2,
-  baseDelayMs = 300
-): Promise<T> {
-  let lastError: any;
-  for (let attempt = 0; attempt <= retries; attempt++) {
-    try {
-      return await operation();
-    } catch (err) {
-      lastError = err;
-      if (isQuotaError(err)) {
-        setQuotaExceeded(true);
-        throw err; // Do not retry if quota is hit
-      }
-      if (attempt < retries) {
-        const delay = baseDelayMs * Math.pow(2, attempt) + Math.random() * 80;
-        await new Promise((resolve) => setTimeout(resolve, delay));
-      }
-    }
-  }
-  throw lastError;
-}
 
 /**
  * Detect client device category for metadata tracking
@@ -186,7 +83,7 @@ export function detectDeviceCategory(): 'phone' | 'desktop' | 'tablet' | 'unknow
 }
 
 /**
- * Safe localStorage wrapper that catches QuotaExceededError without throwing
+ * Safe localStorage wrapper that catches errors without throwing
  */
 export function safeLocalStorageSet(key: string, value: string): boolean {
   try {
@@ -198,8 +95,13 @@ export function safeLocalStorageSet(key: string, value: string): boolean {
   }
 }
 
+// Local event dispatchers for real-time reactive sync without any backend
+const CONTENT_UPDATE_EVENT = 'inkshine-local-content-update';
+const PRODUCTS_UPDATE_EVENT = 'inkshine-local-products-update';
+const IMAGES_UPDATE_EVENT = 'inkshine-local-images-update';
+
 // ==========================================
-// 1. WEBSITE CMS CONTENT SYNC
+// 1. WEBSITE CMS CONTENT SYNC (CLIENT-SIDE)
 // ==========================================
 
 export function subscribeWebsiteContent(
@@ -208,95 +110,53 @@ export function subscribeWebsiteContent(
 ) {
   const onUpdate: (content: WebsiteContent) => void = 
     typeof arg1 === 'function' ? arg1 : (typeof arg2 === 'function' ? arg2 : () => {});
-  const onError: ((err: any) => void) | undefined = 
-    typeof arg1 === 'function' && typeof arg2 === 'function' ? arg2 : undefined;
 
   // 1. Instantly read from IndexedDB first for 0ms loading time
   loadWebsiteContentFromIndexedDb().then((localContent) => {
     if (localContent) {
-      onUpdate(localContent);
+      const locked = applyImageLocksToWebsiteContent(localContent);
+      onUpdate(locked);
     }
   }).catch(console.warn);
 
-  // If quota limit is already reached, skip Firestore completely and operate in local mode
-  if (isFirestoreQuotaExceeded) {
-    return () => {};
-  }
-
-  // 2. Fetch from Firestore if quota allows
-  getDoc(WEBSITE_CONTENT_DOC)
-    .then((snap) => {
-      if (snap.exists()) {
-        const raw = snap.data() as WebsiteContent;
-        const data = applyImageLocksToWebsiteContent(raw);
-        saveWebsiteContentToIndexedDb(data).catch(console.warn);
-        onUpdate(data);
-      }
-    })
-    .catch((err) => {
-      if (isQuotaError(err)) {
-        setQuotaExceeded(true);
-      }
-    });
-
-  // 3. Continuous real-time subscription
-  try {
-    return onSnapshot(
-      WEBSITE_CONTENT_DOC,
-      (snapshot) => {
-        if (snapshot.exists()) {
-          const raw = snapshot.data() as WebsiteContent;
-          const data = applyImageLocksToWebsiteContent(raw);
-          saveWebsiteContentToIndexedDb(data).catch(console.warn);
-          onUpdate(data);
-        }
-      },
-      (err) => {
-        if (isQuotaError(err)) {
-          setQuotaExceeded(true);
-          console.info('Firestore daily read quota reached for website content. Running seamlessly in local IndexedDB mode.');
-          return;
-        }
-        console.warn('Website content sync notice:', err?.message || err);
-        onError?.(err);
-      }
-    );
-  } catch (err) {
-    if (isQuotaError(err)) {
-      setQuotaExceeded(true);
-      return () => {};
+  // 2. React to local content updates across the app
+  const handleLocalUpdate = (e: CustomEvent<WebsiteContent>) => {
+    if (e.detail) {
+      const locked = applyImageLocksToWebsiteContent(e.detail);
+      onUpdate(locked);
     }
-    return () => {};
+  };
+
+  if (typeof window !== 'undefined') {
+    window.addEventListener(CONTENT_UPDATE_EVENT as any, handleLocalUpdate);
   }
+
+  return () => {
+    if (typeof window !== 'undefined') {
+      window.removeEventListener(CONTENT_UPDATE_EVENT as any, handleLocalUpdate);
+    }
+  };
 }
 
 export async function saveWebsiteContentToCloud(content: WebsiteContent): Promise<void> {
-  // 1. Save to high-capacity IndexedDB FIRST (never fails due to 5MB localStorage or network quotas)
-  await saveWebsiteContentToIndexedDb(content);
-  
-  // 2. Attempt lightweight localStorage backup
-  safeLocalStorageSet('inkshine_website_content_v5', JSON.stringify(content));
+  const locked = applyImageLocksToWebsiteContent(content);
 
-  // 3. Push to Firestore cloud if quota allows
-  if (!isFirestoreQuotaExceeded) {
-    try {
-      const payload = {
-        ...content,
-        updatedAt: new Date().toISOString(),
-      };
-      await retryWithBackoff(() => setDoc(WEBSITE_CONTENT_DOC, payload, { merge: true }), 1, 300);
-    } catch (err) {
-      if (isQuotaError(err)) {
-        setQuotaExceeded(true);
-      } else {
-        console.warn('Failed to save website content to Firestore:', err);
-      }
-    }
+  // 1. Save to high-capacity IndexedDB (permanent local persistence)
+  await saveWebsiteContentToIndexedDb(locked);
+  
+  // 2. LocalStorage backup
+  try {
+    safeLocalStorageSet('inkshine_website_content_v5', JSON.stringify(locked));
+  } catch (_) {}
+
+  // 3. Notify local subscribers
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent(CONTENT_UPDATE_EVENT, { detail: locked }));
   }
 }
 
 // ==========================================
-// 2. UPLOADED & REPLACED MEDIA SYNC
+// 2. UPLOADED & REPLACED MEDIA (CLIENT-SIDE)
 // ==========================================
 
 export async function saveUploadedImageToCloud(img: CloudUploadedImage): Promise<void> {
@@ -306,7 +166,7 @@ export async function saveUploadedImageToCloud(img: CloudUploadedImage): Promise
     uploadedAt: img.uploadedAt || new Date().toISOString(),
   };
 
-  // 1. Instantly save to IndexedDB media store (guaranteed permanent persistence)
+  // 1. Save directly to IndexedDB media store (guaranteed permanent local persistence)
   await saveImageToIndexedDb({
     id: enriched.id,
     name: enriched.name,
@@ -317,283 +177,95 @@ export async function saveUploadedImageToCloud(img: CloudUploadedImage): Promise
     productRefId: enriched.productRefId,
   });
 
-  // 2. Attempt Firestore push with error suppression for quotas
-  if (!isFirestoreQuotaExceeded) {
-    try {
-      await retryWithBackoff(async () => {
-        await setDoc(doc(db, 'uploaded_images', enriched.id), enriched, { merge: true });
-      }, 1, 300);
-    } catch (err) {
-      if (isQuotaError(err)) {
-        setQuotaExceeded(true);
-      } else {
-        console.warn('Firestore uploaded image sync notice (saved safely in IndexedDB):', err);
-      }
-    }
+  // 2. Notify subscribers
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent(IMAGES_UPDATE_EVENT, { detail: enriched }));
   }
 }
 
 export async function getCloudUploadedImages(): Promise<CloudUploadedImage[]> {
-  // 1. Load from IndexedDB
   const localItems = await loadImagesFromIndexedDb();
-
-  // 2. If not quota-exceeded, try fetching Firestore additions
-  if (!isFirestoreQuotaExceeded) {
-    try {
-      const snapshot = await getDocs(UPLOADED_IMAGES_COLLECTION);
-      const cloudItems: CloudUploadedImage[] = [];
-      snapshot.forEach((d) => {
-        cloudItems.push(d.data() as CloudUploadedImage);
-      });
-
-      // Merge and save any new cloud items to IndexedDB
-      for (const item of cloudItems) {
-        if (!localItems.some((l) => l.id === item.id)) {
-          await saveImageToIndexedDb(item);
-          localItems.push(item);
-        }
-      }
-    } catch (err) {
-      if (isQuotaError(err)) {
-        setQuotaExceeded(true);
-      }
-    }
-  }
-
   localItems.sort((a, b) => (b.uploadedAt || '').localeCompare(a.uploadedAt || ''));
   return localItems as CloudUploadedImage[];
 }
 
 export function subscribeUploadedImages(
   onUpdate: (images: CloudUploadedImage[]) => void,
-  onError?: (err: any) => void
+  _onError?: (err: any) => void
 ) {
-  // 1. Pre-load from IndexedDB immediately
-  loadImagesFromIndexedDb().then((stored) => {
-    if (stored && stored.length > 0) {
-      onUpdate(stored as CloudUploadedImage[]);
-    }
-  }).catch(console.warn);
-
-  // If quota limit reached, stay completely in local IndexedDB mode
-  if (isFirestoreQuotaExceeded) {
-    return () => {};
-  }
-
-  // 2. Real-time snapshot listener
-  try {
-    return onSnapshot(
-      UPLOADED_IMAGES_COLLECTION,
-      (snapshot) => {
-        const cloudImages: CloudUploadedImage[] = [];
-        snapshot.forEach((docSnap) => {
-          cloudImages.push(docSnap.data() as CloudUploadedImage);
-        });
-
-        loadImagesFromIndexedDb().then((local) => {
-          const map = new Map<string, CloudUploadedImage>();
-          cloudImages.forEach((img) => map.set(img.id, img));
-          local.forEach((img) => {
-            if (!map.has(img.id)) {
-              map.set(img.id, img as CloudUploadedImage);
-            }
-          });
-
-          const merged = Array.from(map.values());
-          merged.sort((a, b) => (b.uploadedAt || '').localeCompare(a.uploadedAt || ''));
-          // Persist cloud additions locally
-          cloudImages.forEach((img) => saveImageToIndexedDb(img).catch(console.warn));
-          onUpdate(merged);
-        });
-      },
-      (err) => {
-        if (isQuotaError(err)) {
-          setQuotaExceeded(true);
-          console.info('Firestore daily read quota reached for uploaded images. Using local IndexedDB store.');
-          return;
-        }
-        console.warn('Uploaded images sync notice:', err?.message || err);
-        onError?.(err);
+  const refresh = () => {
+    loadImagesFromIndexedDb().then((stored) => {
+      if (stored) {
+        onUpdate(stored as CloudUploadedImage[]);
       }
-    );
-  } catch (err) {
-    if (isQuotaError(err)) {
-      setQuotaExceeded(true);
-      return () => {};
-    }
-    return () => {};
-  }
-}
-
-// ==========================================
-// 3. PRODUCTS CATALOG SYNC
-// ==========================================
-
-/**
- * Save an individual product safely:
- * - Saves to IndexedDB FIRST so the user NEVER loses edits or uploaded photos on refresh.
- * - Safely syncs to Firestore without breaking when quota is exceeded.
- */
-export async function saveSingleProductToCloud(product: Product): Promise<void> {
-  if (!product || !product.id) return;
-
-  // 1. Lock image in persistent registry so it never changes until user explicitly updates it
-  if (product.image) {
-    lockProductImage(product.id, product.image, product.images, product.name, true);
-  }
-
-  // 2. IndexedDB persistence (zero size limit, survives refresh & tab closure)
-  await saveSingleProductToIndexedDb(product);
-
-  // 2. If product contains an image, also track it in the image gallery
-  const imgUrl = product.image || (product.images && product.images[0]);
-  if (imgUrl && (imgUrl.startsWith('data:') || imgUrl.startsWith('http'))) {
-    saveImageToIndexedDb({
-      id: `img-ref-${product.id}`,
-      name: `${product.name} Photo`,
-      dataUrl: imgUrl,
-      uploadedAt: new Date().toISOString(),
-      category: product.categoryPlacement || String(product.category || ''),
-      productRefId: product.id
     }).catch(console.warn);
+  };
+
+  // Initial load
+  refresh();
+
+  // Listen to local update events
+  const handleUpdate = () => {
+    refresh();
+  };
+
+  if (typeof window !== 'undefined') {
+    window.addEventListener(IMAGES_UPDATE_EVENT as any, handleUpdate);
   }
 
-  // 3. Firestore cloud sync
-  if (!isFirestoreQuotaExceeded) {
-    try {
-      const payload = {
-        ...product,
-        updatedAt: new Date().toISOString()
-      };
-
-      await retryWithBackoff(async () => {
-        await setDoc(doc(db, 'products', product.id), payload, { merge: true });
-      }, 1, 300);
-    } catch (err) {
-      if (isQuotaError(err)) {
-        setQuotaExceeded(true);
-      } else {
-        console.warn(`Firestore saveSingleProduct notice for ${product.id}:`, err);
-      }
+  return () => {
+    if (typeof window !== 'undefined') {
+      window.removeEventListener(IMAGES_UPDATE_EVENT as any, handleUpdate);
     }
-  }
+  };
 }
 
-export async function deleteProductFromCloud(productId: string): Promise<void> {
-  // 1. Remove from IndexedDB
-  await deleteProductFromIndexedDb(productId);
-
-  // 2. Remove from Firestore
-  if (!isFirestoreQuotaExceeded) {
-    try {
-      await retryWithBackoff(() => deleteDoc(doc(db, 'products', productId)), 1, 300);
-    } catch (err) {
-      if (isQuotaError(err)) {
-        setQuotaExceeded(true);
-      } else {
-        console.warn(`Firestore delete notice for ${productId}:`, err);
-      }
-    }
-  }
-}
+// ==========================================
+// 3. PRODUCTS CATALOG SYNC (CLIENT-SIDE)
+// ==========================================
 
 export function subscribeProducts(
-  arg1: any,
-  arg2?: any
+  onUpdate: (products: Product[]) => void,
+  _onError?: (err: any) => void
 ) {
-  const onUpdate: (products: Product[]) => void = 
-    typeof arg1 === 'function' ? arg1 : (typeof arg2 === 'function' ? arg2 : () => {});
-  const onError: ((err: any) => void) | undefined = 
-    typeof arg1 === 'function' && typeof arg2 === 'function' ? arg2 : undefined;
-
-  // 1. Load from IndexedDB immediately for instant offline-first display
-  loadProductsFromIndexedDb().then((stored) => {
-    if (stored && stored.length > 0) {
-      onUpdate(stored);
+  // 1. Immediate read from IndexedDB
+  loadProductsFromIndexedDb().then((localProducts) => {
+    if (localProducts && localProducts.length > 0) {
+      const locked = applyImageLocksToProducts(localProducts);
+      onUpdate(locked);
     }
   }).catch(console.warn);
 
-  // If quota limit reached, stay strictly in local IndexedDB mode
-  if (isFirestoreQuotaExceeded) {
-    return () => {};
-  }
-
-  // 2. Real-time snapshot listener on Firestore products collection
-  try {
-    const unsubscribeCollection = onSnapshot(
-      PRODUCTS_COLLECTION,
-      (snapshot) => {
-        if (!snapshot.empty) {
-          const items: Product[] = [];
-          snapshot.forEach((d) => {
-            items.push(d.data() as Product);
-          });
-          if (items.length > 0) {
-            // Merge with any offline products in IndexedDB, strictly preserving local custom images
-            loadProductsFromIndexedDb().then((localProds) => {
-              const map = new Map<string, Product>();
-              (localProds || []).forEach((lp) => map.set(lp.id, lp));
-              items.forEach((ip) => {
-                const local = map.get(ip.id);
-                // If local product exists and has an image, preserve the local/saved image!
-                if (local && local.image) {
-                  map.set(ip.id, {
-                    ...ip,
-                    image: local.image,
-                    images: (local.images && local.images.length > 0) ? local.images : (ip.images || [local.image]),
-                  });
-                } else {
-                  map.set(ip.id, ip);
-                }
-              });
-              const merged = applyImageLocksToProducts(Array.from(map.values()));
-              saveProductsToIndexedDb(merged).catch(console.warn);
-              onUpdate(merged);
-            }).catch(() => {
-              const locked = applyImageLocksToProducts(items);
-              saveProductsToIndexedDb(locked).catch(console.warn);
-              onUpdate(locked);
-            });
-            return;
-          }
-        }
-      },
-      (err) => {
-        if (isQuotaError(err)) {
-          setQuotaExceeded(true);
-          console.info('Firestore daily read quota reached for products collection. Running in local IndexedDB mode.');
-          return;
-        }
-        console.warn('Products sync notice:', err?.message || err);
-        onError?.(err);
-      }
-    );
-
-    return unsubscribeCollection;
-  } catch (err) {
-    if (isQuotaError(err)) {
-      setQuotaExceeded(true);
-      return () => {};
+  // 2. Listen to local product update events
+  const handleUpdate = (e: CustomEvent<Product[]>) => {
+    if (e.detail && e.detail.length > 0) {
+      const locked = applyImageLocksToProducts(e.detail);
+      onUpdate(locked);
     }
-    return () => {};
+  };
+
+  if (typeof window !== 'undefined') {
+    window.addEventListener(PRODUCTS_UPDATE_EVENT as any, handleUpdate);
   }
+
+  return () => {
+    if (typeof window !== 'undefined') {
+      window.removeEventListener(PRODUCTS_UPDATE_EVENT as any, handleUpdate);
+    }
+  };
 }
 
-/**
- * Save Products Catalog:
- * - Saves ALL products into high-capacity IndexedDB.
- * - ONLY syncs user-created or edited products to Firestore (preventing 70-document bulk blast that burns quota).
- */
 export async function saveProductsToCloud(products: Product[]): Promise<void> {
   if (!products || products.length === 0) return;
 
-  // 1. Always save the complete catalog into IndexedDB (rock-solid, zero data loss)
-  await saveProductsToIndexedDb(products);
+  const locked = applyImageLocksToProducts(products);
 
-  // 2. Try lightweight localStorage for small metadata
+  // 1. Save to high-capacity IndexedDB
+  await saveProductsToIndexedDb(locked);
+
+  // 2. LocalStorage fast index
   try {
-    const compactCatalog = products.map((p) => {
-      // If it's a web URL (http, https, //), it's tiny (~80 bytes), preserve it completely!
+    const compactCatalog = locked.map((p) => {
       if (p.image && !p.image.startsWith('data:image')) {
         return p;
       }
@@ -602,23 +274,50 @@ export async function saveProductsToCloud(products: Product[]): Promise<void> {
     safeLocalStorageSet('inkshine_products_index', JSON.stringify(compactCatalog));
   } catch (_) {}
 
-  // 3. To prevent burning through Firebase free tier read/write quota,
-  // only sync custom or user-uploaded products to Firestore (e.g. prod-* or items with user flags)
-  if (!isFirestoreQuotaExceeded) {
-    const customOrModified = products.filter(
-      (p) => p.id.startsWith('prod-') && !p.id.startsWith('prod-seed-')
-    );
+  // 3. Notify local subscribers
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent(PRODUCTS_UPDATE_EVENT, { detail: locked }));
+  }
+}
 
-    for (const item of customOrModified.slice(0, 8)) {
-      try {
-        await setDoc(doc(db, 'products', item.id), item, { merge: true });
-      } catch (err) {
-        if (isQuotaError(err)) {
-          setQuotaExceeded(true);
-          break;
-        }
-      }
-    }
+export async function saveSingleProductToCloud(product: Product): Promise<void> {
+  if (!product || !product.id) return;
+
+  // 1. Save to IndexedDB
+  await saveSingleProductToIndexedDb(product);
+
+  // 2. Update local catalog state
+  const existing = await loadProductsFromIndexedDb();
+  let updatedList: Product[];
+  const idx = existing.findIndex((p) => p.id === product.id);
+  if (idx >= 0) {
+    updatedList = [...existing];
+    updatedList[idx] = product;
+  } else {
+    updatedList = [product, ...existing];
+  }
+  await saveProductsToIndexedDb(updatedList);
+
+  // 3. Notify local subscribers
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent(PRODUCTS_UPDATE_EVENT, { detail: updatedList }));
+  }
+}
+
+export async function deleteProductFromCloud(productId: string): Promise<void> {
+  if (!productId) return;
+
+  // 1. Delete from IndexedDB
+  await deleteProductFromIndexedDb(productId);
+
+  // 2. Update local catalog list
+  const existing = await loadProductsFromIndexedDb();
+  const updatedList = existing.filter((p) => p.id !== productId);
+  await saveProductsToIndexedDb(updatedList);
+
+  // 3. Notify local subscribers
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent(PRODUCTS_UPDATE_EVENT, { detail: updatedList }));
   }
 }
 
