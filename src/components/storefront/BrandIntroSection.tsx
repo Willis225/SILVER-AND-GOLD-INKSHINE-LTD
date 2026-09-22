@@ -6,7 +6,7 @@ interface BrandIntroSectionProps {
   onExploreProducts?: () => void;
 }
 
-const BRAND_PROMO_CDN_IMAGE = 'https://cdn.hstockplus.org/uploads/public/img-1790078929320-97676a9f796870ea.webp';
+const BRAND_PROMO_CDN_IMAGE = 'https://cdn.hstockplus.org/uploads/public/img-1790081459988-99a85d16a5c3b3d4.webp';
 
 export const BrandIntroSection: React.FC<BrandIntroSectionProps> = ({ onExploreProducts }) => {
   const [imageSrc, setImageSrc] = useState(BRAND_PROMO_CDN_IMAGE);
@@ -71,7 +71,7 @@ export const BrandIntroSection: React.FC<BrandIntroSectionProps> = ({ onExploreP
               onClick={onExploreProducts}
               className={`relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-white/15 bg-[#121217] backdrop-blur-xl group transition-all duration-500 hover:border-[#f5be38]/60 hover:shadow-[0_20px_50px_rgba(0,0,0,0.8)] ${onExploreProducts ? 'cursor-pointer' : ''}`}
             >
-              <div className="relative w-full aspect-[1672/941] overflow-hidden bg-black/40">
+              <div className="relative w-full aspect-[1492/1054] overflow-hidden bg-black/40">
                 <img
                   src={imageSrc}
                   alt="SILVER & GOLD INKSHINE LTD Business & Commercial Printing Solutions"
