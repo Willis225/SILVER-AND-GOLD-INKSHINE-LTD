@@ -157,7 +157,7 @@ export const DEFAULT_WEBSITE_CONTENT: WebsiteContent = {
   heroSubheadline: 'Banners • Branding • Digital Printing',
   heroEyebrow: 'Bring your business to the best scale',
   heroDescription: 'Select from top print collections, guaranteeing precision color matching and pre-press audit. Need custom specs or large volume? Fast turnaround and nationwide doorstep delivery across Nigeria!',
-  heroBackgroundImage: '/homepage-bg.jpg',
+  heroBackgroundImage: '/7aa493911d023086a5442472c889df70.jpg',
   heroSlides: DEFAULT_HERO_SLIDES,
   showcaseTitle: 'Top-Quality Printing Services',
   showcaseDescription: 'Engineered on industrial press equipment with laser-sharp registration, vibrant CMYK color balance, and rapid nationwide delivery.',
@@ -209,7 +209,9 @@ export function loadSavedWebsiteContent(): WebsiteContent {
         heroSubheadline,
         heroEyebrow,
         heroDescription,
-        heroBackgroundImage: parsed.heroBackgroundImage || DEFAULT_WEBSITE_CONTENT.heroBackgroundImage,
+        heroBackgroundImage: (!parsed.heroBackgroundImage || parsed.heroBackgroundImage === '/homepage-bg.jpg')
+          ? DEFAULT_WEBSITE_CONTENT.heroBackgroundImage
+          : parsed.heroBackgroundImage,
         heroSlides,
         showcaseServices: Array.isArray(parsed.showcaseServices) && parsed.showcaseServices.length > 0 
           ? parsed.showcaseServices 

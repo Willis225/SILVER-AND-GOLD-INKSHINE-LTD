@@ -503,6 +503,18 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#08080a] text-stone-100 font-sans antialiased flex flex-col justify-between selection:bg-[#f5be38] selection:text-black bg-grid-pattern relative">
+      {/* Ambient background overlay for homepage storefront */}
+      {viewMode === 'storefront' && (
+        <div className="fixed inset-0 pointer-events-none select-none z-0 overflow-hidden">
+          <img
+            src={websiteContent.heroBackgroundImage || '/7aa493911d023086a5442472c889df70.jpg'}
+            alt=""
+            className="w-full h-full object-cover opacity-[0.05] scale-110 blur-xs mix-blend-screen"
+            referrerPolicy="no-referrer"
+          />
+        </div>
+      )}
+
       {/* Global Header (Rendered on storefront, pdp, checkout, and sandbox) */}
       {viewMode !== 'admin' && (
         <Header

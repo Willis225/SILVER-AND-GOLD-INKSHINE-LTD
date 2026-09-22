@@ -224,9 +224,9 @@ export const PageTextManager: React.FC<PageTextManagerProps> = ({
           <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
             <input
               type="text"
-              value={formData.heroBackgroundImage || '/homepage-bg.jpg'}
+              value={formData.heroBackgroundImage || '/7aa493911d023086a5442472c889df70.jpg'}
               onChange={(e) => handleChange('heroBackgroundImage', e.target.value)}
-              placeholder="/homepage-bg.jpg or https://..."
+              placeholder="/7aa493911d023086a5442472c889df70.jpg or https://..."
               className="w-full px-3.5 py-2.5 bg-stone-50 rounded-xl border border-stone-300 text-xs text-stone-900 font-mono focus:ring-2 focus:ring-[#b8860b]"
             />
             {formData.heroBackgroundImage && (
@@ -241,7 +241,7 @@ export const PageTextManager: React.FC<PageTextManagerProps> = ({
                 </div>
                 <button
                   type="button"
-                  onClick={() => handleChange('heroBackgroundImage', '/homepage-bg.jpg')}
+                  onClick={() => handleChange('heroBackgroundImage', '/7aa493911d023086a5442472c889df70.jpg')}
                   className="text-[11px] text-stone-500 hover:text-red-600 underline font-medium"
                 >
                   Reset texture

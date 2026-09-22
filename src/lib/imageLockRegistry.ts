@@ -347,7 +347,9 @@ export function applyImageLocksToWebsiteContent(content: WebsiteContent): Websit
   const map = getLockedImagesMap();
 
   const heroBgLock = map['hero_bg'];
-  const resolvedBg = (heroBgLock && heroBgLock.imageUrl) ? heroBgLock.imageUrl : content.heroBackgroundImage;
+  const resolvedBg = (heroBgLock && heroBgLock.imageUrl && heroBgLock.imageUrl !== '/homepage-bg.jpg')
+    ? heroBgLock.imageUrl 
+    : (content.heroBackgroundImage || '/7aa493911d023086a5442472c889df70.jpg');
 
   const resolvedSlides = Array.isArray(content.heroSlides)
     ? content.heroSlides.map((s) => {

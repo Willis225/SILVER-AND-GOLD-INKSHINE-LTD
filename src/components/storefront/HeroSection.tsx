@@ -52,30 +52,39 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   subheadline = 'Banners • Branding • Digital Printing',
   eyebrow = 'Bring your business to the best scale',
   description = 'Select from top print collections, guaranteeing precision color matching and pre-press audit. Need custom specs or large volume? Fast turnaround and nationwide doorstep delivery across Nigeria!',
-  backgroundImageUrl = '/homepage-bg.jpg',
+  backgroundImageUrl = '/7aa493911d023086a5442472c889df70.jpg',
 }) => {
   return (
     <section className="relative overflow-hidden bg-[#08080a] text-white pt-8 pb-16 sm:pt-12 sm:pb-24 lg:pt-16 lg:pb-28 border-b border-white/10 bg-grid-pattern">
       {/* 
-        Dark Sleek Minimalist UI Website Hero Background:
-        - Deep black obsidian backdrop with subtle coordinate grid
-        - Ambient gold glow spots and orbital curves
+        Dark Sleek Minimalist UI Website Hero Background with Image Overlay:
+        - Wide-format printing press visual backdrop with vibrant colors
+        - Sophisticated deep obsidian gradient overlays for crisp WCAG AA text contrast
+        - Neon cyan print-carriage glow matching the PRINTBIG printer
+        - Ambient warm gold light blooms reflecting the studio workshop pendant lighting
       */}
       <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
         <img 
-          src={backgroundImageUrl || '/homepage-bg.jpg'} 
-          alt="Home page background texture" 
-          className="w-full h-full object-cover object-center scale-105 opacity-30 mix-blend-luminosity transition-transform duration-700"
+          src={backgroundImageUrl || '/7aa493911d023086a5442472c889df70.jpg'} 
+          alt="Wide-format commercial printing press homepage background" 
+          className="w-full h-full object-cover object-center scale-105 opacity-60 transition-transform duration-1000 ease-out"
           referrerPolicy="no-referrer"
+          onError={(e) => {
+            const target = e.currentTarget;
+            if (target.src !== window.location.origin + '/homepage-bg.jpg') {
+              target.src = '/homepage-bg.jpg';
+            }
+          }}
         />
         {/* Soft atmospheric gradient overlays for rich depth and crisp text contrast */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#08080a] via-[#08080a]/90 to-[#08080a]/80 pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#08080a] via-transparent to-[#08080a] pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#08080a] via-[#08080a]/85 to-[#08080a]/50 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#08080a]/80 via-transparent to-[#08080a] pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,#08080a_95%)] pointer-events-none" />
       </div>
 
       {/* Radiant Gold Ambient Atmospheric Light Blooms */}
-      <div className="absolute top-1/4 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[550px] lg:w-[650px] h-[350px] sm:h-[550px] lg:h-[650px] rounded-full bg-[radial-gradient(circle,rgba(245,190,56,0.12)_0%,rgba(212,175,55,0.03)_50%,transparent_75%)] blur-3xl pointer-events-none" />
-      <div className="absolute top-1/3 right-10 w-[300px] sm:w-[450px] h-[300px] sm:h-[450px] rounded-full bg-[radial-gradient(circle,rgba(245,190,56,0.1)_0%,transparent_70%)] blur-3xl pointer-events-none" />
+      <div className="absolute top-1/4 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[550px] lg:w-[650px] h-[350px] sm:h-[550px] lg:h-[650px] rounded-full bg-[radial-gradient(circle,rgba(245,190,56,0.14)_0%,rgba(212,175,55,0.03)_50%,transparent_75%)] blur-3xl pointer-events-none" />
+      <div className="absolute top-1/3 right-10 w-[300px] sm:w-[450px] h-[300px] sm:h-[450px] rounded-full bg-[radial-gradient(circle,rgba(6,182,212,0.12)_0%,transparent_70%)] blur-3xl pointer-events-none" />
 
       {/* Glowing gold hairline edge at bottom */}
       <div className="absolute inset-x-0 bottom-0 h-[2px] bg-gradient-to-r from-transparent via-[#f5be38]/85 to-transparent shadow-[0_0_22px_#f5be38] pointer-events-none z-20" />
