@@ -95,9 +95,3 @@ export const BrandIntroSection: React.FC<BrandIntroSectionProps> = ({ onExploreP
     </section>
   );
 };
-
-        </div>
-      </div>
-    </section>
-  );
-};
