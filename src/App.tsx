@@ -509,11 +509,11 @@ export default function App() {
         <div className="fixed inset-0 pointer-events-none select-none z-0 overflow-hidden">
           <motion.div
             animate={{
-              scale: [1, 1.05, 1],
-              opacity: [0.12, 0.20, 0.12],
+              scale: [1, 1.06, 1],
+              opacity: [0.40, 0.55, 0.40],
             }}
             transition={{
-              duration: 20,
+              duration: 18,
               repeat: Infinity,
               ease: "easeInOut",
             }}
@@ -521,22 +521,26 @@ export default function App() {
           >
             <img
               src={
-                websiteContent.heroBackgroundImage && websiteContent.heroBackgroundImage !== '/homepage-bg.jpg'
+                websiteContent.heroBackgroundImage && 
+                websiteContent.heroBackgroundImage !== '/homepage-bg.jpg' && 
+                websiteContent.heroBackgroundImage !== '/7aa493911d023086a5442472c889df70.jpg' &&
+                websiteContent.heroBackgroundImage !== '/hero-banner-main.webp' &&
+                !websiteContent.heroBackgroundImage.includes('unsplash')
                   ? websiteContent.heroBackgroundImage
-                  : '/7aa493911d023086a5442472c889df70.jpg'
+                  : 'https://cdn.hstockplus.org/uploads/public/img-1790066633477-1b16a758309b0fff.webp'
               }
-              alt=""
-              className="w-full h-full object-cover blur-[1.5px] mix-blend-screen brightness-125"
+              alt="Homepage Overlay Background"
+              className="w-full h-full object-cover object-center brightness-110 contrast-105"
               referrerPolicy="no-referrer"
               onError={(e) => {
                 const target = e.currentTarget;
-                if (target.src !== window.location.origin + '/hero-banner-main.webp') {
-                  target.src = '/hero-banner-main.webp';
+                if (target.src !== window.location.origin + '/homepage-bg.webp') {
+                  target.src = '/homepage-bg.webp';
                 }
               }}
             />
           </motion.div>
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#08080a]/60 to-[#08080a] pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#08080a]/40 via-transparent to-[#08080a]/80 pointer-events-none" />
         </div>
       )}
 
@@ -655,9 +659,13 @@ export default function App() {
               eyebrow={websiteContent.heroEyebrow}
               description={websiteContent.heroDescription}
               backgroundImageUrl={
-                websiteContent.heroBackgroundImage && websiteContent.heroBackgroundImage !== '/homepage-bg.jpg'
+                websiteContent.heroBackgroundImage && 
+                websiteContent.heroBackgroundImage !== '/homepage-bg.jpg' && 
+                websiteContent.heroBackgroundImage !== '/7aa493911d023086a5442472c889df70.jpg' &&
+                websiteContent.heroBackgroundImage !== '/hero-banner-main.webp' &&
+                !websiteContent.heroBackgroundImage.includes('unsplash')
                   ? websiteContent.heroBackgroundImage
-                  : '/7aa493911d023086a5442472c889df70.jpg'
+                  : 'https://cdn.hstockplus.org/uploads/public/img-1790066633477-1b16a758309b0fff.webp'
               }
             />
 

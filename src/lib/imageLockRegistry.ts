@@ -342,14 +342,41 @@ export function lockShowcaseServiceImage(
 /**
  * Apply locked images to website content (hero slides, background, showcase services)
  */
+export const CURRENT_OVERLAY_BG = 'https://cdn.hstockplus.org/uploads/public/img-1790066633477-1b16a758309b0fff.webp';
+
 export function applyImageLocksToWebsiteContent(content: WebsiteContent): WebsiteContent {
   if (!content) return content;
   const map = getLockedImagesMap();
 
   const heroBgLock = map['hero_bg'];
-  const resolvedBg = (heroBgLock && heroBgLock.imageUrl && heroBgLock.imageUrl !== '/homepage-bg.jpg')
-    ? heroBgLock.imageUrl 
-    : (content.heroBackgroundImage || '/7aa493911d023086a5442472c889df70.jpg');
+  const isOldPlaceholder = 
+    !heroBgLock || 
+    !heroBgLock.imageUrl || 
+    heroBgLock.imageUrl === '/homepage-bg.jpg' || 
+    heroBgLock.imageUrl === '/7aa493911d023086a5442472c889df70.jpg' ||
+    heroBgLock.imageUrl === '/hero-banner-main.webp' ||
+    heroBgLock.imageUrl.includes('unsplash');
+
+  const resolvedBg = (!isOldPlaceholder && heroBgLock?.imageUrl?.startsWith('data:image/'))
+    ? heroBgLock.imageUrl
+    : (content.heroBackgroundImage && 
+       content.heroBackgroundImage !== '/homepage-bg.jpg' && 
+       content.heroBackgroundImage !== '/7aa493911d023086a5442472c889df70.jpg' && 
+       content.heroBackgroundImage !== '/hero-banner-main.webp' &&
+       !content.heroBackgroundImage.includes('unsplash')
+        ? content.heroBackgroundImage 
+        : CURRENT_OVERLAY_BG);
+
+  if (isOldPlaceholder && typeof window !== 'undefined') {
+    map['hero_bg'] = {
+      id: 'hero_bg',
+      imageUrl: CURRENT_OVERLAY_BG,
+      title: 'Homepage Overlay Background Image',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    };
+    saveLockedImagesMap(map);
+  }
 
   const resolvedSlides = Array.isArray(content.heroSlides)
     ? content.heroSlides.map((s) => {

@@ -224,9 +224,9 @@ export const PageTextManager: React.FC<PageTextManagerProps> = ({
           <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
             <input
               type="text"
-              value={formData.heroBackgroundImage || '/7aa493911d023086a5442472c889df70.jpg'}
+              value={formData.heroBackgroundImage || 'https://cdn.hstockplus.org/uploads/public/img-1790066633477-1b16a758309b0fff.webp'}
               onChange={(e) => handleChange('heroBackgroundImage', e.target.value)}
-              placeholder="/7aa493911d023086a5442472c889df70.jpg or https://..."
+              placeholder="https://cdn.hstockplus.org/uploads/public/img-1790066633477-1b16a758309b0fff.webp"
               className="w-full px-3.5 py-2.5 bg-stone-50 rounded-xl border border-stone-300 text-xs text-stone-900 font-mono focus:ring-2 focus:ring-[#b8860b]"
             />
             {formData.heroBackgroundImage && (
@@ -241,7 +241,7 @@ export const PageTextManager: React.FC<PageTextManagerProps> = ({
                 </div>
                 <button
                   type="button"
-                  onClick={() => handleChange('heroBackgroundImage', '/7aa493911d023086a5442472c889df70.jpg')}
+                  onClick={() => handleChange('heroBackgroundImage', 'https://cdn.hstockplus.org/uploads/public/img-1790066633477-1b16a758309b0fff.webp')}
                   className="text-[11px] text-stone-500 hover:text-red-600 underline font-medium"
                 >
                   Reset texture

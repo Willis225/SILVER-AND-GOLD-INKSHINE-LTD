@@ -52,11 +52,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   subheadline = 'Banners • Branding • Digital Printing',
   eyebrow = 'Bring your business to the best scale',
   description = 'Select from top print collections, guaranteeing precision color matching and pre-press audit. Need custom specs or large volume? Fast turnaround and nationwide doorstep delivery across Nigeria!',
-  backgroundImageUrl = '/7aa493911d023086a5442472c889df70.jpg',
+  backgroundImageUrl = 'https://cdn.hstockplus.org/uploads/public/img-1790066633477-1b16a758309b0fff.webp',
 }) => {
   const resolveHeroBg = (url?: string) => {
-    if (url && url !== '/homepage-bg.jpg') return url;
-    return '/7aa493911d023086a5442472c889df70.jpg';
+    if (url && 
+        url !== '/homepage-bg.jpg' && 
+        url !== '/7aa493911d023086a5442472c889df70.jpg' &&
+        url !== '/hero-banner-main.webp' &&
+        !url.includes('unsplash')) {
+      return url;
+    }
+    return 'https://cdn.hstockplus.org/uploads/public/img-1790066633477-1b16a758309b0fff.webp';
   };
 
   const [activeImage, setActiveImage] = useState<string>(() => resolveHeroBg(backgroundImageUrl));
@@ -66,31 +72,32 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   }, [backgroundImageUrl]);
 
   const handleImageError = () => {
-    if (activeImage !== '/hero-banner-main.webp') {
+    if (activeImage !== '/homepage-bg.webp') {
+      setActiveImage('/homepage-bg.webp');
+    } else if (activeImage !== '/hero-banner-main.webp') {
       setActiveImage('/hero-banner-main.webp');
     }
   };
 
   return (
-    <section className="relative overflow-hidden bg-[#08080a] text-white pt-8 pb-16 sm:pt-12 sm:pb-24 lg:pt-16 lg:pb-28 border-b border-white/10 bg-grid-pattern">
+    <section className="relative overflow-hidden bg-[#08080a] text-white pt-8 pb-16 sm:pt-12 sm:pb-24 lg:pt-16 lg:pb-28 border-b border-white/10">
       {/* 
-        High-Visibility Animated Hero Background Overlay:
+        Ultra-High-Visibility Animated Hero Background Overlay:
+        - 100% Crisp Opacity with Enhanced Saturation & Brightness
+        - Lightweight edge vignettes so the user's custom overlay image is fully visible across the viewport
         - Continuous slow Ken Burns cinematic motion (scale and gentle pan)
-        - High-clarity opacity so colors, commercial machinery, and details are brilliantly visible
-        - Directional obsidian contrast scrim on the left ensures 100% WCAG AA text legibility
         - Animated print-carriage laser sweep beam passing continuously across the visual
-        - Atmospheric pulsing neon cyan & warm gold radial light blooms
       */}
       <div className="absolute inset-0 pointer-events-none select-none overflow-hidden z-0">
         {/* Continuous Animated Image Layer */}
         <motion.div
           animate={{
-            scale: [1.02, 1.07, 1.02],
-            x: [0, -12, 0],
-            y: [0, -6, 0],
+            scale: [1, 1.05, 1],
+            x: [0, -10, 0],
+            y: [0, -5, 0],
           }}
           transition={{
-            duration: 20,
+            duration: 18,
             repeat: Infinity,
             ease: "easeInOut",
           }}
@@ -99,18 +106,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           <img 
             src={activeImage} 
             alt="Silver & Gold Inkshine Ltd Commercial Printing Press Background" 
-            className="w-full h-full object-cover object-center brightness-105 contrast-105 opacity-85 lg:opacity-90"
+            className="w-full h-full object-cover object-center brightness-115 contrast-110 opacity-95 sm:opacity-100"
             referrerPolicy="no-referrer"
             onError={handleImageError}
           />
         </motion.div>
 
-        {/* Focused Directional Text Contrast Scrim (Left dark, right vibrant) */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#08080a] via-[#08080a]/80 via-40% to-transparent pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#08080a]/60 via-transparent to-[#08080a] pointer-events-none" />
+        {/* Lightweight Non-Destructive Contrast Fade (Preserves vivid image center) */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#08080a]/65 via-[#08080a]/20 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#08080a]/90 via-transparent to-[#08080a]/40 pointer-events-none" />
         
         {/* Subtle grid pattern layer */}
-        <div className="absolute inset-0 bg-grid-pattern opacity-20 pointer-events-none" />
+        <div className="absolute inset-0 bg-grid-pattern opacity-15 pointer-events-none" />
 
         {/* Animated Print-Carriage Scanning Light Beam */}
         <motion.div
@@ -123,26 +130,26 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             ease: "linear",
             repeatDelay: 3,
           }}
-          className="absolute inset-y-0 w-64 bg-gradient-to-r from-transparent via-[#f5be38]/15 to-transparent pointer-events-none skew-x-12"
+          className="absolute inset-y-0 w-64 bg-gradient-to-r from-transparent via-[#f5be38]/20 to-transparent pointer-events-none skew-x-12"
         />
 
         {/* Pulsing Atmospheric Studio Light Blooms */}
         <motion.div 
           animate={{
             scale: [1, 1.15, 1],
-            opacity: [0.12, 0.22, 0.12],
+            opacity: [0.15, 0.28, 0.15],
           }}
           transition={{
             duration: 8,
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          className="absolute top-1/4 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[550px] lg:w-[650px] h-[350px] sm:h-[550px] lg:h-[650px] rounded-full bg-[radial-gradient(circle,rgba(245,190,56,0.18)_0%,rgba(212,175,55,0.04)_50%,transparent_75%)] blur-3xl pointer-events-none" 
+          className="absolute top-1/4 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[550px] lg:w-[650px] h-[350px] sm:h-[550px] lg:h-[650px] rounded-full bg-[radial-gradient(circle,rgba(245,190,56,0.22)_0%,rgba(212,175,55,0.06)_50%,transparent_75%)] blur-3xl pointer-events-none" 
         />
         <motion.div 
           animate={{
             scale: [1, 1.18, 1],
-            opacity: [0.1, 0.2, 0.1],
+            opacity: [0.12, 0.24, 0.12],
           }}
           transition={{
             duration: 10,
@@ -150,7 +157,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             ease: "easeInOut",
             delay: 1,
           }}
-          className="absolute top-1/3 right-10 w-[300px] sm:w-[450px] h-[300px] sm:h-[450px] rounded-full bg-[radial-gradient(circle,rgba(6,182,212,0.16)_0%,transparent_70%)] blur-3xl pointer-events-none" 
+          className="absolute top-1/3 right-10 w-[300px] sm:w-[450px] h-[300px] sm:h-[450px] rounded-full bg-[radial-gradient(circle,rgba(6,182,212,0.18)_0%,transparent_70%)] blur-3xl pointer-events-none" 
         />
       </div>
 
@@ -158,14 +165,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       <div className="absolute inset-x-0 bottom-0 h-[2px] bg-gradient-to-r from-transparent via-[#f5be38]/85 to-transparent shadow-[0_0_22px_#f5be38] pointer-events-none z-20" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
-          {/* Left Column: Exact Headline, Eyebrow Pill, Gold Shimmer Subheadline, Realtime Social Proof & Gold Pill CTA */}
+          {/* Left Column: Glassmorphic Floating Panel ensuring razor-sharp text legibility while displaying background overlay */}
           <motion.div 
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="lg:col-span-6 xl:col-span-6 space-y-6 sm:space-y-7 relative"
+            className="lg:col-span-6 xl:col-span-6 space-y-6 sm:space-y-7 relative bg-[#08080a]/65 sm:bg-[#08080a]/55 backdrop-blur-md p-6 sm:p-8 rounded-3xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.6)]"
           >
             {/* Eyebrow Pill Badge with Gold Accent & Floating Micro-Motion */}
             <motion.div 
@@ -317,13 +324,19 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             transition={{ duration: 0.7, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-6 xl:col-span-6 flex flex-col items-center lg:items-end relative"
           >
+            {/* Status indicator pill confirming custom overlay visibility */}
+            <div className="mb-2.5 flex items-center gap-2 px-3 py-1 rounded-full bg-[#08080a]/75 border border-[#f5be38]/40 backdrop-blur-md text-[11px] text-[#f5be38] shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
+              <span className="w-2 h-2 rounded-full bg-[#f5be38] animate-pulse shadow-[0_0_8px_#f5be38]" />
+              <span className="font-bold tracking-wider uppercase">Live Studio Overlay Active</span>
+            </div>
+
             {/* Glowing gold orbital rings and background trajectory (matching reference concept) */}
             <div className="absolute -top-10 -right-10 w-[420px] h-[420px] rounded-full border border-[#f5be38]/20 pointer-events-none -z-10 animate-spin" style={{ animationDuration: '45s' }} />
             <div className="absolute -bottom-8 -left-8 w-[340px] h-[340px] rounded-full border border-dashed border-[#f5be38]/15 pointer-events-none -z-10" />
 
             <div className="w-full max-w-xl relative">
               {/* Product Visual Presentation Scene Card */}
-              <div className="relative rounded-3xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.8)] bg-[#101015] border border-white/15 p-2 sm:p-2.5 backdrop-blur-xl ring-1 ring-[#f5be38]/20 group">
+              <div className="relative rounded-3xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.8)] bg-[#101015]/85 border border-white/20 p-2 sm:p-2.5 backdrop-blur-xl ring-1 ring-[#f5be38]/30 group">
                 {/* Pure Interactive Animated Sliding Image Showcase */}
                 <HeroImageSlider slides={slides} />
               </div>
