@@ -163,18 +163,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
-          {/* Left Column: Glassmorphic Floating Panel with high transparency to show overlay clearly */}
+          {/* Left Column: Darkened Glassmorphic Floating Panel ensuring razor-sharp, crystal-clear text readability */}
           <motion.div 
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="lg:col-span-6 xl:col-span-6 space-y-6 sm:space-y-7 relative bg-[#08080a]/35 sm:bg-[#08080a]/30 backdrop-blur-sm p-6 sm:p-8 rounded-3xl border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+            className="lg:col-span-6 xl:col-span-6 space-y-6 sm:space-y-7 relative bg-[#08080a]/80 sm:bg-[#08080a]/75 backdrop-blur-xl p-6 sm:p-8 rounded-3xl border border-white/15 shadow-[0_25px_60px_rgba(0,0,0,0.75)] ring-1 ring-white/10"
           >
             {/* Eyebrow Pill Badge with Gold Accent & Floating Micro-Motion */}
             <motion.div 
               variants={itemVariants}
               whileHover={{ scale: 1.03, y: -2 }}
-              className="inline-flex items-center gap-2.5 px-3.5 sm:px-4 py-1.5 rounded-full border border-[#f5be38]/30 bg-[#121217]/90 text-xs text-stone-200 backdrop-blur-md shadow-[0_2px_15px_rgba(245,190,56,0.15)] group cursor-default"
+              className="inline-flex items-center gap-2.5 px-3.5 sm:px-4 py-1.5 rounded-full border border-[#f5be38]/40 bg-[#121217]/95 text-xs text-white backdrop-blur-md shadow-[0_2px_15px_rgba(245,190,56,0.2)] group cursor-default"
             >
               <span className="w-2 h-2 rounded-full bg-[#f5be38] shadow-[0_0_8px_#f5be38] animate-ping shrink-0" />
               <span className="tracking-widest uppercase text-[10.5px] sm:text-[11.5px] font-black text-[#f5be38]">
@@ -185,14 +185,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
             {/* Headline, Sub-headline, Gold Divider, and Subtitle */}
             <motion.div variants={itemVariants} className="space-y-3">
-              {/* Primary Headline: Bold Large White Font */}
-              <h1 className="text-3xl xs:text-4xl sm:text-5xl lg:text-[46px] xl:text-[54px] font-black tracking-tight text-white leading-[1.08] drop-shadow-[0_2px_20px_rgba(245,190,56,0.15)]">
+              {/* Primary Headline: Bold Large White Font with crisp shadow */}
+              <h1 className="text-3xl xs:text-4xl sm:text-5xl lg:text-[46px] xl:text-[54px] font-black tracking-tight text-white leading-[1.08] drop-shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
                 {headline}
               </h1>
 
               {/* Sub-headline: Shimmering Radiant Gold Font */}
               <div className="text-2xl xs:text-3xl sm:text-4xl lg:text-[38px] xl:text-[44px] font-black tracking-tight leading-[1.12]">
-                <span className="gold-shimmer-text drop-shadow-[0_0_24px_rgba(245,190,56,0.35)] inline-block">
+                <span className="gold-shimmer-text drop-shadow-[0_2px_18px_rgba(245,190,56,0.45)] inline-block">
                   {subheadline}
                 </span>
               </div>
@@ -207,8 +207,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 </div>
               </div>
 
-              {/* Subtitle text */}
-              <p className="text-stone-300 text-sm sm:text-base leading-relaxed max-w-xl font-normal pt-1">
+              {/* Subtitle text - High-contrast & razor-sharp legibility */}
+              <p className="text-stone-100 text-sm sm:text-base leading-relaxed max-w-xl font-normal pt-1 drop-shadow-[0_1px_4px_rgba(0,0,0,0.6)]">
                 {description}
               </p>
             </motion.div>
@@ -240,13 +240,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   alt="Client"
                   referrerPolicy="no-referrer"
                 />
-                <div className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#f5be38] text-black font-black text-[11px] ring-2 ring-[#08080a]">
+                <div className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#f5be38] text-black font-black text-[11px] ring-2 ring-[#08080a] shadow-sm">
                   +5k
                 </div>
               </div>
               <div className="text-xs">
-                <span className="font-extrabold text-white">168K+ Realtime Clients</span>
-                <span className="text-stone-400 block text-[11px]">Corporate brands &amp; businesses served</span>
+                <span className="font-extrabold text-white text-[13px] block drop-shadow-sm">168K+ Realtime Clients</span>
+                <span className="text-stone-300 block text-[11.5px] font-medium">Corporate brands &amp; businesses served</span>
               </div>
             </motion.div>
 
@@ -284,7 +284,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 whileTap={{ scale: 0.96 }}
                 onClick={onExploreProducts}
                 id="hero-view-services-btn"
-                className="relative bg-[#121217]/80 hover:bg-white/10 border border-white/20 hover:border-[#f5be38]/50 text-white font-bold text-xs sm:text-sm px-6 py-3.5 rounded-full transition-colors shadow-md shadow-black/40 flex items-center justify-center gap-2 group backdrop-blur-md cursor-pointer text-center"
+                className="relative bg-[#121217]/90 hover:bg-white/10 border border-white/25 hover:border-[#f5be38]/50 text-white font-bold text-xs sm:text-sm px-6 py-3.5 rounded-full transition-colors shadow-md shadow-black/40 flex items-center justify-center gap-2 group backdrop-blur-md cursor-pointer text-center"
               >
                 <span>View Our Services</span>
                 <div className="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-[#f5be38] group-hover:text-black transition-colors">
@@ -296,19 +296,19 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             {/* Quick-links / Features pill indicators with entrance animation */}
             <motion.div 
               variants={itemVariants}
-              className="pt-1 flex flex-wrap items-center gap-4 text-xs text-stone-300"
+              className="pt-1 flex flex-wrap items-center gap-4 text-xs text-stone-200"
             >
               <div className="flex items-center gap-1.5 hover:text-white transition-colors cursor-default">
-                <CheckCircle2 className="w-4 h-4 text-[#f5be38] shrink-0" />
-                <span className="font-medium">Same-Day &amp; 24hr Turnaround</span>
+                <CheckCircle2 className="w-4 h-4 text-[#f5be38] shrink-0 drop-shadow" />
+                <span className="font-semibold text-white/95">Same-Day &amp; 24hr Turnaround</span>
               </div>
               <div className="flex items-center gap-1.5 hover:text-white transition-colors cursor-default">
-                <CheckCircle2 className="w-4 h-4 text-[#f5be38] shrink-0" />
-                <span className="font-medium">Free Bleed &amp; Pre-Press Audit</span>
+                <CheckCircle2 className="w-4 h-4 text-[#f5be38] shrink-0 drop-shadow" />
+                <span className="font-semibold text-white/95">Free Bleed &amp; Pre-Press Audit</span>
               </div>
               <div className="flex items-center gap-1.5 hover:text-white transition-colors cursor-default">
-                <CheckCircle2 className="w-4 h-4 text-[#f5be38] shrink-0" />
-                <span className="font-medium">Bayelsa &amp; Nationwide Delivery</span>
+                <CheckCircle2 className="w-4 h-4 text-[#f5be38] shrink-0 drop-shadow" />
+                <span className="font-semibold text-white/95">Bayelsa &amp; Nationwide Delivery</span>
               </div>
             </motion.div>
           </motion.div>
