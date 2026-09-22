@@ -11,9 +11,9 @@ export const TrustedCompanyFeatureSection: React.FC<TrustedCompanyFeatureSection
   const [imageSrc, setImageSrc] = useState(TRUSTED_COMPANY_CDN_IMAGE);
 
   return (
-    <section className="bg-[#fbf9f4] text-stone-900 py-16 sm:py-24 border-b border-amber-950/10 relative overflow-hidden">
+    <section className="bg-[#f5efe4] text-stone-900 py-16 sm:py-24 border-b border-amber-900/15 relative overflow-hidden">
       {/* Subtle ambient warm texture */}
-      <div className="absolute inset-0 bg-[radial-gradient(#e7dfd5_1px,transparent_1px)] [background-size:20px_20px] opacity-70 pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(#dfd4c4_1px,transparent_1px)] [background-size:20px_20px] opacity-80 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
@@ -26,7 +26,7 @@ export const TrustedCompanyFeatureSection: React.FC<TrustedCompanyFeatureSection
             transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-6 space-y-4 sm:space-y-6"
           >
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-100/70 border border-amber-300/60 text-amber-950 text-xs font-black tracking-wide shadow-sm">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-100/90 border border-amber-300/80 text-amber-950 text-xs font-black tracking-wide shadow-sm">
               <span className="w-2 h-2 rounded-full bg-[#f5be38] shadow-[0_0_8px_rgba(245,190,56,0.8)]" />
               <span>ESTABLISHED COMMERCIAL PRINTING HUB</span>
             </div>
@@ -40,15 +40,15 @@ export const TrustedCompanyFeatureSection: React.FC<TrustedCompanyFeatureSection
             </p>
 
             <div className="pt-2 flex flex-wrap items-center gap-6 text-xs sm:text-sm font-bold text-stone-800">
-              <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-3.5 py-1.5 rounded-xl border border-stone-200/80 shadow-sm">
+              <div className="flex items-center gap-2 bg-white/90 backdrop-blur-sm px-3.5 py-1.5 rounded-xl border border-stone-200/90 shadow-sm">
                 <span className="w-2 h-2 rounded-full bg-[#f5be38]" />
                 <span>Modern Offset &amp; UV Fleet</span>
               </div>
-              <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-3.5 py-1.5 rounded-xl border border-stone-200/80 shadow-sm">
+              <div className="flex items-center gap-2 bg-white/90 backdrop-blur-sm px-3.5 py-1.5 rounded-xl border border-stone-200/90 shadow-sm">
                 <span className="w-2 h-2 rounded-full bg-[#f5be38]" />
                 <span>Zero-Color-Shift Pre-Press</span>
               </div>
-              <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-3.5 py-1.5 rounded-xl border border-stone-200/80 shadow-sm">
+              <div className="flex items-center gap-2 bg-white/90 backdrop-blur-sm px-3.5 py-1.5 rounded-xl border border-stone-200/90 shadow-sm">
                 <span className="w-2 h-2 rounded-full bg-[#f5be38]" />
                 <span>Nationwide Express Logistics</span>
               </div>
@@ -83,10 +83,10 @@ export const TrustedCompanyFeatureSection: React.FC<TrustedCompanyFeatureSection
               />
 
               {/* Directional gradient overlays to ensure seamless perimeter dissolution into cream white */}
-              <div className="absolute inset-y-0 left-0 w-20 sm:w-28 bg-gradient-to-r from-[#fbf9f4] via-[#fbf9f4]/80 to-transparent pointer-events-none" />
-              <div className="absolute inset-y-0 right-0 w-20 sm:w-28 bg-gradient-to-l from-[#fbf9f4] via-[#fbf9f4]/80 to-transparent pointer-events-none" />
-              <div className="absolute inset-x-0 top-0 h-20 sm:h-28 bg-gradient-to-b from-[#fbf9f4] via-[#fbf9f4]/80 to-transparent pointer-events-none" />
-              <div className="absolute inset-x-0 bottom-0 h-20 sm:h-28 bg-gradient-to-t from-[#fbf9f4] via-[#fbf9f4]/80 to-transparent pointer-events-none" />
+              <div className="absolute inset-y-0 left-0 w-20 sm:w-28 bg-gradient-to-r from-[#f5efe4] via-[#f5efe4]/85 to-transparent pointer-events-none" />
+              <div className="absolute inset-y-0 right-0 w-20 sm:w-28 bg-gradient-to-l from-[#f5efe4] via-[#f5efe4]/85 to-transparent pointer-events-none" />
+              <div className="absolute inset-x-0 top-0 h-20 sm:h-28 bg-gradient-to-b from-[#f5efe4] via-[#f5efe4]/85 to-transparent pointer-events-none" />
+              <div className="absolute inset-x-0 bottom-0 h-20 sm:h-28 bg-gradient-to-t from-[#f5efe4] via-[#f5efe4]/85 to-transparent pointer-events-none" />
 
               {/* Overlaid Brand Badge with crisp styling */}
               <motion.div 

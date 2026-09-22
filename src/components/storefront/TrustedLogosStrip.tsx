@@ -231,50 +231,53 @@ export const TrustedLogosStrip: React.FC<TrustedLogosStripProps> = ({
   return (
     <section 
       id="trusted-enterprises-section"
-      className={`relative py-10 sm:py-12 border-b border-white/10 bg-[#08080a] overflow-hidden ${className}`}
+      className={`relative py-12 sm:py-16 border-b border-amber-900/15 bg-[#f5efe4] text-stone-900 overflow-hidden ${className}`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Warm ambient micro-texture */}
+      <div className="absolute inset-0 bg-[radial-gradient(#dfd4c4_1px,transparent_1px)] [background-size:20px_20px] opacity-80 pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
-        <div className="text-center space-y-2 mb-6 sm:mb-8">
-          <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-[#121217] border border-[#f5be38]/30 text-[#f5be38] text-[11px] font-black tracking-wider uppercase shadow-[0_0_15px_rgba(245,190,56,0.15)]">
-            <ShieldCheck className="w-3.5 h-3.5 text-[#f5be38]" />
+        <div className="text-center space-y-2.5 mb-7 sm:mb-9">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-100/90 border border-amber-300/80 text-amber-950 text-[11px] font-black tracking-wider uppercase shadow-sm">
+            <ShieldCheck className="w-3.5 h-3.5 text-amber-800" />
             <span>Official Corporate Printing Partner</span>
           </div>
 
-          <h2 className="text-xs sm:text-sm md:text-base font-black uppercase tracking-wider sm:tracking-widest text-white max-w-3xl mx-auto leading-relaxed">
+          <h2 className="text-xs sm:text-sm md:text-base font-black uppercase tracking-wider sm:tracking-widest text-stone-950 max-w-3xl mx-auto leading-relaxed">
             TRUSTED BY NIGERIA&apos;S LEADING ENTERPRISES, FINTECHS &amp; INSTITUTIONS
           </h2>
           
-          <p className="text-[11px] sm:text-xs text-stone-400 font-medium">
+          <p className="text-[12px] sm:text-[13px] text-stone-600 font-medium">
             Over 50,000+ corporate orders executed with 100% color accuracy, premium substrates &amp; nationwide delivery
           </p>
         </div>
 
         {/* Continuous Straight Single-Line Moving Marquee */}
         <div className="relative w-full overflow-hidden py-2">
-          {/* Left & Right Edge Vignette Fades */}
-          <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-24 bg-gradient-to-r from-[#08080a] to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-24 bg-gradient-to-l from-[#08080a] to-transparent z-10 pointer-events-none" />
+          {/* Left & Right Edge Vignette Fades to Cream White */}
+          <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-28 bg-gradient-to-r from-[#f5efe4] via-[#f5efe4]/85 to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-28 bg-gradient-to-l from-[#f5efe4] via-[#f5efe4]/85 to-transparent z-10 pointer-events-none" />
 
           <div className="animate-marquee-straight items-center gap-3 sm:gap-4 py-2">
             {[...ENTERPRISE_BRANDS, ...ENTERPRISE_BRANDS].map((brand, index) => (
               <div
                 key={`${brand.id}-${index}`}
-                className="group relative bg-[#121217] hover:bg-[#181822] border border-white/10 hover:border-[#f5be38]/50 rounded-2xl px-4 sm:px-5 py-3 flex items-center gap-3.5 transition-all duration-300 shadow-lg hover:shadow-[0_0_20px_rgba(245,190,56,0.15)] shrink-0 h-[64px] min-w-[200px] sm:min-w-[230px]"
+                className="group relative bg-white hover:bg-amber-50/50 border border-stone-200/90 hover:border-amber-400/80 rounded-2xl px-4 sm:px-5 py-3 flex items-center gap-3.5 transition-all duration-300 shadow-sm hover:shadow-md shrink-0 h-[66px] min-w-[210px] sm:min-w-[240px]"
               >
                 {/* Brand Logo Presentation Box */}
-                <div className="h-8 sm:h-9 w-24 sm:w-28 flex items-center justify-center shrink-0 transition-transform group-hover:scale-105 duration-200 bg-white/95 rounded-lg px-2 py-1">
+                <div className="h-8 sm:h-9 w-24 sm:w-28 flex items-center justify-center shrink-0 transition-transform group-hover:scale-105 duration-200 bg-stone-50/90 border border-stone-100 rounded-lg px-2 py-1">
                   {brand.renderLogo()}
                 </div>
 
-                <div className="h-6 w-px bg-white/10 shrink-0" />
+                <div className="h-6 w-px bg-stone-200 shrink-0" />
 
                 {/* Sub-label & Industry Badge */}
                 <div className="flex flex-col text-left shrink-0">
-                  <span className="font-extrabold text-xs text-white tracking-tight truncate max-w-[85px] sm:max-w-[105px]">
+                  <span className="font-extrabold text-xs text-stone-900 tracking-tight truncate max-w-[85px] sm:max-w-[110px]">
                     {brand.name}
                   </span>
-                  <span className="text-[9.5px] font-semibold text-[#f5be38] group-hover:text-[#ffd15c] transition-colors">
+                  <span className="text-[10px] font-bold text-amber-700 group-hover:text-amber-800 transition-colors">
                     {brand.badge}
                   </span>
                 </div>
@@ -284,18 +287,18 @@ export const TrustedLogosStrip: React.FC<TrustedLogosStripProps> = ({
         </div>
 
         {/* Bottom Trust Indicators */}
-        <div className="mt-6 pt-5 border-t border-white/10 flex flex-wrap items-center justify-center gap-6 text-[11px] sm:text-xs text-stone-400 font-medium">
-          <div className="flex items-center gap-1.5 text-stone-300">
-            <Award className="w-4 h-4 text-[#f5be38]" />
+        <div className="mt-7 pt-5 border-t border-amber-900/15 flex flex-wrap items-center justify-center gap-6 text-[11px] sm:text-xs text-stone-600 font-medium">
+          <div className="flex items-center gap-2 text-stone-800 font-semibold">
+            <Award className="w-4 h-4 text-amber-700" />
             <span>Bulk Procurement &amp; Corporate Credit Support</span>
           </div>
-          <span className="hidden sm:inline text-stone-600">•</span>
-          <div className="flex items-center gap-1.5 text-stone-300">
-            <span className="w-2 h-2 rounded-full bg-[#f5be38] animate-pulse" />
+          <span className="hidden sm:inline text-amber-900/30">•</span>
+          <div className="flex items-center gap-2 text-stone-800 font-semibold">
+            <span className="w-2 h-2 rounded-full bg-[#f5be38] shadow-[0_0_8px_rgba(245,190,56,0.8)]" />
             <span>Direct Proforma Invoices with Tax &amp; CAC Verification</span>
           </div>
-          <span className="hidden sm:inline text-stone-600">•</span>
-          <div className="flex items-center gap-1.5 text-stone-300">
+          <span className="hidden sm:inline text-amber-900/30">•</span>
+          <div className="flex items-center gap-2 text-stone-800 font-semibold">
             <span>Guaranteed Next-Day Dispatch to Lagos, Abuja, PH &amp; All 36 States</span>
           </div>
         </div>
