@@ -90,7 +90,7 @@ export const ServicesShowcaseSection: React.FC<ServicesShowcaseSectionProps> = (
   };
 
   return (
-    <section className="bg-[#08080a] text-stone-100 py-14 sm:py-20 border-b border-white/10 relative overflow-hidden bg-grid-pattern">
+    <section className="bg-[#08080a]/80 backdrop-blur-sm text-stone-100 py-14 sm:py-20 border-b border-white/10 relative overflow-hidden bg-grid-pattern">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           

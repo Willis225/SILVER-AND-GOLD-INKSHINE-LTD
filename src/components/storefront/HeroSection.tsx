@@ -80,7 +80,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   };
 
   return (
-    <section className="relative overflow-hidden bg-[#08080a] text-white pt-8 pb-16 sm:pt-12 sm:pb-24 lg:pt-16 lg:pb-28 border-b border-white/10">
+    <section className="relative overflow-hidden bg-transparent text-white pt-8 pb-16 sm:pt-12 sm:pb-24 lg:pt-16 lg:pb-28 border-b border-white/10">
       {/* 
         Ultra-High-Visibility Animated Hero Background Overlay:
         - 100% Crisp Opacity with Enhanced Saturation & Brightness
@@ -89,15 +89,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         - Animated print-carriage laser sweep beam passing continuously across the visual
       */}
       <div className="absolute inset-0 pointer-events-none select-none overflow-hidden z-0">
-        {/* Continuous Animated Image Layer */}
+        {/* Continuous Animated Image Layer - 100% Unobscured and Vivid */}
         <motion.div
           animate={{
-            scale: [1, 1.05, 1],
-            x: [0, -10, 0],
-            y: [0, -5, 0],
+            scale: [1, 1.06, 1],
+            x: [0, -12, 0],
+            y: [0, -6, 0],
           }}
           transition={{
-            duration: 18,
+            duration: 16,
             repeat: Infinity,
             ease: "easeInOut",
           }}
@@ -106,18 +106,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           <img 
             src={activeImage} 
             alt="Silver & Gold Inkshine Ltd Commercial Printing Press Background" 
-            className="w-full h-full object-cover object-center brightness-115 contrast-110 opacity-95 sm:opacity-100"
+            className="w-full h-full object-cover object-center brightness-125 contrast-115 opacity-100 saturate-110"
             referrerPolicy="no-referrer"
             onError={handleImageError}
           />
         </motion.div>
 
-        {/* Lightweight Non-Destructive Contrast Fade (Preserves vivid image center) */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#08080a]/65 via-[#08080a]/20 to-transparent pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#08080a]/90 via-transparent to-[#08080a]/40 pointer-events-none" />
-        
-        {/* Subtle grid pattern layer */}
-        <div className="absolute inset-0 bg-grid-pattern opacity-15 pointer-events-none" />
+        {/* Minimal hairline bottom border blend only - Zero black gradient blankets */}
+        <div className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-[#08080a] to-transparent pointer-events-none" />
 
         {/* Animated Print-Carriage Scanning Light Beam */}
         <motion.div
@@ -125,31 +121,31 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             x: ['-100%', '280%'],
           }}
           transition={{
-            duration: 7,
+            duration: 6,
             repeat: Infinity,
             ease: "linear",
-            repeatDelay: 3,
+            repeatDelay: 2,
           }}
-          className="absolute inset-y-0 w-64 bg-gradient-to-r from-transparent via-[#f5be38]/20 to-transparent pointer-events-none skew-x-12"
+          className="absolute inset-y-0 w-64 bg-gradient-to-r from-transparent via-[#f5be38]/25 to-transparent pointer-events-none skew-x-12"
         />
 
         {/* Pulsing Atmospheric Studio Light Blooms */}
         <motion.div 
           animate={{
             scale: [1, 1.15, 1],
-            opacity: [0.15, 0.28, 0.15],
+            opacity: [0.18, 0.32, 0.18],
           }}
           transition={{
             duration: 8,
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          className="absolute top-1/4 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[550px] lg:w-[650px] h-[350px] sm:h-[550px] lg:h-[650px] rounded-full bg-[radial-gradient(circle,rgba(245,190,56,0.22)_0%,rgba(212,175,55,0.06)_50%,transparent_75%)] blur-3xl pointer-events-none" 
+          className="absolute top-1/4 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[550px] lg:w-[650px] h-[350px] sm:h-[550px] lg:h-[650px] rounded-full bg-[radial-gradient(circle,rgba(245,190,56,0.25)_0%,rgba(212,175,55,0.08)_50%,transparent_75%)] blur-3xl pointer-events-none" 
         />
         <motion.div 
           animate={{
             scale: [1, 1.18, 1],
-            opacity: [0.12, 0.24, 0.12],
+            opacity: [0.15, 0.28, 0.15],
           }}
           transition={{
             duration: 10,
@@ -157,7 +153,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             ease: "easeInOut",
             delay: 1,
           }}
-          className="absolute top-1/3 right-10 w-[300px] sm:w-[450px] h-[300px] sm:h-[450px] rounded-full bg-[radial-gradient(circle,rgba(6,182,212,0.18)_0%,transparent_70%)] blur-3xl pointer-events-none" 
+          className="absolute top-1/3 right-10 w-[300px] sm:w-[450px] h-[300px] sm:h-[450px] rounded-full bg-[radial-gradient(circle,rgba(6,182,212,0.22)_0%,transparent_70%)] blur-3xl pointer-events-none" 
         />
       </div>
 
@@ -167,12 +163,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
-          {/* Left Column: Glassmorphic Floating Panel ensuring razor-sharp text legibility while displaying background overlay */}
+          {/* Left Column: Glassmorphic Floating Panel with high transparency to show overlay clearly */}
           <motion.div 
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="lg:col-span-6 xl:col-span-6 space-y-6 sm:space-y-7 relative bg-[#08080a]/65 sm:bg-[#08080a]/55 backdrop-blur-md p-6 sm:p-8 rounded-3xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.6)]"
+            className="lg:col-span-6 xl:col-span-6 space-y-6 sm:space-y-7 relative bg-[#08080a]/35 sm:bg-[#08080a]/30 backdrop-blur-sm p-6 sm:p-8 rounded-3xl border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
           >
             {/* Eyebrow Pill Badge with Gold Accent & Floating Micro-Motion */}
             <motion.div 
@@ -336,7 +332,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
             <div className="w-full max-w-xl relative">
               {/* Product Visual Presentation Scene Card */}
-              <div className="relative rounded-3xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.8)] bg-[#101015]/85 border border-white/20 p-2 sm:p-2.5 backdrop-blur-xl ring-1 ring-[#f5be38]/30 group">
+              <div className="relative rounded-3xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.7)] bg-[#101015]/40 border border-white/20 p-2 sm:p-2.5 backdrop-blur-md ring-1 ring-[#f5be38]/30 group">
                 {/* Pure Interactive Animated Sliding Image Showcase */}
                 <HeroImageSlider slides={slides} />
               </div>

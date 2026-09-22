@@ -509,11 +509,11 @@ export default function App() {
         <div className="fixed inset-0 pointer-events-none select-none z-0 overflow-hidden">
           <motion.div
             animate={{
-              scale: [1, 1.06, 1],
-              opacity: [0.40, 0.55, 0.40],
+              scale: [1, 1.08, 1],
+              opacity: [0.65, 0.85, 0.65],
             }}
             transition={{
-              duration: 18,
+              duration: 16,
               repeat: Infinity,
               ease: "easeInOut",
             }}
@@ -530,7 +530,7 @@ export default function App() {
                   : 'https://cdn.hstockplus.org/uploads/public/img-1790066633477-1b16a758309b0fff.webp'
               }
               alt="Homepage Overlay Background"
-              className="w-full h-full object-cover object-center brightness-110 contrast-105"
+              className="w-full h-full object-cover object-center brightness-125 contrast-115 saturate-110"
               referrerPolicy="no-referrer"
               onError={(e) => {
                 const target = e.currentTarget;
@@ -540,7 +540,6 @@ export default function App() {
               }}
             />
           </motion.div>
-          <div className="absolute inset-0 bg-gradient-to-b from-[#08080a]/40 via-transparent to-[#08080a]/80 pointer-events-none" />
         </div>
       )}
 
