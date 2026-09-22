@@ -459,7 +459,7 @@ export const Footer: React.FC<FooterProps> = ({
 
             {/* Phone */}
             <div className="flex items-center gap-2 text-[13px] text-stone-300">
-              <span className="text-[#10b981] shrink-0">
+              <span className="text-[#f5be38] shrink-0">
                 <Phone className="w-4 h-4 fill-none stroke-current stroke-[2.2]" />
               </span>
               <a 
@@ -472,7 +472,7 @@ export const Footer: React.FC<FooterProps> = ({
 
             {/* Email */}
             <div className="flex items-center gap-2 text-[13px] text-stone-300">
-              <span className="text-[#10b981] shrink-0">
+              <span className="text-[#f5be38] shrink-0">
                 <Mail className="w-4 h-4 fill-none stroke-current stroke-[2.2]" />
               </span>
               <a 

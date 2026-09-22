@@ -57,8 +57,8 @@ export const FlutterwaveModal: React.FC<FlutterwaveModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-stone-950/70 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 animate-in fade-in duration-200">
-      <div className="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden border border-stone-200">
+    <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 animate-in fade-in duration-200">
+      <div className="bg-[#121217] w-full max-w-md rounded-2xl shadow-2xl overflow-hidden border border-white/10 text-stone-100">
         
         {/* Header with Flutterwave identity */}
         <div className="bg-[#FB9129] p-4 text-white flex items-center justify-between">
@@ -79,7 +79,7 @@ export const FlutterwaveModal: React.FC<FlutterwaveModalProps> = ({
             </div>
             <button
               onClick={onClose}
-              className="p-1 rounded-lg hover:bg-white/20 text-white transition-colors"
+              className="p-1 rounded-lg hover:bg-white/20 text-white transition-colors cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
@@ -87,13 +87,13 @@ export const FlutterwaveModal: React.FC<FlutterwaveModalProps> = ({
         </div>
 
         {/* Method Picker */}
-        <div className="flex border-b border-stone-200 bg-stone-50 text-xs">
+        <div className="flex border-b border-white/10 bg-[#0c0c10] text-xs">
           <button
             onClick={() => setMethod('card')}
-            className={`flex-1 py-3 font-semibold flex items-center justify-center gap-1.5 border-b-2 transition-colors ${
+            className={`flex-1 py-3 font-semibold flex items-center justify-center gap-1.5 border-b-2 transition-colors cursor-pointer ${
               method === 'card'
-                ? 'border-[#FB9129] text-[#FB9129] bg-white'
-                : 'border-transparent text-stone-600 hover:text-stone-900'
+                ? 'border-[#FB9129] text-[#FB9129] bg-[#121217]'
+                : 'border-transparent text-stone-400 hover:text-white'
             }`}
           >
             <CreditCard className="w-3.5 h-3.5" />
@@ -102,10 +102,10 @@ export const FlutterwaveModal: React.FC<FlutterwaveModalProps> = ({
 
           <button
             onClick={() => setMethod('bank_transfer')}
-            className={`flex-1 py-3 font-semibold flex items-center justify-center gap-1.5 border-b-2 transition-colors ${
+            className={`flex-1 py-3 font-semibold flex items-center justify-center gap-1.5 border-b-2 transition-colors cursor-pointer ${
               method === 'bank_transfer'
-                ? 'border-[#FB9129] text-[#FB9129] bg-white'
-                : 'border-transparent text-stone-600 hover:text-stone-900'
+                ? 'border-[#FB9129] text-[#FB9129] bg-[#121217]'
+                : 'border-transparent text-stone-400 hover:text-white'
             }`}
           >
             <Building className="w-3.5 h-3.5" />
@@ -114,10 +114,10 @@ export const FlutterwaveModal: React.FC<FlutterwaveModalProps> = ({
 
           <button
             onClick={() => setMethod('barter')}
-            className={`flex-1 py-3 font-semibold flex items-center justify-center gap-1.5 border-b-2 transition-colors ${
+            className={`flex-1 py-3 font-semibold flex items-center justify-center gap-1.5 border-b-2 transition-colors cursor-pointer ${
               method === 'barter'
-                ? 'border-[#FB9129] text-[#FB9129] bg-white'
-                : 'border-transparent text-stone-600 hover:text-stone-900'
+                ? 'border-[#FB9129] text-[#FB9129] bg-[#121217]'
+                : 'border-transparent text-stone-400 hover:text-white'
             }`}
           >
             <Smartphone className="w-3.5 h-3.5" />
@@ -129,12 +129,12 @@ export const FlutterwaveModal: React.FC<FlutterwaveModalProps> = ({
         <div className="p-6 space-y-4">
           {method === 'card' && (
             <div className="space-y-3">
-              <div className="text-xs text-stone-600">
+              <div className="text-xs text-stone-300">
                 Pay using Verve, Visa, or Mastercard:
               </div>
 
               <div>
-                <label className="text-[11px] font-bold text-stone-700 block mb-1">
+                <label className="text-[11px] font-bold text-stone-300 block mb-1">
                   Card Number
                 </label>
                 <div className="relative">
@@ -142,9 +142,9 @@ export const FlutterwaveModal: React.FC<FlutterwaveModalProps> = ({
                     type="text"
                     value={cardNumber}
                     onChange={(e) => setCardNumber(e.target.value)}
-                    className="w-full bg-stone-50 border border-stone-300 rounded-xl p-2.5 text-xs font-mono font-bold text-stone-900 focus:ring-2 focus:ring-[#FB9129]"
+                    className="w-full bg-[#181824] border border-white/10 rounded-xl p-2.5 text-xs font-mono font-bold text-white focus:outline-none focus:ring-2 focus:ring-[#FB9129]"
                   />
-                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] bg-amber-100 text-amber-900 px-1.5 py-0.5 rounded font-bold">
+                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] bg-white/10 text-amber-300 px-1.5 py-0.5 rounded font-bold">
                     TEST FLW
                   </span>
                 </div>
@@ -152,19 +152,19 @@ export const FlutterwaveModal: React.FC<FlutterwaveModalProps> = ({
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-[11px] font-bold text-stone-700 block mb-1">
+                  <label className="text-[11px] font-bold text-stone-300 block mb-1">
                     Valid Thru
                   </label>
                   <input
                     type="text"
                     value={cardExpiry}
                     onChange={(e) => setCardExpiry(e.target.value)}
-                    className="w-full bg-stone-50 border border-stone-300 rounded-xl p-2.5 text-xs font-mono text-stone-900 focus:ring-2 focus:ring-[#FB9129]"
+                    className="w-full bg-[#181824] border border-white/10 rounded-xl p-2.5 text-xs font-mono text-white focus:outline-none focus:ring-2 focus:ring-[#FB9129]"
                   />
                 </div>
 
                 <div>
-                  <label className="text-[11px] font-bold text-stone-700 block mb-1">
+                  <label className="text-[11px] font-bold text-stone-300 block mb-1">
                     CVV
                   </label>
                   <input
@@ -172,7 +172,7 @@ export const FlutterwaveModal: React.FC<FlutterwaveModalProps> = ({
                     value={cardCvv}
                     onChange={(e) => setCardCvv(e.target.value)}
                     maxLength={3}
-                    className="w-full bg-stone-50 border border-stone-300 rounded-xl p-2.5 text-xs font-mono text-stone-900 focus:ring-2 focus:ring-[#FB9129]"
+                    className="w-full bg-[#181824] border border-white/10 rounded-xl p-2.5 text-xs font-mono text-white focus:outline-none focus:ring-2 focus:ring-[#FB9129]"
                   />
                 </div>
               </div>
@@ -181,43 +181,43 @@ export const FlutterwaveModal: React.FC<FlutterwaveModalProps> = ({
 
           {method === 'bank_transfer' && (
             <div className="space-y-3">
-              <div className="text-xs text-stone-600">
-                Send <strong className="text-stone-900">{formatNaira(amountNgn)}</strong> to Flutterwave checkout account:
+              <div className="text-xs text-stone-300">
+                Send <strong className="text-[#f5be38]">{formatNaira(amountNgn)}</strong> to Flutterwave checkout account:
               </div>
 
-              <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 space-y-2">
+              <div className="bg-[#181824] border border-[#FB9129]/30 rounded-2xl p-4 space-y-2">
                 <div className="flex justify-between text-xs">
-                  <span className="text-stone-500">Bank Name:</span>
-                  <strong className="text-stone-900">{flwVirtualBank}</strong>
+                  <span className="text-stone-400">Bank Name:</span>
+                  <strong className="text-white">{flwVirtualBank}</strong>
                 </div>
 
                 <div className="flex justify-between items-center text-xs">
-                  <span className="text-stone-500">Account Number:</span>
+                  <span className="text-stone-400">Account Number:</span>
                   <div className="flex items-center gap-2">
                     <strong className="font-mono text-base font-black text-[#FB9129]">
                       {flwVirtualAccount}
                     </strong>
                     <button
                       onClick={copyAccount}
-                      className="p-1 rounded bg-white border border-amber-300 text-stone-700 hover:text-amber-800"
+                      className="p-1 rounded bg-white/10 border border-white/10 text-stone-200 hover:text-[#FB9129] cursor-pointer"
                     >
-                      {copied ? <Check className="w-3.5 h-3.5 text-amber-600" /> : <Copy className="w-3.5 h-3.5" />}
+                      {copied ? <Check className="w-3.5 h-3.5 text-[#f5be38]" /> : <Copy className="w-3.5 h-3.5" />}
                     </button>
                   </div>
                 </div>
 
                 <div className="flex justify-between text-xs">
-                  <span className="text-stone-500">Account Name:</span>
-                  <strong className="text-stone-900">Flutterwave / SILVER &amp; GOLD INKSHINE LTD</strong>
+                  <span className="text-stone-400">Account Name:</span>
+                  <strong className="text-white">Flutterwave / SILVER &amp; GOLD INKSHINE LTD</strong>
                 </div>
               </div>
             </div>
           )}
 
           {method === 'barter' && (
-            <div className="space-y-3 text-xs text-stone-600">
+            <div className="space-y-3 text-xs text-stone-300">
               <p>Authorize payment through your Barter by Flutterwave balance or QR scanner.</p>
-              <div className="p-3 bg-stone-50 rounded-xl border border-stone-200 font-mono text-center text-stone-700">
+              <div className="p-3 bg-[#181824] rounded-xl border border-white/10 font-mono text-center text-stone-300">
                 Payment Request Sent to {email}
               </div>
             </div>
@@ -228,7 +228,7 @@ export const FlutterwaveModal: React.FC<FlutterwaveModalProps> = ({
             type="button"
             onClick={handlePay}
             disabled={isProcessing}
-            className="w-full py-3.5 px-4 rounded-xl bg-[#FB9129] hover:bg-[#e4801e] active:scale-98 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20 transition-all disabled:opacity-75"
+            className="w-full py-3.5 px-4 rounded-xl bg-[#FB9129] hover:bg-[#e4801e] active:scale-98 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20 transition-all disabled:opacity-75 cursor-pointer"
           >
             {isProcessing ? (
               <>
@@ -246,7 +246,7 @@ export const FlutterwaveModal: React.FC<FlutterwaveModalProps> = ({
           </button>
 
           <div className="flex items-center justify-center gap-2 text-[10px] text-stone-400">
-            <ShieldCheck className="w-3.5 h-3.5 text-amber-600" />
+            <ShieldCheck className="w-3.5 h-3.5 text-[#f5be38]" />
             <span>Regulated by Central Bank of Nigeria (CBN) • ISO 27001</span>
           </div>
         </div>

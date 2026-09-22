@@ -8,7 +8,7 @@ interface BrandIntroSectionProps {
 
 export const BrandIntroSection: React.FC<BrandIntroSectionProps> = ({ onExploreProducts }) => {
   return (
-    <section className="bg-white text-stone-800 py-10 sm:py-14 lg:py-16 border-b border-stone-200/80">
+    <section className="bg-[#0a0a0d] text-stone-200 py-12 sm:py-16 lg:py-20 border-b border-white/10 relative overflow-hidden bg-grid-pattern">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
@@ -20,47 +20,53 @@ export const BrandIntroSection: React.FC<BrandIntroSectionProps> = ({ onExploreP
             transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-5 space-y-6"
           >
-            <p className="text-stone-700 text-sm sm:text-[15px] leading-relaxed font-normal text-justify sm:text-left">
+            <p className="text-stone-300 text-sm sm:text-[15px] leading-relaxed font-normal text-justify sm:text-left">
               Order everything you need for your business, events or promotions at SILVER &amp; GOLD INKSHINE LTD and have them delivered nationwide in 3–5 business days! Send your print-ready artwork or hire our graphic experts to help you. We design and print quality roll-up banners, display stands, flyers, business cards, custom t-shirts, branded apparels, vehicle branding, signage, packaging labels, stickers, posters, promotional gifts and more.
             </p>
 
-            {/* Bullet Points with exact gold outline checkmarks */}
+            {/* Bullet Points with exact radiant gold filled checkmarks */}
             <div className="space-y-3.5 pt-1">
               <div className="flex items-center gap-3">
-                <div className="w-5 h-5 rounded-full border-2 border-[#b8860b] flex items-center justify-center shrink-0 text-[#b8860b]">
-                  <Check className="w-3 h-3 stroke-[3]" />
+                <div className="w-5 h-5 rounded-full bg-[#f5be38] text-black flex items-center justify-center shrink-0 shadow-[0_0_12px_rgba(245,190,56,0.35)]">
+                  <Check className="w-3.5 h-3.5 stroke-[3]" />
                 </div>
-                <span className="font-bold text-stone-900 text-sm sm:text-base">
+                <span className="font-bold text-white text-sm sm:text-base">
                   100% Quality Printing Services.
                 </span>
               </div>
 
               <div className="flex items-center gap-3">
-                <div className="w-5 h-5 rounded-full border-2 border-[#b8860b] flex items-center justify-center shrink-0 text-[#b8860b]">
-                  <Check className="w-3 h-3 stroke-[3]" />
+                <div className="w-5 h-5 rounded-full bg-[#f5be38] text-black flex items-center justify-center shrink-0 shadow-[0_0_12px_rgba(245,190,56,0.35)]">
+                  <Check className="w-3.5 h-3.5 stroke-[3]" />
                 </div>
-                <span className="font-bold text-stone-900 text-sm sm:text-base">
+                <span className="font-bold text-white text-sm sm:text-base">
                   12% Discount on Bulk Orders.
                 </span>
               </div>
 
               <div className="flex items-center gap-3">
-                <div className="w-5 h-5 rounded-full border-2 border-[#b8860b] flex items-center justify-center shrink-0 text-[#b8860b]">
-                  <Check className="w-3 h-3 stroke-[3]" />
+                <div className="w-5 h-5 rounded-full bg-[#f5be38] text-black flex items-center justify-center shrink-0 shadow-[0_0_12px_rgba(245,190,56,0.35)]">
+                  <Check className="w-3.5 h-3.5 stroke-[3]" />
                 </div>
-                <span className="font-bold text-stone-900 text-sm sm:text-base">
+                <span className="font-bold text-white text-sm sm:text-base">
                   Fast Delivery Nationwide.
                 </span>
               </div>
             </div>
           </motion.div>
 
-          {/* Right Column: Exact Promo Banner Card with Mockups */}
-          <div className="lg:col-span-7">
-            <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-stone-200 bg-gradient-to-r from-stone-50 via-white to-stone-100 p-5 sm:p-7 md:p-8">
+          {/* Right Column: Exact Promo Banner Card with Mockups in Obsidian Glass */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.96, y: 24 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-7"
+          >
+            <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-white/15 bg-[#121217] backdrop-blur-xl p-5 sm:p-7 md:p-8 hover:border-[#f5be38]/40 transition-colors group">
               
               {/* Gold Dynamic Swoosh Graphic in the background */}
-              <div className="absolute right-0 top-0 bottom-0 w-3/5 pointer-events-none overflow-hidden">
+              <div className="absolute right-0 top-0 bottom-0 w-3/5 pointer-events-none overflow-hidden opacity-85">
                 <svg
                   viewBox="0 0 500 400"
                   className="w-full h-full object-cover preserve-3d"
@@ -73,14 +79,14 @@ export const BrandIntroSection: React.FC<BrandIntroSectionProps> = ({ onExploreP
                   />
                   <path
                     d="M230 0 L500 0 L500 400 L140 400 C200 340 180 230 290 170 C360 120 300 50 230 0 Z"
-                    fill="#78350f"
+                    fill="#3b2005"
                     opacity="0.6"
                   />
                   <defs>
                     <linearGradient id="goldGradient" x1="100" y1="0" x2="500" y2="400" gradientUnits="userSpaceOnUse">
-                      <stop offset="0%" stopColor="#d4af37" />
-                      <stop offset="50%" stopColor="#b8860b" />
-                      <stop offset="100%" stopColor="#78350f" />
+                      <stop offset="0%" stopColor="#f5be38" />
+                      <stop offset="50%" stopColor="#d4af37" />
+                      <stop offset="100%" stopColor="#5c3808" />
                     </linearGradient>
                   </defs>
                 </svg>
@@ -93,54 +99,54 @@ export const BrandIntroSection: React.FC<BrandIntroSectionProps> = ({ onExploreP
                 <div className="md:col-span-5 space-y-4">
                   {/* Logo: SILVER & GOLD INKSHINE LTD */}
                   <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-md bg-[#b8860b] flex items-center justify-center text-white shadow-xs">
+                    <div className="w-7 h-7 rounded-md bg-[#f5be38] flex items-center justify-center text-black shadow-xs">
                       {/* Stylized Rollup Banner Icon */}
                       <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
                         <path d="M4 3h16a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm1 5h14v11H5V8zm-2 12h18a1 1 0 0 1 1 1v1H2v-1a1 1 0 0 1 1-1z" />
                       </svg>
                     </div>
-                    <div className="flex items-center text-xs sm:text-sm font-black tracking-tight text-stone-900">
+                    <div className="flex items-center text-xs sm:text-sm font-black tracking-tight text-white">
                       <span>SILVER &amp; GOLD INKSHINE LTD</span>
                     </div>
                   </div>
 
                   {/* Headline: Printing Company in Lagos */}
                   <div>
-                    <h3 className="text-2xl sm:text-3xl font-black text-stone-900 tracking-tight leading-[1.15]">
+                    <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight leading-[1.15]">
                       Printing Company
                     </h3>
-                    <div className="text-2xl sm:text-3xl font-black text-[#b8860b] tracking-tight leading-[1.15]">
+                    <div className="text-2xl sm:text-3xl font-black text-[#f5be38] tracking-tight leading-[1.15]">
                       in Lagos
                     </div>
                   </div>
 
                   {/* Subtext */}
-                  <p className="text-[11px] sm:text-xs text-stone-600 leading-relaxed font-normal max-w-xs">
+                  <p className="text-[11px] sm:text-xs text-stone-300 leading-relaxed font-normal max-w-xs">
                     Quality digital printing, large format printing and branding solutions for businesses, events and organisations.
                   </p>
 
                   {/* 4 Feature Badges */}
                   <div className="grid grid-cols-2 gap-2 pt-1">
-                    <div className="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-semibold text-stone-700">
-                      <div className="w-4 h-4 rounded-full border border-stone-400 flex items-center justify-center text-stone-600 shrink-0">
+                    <div className="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-semibold text-stone-200">
+                      <div className="w-4 h-4 rounded-full border border-white/20 flex items-center justify-center text-stone-300 shrink-0">
                         ⏱️
                       </div>
                       <span className="truncate">Fast Turnaround</span>
                     </div>
-                    <div className="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-semibold text-stone-700">
-                      <div className="w-4 h-4 rounded-full border border-stone-400 flex items-center justify-center text-stone-600 shrink-0">
+                    <div className="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-semibold text-stone-200">
+                      <div className="w-4 h-4 rounded-full border border-white/20 flex items-center justify-center text-stone-300 shrink-0">
                         🏅
                       </div>
                       <span className="truncate">Premium Quality</span>
                     </div>
-                    <div className="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-semibold text-stone-700">
-                      <div className="w-4 h-4 rounded-full border border-stone-400 flex items-center justify-center text-stone-600 shrink-0">
+                    <div className="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-semibold text-stone-200">
+                      <div className="w-4 h-4 rounded-full border border-white/20 flex items-center justify-center text-stone-300 shrink-0">
                         🏷️
                       </div>
                       <span className="truncate">Affordable Pricing</span>
                     </div>
-                    <div className="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-semibold text-stone-700">
-                      <div className="w-4 h-4 rounded-full border border-stone-400 flex items-center justify-center text-stone-600 shrink-0">
+                    <div className="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-semibold text-stone-200">
+                      <div className="w-4 h-4 rounded-full border border-white/20 flex items-center justify-center text-stone-300 shrink-0">
                         🚚
                       </div>
                       <span className="truncate">Nationwide Delivery</span>
@@ -326,7 +332,7 @@ export const BrandIntroSection: React.FC<BrandIntroSectionProps> = ({ onExploreP
               </div>
 
             </div>
-          </div>
+          </motion.div>
 
         </div>
       </div>

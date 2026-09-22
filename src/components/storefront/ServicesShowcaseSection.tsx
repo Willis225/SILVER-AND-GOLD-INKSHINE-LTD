@@ -90,9 +90,9 @@ export const ServicesShowcaseSection: React.FC<ServicesShowcaseSectionProps> = (
   };
 
   return (
-    <section className="bg-white py-12 sm:py-16 border-b border-stone-200/80">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+    <section className="bg-[#08080a] text-stone-100 py-14 sm:py-20 border-b border-white/10 relative overflow-hidden bg-grid-pattern">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
           {/* Left Column: Heading, Paragraph & Call to Action with entrance animation */}
           <motion.div 
@@ -100,37 +100,45 @@ export const ServicesShowcaseSection: React.FC<ServicesShowcaseSectionProps> = (
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-3 space-y-4 sm:space-y-5"
+            className="lg:col-span-3 space-y-4 sm:space-y-6"
           >
-            <h2 className="text-xl sm:text-2xl font-bold text-stone-900 tracking-tight leading-snug">
+            <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight leading-tight">
               {title}
             </h2>
 
-            <p className="text-xs sm:text-[13px] text-stone-600 leading-relaxed font-normal">
+            <p className="text-xs sm:text-[13.5px] text-stone-300 leading-relaxed font-normal">
               {description}
             </p>
 
             <div>
-              <button
+              <motion.button
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.96 }}
                 type="button"
                 id="services-section-order-now-btn"
                 onClick={onOrderNow}
-                className="inline-flex items-center gap-2.5 px-6 py-3 bg-gradient-to-r from-[#d4af37] via-[#c59b27] to-[#b8860b] hover:from-[#e5c158] hover:to-[#c59b27] active:scale-95 text-stone-950 font-extrabold text-xs sm:text-sm rounded-xl shadow-md shadow-[#d4af37]/25 transition-all group cursor-pointer"
+                className="inline-flex items-center gap-2.5 px-6 py-3 bg-[#f5be38] hover:bg-[#ffd15c] text-black font-extrabold text-xs sm:text-sm rounded-full shadow-[0_0_25px_rgba(245,190,56,0.3)] transition-colors group cursor-pointer"
                 title="Browse our complete design and print catalog to order instantly"
               >
                 <span>Order Now</span>
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </button>
+              </motion.button>
             </div>
           </motion.div>
 
           {/* Right Column: Carousel of Products */}
-          <div className="lg:col-span-9 relative group/carousel">
+          <motion.div 
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-9 relative group/carousel"
+          >
             
             {/* Scroll buttons for desktop */}
             <button
               onClick={() => handleScroll('left')}
-              className="absolute -left-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white shadow-md border border-stone-200 text-stone-700 flex items-center justify-center opacity-0 group-hover/carousel:opacity-100 transition-opacity z-20 hover:bg-stone-50"
+              className="absolute -left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-[#121217] shadow-xl border border-white/20 text-white flex items-center justify-center opacity-0 group-hover/carousel:opacity-100 transition-opacity z-20 hover:bg-[#f5be38] hover:text-black cursor-pointer"
               aria-label="Scroll left"
             >
               <ChevronLeft className="w-4 h-4" />
@@ -138,7 +146,7 @@ export const ServicesShowcaseSection: React.FC<ServicesShowcaseSectionProps> = (
 
             <button
               onClick={() => handleScroll('right')}
-              className="absolute -right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white shadow-md border border-stone-200 text-stone-700 flex items-center justify-center opacity-80 group-hover/carousel:opacity-100 transition-opacity z-20 hover:bg-stone-50"
+              className="absolute -right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-[#121217] shadow-xl border border-white/20 text-white flex items-center justify-center opacity-80 group-hover/carousel:opacity-100 transition-opacity z-20 hover:bg-[#f5be38] hover:text-black cursor-pointer"
               aria-label="Scroll right"
             >
               <ChevronRight className="w-4 h-4" />
@@ -150,7 +158,7 @@ export const ServicesShowcaseSection: React.FC<ServicesShowcaseSectionProps> = (
               className="flex gap-4 sm:gap-6 overflow-x-auto scrollbar-none scroll-smooth pb-4 pt-1 px-1 -mx-1"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
-              {displayItems.map((item) => {
+              {displayItems.map((item, idx) => {
                 const hasReplacedImage = item.imageUrl && 
                   item.imageUrl !== 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=600&q=80' &&
                   item.imageUrl !== 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80' &&
@@ -158,13 +166,19 @@ export const ServicesShowcaseSection: React.FC<ServicesShowcaseSectionProps> = (
                   item.imageUrl !== 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80';
 
                 return (
-                  <div
+                  <motion.div
                     key={item.id}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: idx * 0.06 }}
+                    whileHover={{ y: -6, scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                     onClick={() => onSelectItem?.(item as any)}
-                    className="w-[200px] sm:w-[220px] shrink-0 flex flex-col group cursor-pointer"
+                    className="w-[200px] sm:w-[225px] shrink-0 flex flex-col bg-[#121217] border border-white/10 rounded-2xl p-3 hover:border-[#f5be38]/60 hover:shadow-[0_0_30px_rgba(245,190,56,0.2)] transition-colors group cursor-pointer"
                   >
                     {/* Image Container with Exact Aspect Ratio & Styling */}
-                    <div className="w-full h-[210px] sm:h-[230px] rounded-lg overflow-hidden bg-stone-50 border border-stone-100 group-hover:shadow-md transition-shadow relative flex items-center justify-center">
+                    <div className="w-full h-[200px] sm:h-[220px] rounded-xl overflow-hidden bg-[#181820] border border-white/5 relative flex items-center justify-center">
                       
                       {/* If user uploaded or replaced the image, show it directly */}
                       {hasReplacedImage ? (
@@ -308,21 +322,21 @@ export const ServicesShowcaseSection: React.FC<ServicesShowcaseSectionProps> = (
 
                   {/* Title */}
                   <div className="pt-3 text-center">
-                    <h3 className="text-xs sm:text-[13px] font-bold text-stone-900 line-clamp-2 leading-tight group-hover:text-[#b8860b] transition-colors">
+                    <h3 className="text-xs sm:text-[13px] font-bold text-stone-200 line-clamp-2 leading-tight group-hover:text-[#f5be38] transition-colors">
                       {item.title}
                     </h3>
                     
                     {/* Gold Price */}
-                    <div className="text-xs sm:text-[13.5px] font-bold text-[#b8860b] mt-1.5">
+                    <div className="text-xs sm:text-[14px] font-black text-[#f5be38] mt-2 font-mono">
                       {item.price}
                     </div>
                   </div>
-                </div>
+                </motion.div>
                 );
               })}
             </div>
 
-          </div>
+          </motion.div>
 
         </div>
       </div>

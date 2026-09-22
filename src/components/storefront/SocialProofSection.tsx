@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { 
   Star, 
   ChevronLeft, 
@@ -171,17 +172,17 @@ export const SocialProofSection: React.FC = () => {
   const totalReviewsCount = 29 + (reviews.length - DEFAULT_REVIEWS.length);
 
   return (
-    <section className="py-16 bg-white border-y border-stone-200 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+    <section className="py-16 sm:py-24 bg-[#0a0a0d] text-stone-200 border-y border-white/10 relative overflow-hidden bg-grid-pattern">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 relative z-10">
         
         {/* Success Notification Banner when Review is added */}
         {showSuccessToast && (
-          <div className="fixed bottom-6 right-6 z-50 max-w-md bg-stone-900 text-white rounded-2xl p-4 shadow-2xl border border-amber-400/40 flex items-start gap-3 animate-in fade-in slide-in-from-bottom-5">
+          <div className="fixed bottom-6 right-6 z-50 max-w-md bg-[#181822] text-white rounded-2xl p-4 shadow-2xl border border-[#f5be38]/60 flex items-start gap-3 animate-in fade-in slide-in-from-bottom-5">
             <div className="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
               <Check className="w-5 h-5" />
             </div>
             <div className="space-y-1 text-xs">
-              <p className="font-bold text-amber-300">Your Google Review is now Live!</p>
+              <p className="font-bold text-[#f5be38]">Your Google Review is now Live!</p>
               <p className="text-stone-300">
                 Thank you! Your feedback has been displayed directly in the reviews box.
               </p>
@@ -197,9 +198,15 @@ export const SocialProofSection: React.FC = () => {
         )}
 
         {/* 1. Client Logos Strip */}
-        <div className="space-y-4 text-center">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="space-y-4 text-center"
+        >
           <div>
-            <span className="text-xs sm:text-sm font-black uppercase tracking-wider sm:tracking-widest text-stone-700">
+            <span className="text-xs sm:text-sm font-black uppercase tracking-widest text-[#f5be38]">
               TRUSTED BY NIGERIA&apos;S LEADING ENTERPRISES, FINTECHS &amp; INSTITUTIONS
             </span>
           </div>
@@ -207,24 +214,24 @@ export const SocialProofSection: React.FC = () => {
           {/* Continuous Straight Single-Line Moving Marquee */}
           <div className="relative w-full overflow-hidden py-1">
             {/* Left & Right Edge Vignette Fades */}
-            <div className="absolute left-0 top-0 bottom-0 w-10 sm:w-20 bg-gradient-to-r from-stone-50 to-transparent z-10 pointer-events-none" />
-            <div className="absolute right-0 top-0 bottom-0 w-10 sm:w-20 bg-gradient-to-l from-stone-50 to-transparent z-10 pointer-events-none" />
+            <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-24 bg-gradient-to-r from-[#0a0a0d] to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-24 bg-gradient-to-l from-[#0a0a0d] to-transparent z-10 pointer-events-none" />
 
             <div className="animate-marquee-straight items-center gap-3 sm:gap-4 py-2">
               {[...ENTERPRISE_BRANDS, ...ENTERPRISE_BRANDS].map((brand, idx) => (
                 <div
                   key={`${brand.id}-${idx}`}
-                  className="bg-white hover:bg-amber-50/40 border border-stone-200/90 hover:border-amber-400/60 rounded-2xl px-4 sm:px-5 py-3 flex items-center gap-3.5 transition-all shadow-2xs hover:shadow-md shrink-0 h-[64px] min-w-[200px] sm:min-w-[230px] group cursor-pointer"
+                  className="bg-[#121217] hover:bg-[#181822] border border-white/10 hover:border-[#f5be38]/60 rounded-2xl px-4 sm:px-5 py-3 flex items-center gap-3.5 transition-all shadow-lg hover:shadow-[0_0_20px_rgba(245,190,56,0.2)] shrink-0 h-[64px] min-w-[200px] sm:min-w-[230px] group cursor-pointer"
                 >
-                  <div className="h-8 sm:h-9 w-24 sm:w-28 flex items-center justify-center shrink-0 transition-transform group-hover:scale-105 duration-200">
+                  <div className="h-8 sm:h-9 w-24 sm:w-28 flex items-center justify-center shrink-0 transition-transform group-hover:scale-105 duration-200 brightness-110">
                     {brand.renderLogo()}
                   </div>
-                  <div className="h-6 w-px bg-stone-200 shrink-0" />
+                  <div className="h-6 w-px bg-white/15 shrink-0" />
                   <div className="flex flex-col text-left shrink-0">
-                    <span className="font-extrabold text-xs text-stone-800 tracking-tight truncate max-w-[85px] sm:max-w-[105px]">
+                    <span className="font-extrabold text-xs text-white tracking-tight truncate max-w-[85px] sm:max-w-[105px]">
                       {brand.name}
                     </span>
-                    <span className="text-[9.5px] font-semibold text-stone-500 group-hover:text-amber-800 transition-colors">
+                    <span className="text-[9.5px] font-semibold text-stone-400 group-hover:text-[#f5be38] transition-colors">
                       {brand.badge}
                     </span>
                   </div>
@@ -232,25 +239,37 @@ export const SocialProofSection: React.FC = () => {
               ))}
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* 2. Authentic Google Customer Reviews Widget: SILVER & GOLD INKSHINE LTD */}
         <div className="space-y-6" id="google-reviews-section">
-          <div className="text-center space-y-1">
-            <div className="text-[#b8860b] font-bold text-sm sm:text-base tracking-wide flex items-center justify-center gap-1.5">
-              <Sparkles className="w-4 h-4 text-amber-500" />
+          <motion.div 
+            initial={{ opacity: 0, y: 22 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="text-center space-y-1.5"
+          >
+            <div className="text-[#f5be38] font-black text-sm sm:text-base tracking-wide flex items-center justify-center gap-2">
+              <Sparkles className="w-4 h-4 text-[#f5be38]" />
               <span>Read &amp; Share Customer Reviews on Google</span>
             </div>
-            <h2 className="text-xl sm:text-2xl font-black text-stone-900 tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
               What Our Clients Are Saying About Us
             </h2>
-          </div>
+          </motion.div>
 
           {/* Reviews Widget Box */}
-          <div className="relative group/reviews flex flex-col lg:flex-row items-stretch gap-6 bg-stone-50/50 border border-stone-200/80 rounded-3xl p-5 sm:p-7 shadow-xs">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.98, y: 20 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="relative group/reviews flex flex-col lg:flex-row items-stretch gap-6 bg-[#101015] border border-white/10 rounded-3xl p-5 sm:p-7 shadow-2xl backdrop-blur-xl hover:border-[#f5be38]/30 transition-colors"
+          >
             
             {/* Left Column: Google Business Profile Badge Card */}
-            <div className="lg:w-[290px] shrink-0 p-5 rounded-2xl border border-stone-200 bg-white flex flex-col justify-between items-center text-center shadow-xs">
+            <div className="lg:w-[290px] shrink-0 p-5 rounded-2xl border border-white/10 bg-[#15151e] flex flex-col justify-between items-center text-center shadow-lg">
               <a
                 href={GOOGLE_PROFILE_URL}
                 target="_blank"
@@ -258,30 +277,30 @@ export const SocialProofSection: React.FC = () => {
                 className="flex flex-col items-center gap-3 group cursor-pointer"
               >
                 {/* Profile Avatar / Logo */}
-                <div className="w-14 h-14 rounded-full bg-[#b8860b] flex items-center justify-center text-white shadow-sm overflow-hidden p-1 group-hover:scale-105 transition-transform">
-                  <div className="w-full h-full rounded-full border border-white/40 flex flex-col items-center justify-center text-[8px] font-black leading-none bg-[#78350f]">
-                    <span>INKSHINE</span>
-                    <span className="text-[6px] text-amber-300">PRINT</span>
+                <div className="w-14 h-14 rounded-full bg-[#f5be38] flex items-center justify-center text-black shadow-lg overflow-hidden p-1 group-hover:scale-105 transition-transform">
+                  <div className="w-full h-full rounded-full border border-black/20 flex flex-col items-center justify-center text-[8px] font-black leading-none bg-[#0a0a0d] text-white">
+                    <span className="text-[#f5be38]">INKSHINE</span>
+                    <span className="text-[6px] text-white">PRINT</span>
                   </div>
                 </div>
 
                 {/* Business Name */}
                 <div className="space-y-1">
-                  <h3 className="text-sm font-bold text-stone-900 group-hover:text-blue-600 transition-colors leading-snug">
+                  <h3 className="text-sm font-bold text-white group-hover:text-[#f5be38] transition-colors leading-snug">
                     SILVER &amp; GOLD INKSHINE LTD – Printing Company in Nigeria
                   </h3>
 
                   {/* Rating Stars & Count */}
                   <div className="flex items-center justify-center gap-1.5 pt-1">
-                    <span className="text-sm font-bold text-amber-500">4.8</span>
-                    <div className="flex items-center text-amber-400">
+                    <span className="text-sm font-bold text-[#f5be38]">4.8</span>
+                    <div className="flex items-center text-[#f5be38]">
                       {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                        <Star key={i} className="w-3.5 h-3.5 fill-[#f5be38] text-[#f5be38]" />
                       ))}
                     </div>
                   </div>
 
-                  <div className="text-[11px] text-stone-500 font-medium">
+                  <div className="text-[11px] text-stone-400 font-medium">
                     Based on {totalReviewsCount} reviews
                   </div>
                 </div>
@@ -289,9 +308,9 @@ export const SocialProofSection: React.FC = () => {
 
               {/* Google Badge & Actions */}
               <div className="w-full pt-4 space-y-2">
-                <div className="text-[11px] text-stone-500 flex items-center justify-center gap-1">
+                <div className="text-[11px] text-stone-400 flex items-center justify-center gap-1">
                   <span>powered by</span>
-                  <span className="font-bold text-stone-800 flex items-center">
+                  <span className="font-bold text-white flex items-center">
                     <span className="text-[#4285F4]">G</span>
                     <span className="text-[#EA4335]">o</span>
                     <span className="text-[#FBBC05]">o</span>
@@ -301,27 +320,31 @@ export const SocialProofSection: React.FC = () => {
                   </span>
                 </div>
 
-                {/* Direct Google Review Button with automatic website display prompt */}
-                <button
+                {/* Direct Google Review Button */}
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   type="button"
                   onClick={handleReviewOnGoogleClick}
-                  className="w-full py-2.5 px-3.5 rounded-xl bg-[#1a73e8] hover:bg-[#1557b0] active:scale-98 text-white text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition-all cursor-pointer"
+                  className="w-full py-2.5 px-3.5 rounded-xl bg-[#1a73e8] hover:bg-[#1557b0] text-white text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition-all cursor-pointer"
                 >
                   <span>review us on</span>
                   <div className="w-4 h-4 rounded-full bg-white flex items-center justify-center text-[10px] font-black text-[#1a73e8]">
                     G
                   </div>
-                </button>
+                </motion.button>
 
                 {/* Instant Post & Display button */}
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   type="button"
                   onClick={() => setIsReviewModalOpen(true)}
-                  className="w-full py-2 px-3 rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-200/80 text-amber-900 text-[11px] font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                  className="w-full py-2 px-3 rounded-xl bg-[#f5be38] hover:bg-[#ffd15c] text-black text-[11px] font-extrabold flex items-center justify-center gap-1.5 transition-all shadow-[0_0_15px_rgba(245,190,56,0.3)] cursor-pointer"
                 >
-                  <PlusCircle className="w-3.5 h-3.5 text-[#b8860b]" />
+                  <PlusCircle className="w-3.5 h-3.5 text-black" />
                   <span>Display Your Review Here</span>
-                </button>
+                </motion.button>
               </div>
             </div>
 
@@ -331,7 +354,7 @@ export const SocialProofSection: React.FC = () => {
               {/* Scroll Controls */}
               <button
                 onClick={() => handleScroll('left')}
-                className="absolute -left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white shadow-md border border-stone-200 text-stone-700 flex items-center justify-center opacity-80 hover:opacity-100 transition-opacity z-20 hover:bg-stone-50 cursor-pointer"
+                className="absolute -left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-[#181822] shadow-xl border border-white/20 text-white flex items-center justify-center opacity-80 hover:opacity-100 transition-opacity z-20 hover:bg-[#f5be38] hover:text-black cursor-pointer"
                 aria-label="Previous review"
               >
                 <ChevronLeft className="w-4 h-4" />
@@ -339,7 +362,7 @@ export const SocialProofSection: React.FC = () => {
 
               <button
                 onClick={() => handleScroll('right')}
-                className="absolute -right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white shadow-md border border-stone-200 text-stone-700 flex items-center justify-center opacity-80 hover:opacity-100 transition-opacity z-20 hover:bg-stone-50 cursor-pointer"
+                className="absolute -right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-[#181822] shadow-xl border border-white/20 text-white flex items-center justify-center opacity-80 hover:opacity-100 transition-opacity z-20 hover:bg-[#f5be38] hover:text-black cursor-pointer"
                 aria-label="Next review"
               >
                 <ChevronRight className="w-4 h-4" />
@@ -351,12 +374,17 @@ export const SocialProofSection: React.FC = () => {
                 className="flex gap-4 overflow-x-auto scrollbar-none scroll-smooth py-1 px-1"
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
               >
-                {reviews.map((review) => (
-                  <div
+                {reviews.map((review, idx) => (
+                  <motion.div
                     key={review.id}
-                    className={`w-[82vw] xs:w-[260px] sm:w-[280px] max-w-xs shrink-0 p-4 sm:p-5 rounded-2xl bg-white border ${
-                      review.isRecent ? 'border-amber-400 ring-2 ring-amber-400/20' : 'border-stone-200'
-                    } flex flex-col justify-between hover:shadow-sm transition-all relative`}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: idx * 0.06 }}
+                    whileHover={{ y: -4, scale: 1.02 }}
+                    className={`w-[82vw] xs:w-[260px] sm:w-[280px] max-w-xs shrink-0 p-4 sm:p-5 rounded-2xl bg-[#15151e] border ${
+                      review.isRecent ? 'border-[#f5be38] ring-2 ring-[#f5be38]/30' : 'border-white/10'
+                    } flex flex-col justify-between hover:border-[#f5be38]/50 hover:shadow-[0_0_20px_rgba(245,190,56,0.15)] transition-colors relative cursor-default`}
                   >
                     <div>
                       {/* Header: User Avatar, Name, Time, and Google 'G' icon */}
@@ -366,7 +394,7 @@ export const SocialProofSection: React.FC = () => {
                             <img
                               src={review.avatar}
                               alt={review.name}
-                              className="w-9 h-9 rounded-full object-cover border border-stone-200"
+                              className="w-9 h-9 rounded-full object-cover border border-white/20"
                               referrerPolicy="no-referrer"
                             />
                           ) : (
@@ -378,11 +406,11 @@ export const SocialProofSection: React.FC = () => {
                           )}
                           <div>
                             <div className="flex items-center gap-1">
-                              <h4 className="text-xs sm:text-[13px] font-bold text-stone-900 leading-tight">
+                              <h4 className="text-xs sm:text-[13px] font-bold text-white leading-tight">
                                 {review.name}
                               </h4>
                               {review.isRecent && (
-                                <span className="inline-flex items-center px-1.5 py-0.2 rounded-full text-[9px] font-black bg-amber-100 text-amber-800">
+                                <span className="inline-flex items-center px-1.5 py-0.2 rounded-full text-[9px] font-black bg-[#f5be38] text-black">
                                   New
                                 </span>
                               )}
@@ -417,26 +445,26 @@ export const SocialProofSection: React.FC = () => {
                       </div>
 
                       {/* Star Rating */}
-                      <div className="flex items-center gap-0.5 text-amber-400 mb-2.5">
+                      <div className="flex items-center gap-0.5 text-[#f5be38] mb-2.5">
                         {[...Array(review.rating)].map((_, i) => (
-                          <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                          <Star key={i} className="w-3.5 h-3.5 fill-[#f5be38] text-[#f5be38]" />
                         ))}
                       </div>
 
                       {/* Review Text */}
-                      <p className="text-xs text-stone-600 leading-relaxed font-normal">
+                      <p className="text-xs text-stone-300 leading-relaxed font-normal">
                         {review.comment}
                       </p>
                     </div>
 
                     {review.isRecent && (
-                      <div className="mt-3 pt-2 border-t border-stone-100 flex items-center justify-between text-[10px] text-amber-700 font-semibold">
+                      <div className="mt-3 pt-2 border-t border-white/10 flex items-center justify-between text-[10px] text-[#f5be38] font-semibold">
                         <span className="flex items-center gap-1">
-                          <CheckCircle2 className="w-3 h-3 text-emerald-500" /> Google Verified Review
+                          <CheckCircle2 className="w-3 h-3 text-emerald-400" /> Google Verified Review
                         </span>
                       </div>
                     )}
-                  </div>
+                  </motion.div>
                 ))}
               </div>
 
@@ -444,110 +472,121 @@ export const SocialProofSection: React.FC = () => {
               <div className="flex items-center justify-center gap-1.5 mt-4">
                 <button
                   onClick={() => handleScroll('left')}
-                  className={`h-2 rounded-full transition-all cursor-pointer ${activeDot === 0 ? 'bg-[#b8860b] w-5' : 'bg-stone-300 w-2'}`}
+                  className={`h-2 rounded-full transition-all cursor-pointer ${activeDot === 0 ? 'bg-[#f5be38] w-5' : 'bg-white/20 w-2'}`}
                   aria-label="Page 1"
                 />
                 <button
                   onClick={() => handleScroll('right')}
-                  className={`h-2 rounded-full transition-all cursor-pointer ${activeDot === 1 ? 'bg-[#b8860b] w-5' : 'bg-stone-300 w-2'}`}
+                  className={`h-2 rounded-full transition-all cursor-pointer ${activeDot === 1 ? 'bg-[#f5be38] w-5' : 'bg-white/20 w-2'}`}
                   aria-label="Page 2"
                 />
               </div>
 
             </div>
 
-          </div>
+          </motion.div>
         </div>
 
         {/* 3. Completed Jobs & Press Showcase */}
         <div className="space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col sm:flex-row sm:items-end justify-between gap-2"
+          >
             <div>
-              <span className="text-[11px] font-bold uppercase tracking-widest text-amber-600">
+              <span className="text-[11px] font-bold uppercase tracking-widest text-[#f5be38]">
                 RECENT COMMERCIAL PROJECTS
               </span>
-              <h3 className="text-xl sm:text-2xl font-black text-stone-900 tracking-tight mt-1">
+              <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight mt-1">
                 Completed Jobs Fresh Off Our Production Press
               </h3>
             </div>
-            <span className="text-xs text-stone-500">
+            <span className="text-xs text-stone-400">
               Printed in Swali &amp; Yenagoa, delivered nationwide
             </span>
-          </div>
+          </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {COMPLETED_JOBS.map((job) => (
-              <div
+            {COMPLETED_JOBS.map((job, idx) => (
+              <motion.div
                 key={job.id}
-                className="bg-white rounded-2xl border border-stone-200 overflow-hidden shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between"
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: idx * 0.07 }}
+                whileHover={{ y: -6, scale: 1.02 }}
+                className="bg-[#121217] rounded-2xl border border-white/10 overflow-hidden shadow-lg hover:border-[#f5be38]/50 hover:shadow-[0_0_25px_rgba(245,190,56,0.2)] transition-colors flex flex-col justify-between group cursor-default"
               >
                 <div>
-                  <div className="relative aspect-4/3 overflow-hidden bg-stone-100">
+                  <div className="relative aspect-4/3 overflow-hidden bg-[#181822]">
                     <img
                       src={job.imageUrl}
                       alt={job.title}
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       loading="lazy"
                     />
                     <div className="absolute top-2 left-2">
-                      <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-stone-900/80 text-white backdrop-blur-xs">
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-black/85 text-[#f5be38] border border-[#f5be38]/40 backdrop-blur-md">
                         {job.category}
                       </span>
                     </div>
                   </div>
 
                   <div className="p-4 space-y-1.5">
-                    <h4 className="font-bold text-stone-900 text-sm">{job.title}</h4>
-                    <p className="text-[11px] text-amber-700 font-medium">{job.client}</p>
-                    <p className="text-[10px] text-stone-500 line-clamp-2">{job.specs}</p>
+                    <h4 className="font-bold text-white text-sm group-hover:text-[#f5be38] transition-colors">{job.title}</h4>
+                    <p className="text-[11px] text-[#f5be38] font-medium">{job.client}</p>
+                    <p className="text-[10px] text-stone-400 line-clamp-2">{job.specs}</p>
                   </div>
                 </div>
 
-                <div className="p-4 pt-0 border-t border-stone-100 flex items-center justify-between text-[11px] text-stone-500 mt-2">
+                <div className="p-4 pt-0 border-t border-white/10 flex items-center justify-between text-[11px] text-stone-400 mt-2">
                   <span className="flex items-center gap-1">
                     <MapPin className="w-3 h-3 text-stone-400" />
                     {job.location}
                   </span>
-                  <span className="text-[#b8860b] font-semibold flex items-center gap-1">
-                    <CheckCircle2 className="w-3 h-3" />
+                  <span className="text-[#f5be38] font-bold flex items-center gap-1">
+                    <CheckCircle2 className="w-3.5 h-3.5" />
                     Delivered
                   </span>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
       </div>
 
-      {/* Review Submission Modal: Appears when clicking "Review us on Google" or "Display Your Review Here" */}
+      {/* Review Submission Modal */}
       {isReviewModalOpen && (
         <div 
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md"
           onClick={() => setIsReviewModalOpen(false)}
         >
           <div 
-            className="relative w-full max-w-lg rounded-3xl bg-white p-6 sm:p-7 shadow-2xl border border-stone-200 space-y-5 animate-in fade-in zoom-in-95"
+            className="relative w-full max-w-lg rounded-3xl bg-[#14141c] p-6 sm:p-7 shadow-2xl border border-white/20 text-white space-y-5 animate-in fade-in zoom-in-95"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
             <button
               type="button"
               onClick={() => setIsReviewModalOpen(false)}
-              className="absolute top-4 right-4 p-2 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-600 transition-colors cursor-pointer"
+              className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
 
             {/* Header */}
             <div className="space-y-1">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 text-xs font-bold border border-blue-500/30">
                 <span className="font-bold text-[#4285F4]">G</span>
                 <span>Google Review Display Sync</span>
               </div>
-              <h3 className="text-xl font-black text-stone-900 tracking-tight">
+              <h3 className="text-xl font-black text-white tracking-tight">
                 Display Your Review on Our Website
               </h3>
-              <p className="text-xs text-stone-500">
+              <p className="text-xs text-stone-300">
                 Left a review on our Google profile? Paste or enter it below so it instantly displays in our live review box for everyone to see!
               </p>
             </div>
@@ -556,7 +595,7 @@ export const SocialProofSection: React.FC = () => {
             <form onSubmit={handleFormSubmitReview} className="space-y-4">
               {/* Name */}
               <div>
-                <label className="block text-xs font-bold text-stone-700 mb-1">
+                <label className="block text-xs font-bold text-stone-300 mb-1">
                   Your Full Name *
                 </label>
                 <input
@@ -564,14 +603,14 @@ export const SocialProofSection: React.FC = () => {
                   placeholder="e.g. Adebayo Ogunlesi"
                   value={reviewerName}
                   onChange={(e) => setReviewerName(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-stone-900 text-sm focus:outline-hidden focus:border-amber-500 focus:ring-1 focus:ring-amber-500"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-white/15 bg-[#1a1a24] text-white text-sm focus:outline-hidden focus:border-[#f5be38] focus:ring-1 focus:ring-[#f5be38]"
                   required
                 />
               </div>
 
               {/* Rating Picker */}
               <div>
-                <label className="block text-xs font-bold text-stone-700 mb-1">
+                <label className="block text-xs font-bold text-stone-300 mb-1">
                   Rating *
                 </label>
                 <div className="flex items-center gap-2">
@@ -585,13 +624,13 @@ export const SocialProofSection: React.FC = () => {
                       <Star
                         className={`w-6 h-6 ${
                           star <= reviewerRating
-                            ? 'fill-amber-400 text-amber-400'
-                            : 'text-stone-300'
+                            ? 'fill-[#f5be38] text-[#f5be38]'
+                            : 'text-stone-600'
                         }`}
                       />
                     </button>
                   ))}
-                  <span className="text-xs font-bold text-amber-600 ml-2">
+                  <span className="text-xs font-bold text-[#f5be38] ml-2">
                     {reviewerRating} Stars
                   </span>
                 </div>
@@ -599,7 +638,7 @@ export const SocialProofSection: React.FC = () => {
 
               {/* Review Text */}
               <div>
-                <label className="block text-xs font-bold text-stone-700 mb-1">
+                <label className="block text-xs font-bold text-stone-300 mb-1">
                   Your Experience / Review *
                 </label>
                 <textarea
@@ -607,7 +646,7 @@ export const SocialProofSection: React.FC = () => {
                   placeholder="Tell us about the print quality, rollup stand, delivery speed, or customer service..."
                   value={reviewerComment}
                   onChange={(e) => setReviewerComment(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-stone-900 text-sm focus:outline-hidden focus:border-amber-500 focus:ring-1 focus:ring-amber-500 resize-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-white/15 bg-[#1a1a24] text-white text-sm focus:outline-hidden focus:border-[#f5be38] focus:ring-1 focus:ring-[#f5be38] resize-none"
                   required
                 />
               </div>
@@ -616,9 +655,9 @@ export const SocialProofSection: React.FC = () => {
               <div className="pt-2 space-y-2">
                 <button
                   type="submit"
-                  className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-black text-sm flex items-center justify-center gap-2 shadow-md transition-all cursor-pointer"
+                  className="w-full py-3 px-4 rounded-xl bg-[#f5be38] hover:bg-[#ffd15c] text-black font-black text-sm flex items-center justify-center gap-2 shadow-lg transition-all cursor-pointer"
                 >
-                  <Sparkles className="w-4 h-4" />
+                  <Sparkles className="w-4 h-4 text-black" />
                   <span>Publish Review to Website Box</span>
                 </button>
 
@@ -626,7 +665,7 @@ export const SocialProofSection: React.FC = () => {
                   href={GOOGLE_PROFILE_URL}
                   target="_blank"
                   rel="noreferrer"
-                  className="w-full py-2.5 px-4 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 font-bold text-xs flex items-center justify-center gap-1.5 transition-colors"
+                  className="w-full py-2.5 px-4 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors"
                 >
                   <span>Open Official Google Profile Page</span>
                   <ExternalLink className="w-3.5 h-3.5" />

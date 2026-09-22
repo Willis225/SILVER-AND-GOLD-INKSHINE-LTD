@@ -115,23 +115,23 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
   };
 
   return (
-    <div className="bg-stone-50 min-h-screen py-6 sm:py-10">
+    <div className="bg-[#08080a] min-h-screen py-6 sm:py-10 text-stone-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         
         {/* Breadcrumb Navigation */}
         <div className="flex items-center justify-between">
-          <nav className="flex items-center gap-2 text-xs text-stone-500 font-medium">
+          <nav className="flex items-center gap-2 text-xs text-stone-400 font-medium">
             <button
               onClick={onBackToCatalog}
-              className="hover:text-amber-700 flex items-center gap-1 font-semibold text-stone-700"
+              className="hover:text-[#f5be38] flex items-center gap-1 font-semibold text-stone-300 transition-colors cursor-pointer"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>Back to Catalog</span>
             </button>
             <span>/</span>
-            <span className="text-stone-400">{product.categoryLabel}</span>
+            <span className="text-stone-500">{product.categoryLabel}</span>
             <span>/</span>
-            <span className="text-stone-900 font-bold truncate max-w-[200px] sm:max-w-none">
+            <span className="text-white font-bold truncate max-w-[200px] sm:max-w-none">
               {product.name}
             </span>
           </nav>
@@ -141,7 +141,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
               href={`https://wa.me/2347030372539?text=Hello%20Silver%20%26%20Gold%20Inkshine%2C%20I%20am%20inquiring%20about%20${encodeURIComponent(product.name)}`}
               target="_blank"
               rel="noreferrer"
-              className="hidden sm:inline-flex items-center gap-1 text-xs font-semibold text-[#b8860b] bg-amber-50/80 border border-amber-300 px-3 py-1.5 rounded-lg hover:bg-amber-100 transition-colors"
+              className="hidden sm:inline-flex items-center gap-1 text-xs font-bold text-[#f5be38] bg-[#f5be38]/10 border border-[#f5be38]/30 px-3 py-1.5 rounded-lg hover:bg-[#f5be38]/20 transition-colors"
             >
               <MessageSquare className="w-3.5 h-3.5" />
               <span>WhatsApp Inquiries</span>
@@ -155,26 +155,26 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
           {/* Left Column: Media Gallery & Nigerian Dispatch Ticker */}
           <div className="lg:col-span-6 space-y-5">
             {/* Main Stage Image */}
-            <div className="relative aspect-4/3 rounded-3xl overflow-hidden bg-white border border-stone-200 shadow-sm group">
+            <div className="relative aspect-4/3 rounded-3xl overflow-hidden bg-[#121217] border border-white/10 shadow-xl group">
               <img
                 src={galleryImages[activeImageIdx]}
                 alt={product.name}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
               <div className="absolute top-3 left-3 flex flex-col gap-1.5">
-                <span className="px-3 py-1 rounded-lg text-xs font-black uppercase tracking-wider bg-stone-900 text-amber-400 shadow-xs">
+                <span className="px-3 py-1 rounded-lg text-xs font-black uppercase tracking-wider bg-black/85 text-[#f5be38] border border-[#f5be38]/30 shadow-md">
                   {product.categoryLabel}
                 </span>
                 {product.badge && (
-                  <span className="px-2.5 py-0.5 rounded-md text-[10px] font-bold bg-amber-600 text-white shadow-xs">
+                  <span className="px-2.5 py-0.5 rounded-md text-[10px] font-black bg-[#f5be38] text-black shadow-md">
                     {product.badge}
                   </span>
                 )}
               </div>
 
               <div className="absolute bottom-3 right-3">
-                <span className="px-2.5 py-1 rounded-lg text-xs font-medium bg-stone-900/80 text-stone-200 backdrop-blur-xs flex items-center gap-1.5">
-                  <Clock className="w-3.5 h-3.5 text-amber-400" />
+                <span className="px-2.5 py-1 rounded-lg text-xs font-semibold bg-black/80 text-stone-200 backdrop-blur-xs border border-white/10 flex items-center gap-1.5">
+                  <Clock className="w-3.5 h-3.5 text-[#f5be38]" />
                   <span>{product.turnaroundDays} Business Days TAT</span>
                 </span>
               </div>
@@ -187,10 +187,10 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                   key={idx}
                   type="button"
                   onClick={() => setActiveImageIdx(idx)}
-                  className={`aspect-4/3 rounded-xl overflow-hidden border-2 transition-all ${
+                  className={`aspect-4/3 rounded-xl overflow-hidden border-2 transition-all cursor-pointer ${
                     activeImageIdx === idx
-                      ? 'border-amber-600 ring-2 ring-amber-600/30 shadow-xs'
-                      : 'border-stone-200 hover:border-stone-300 opacity-80 hover:opacity-100'
+                      ? 'border-[#f5be38] ring-2 ring-[#f5be38]/30 shadow-md'
+                      : 'border-white/10 hover:border-white/20 opacity-70 hover:opacity-100'
                   }`}
                 >
                   <img src={img} alt={`Angle ${idx + 1}`} className="w-full h-full object-cover" />
@@ -199,45 +199,45 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
             </div>
 
             {/* Logistics & Delivery Estimator for Nigeria */}
-            <div className="bg-white rounded-2xl border border-stone-200 p-5 space-y-3">
+            <div className="bg-[#121217] rounded-2xl border border-white/10 p-5 space-y-3 shadow-lg">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 text-xs font-bold text-stone-900">
-                  <Truck className="w-4 h-4 text-amber-600" />
-                  <span>Check Nigerian Delivery Timeline & Rates</span>
+                <div className="flex items-center gap-2 text-xs font-bold text-white">
+                  <Truck className="w-4 h-4 text-[#f5be38]" />
+                  <span>Check Nigerian Delivery Timeline &amp; Rates</span>
                 </div>
-                <span className="text-[10px] text-stone-500 font-mono">Central Press Dispatch</span>
+                <span className="text-[10px] text-stone-400 font-mono">Central Press Dispatch</span>
               </div>
 
               <div className="space-y-2">
                 <select
                   value={selectedDestinationZone}
                   onChange={(e) => setSelectedDestinationZone(e.target.value)}
-                  className="w-full bg-stone-50 border border-stone-300 rounded-xl p-2.5 text-xs font-semibold text-stone-900 focus:ring-2 focus:ring-amber-500"
+                  className="w-full bg-[#181822] border border-white/15 rounded-xl p-2.5 text-xs font-semibold text-white focus:outline-hidden focus:border-[#f5be38]"
                 >
                   {NIGERIAN_SHIPPING_ZONES.map((zone) => (
-                    <option key={zone.id} value={zone.id}>
+                    <option key={zone.id} value={zone.id} className="bg-[#181822] text-white">
                       {zone.name} ({zone.region}) — {formatNaira(zone.baseFeeNgn)}
                     </option>
                   ))}
                 </select>
 
-                <div className="bg-stone-50 rounded-xl p-3 text-xs flex items-center justify-between text-stone-700">
+                <div className="bg-[#181822] rounded-xl p-3 text-xs flex items-center justify-between text-stone-300 border border-white/5">
                   <div>
-                    <span className="text-stone-500 block text-[11px]">Estimated Arrival:</span>
-                    <strong className="text-stone-900 font-bold">{currentZone.estimatedDays}</strong>
+                    <span className="text-stone-400 block text-[11px]">Estimated Arrival:</span>
+                    <strong className="text-white font-bold">{currentZone.estimatedDays}</strong>
                   </div>
                   <div className="text-right">
-                    <span className="text-stone-500 block text-[11px]">Standard Logistics Fee:</span>
-                    <strong className="font-mono text-amber-800 font-bold">
+                    <span className="text-stone-400 block text-[11px]">Standard Logistics Fee:</span>
+                    <strong className="font-mono text-[#f5be38] font-bold">
                       {formatNaira(currentZone.baseFeeNgn)}
                     </strong>
                   </div>
                 </div>
 
                 {currentZone.expressAvailable && (
-                  <div className="text-[11px] text-amber-900 bg-amber-50 border border-amber-200 p-2.5 rounded-xl flex items-center justify-between">
+                  <div className="text-[11px] text-[#f5be38] bg-[#f5be38]/10 border border-[#f5be38]/30 p-2.5 rounded-xl flex items-center justify-between">
                     <span>⚡ Same-Day Express Logistics available for {currentZone.name}</span>
-                    <span className="font-mono font-bold">{formatNaira(currentZone.expressFeeNgn!)}</span>
+                    <span className="font-mono font-bold text-white">{formatNaira(currentZone.expressFeeNgn!)}</span>
                   </div>
                 )}
               </div>
@@ -245,19 +245,19 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
 
             {/* Pre-Press Trust Guarantees */}
             <div className="grid grid-cols-2 gap-3 text-xs">
-              <div className="bg-white p-3.5 rounded-xl border border-stone-200 flex items-start gap-2.5">
-                <ShieldCheck className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+              <div className="bg-[#121217] p-3.5 rounded-xl border border-white/10 flex items-start gap-2.5 shadow-sm">
+                <ShieldCheck className="w-4 h-4 text-[#f5be38] shrink-0 mt-0.5" />
                 <div>
-                  <div className="font-bold text-stone-900">Pre-Press Bleed Guarantee</div>
-                  <div className="text-[10px] text-stone-500">Every file is inspected by an expert before press.</div>
+                  <div className="font-bold text-white">Pre-Press Bleed Guarantee</div>
+                  <div className="text-[10px] text-stone-400">Every file is inspected by an expert before press.</div>
                 </div>
               </div>
 
-              <div className="bg-white p-3.5 rounded-xl border border-stone-200 flex items-start gap-2.5">
-                <Package className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+              <div className="bg-[#121217] p-3.5 rounded-xl border border-white/10 flex items-start gap-2.5 shadow-sm">
+                <Package className="w-4 h-4 text-[#f5be38] shrink-0 mt-0.5" />
                 <div>
-                  <div className="font-bold text-stone-900">Secure Travel Packaging</div>
-                  <div className="text-[10px] text-stone-500">Shipped in padded cartons & protective canvas sleeves.</div>
+                  <div className="font-bold text-white">Secure Travel Packaging</div>
+                  <div className="text-[10px] text-stone-400">Shipped in padded cartons &amp; protective canvas sleeves.</div>
                 </div>
               </div>
             </div>
@@ -267,34 +267,34 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
           <div className="lg:col-span-6 space-y-6">
             
             {/* Header info */}
-            <div className="bg-white rounded-3xl border border-stone-200 p-6 sm:p-7 space-y-4">
-              <div className="flex items-center justify-between text-xs text-stone-500">
+            <div className="bg-[#121217] rounded-3xl border border-white/10 p-6 sm:p-7 space-y-4 shadow-xl">
+              <div className="flex items-center justify-between text-xs text-stone-400">
                 <span className="font-mono text-stone-400 font-bold">{product.sku}</span>
-                <div className="flex items-center gap-1.5 text-amber-500">
+                <div className="flex items-center gap-1.5 text-[#f5be38]">
                   <div className="flex">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-3.5 h-3.5 fill-amber-400" />
+                      <Star key={i} className="w-3.5 h-3.5 fill-[#f5be38] text-[#f5be38]" />
                     ))}
                   </div>
-                  <span className="font-bold text-stone-800 text-[11px]">4.9 (84 reviews)</span>
+                  <span className="font-bold text-stone-300 text-[11px]">4.9 (84 reviews)</span>
                 </div>
               </div>
 
-              <h1 className="text-2xl sm:text-3xl font-black text-stone-900 tracking-tight leading-tight">
+              <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight leading-tight">
                 {product.name}
               </h1>
 
-              <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
+              <p className="text-xs sm:text-sm text-stone-300 leading-relaxed">
                 {product.description}
               </p>
 
               {/* Dynamic Option Groups */}
-              <div className="space-y-4 pt-2 border-t border-stone-100">
+              <div className="space-y-4 pt-2 border-t border-white/10">
                 {product.optionGroups.map((grp) => (
                   <div key={grp.id} className="space-y-2">
-                    <label className="text-xs font-bold text-stone-800 flex items-center justify-between">
+                    <label className="text-xs font-bold text-stone-200 flex items-center justify-between">
                       <span>{grp.name}</span>
-                      {grp.required && <span className="text-[10px] text-amber-600 font-semibold">Select One</span>}
+                      {grp.required && <span className="text-[10px] text-[#f5be38] font-bold">Select One</span>}
                     </label>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -305,19 +305,19 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                             key={opt.id}
                             type="button"
                             onClick={() => handleOptionSelect(grp.id, opt.id)}
-                            className={`p-3 rounded-xl text-left text-xs transition-all border flex flex-col justify-between ${
+                            className={`p-3 rounded-xl text-left text-xs transition-all border flex flex-col justify-between cursor-pointer ${
                               isSelected
-                                ? 'bg-amber-50/80 border-amber-600 text-stone-900 ring-2 ring-amber-600/30 shadow-xs'
-                                : 'bg-stone-50/60 border-stone-200 text-stone-700 hover:border-stone-300'
+                                ? 'bg-[#f5be38]/15 border-[#f5be38] text-white ring-2 ring-[#f5be38]/30 shadow-md font-bold'
+                                : 'bg-[#181822] border-white/10 text-stone-300 hover:border-white/20'
                             }`}
                           >
                             <div className="flex items-center justify-between">
                               <span className="font-bold">{opt.name}</span>
-                              {isSelected && <Check className="w-4 h-4 text-amber-600 shrink-0 ml-1" />}
+                              {isSelected && <Check className="w-4 h-4 text-[#f5be38] shrink-0 ml-1" />}
                             </div>
                             {opt.priceModifierValue !== 0 && (
                               <span className={`text-[10px] mt-1 font-mono font-semibold ${
-                                opt.priceModifierValue > 0 ? 'text-amber-800' : 'text-[#b8860b]'
+                                opt.priceModifierValue > 0 ? 'text-[#f5be38]' : 'text-stone-400'
                               }`}>
                                 {opt.priceModifierValue > 0 ? `+${formatNaira(opt.priceModifierValue)}` : formatNaira(opt.priceModifierValue)}
                               </span>
@@ -331,21 +331,21 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
               </div>
 
               {/* Quantity Counter & Quick Step Pills */}
-              <div className="pt-3 border-t border-stone-100 space-y-3">
+              <div className="pt-3 border-t border-white/10 space-y-3">
                 <div className="flex items-center justify-between">
                   <div>
-                    <span className="text-xs font-bold text-stone-900 block">Select Order Quantity</span>
-                    <span className="text-[10px] text-stone-500">
+                    <span className="text-xs font-bold text-white block">Select Order Quantity</span>
+                    <span className="text-[10px] text-stone-400">
                       Minimum order: {product.minQuantity} {product.minQuantity === 1 ? 'unit' : 'pack'}
                     </span>
                   </div>
 
-                  <div className="flex items-center border border-stone-300 rounded-xl bg-stone-50 overflow-hidden shadow-2xs">
+                  <div className="flex items-center border border-white/15 rounded-xl bg-[#181822] overflow-hidden shadow-inner">
                     <button
                       type="button"
                       onClick={() => handleQuantityAdjust(-1)}
                       disabled={quantity <= product.minQuantity}
-                      className="p-2 text-stone-600 hover:bg-stone-200 disabled:opacity-30"
+                      className="p-2 text-stone-300 hover:bg-white/10 disabled:opacity-30 cursor-pointer"
                     >
                       <Minus className="w-4 h-4" />
                     </button>
@@ -356,12 +356,12 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                         const val = parseInt(e.target.value, 10);
                         if (!isNaN(val)) setQuantity(Math.max(product.minQuantity, val));
                       }}
-                      className="w-14 text-center font-mono font-black text-sm py-1.5 text-stone-900 focus:outline-hidden"
+                      className="w-14 text-center font-mono font-black text-sm py-1.5 text-white bg-transparent focus:outline-hidden"
                     />
                     <button
                       type="button"
                       onClick={() => handleQuantityAdjust(1)}
-                      className="p-2 text-stone-600 hover:bg-stone-200"
+                      className="p-2 text-stone-300 hover:bg-white/10 cursor-pointer"
                     >
                       <Plus className="w-4 h-4" />
                     </button>
@@ -376,10 +376,10 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                       key={stepQty}
                       type="button"
                       onClick={() => handleSetQuickQuantity(stepQty)}
-                      className={`text-[11px] px-2.5 py-1 rounded-lg font-mono font-semibold transition-colors ${
+                      className={`text-[11px] px-2.5 py-1 rounded-lg font-mono font-semibold transition-colors cursor-pointer ${
                         quantity === stepQty
-                          ? 'bg-amber-600 text-white shadow-xs'
-                          : 'bg-stone-100 text-stone-700 hover:bg-stone-200'
+                          ? 'bg-[#f5be38] text-black font-bold shadow-md'
+                          : 'bg-[#181822] text-stone-300 hover:bg-white/10 border border-white/10'
                       }`}
                     >
                       {stepQty}
@@ -389,18 +389,18 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
               </div>
 
               {/* Bulk Volume Discount Matrix Table */}
-              <div className="pt-2 border-t border-stone-100 space-y-2">
+              <div className="pt-2 border-t border-white/10 space-y-2">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-stone-800 flex items-center gap-1">
-                    <Percent className="w-3.5 h-3.5 text-amber-600" />
+                  <span className="font-bold text-white flex items-center gap-1">
+                    <Percent className="w-3.5 h-3.5 text-[#f5be38]" />
                     <span>Tiered Bulk Volume Discount Matrix</span>
                   </span>
-                  <span className="text-[10px] text-stone-500">Live Tier Applied</span>
+                  <span className="text-[10px] text-stone-400">Live Tier Applied</span>
                 </div>
 
-                <div className="border border-stone-200 rounded-xl overflow-hidden text-xs">
+                <div className="border border-white/10 rounded-xl overflow-hidden text-xs">
                   <table className="w-full text-left">
-                    <thead className="bg-stone-100 text-stone-600 font-semibold text-[11px]">
+                    <thead className="bg-[#181822] text-stone-300 font-semibold text-[11px]">
                       <tr>
                         <th className="p-2.5">Tier Quantity</th>
                         <th className="p-2.5">Discount %</th>
@@ -408,7 +408,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                         <th className="p-2.5 text-right">Status</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-stone-100 bg-white">
+                    <tbody className="divide-y divide-white/5 bg-[#121217]">
                       {product.bulkPricingTiers.map((tier, idx) => {
                         const isTierActive = 
                           quantity >= tier.minQuantity &&
@@ -424,29 +424,29 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                             key={idx}
                             className={`transition-colors ${
                               isTierActive
-                                ? 'bg-amber-50/80 font-bold text-amber-950'
-                                : 'text-stone-700'
+                                ? 'bg-[#f5be38]/15 font-bold text-white'
+                                : 'text-stone-300'
                             }`}
                           >
                             <td className="p-2.5">{tier.label}</td>
-                            <td className="p-2.5 font-mono text-[#b8860b]">
+                            <td className="p-2.5 font-mono text-[#f5be38] font-bold">
                               {tier.discountPercentage > 0 ? `${tier.discountPercentage}% OFF` : 'Base Price'}
                             </td>
                             <td className="p-2.5 text-right font-mono">
                               {product.hidePrice ? (
-                                <span className="text-amber-800 text-[11px] font-sans font-semibold">Quote on Request</span>
+                                <span className="text-[#f5be38] text-[11px] font-sans font-semibold">Quote on Request</span>
                               ) : (
                                 formatNaira(tierPrice)
                               )}
                             </td>
                             <td className="p-2.5 text-right">
                               {isTierActive ? (
-                                <span className="inline-flex items-center gap-1 text-[10px] bg-[#b8860b] text-white px-2 py-0.5 rounded-full uppercase">
+                                <span className="inline-flex items-center gap-1 text-[10px] bg-[#f5be38] text-black font-black px-2 py-0.5 rounded-full uppercase shadow-xs">
                                   <Check className="w-2.5 h-2.5" />
                                   Active
                                 </span>
                               ) : (
-                                <span className="text-[10px] text-stone-400">—</span>
+                                <span className="text-[10px] text-stone-500">—</span>
                               )}
                             </td>
                           </tr>
@@ -469,9 +469,9 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
             />
 
             {/* Live Pricing Summary & Add to Cart Sticky Box */}
-            <div className="bg-stone-900 text-white rounded-3xl p-6 sm:p-7 shadow-xl space-y-5 border border-stone-800">
-              <div className="flex items-center justify-between border-b border-stone-800 pb-3">
-                <span className="text-xs font-bold uppercase tracking-wider text-amber-400">
+            <div className="bg-[#121217] text-white rounded-3xl p-6 sm:p-7 shadow-2xl space-y-5 border border-white/10">
+              <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                <span className="text-xs font-bold uppercase tracking-wider text-[#f5be38]">
                   {product.hidePrice ? 'Pricing on Request' : 'Dynamic Order Subtotal'}
                 </span>
                 <span className="text-xs text-stone-400 font-mono">
@@ -480,9 +480,9 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
               </div>
 
               {product.hidePrice ? (
-                <div className="p-4 rounded-2xl bg-stone-800/80 border border-stone-700 space-y-3 text-xs">
+                <div className="p-4 rounded-2xl bg-[#181822] border border-white/10 space-y-3 text-xs">
                   <div className="flex items-center gap-2">
-                    <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-bold text-[10px] uppercase tracking-wider">
+                    <span className="px-2.5 py-0.5 rounded-full bg-[#f5be38]/20 text-[#f5be38] font-bold text-[10px] uppercase tracking-wider border border-[#f5be38]/30">
                       Fluctuating Market Rate
                     </span>
                   </div>
@@ -490,7 +490,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                     <span className="text-xs uppercase font-bold text-stone-400 block mb-1">
                       Storefront Rate:
                     </span>
-                    <span className="text-2xl sm:text-3xl font-black text-amber-400 tracking-tight">
+                    <span className="text-2xl sm:text-3xl font-black text-[#f5be38] tracking-tight">
                       {product.priceCustomLabel || 'Price on Request'}
                     </span>
                   </div>
@@ -508,7 +508,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                   </div>
 
                   {pricing.bulkDiscountPercentage > 0 && (
-                    <div className="flex justify-between text-amber-400 font-bold">
+                    <div className="flex justify-between text-[#f5be38] font-bold">
                       <span>Bulk Tier Savings ({pricing.bulkDiscountPercentage}% Off):</span>
                       <span className="font-mono">-{formatNaira(pricing.savingsNgn)}</span>
                     </div>
@@ -522,18 +522,18 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                   </div>
 
                   {designerFeeNgn > 0 && (
-                    <div className="flex justify-between text-amber-400 font-bold">
+                    <div className="flex justify-between text-[#f5be38] font-bold">
                       <span>In-House Pre-Press Creative Desk:</span>
                       <span className="font-mono">+{formatNaira(designerFeeNgn)}</span>
                     </div>
                   )}
 
-                  <div className="pt-3 border-t border-stone-800 flex items-baseline justify-between">
+                  <div className="pt-3 border-t border-white/10 flex items-baseline justify-between">
                     <div>
                       <span className="text-xs uppercase font-bold text-stone-400 block">
                         Total Print Amount:
                       </span>
-                      <span className="text-2xl sm:text-3xl font-black text-amber-400 font-mono tracking-tight">
+                      <span className="text-2xl sm:text-3xl font-black text-[#f5be38] font-mono tracking-tight">
                         {formatNaira(grandTotalWithDesign)}
                       </span>
                     </div>
@@ -552,16 +552,16 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                     href={`https://wa.me/2347030372539?text=${encodeURIComponent(`Hello Silver & Gold Inkshine Ltd, I would like to request an instant price quote for: "${product.name}" (${quantity} units, specs: ${Object.entries(selectedOptions).map(([k, v]) => `${k}: ${v}`).join(', ')}).`)}`}
                     target="_blank"
                     rel="noreferrer"
-                    className="w-full py-4 px-6 rounded-2xl bg-emerald-600 hover:bg-emerald-500 active:scale-98 text-white font-black text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-lg shadow-emerald-600/30 transition-all cursor-pointer"
+                    className="w-full py-4 px-6 rounded-2xl bg-[#f5be38] hover:bg-[#ffd25d] active:scale-98 text-black font-black text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-lg shadow-[#f5be38]/20 transition-all cursor-pointer"
                   >
-                    <MessageSquare className="w-5 h-5 text-white" />
+                    <MessageSquare className="w-5 h-5 text-black" />
                     <span>Request Instant Quote on WhatsApp</span>
                   </a>
 
                   <button
                     type="button"
                     onClick={handleAddToCartClick}
-                    className="w-full py-2.5 px-4 rounded-xl bg-stone-800 hover:bg-stone-700 active:scale-98 text-stone-200 hover:text-white font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer border border-stone-700"
+                    className="w-full py-2.5 px-4 rounded-xl bg-[#181822] hover:bg-white/10 active:scale-98 text-stone-200 hover:text-white font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer border border-white/15"
                   >
                     <ShoppingBag className="w-4 h-4" />
                     <span>Save Order Specs to Cart</span>
@@ -572,15 +572,15 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                   id="pdp-add-to-cart-btn"
                   type="button"
                   onClick={handleAddToCartClick}
-                  className="w-full py-4 px-6 rounded-2xl bg-amber-600 hover:bg-amber-500 active:scale-98 text-white font-black text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-lg shadow-amber-600/30 transition-all cursor-pointer"
+                  className="w-full py-4 px-6 rounded-2xl bg-[#f5be38] hover:bg-[#ffd25d] active:scale-98 text-black font-black text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-lg shadow-[#f5be38]/25 transition-all cursor-pointer"
                 >
-                  <ShoppingBag className="w-5 h-5 text-white" />
+                  <ShoppingBag className="w-5 h-5 text-black" />
                   <span>Add to Cart • {formatNaira(grandTotalWithDesign)}</span>
                 </button>
               )}
 
               {addedToast && (
-                <div className="text-center text-xs text-amber-400 font-bold flex items-center justify-center gap-1.5 animate-in fade-in">
+                <div className="text-center text-xs text-[#f5be38] font-bold flex items-center justify-center gap-1.5 animate-in fade-in">
                   <Check className="w-4 h-4" />
                   <span>Item added to your order cart!</span>
                 </div>
@@ -591,7 +591,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                   href="https://wa.me/2347030372539?text=Hello%20Silver%20%26%20Gold%20Inkshine%2C%20I%20need%20a%20bulk%20corporate%20quote%20for%20100%2B%20units"
                   target="_blank"
                   rel="noreferrer"
-                  className="text-xs text-stone-400 hover:text-amber-400 inline-flex items-center gap-1 font-medium transition-colors"
+                  className="text-xs text-stone-400 hover:text-[#f5be38] inline-flex items-center gap-1 font-medium transition-colors"
                 >
                   <span>Ordering over 50 units? Contact Corporate Procurement Desk</span>
                   <ChevronRight className="w-3.5 h-3.5" />
@@ -602,25 +602,25 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
         </div>
 
         {/* Tabbed Technical Specifications & Box Contents */}
-        <div className="bg-white rounded-3xl border border-stone-200 overflow-hidden shadow-xs">
-          <div className="flex border-b border-stone-200 overflow-x-auto">
+        <div className="bg-[#121217] rounded-3xl border border-white/10 overflow-hidden shadow-xl">
+          <div className="flex border-b border-white/10 overflow-x-auto">
             <button
               onClick={() => setActiveTab('overview')}
-              className={`px-6 py-4 text-xs font-bold whitespace-nowrap transition-colors border-b-2 ${
+              className={`px-6 py-4 text-xs font-bold whitespace-nowrap transition-colors border-b-2 cursor-pointer ${
                 activeTab === 'overview'
-                  ? 'border-amber-600 text-amber-700 bg-amber-50/40'
-                  : 'border-transparent text-stone-600 hover:text-stone-900'
+                  ? 'border-[#f5be38] text-[#f5be38] bg-[#f5be38]/10'
+                  : 'border-transparent text-stone-400 hover:text-white'
               }`}
             >
-              Product Overview & Corporate Uses
+              Product Overview &amp; Corporate Uses
             </button>
 
             <button
               onClick={() => setActiveTab('specs')}
-              className={`px-6 py-4 text-xs font-bold whitespace-nowrap transition-colors border-b-2 ${
+              className={`px-6 py-4 text-xs font-bold whitespace-nowrap transition-colors border-b-2 cursor-pointer ${
                 activeTab === 'specs'
-                  ? 'border-amber-600 text-amber-700 bg-amber-50/40'
-                  : 'border-transparent text-stone-600 hover:text-stone-900'
+                  ? 'border-[#f5be38] text-[#f5be38] bg-[#f5be38]/10'
+                  : 'border-transparent text-stone-400 hover:text-white'
               }`}
             >
               Technical Print Specifications
@@ -628,10 +628,10 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
 
             <button
               onClick={() => setActiveTab('box_contents')}
-              className={`px-6 py-4 text-xs font-bold whitespace-nowrap transition-colors border-b-2 ${
+              className={`px-6 py-4 text-xs font-bold whitespace-nowrap transition-colors border-b-2 cursor-pointer ${
                 activeTab === 'box_contents'
-                  ? 'border-amber-600 text-amber-700 bg-amber-50/40'
-                  : 'border-transparent text-stone-600 hover:text-stone-900'
+                  ? 'border-[#f5be38] text-[#f5be38] bg-[#f5be38]/10'
+                  : 'border-transparent text-stone-400 hover:text-white'
               }`}
             >
               What&apos;s Included In Package
@@ -639,33 +639,33 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
 
             <button
               onClick={() => setActiveTab('delivery')}
-              className={`px-6 py-4 text-xs font-bold whitespace-nowrap transition-colors border-b-2 ${
+              className={`px-6 py-4 text-xs font-bold whitespace-nowrap transition-colors border-b-2 cursor-pointer ${
                 activeTab === 'delivery'
-                  ? 'border-amber-600 text-amber-700 bg-amber-50/40'
-                  : 'border-transparent text-stone-600 hover:text-stone-900'
+                  ? 'border-[#f5be38] text-[#f5be38] bg-[#f5be38]/10'
+                  : 'border-transparent text-stone-400 hover:text-white'
               }`}
             >
               Nationwide Logistics Schedule
             </button>
           </div>
 
-          <div className="p-6 sm:p-8 text-xs text-stone-700 leading-relaxed">
+          <div className="p-6 sm:p-8 text-xs text-stone-300 leading-relaxed">
             {activeTab === 'overview' && (
               <div className="space-y-4 max-w-3xl">
-                <h3 className="text-base font-bold text-stone-900">
-                  Command Corporate Attention at Exhibitions & Conferences
+                <h3 className="text-base font-bold text-white">
+                  Command Corporate Attention at Exhibitions &amp; Conferences
                 </h3>
                 <p>
                   Engineered specifically for Nigerian trade exhibitions, bank branch lobbies, VIP annual general meetings, and retail showrooms. Designed to endure tropical transit with zero curling on edges, providing razor-sharp graphical contrast even under harsh tungsten or LED hall lighting.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                  <div className="p-3 rounded-xl bg-stone-50 border border-stone-200">
-                    <strong className="block text-stone-900 mb-1">Corporate AGM & Expos</strong>
-                    <span>Flawless photography reproduction with zero glare under television cameras.</span>
+                  <div className="p-3.5 rounded-xl bg-[#181822] border border-white/10">
+                    <strong className="block text-white mb-1">Corporate AGM &amp; Expos</strong>
+                    <span className="text-stone-400">Flawless photography reproduction with zero glare under television cameras.</span>
                   </div>
-                  <div className="p-3 rounded-xl bg-stone-50 border border-stone-200">
-                    <strong className="block text-stone-900 mb-1">Retail Lobbies & Headquarters</strong>
-                    <span>Weighted teardrop base sits sturdy with no protruding feet to trip visitors.</span>
+                  <div className="p-3.5 rounded-xl bg-[#181822] border border-white/10">
+                    <strong className="block text-white mb-1">Retail Lobbies &amp; Headquarters</strong>
+                    <span className="text-stone-400">Weighted teardrop base sits sturdy with no protruding feet to trip visitors.</span>
                   </div>
                 </div>
               </div>
@@ -673,31 +673,31 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
 
             {activeTab === 'specs' && (
               <div className="space-y-4 max-w-3xl">
-                <h3 className="text-base font-bold text-stone-900">Commercial Substrate Specifications</h3>
+                <h3 className="text-base font-bold text-white">Commercial Substrate Specifications</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3 font-mono text-xs">
-                  <div className="flex justify-between border-b border-stone-100 py-1.5">
-                    <span className="text-stone-500">Substrate Weight:</span>
-                    <span className="font-bold text-stone-900">380gsm Premium Solite / 440gsm Flex</span>
+                  <div className="flex justify-between border-b border-white/5 py-2">
+                    <span className="text-stone-400">Substrate Weight:</span>
+                    <span className="font-bold text-white">380gsm Premium Solite / 440gsm Flex</span>
                   </div>
-                  <div className="flex justify-between border-b border-stone-100 py-1.5">
-                    <span className="text-stone-500">Cassette Material:</span>
-                    <span className="font-bold text-stone-900">Anodized Solid Extruded Aluminum</span>
+                  <div className="flex justify-between border-b border-white/5 py-2">
+                    <span className="text-stone-400">Cassette Material:</span>
+                    <span className="font-bold text-white">Anodized Solid Extruded Aluminum</span>
                   </div>
-                  <div className="flex justify-between border-b border-stone-100 py-1.5">
-                    <span className="text-stone-500">Print Resolution:</span>
-                    <span className="font-bold text-[#b8860b]">1440 DPI High-Definition Photo Quality</span>
+                  <div className="flex justify-between border-b border-white/5 py-2">
+                    <span className="text-stone-400">Print Resolution:</span>
+                    <span className="font-bold text-[#f5be38]">1440 DPI High-Definition Photo Quality</span>
                   </div>
-                  <div className="flex justify-between border-b border-stone-100 py-1.5">
-                    <span className="text-stone-500">Bleed Requirement:</span>
-                    <span className="font-bold text-stone-900">{product.artworkRequirements.bleedMarginMm}mm Edge Bleed</span>
+                  <div className="flex justify-between border-b border-white/5 py-2">
+                    <span className="text-stone-400">Bleed Requirement:</span>
+                    <span className="font-bold text-white">{product.artworkRequirements.bleedMarginMm}mm Edge Bleed</span>
                   </div>
-                  <div className="flex justify-between border-b border-stone-100 py-1.5">
-                    <span className="text-stone-500">Color Spectrum:</span>
-                    <span className="font-bold text-stone-900">4-Color CMYK Process</span>
+                  <div className="flex justify-between border-b border-white/5 py-2">
+                    <span className="text-stone-400">Color Spectrum:</span>
+                    <span className="font-bold text-white">4-Color CMYK Process</span>
                   </div>
-                  <div className="flex justify-between border-b border-stone-100 py-1.5">
-                    <span className="text-stone-500">Cassette Lifespan:</span>
-                    <span className="font-bold text-stone-900">Reusable with Replaceable Graphic Inserts</span>
+                  <div className="flex justify-between border-b border-white/5 py-2">
+                    <span className="text-stone-400">Cassette Lifespan:</span>
+                    <span className="font-bold text-white">Reusable with Replaceable Graphic Inserts</span>
                   </div>
                 </div>
               </div>
@@ -705,31 +705,31 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
 
             {activeTab === 'box_contents' && (
               <div className="space-y-4 max-w-3xl">
-                <h3 className="text-base font-bold text-stone-900">What is Packed in the Transit Box</h3>
-                <ul className="space-y-2 list-disc pl-5">
-                  <li><strong>1x High-Resolution Printed Graphic:</strong> Pre-installed into the tension cassette with protective film.</li>
-                  <li><strong>1x Weighted Solid Base Cassette:</strong> Chrome teardrop end-caps and precision retraction spring mechanism.</li>
-                  <li><strong>1x Heavy-Duty Telescopic / 3-Stage Support Pole:</strong> With secure locking top hook.</li>
-                  <li><strong>1x Padded Oxford Nylon Travel Bag:</strong> Full zipper with reinforced dual carry handles and shoulder strap.</li>
-                  <li><strong>1x Quality Control Pass Certificate:</strong> Signed by pre-press pressmaster in Lagos.</li>
+                <h3 className="text-base font-bold text-white">What is Packed in the Transit Box</h3>
+                <ul className="space-y-2 list-disc pl-5 text-stone-300">
+                  <li><strong className="text-white">1x High-Resolution Printed Graphic:</strong> Pre-installed into the tension cassette with protective film.</li>
+                  <li><strong className="text-white">1x Weighted Solid Base Cassette:</strong> Chrome teardrop end-caps and precision retraction spring mechanism.</li>
+                  <li><strong className="text-white">1x Heavy-Duty Telescopic / 3-Stage Support Pole:</strong> With secure locking top hook.</li>
+                  <li><strong className="text-white">1x Padded Oxford Nylon Travel Bag:</strong> Full zipper with reinforced dual carry handles and shoulder strap.</li>
+                  <li><strong className="text-white">1x Quality Control Pass Certificate:</strong> Signed by pre-press pressmaster in Lagos.</li>
                 </ul>
               </div>
             )}
 
             {activeTab === 'delivery' && (
               <div className="space-y-4 max-w-3xl">
-                <h3 className="text-base font-bold text-stone-900">Nationwide Delivery Schedules</h3>
+                <h3 className="text-base font-bold text-white">Nationwide Delivery Schedules</h3>
                 <p>
-                  Orders dispatched directly from our Somolu & Ikeja Graphic Production Hub. Packaged in custom corrugated cartons to ensure zero denting of aluminum cassettes during road and air transit.
+                  Orders dispatched directly from our Somolu &amp; Ikeja Graphic Production Hub. Packaged in custom corrugated cartons to ensure zero denting of aluminum cassettes during road and air transit.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                  <div className="bg-stone-50 p-3 rounded-xl border border-stone-200">
-                    <strong className="text-stone-900 block mb-1">Lagos State Express:</strong>
-                    <span>Same-day or next-day dispatch via dedicated dispatch riders and vans.</span>
+                  <div className="bg-[#181822] p-3.5 rounded-xl border border-white/10">
+                    <strong className="text-white block mb-1">Lagos State Express:</strong>
+                    <span className="text-stone-400">Same-day or next-day dispatch via dedicated dispatch riders and vans.</span>
                   </div>
-                  <div className="bg-stone-50 p-3 rounded-xl border border-stone-200">
-                    <strong className="text-stone-900 block mb-1">Abuja, PH & Interstate:</strong>
-                    <span>2–3 business days via GIG Logistics, Air Express, and hub freight.</span>
+                  <div className="bg-[#181822] p-3.5 rounded-xl border border-white/10">
+                    <strong className="text-white block mb-1">Abuja, PH &amp; Interstate:</strong>
+                    <span className="text-stone-400">2–3 business days via GIG Logistics, Air Express, and hub freight.</span>
                   </div>
                 </div>
               </div>

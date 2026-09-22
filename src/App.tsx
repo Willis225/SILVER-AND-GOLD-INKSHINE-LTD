@@ -502,7 +502,7 @@ export default function App() {
   const totalCartCount = cartItems.reduce((acc, curr) => acc + curr.quantity, 0);
 
   return (
-    <div className="min-h-screen bg-stone-50 text-stone-900 font-sans antialiased flex flex-col justify-between selection:bg-amber-500 selection:text-white">
+    <div className="min-h-screen bg-[#08080a] text-stone-100 font-sans antialiased flex flex-col justify-between selection:bg-[#f5be38] selection:text-black bg-grid-pattern relative">
       {/* Global Header (Rendered on storefront, pdp, checkout, and sandbox) */}
       {viewMode !== 'admin' && (
         <Header

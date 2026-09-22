@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import { motion } from 'motion/react';
 import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
 
 interface GoogleReview {
@@ -70,50 +71,62 @@ export const GoogleReviewsSection: React.FC = () => {
   };
 
   return (
-    <section className="bg-white pt-12 pb-10 border-b border-stone-200/80">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="bg-[#08080a] text-stone-100 pt-14 pb-12 border-b border-white/10 relative overflow-hidden bg-grid-pattern">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Headers */}
-        <div className="text-center mb-8 sm:mb-10 space-y-1.5">
-          <div className="text-[#b8860b] font-bold text-sm sm:text-base tracking-wide">
+        <motion.div 
+          initial={{ opacity: 0, y: 22 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center mb-8 sm:mb-10 space-y-1.5"
+        >
+          <div className="text-[#f5be38] font-bold text-xs sm:text-sm tracking-wider uppercase">
             Read Our Happy Customer Reviews on Google
           </div>
-          <h2 className="text-xl sm:text-2xl font-black text-stone-900 tracking-tight">
+          <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-white tracking-tight">
             What Our Clients Are Saying About Us
           </h2>
-        </div>
+        </motion.div>
 
         {/* Carousel / Reviews Grid */}
         <div className="relative group/reviews flex flex-col lg:flex-row items-stretch gap-6">
           
           {/* Left Column: Google Business Profile Badge Card */}
-          <div className="lg:w-[280px] shrink-0 p-5 rounded-2xl border border-stone-200 bg-stone-50/70 flex flex-col justify-between items-center text-center shadow-xs">
+          <motion.div 
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:w-[280px] shrink-0 p-5 rounded-2xl border border-white/10 bg-[#121217] flex flex-col justify-between items-center text-center shadow-xl hover:border-[#f5be38]/40 transition-colors"
+          >
             <div className="flex flex-col items-center gap-3">
               {/* Profile Avatar / Logo */}
-              <div className="w-14 h-14 rounded-full bg-[#b8860b] flex items-center justify-center text-white shadow-sm overflow-hidden p-1">
-                <div className="w-full h-full rounded-full border border-white/40 flex flex-col items-center justify-center text-[8px] font-black leading-none bg-[#78350f]">
+              <div className="w-14 h-14 rounded-full bg-[#f5be38] flex items-center justify-center text-white shadow-md overflow-hidden p-1">
+                <div className="w-full h-full rounded-full border border-black/20 flex flex-col items-center justify-center text-[8px] font-black leading-none bg-black text-[#f5be38]">
                   <span>INKSHINE</span>
-                  <span className="text-[6px] text-amber-300">PRINT</span>
+                  <span className="text-[6px] text-white">PRINT</span>
                 </div>
               </div>
 
               {/* Business Name */}
               <div className="space-y-1">
-                <h3 className="text-sm font-bold text-stone-900 leading-snug">
+                <h3 className="text-sm font-bold text-white leading-snug">
                   SILVER &amp; GOLD INKSHINE LTD – Printing Company in Nigeria
                 </h3>
 
                 {/* Rating Stars & Count */}
                 <div className="flex items-center justify-center gap-1.5 pt-1">
-                  <span className="text-sm font-bold text-amber-500">4.8</span>
-                  <div className="flex items-center text-amber-400">
+                  <span className="text-sm font-bold text-[#f5be38]">4.8</span>
+                  <div className="flex items-center text-[#f5be38]">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                      <Star key={i} className="w-3.5 h-3.5 fill-[#f5be38] text-[#f5be38]" />
                     ))}
                   </div>
                 </div>
 
-                <div className="text-[11px] text-stone-500 font-medium">
+                <div className="text-[11px] text-stone-400 font-medium">
                   Based on 29 reviews
                 </div>
               </div>
@@ -121,9 +134,9 @@ export const GoogleReviewsSection: React.FC = () => {
 
             {/* Google Badge & Button */}
             <div className="w-full pt-4 space-y-2.5">
-              <div className="text-[11px] text-stone-500 flex items-center justify-center gap-1">
+              <div className="text-[11px] text-stone-400 flex items-center justify-center gap-1">
                 <span>powered by</span>
-                <span className="font-bold text-stone-800 flex items-center">
+                <span className="font-bold text-white flex items-center">
                   <span className="text-[#4285F4]">G</span>
                   <span className="text-[#EA4335]">o</span>
                   <span className="text-[#FBBC05]">o</span>
@@ -133,27 +146,36 @@ export const GoogleReviewsSection: React.FC = () => {
                 </span>
               </div>
 
-              <a
+              <motion.a
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
                 href="https://share.google/k34pe4JFmZSmpWHlA"
                 target="_blank"
                 rel="noreferrer"
-                className="w-full py-2 px-3.5 rounded-lg bg-[#1a73e8] hover:bg-[#1557b0] text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm transition-colors"
+                className="w-full py-2 px-3.5 rounded-xl bg-[#1a73e8] hover:bg-[#1557b0] text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-md transition-colors cursor-pointer"
               >
                 <span>review us on</span>
                 <div className="w-4 h-4 rounded-full bg-white flex items-center justify-center text-[10px] font-black text-[#1a73e8]">
                   G
                 </div>
-              </a>
+              </motion.a>
             </div>
-          </div>
+          </motion.div>
 
           {/* Right Area: Scrollable Review Cards */}
-          <div className="flex-1 relative overflow-hidden">
+          <motion.div 
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="flex-1 relative overflow-hidden"
+          >
             
             {/* Scroll Prev Button */}
             <button
+              type="button"
               onClick={() => handleScroll('left')}
-              className="absolute -left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white shadow-md border border-stone-200 text-stone-700 flex items-center justify-center opacity-80 hover:opacity-100 transition-opacity z-20 hover:bg-stone-50"
+              className="absolute -left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-[#121217] shadow-xl border border-white/20 text-white flex items-center justify-center opacity-80 hover:opacity-100 transition-opacity z-20 hover:bg-[#f5be38] hover:text-black cursor-pointer"
               aria-label="Previous review"
             >
               <ChevronLeft className="w-4 h-4" />
@@ -161,8 +183,9 @@ export const GoogleReviewsSection: React.FC = () => {
 
             {/* Scroll Next Button */}
             <button
+              type="button"
               onClick={() => handleScroll('right')}
-              className="absolute -right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white shadow-md border border-stone-200 text-stone-700 flex items-center justify-center opacity-80 hover:opacity-100 transition-opacity z-20 hover:bg-stone-50"
+              className="absolute -right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-[#121217] shadow-xl border border-white/20 text-white flex items-center justify-center opacity-80 hover:opacity-100 transition-opacity z-20 hover:bg-[#f5be38] hover:text-black cursor-pointer"
               aria-label="Next review"
             >
               <ChevronRight className="w-4 h-4" />
@@ -174,10 +197,15 @@ export const GoogleReviewsSection: React.FC = () => {
               className="flex gap-4 overflow-x-auto scrollbar-none scroll-smooth py-1 px-1"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
-              {GOOGLE_REVIEWS.map((review) => (
-                <div
+              {GOOGLE_REVIEWS.map((review, idx) => (
+                <motion.div
                   key={review.id}
-                  className="w-[82vw] xs:w-[260px] sm:w-[280px] max-w-xs shrink-0 p-4 sm:p-5 rounded-2xl bg-stone-50/60 border border-stone-200 flex flex-col justify-between hover:shadow-sm transition-shadow relative"
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: idx * 0.06 }}
+                  whileHover={{ y: -4, scale: 1.02 }}
+                  className="w-[82vw] xs:w-[260px] sm:w-[280px] max-w-xs shrink-0 p-4 sm:p-5 rounded-2xl bg-[#121217] border border-white/10 flex flex-col justify-between hover:border-[#f5be38]/50 hover:shadow-[0_0_25px_rgba(245,190,56,0.15)] transition-colors relative cursor-default"
                 >
                   <div>
                     {/* Header: User Avatar, Name, Time, and Google 'G' icon */}
@@ -187,7 +215,7 @@ export const GoogleReviewsSection: React.FC = () => {
                           <img
                             src={review.avatar}
                             alt={review.name}
-                            className="w-9 h-9 rounded-full object-cover border border-stone-200"
+                            className="w-9 h-9 rounded-full object-cover border border-white/15"
                             referrerPolicy="no-referrer"
                           />
                         ) : (
@@ -198,7 +226,7 @@ export const GoogleReviewsSection: React.FC = () => {
                           </div>
                         )}
                         <div>
-                          <h4 className="text-xs sm:text-[13px] font-bold text-stone-900 leading-tight">
+                          <h4 className="text-xs sm:text-[13px] font-bold text-white leading-tight">
                             {review.name}
                           </h4>
                           <span className="text-[10px] text-stone-400">
@@ -231,39 +259,41 @@ export const GoogleReviewsSection: React.FC = () => {
                     </div>
 
                     {/* Star Rating */}
-                    <div className="flex items-center gap-0.5 text-amber-400 mb-2.5">
+                    <div className="flex items-center gap-0.5 text-[#f5be38] mb-2.5">
                       {[...Array(review.rating)].map((_, i) => (
-                        <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                        <Star key={i} className="w-3.5 h-3.5 fill-[#f5be38] text-[#f5be38]" />
                       ))}
                     </div>
 
                     {/* Review Text */}
-                    <p className="text-xs text-stone-600 leading-relaxed font-normal line-clamp-4">
+                    <p className="text-xs text-stone-300 leading-relaxed font-normal line-clamp-4">
                       {review.comment}
                     </p>
                   </div>
 
                   {/* Subtle right scroll indicator line */}
-                  <div className="w-1 h-8 bg-stone-300 rounded-full absolute right-2 top-1/2 -translate-y-1/2 opacity-30" />
-                </div>
+                  <div className="w-1 h-8 bg-white/10 rounded-full absolute right-2 top-1/2 -translate-y-1/2 opacity-30" />
+                </motion.div>
               ))}
             </div>
 
             {/* Pagination Dots */}
             <div className="flex items-center justify-center gap-1.5 mt-5">
               <button
+                type="button"
                 onClick={() => handleScroll('left')}
-                className={`w-2 h-2 rounded-full transition-all ${activeDot === 0 ? 'bg-[#b8860b] w-4' : 'bg-stone-300'}`}
+                className={`h-2 rounded-full transition-all cursor-pointer ${activeDot === 0 ? 'bg-[#f5be38] w-4' : 'bg-white/20 w-2'}`}
                 aria-label="Page 1"
               />
               <button
+                type="button"
                 onClick={() => handleScroll('right')}
-                className={`w-2 h-2 rounded-full transition-all ${activeDot === 1 ? 'bg-[#b8860b] w-4' : 'bg-stone-300'}`}
+                className={`h-2 rounded-full transition-all cursor-pointer ${activeDot === 1 ? 'bg-[#f5be38] w-4' : 'bg-white/20 w-2'}`}
                 aria-label="Page 2"
               />
             </div>
 
-          </div>
+          </motion.div>
 
         </div>
 

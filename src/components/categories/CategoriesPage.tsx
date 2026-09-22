@@ -362,30 +362,30 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-white text-stone-900 font-sans selection:bg-amber-100 selection:text-amber-900">
+    <div className="min-h-screen bg-[#08080a] text-stone-200 font-sans selection:bg-[#f5be38] selection:text-black bg-grid-pattern">
       {/* 1. Top Breadcrumb & Page Bar */}
-      <div className="border-b border-stone-200 bg-stone-50/80 sticky top-0 z-30 backdrop-blur-xs">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-3">
+      <div className="border-b border-white/10 bg-[#0d0e14]/90 sticky top-0 z-30 backdrop-blur-md">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap items-center justify-between gap-3">
           {/* Breadcrumb path */}
-          <div className="flex items-center gap-2 text-xs sm:text-sm text-stone-500">
+          <div className="flex items-center gap-2 text-xs sm:text-sm text-stone-400">
             <button
               onClick={onNavigateHome}
-              className="font-medium text-stone-600 hover:text-amber-600 transition-colors cursor-pointer flex items-center gap-1"
+              className="font-medium text-stone-300 hover:text-[#f5be38] transition-colors cursor-pointer flex items-center gap-1"
             >
-              <ArrowLeft className="w-3.5 h-3.5" />
+              <ArrowLeft className="w-3.5 h-3.5 text-[#f5be38]" />
               <span>Home</span>
             </button>
-            <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
+            <ChevronRight className="w-3.5 h-3.5 text-stone-600" />
             <span 
               onClick={() => handleSelectCategory('all')} 
-              className={`cursor-pointer ${selectedCategoryKey === 'all' ? 'font-bold text-stone-900' : 'hover:text-stone-800'}`}
+              className={`cursor-pointer ${selectedCategoryKey === 'all' ? 'font-bold text-[#f5be38]' : 'text-stone-300 hover:text-white'}`}
             >
               Categories
             </span>
             {selectedCategoryKey !== 'all' && (
               <>
-                <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
-                <span className="font-bold text-stone-900 truncate max-w-[200px] sm:max-w-xs">
+                <ChevronRight className="w-3.5 h-3.5 text-stone-600" />
+                <span className="font-bold text-white truncate max-w-[200px] sm:max-w-xs">
                   {currentCategoryLabel}
                 </span>
               </>
@@ -399,21 +399,21 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
               href="https://wa.me/2347030372539?text=Hello%20Silver%20and%20Gold%20Inkshine,%20I%20am%20browsing%20the%20categories%20page%20and%20need%20assistance"
               target="_blank"
               rel="noreferrer"
-              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold hover:bg-emerald-100 transition-colors"
+              className="hidden sm:flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#f5be38]/10 text-[#f5be38] border border-[#f5be38]/30 text-xs font-bold hover:bg-[#f5be38]/20 transition-colors"
             >
-              <MessageCircle className="w-3.5 h-3.5 fill-emerald-600 stroke-none" />
+              <MessageCircle className="w-3.5 h-3.5 fill-[#f5be38] stroke-none" />
               <span>WhatsApp: 07030372539</span>
             </a>
 
             {onOpenCart && (
               <button
                 onClick={onOpenCart}
-                className="relative p-2 text-stone-700 hover:text-amber-600 hover:bg-stone-100 rounded-full transition-colors cursor-pointer"
+                className="relative p-2 text-stone-300 hover:text-[#f5be38] hover:bg-white/10 rounded-full transition-colors cursor-pointer"
                 title="View cart"
               >
                 <ShoppingCart className="w-5 h-5" />
                 {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-amber-500 text-black font-extrabold text-[10px] flex items-center justify-center shadow-xs">
+                  <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#f5be38] text-black font-extrabold text-[10px] flex items-center justify-center shadow-xs">
                     {cartCount}
                   </span>
                 )}
@@ -423,7 +423,7 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
             {/* Mobile Filter Toggle */}
             <button
               onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
-              className="md:hidden flex items-center gap-1.5 px-3 py-1.5 bg-stone-900 text-white rounded-lg text-xs font-bold cursor-pointer"
+              className="md:hidden flex items-center gap-1.5 px-3 py-1.5 bg-[#f5be38] text-black rounded-lg text-xs font-black cursor-pointer shadow-md"
             >
               <SlidersHorizontal className="w-3.5 h-3.5" />
               <span>Browse Categories</span>
@@ -445,8 +445,8 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
             }`}
           >
             {/* Search Box Widget */}
-            <div className="space-y-2">
-              <label htmlFor="cat-search-input" className="block text-sm font-semibold text-stone-700">
+            <div className="space-y-2 p-4 rounded-2xl bg-[#121217] border border-white/10 shadow-lg">
+              <label htmlFor="cat-search-input" className="block text-xs font-bold uppercase tracking-wider text-stone-300">
                 Search
               </label>
               <form onSubmit={handleSearchSubmit} className="flex gap-2">
@@ -456,14 +456,14 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
                     type="text"
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)}
-                    placeholder=""
-                    className="w-full px-3 py-2 text-sm bg-white border border-stone-300 rounded-xs focus:outline-hidden focus:border-stone-500 text-stone-900"
+                    placeholder="Search products..."
+                    className="w-full px-3 py-2 text-sm bg-[#181822] border border-white/15 rounded-lg focus:outline-hidden focus:border-[#f5be38] text-white placeholder:text-stone-500"
                   />
                   {searchInput && (
                     <button
                       type="button"
                       onClick={handleClearSearch}
-                      className="absolute right-2.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-700"
+                      className="absolute right-2.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-white"
                     >
                       <X className="w-3.5 h-3.5" />
                     </button>
@@ -471,17 +471,17 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
                 </div>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-stone-100 hover:bg-stone-200 text-stone-800 text-sm font-medium border border-stone-300 rounded-xs transition-colors cursor-pointer"
+                  className="px-3.5 py-2 bg-[#f5be38] hover:bg-[#ffd15c] text-black text-xs font-black rounded-lg transition-colors cursor-pointer shadow-md"
                 >
                   Search
                 </button>
               </form>
               {searchKeyword && (
-                <div className="flex items-center justify-between text-xs text-stone-500 pt-1">
+                <div className="flex items-center justify-between text-xs text-stone-400 pt-1">
                   <span>Filtered: "{searchKeyword}"</span>
                   <button 
                     onClick={handleClearSearch}
-                    className="text-amber-700 font-bold underline cursor-pointer"
+                    className="text-[#f5be38] font-bold underline cursor-pointer"
                   >
                     Clear
                   </button>
@@ -490,26 +490,27 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
             </div>
 
             {/* Browse by Category Widget */}
-            <div>
-              <h2 className="text-base font-bold text-stone-900 tracking-tight pb-2 border-b border-stone-200">
-                Browse by Category
+            <div className="p-4 rounded-2xl bg-[#121217] border border-white/10 shadow-lg">
+              <h2 className="text-sm font-black text-white tracking-wide uppercase pb-2.5 border-b border-white/10 flex items-center justify-between">
+                <span>Browse by Category</span>
+                <span className="w-2 h-2 rounded-full bg-[#f5be38]"></span>
               </h2>
-              <ul className="mt-3 space-y-1.5 text-sm text-stone-600">
+              <ul className="mt-3 space-y-1 text-sm text-stone-300 max-h-[420px] overflow-y-auto pr-1">
                 {/* All Categories item */}
                 <li key="cat-all">
                   <button
                     onClick={() => handleSelectCategory('all')}
-                    className={`w-full text-left py-1 px-1.5 rounded-xs transition-colors flex items-center justify-between group cursor-pointer ${
+                    className={`w-full text-left py-1.5 px-2 rounded-lg transition-colors flex items-center justify-between group cursor-pointer ${
                       selectedCategoryKey === 'all'
-                        ? 'font-bold text-stone-900 bg-stone-100'
-                        : 'hover:text-stone-900 hover:bg-stone-50'
+                        ? 'font-bold text-[#f5be38] bg-white/10'
+                        : 'hover:text-white hover:bg-white/5'
                     }`}
                   >
                     <span className="flex items-center gap-2">
-                      <span className={`w-1.5 h-1.5 rounded-full ${selectedCategoryKey === 'all' ? 'bg-amber-600' : 'bg-stone-300 group-hover:bg-stone-500'}`} />
+                      <span className={`w-1.5 h-1.5 rounded-full ${selectedCategoryKey === 'all' ? 'bg-[#f5be38]' : 'bg-stone-600 group-hover:bg-[#f5be38]'}`} />
                       <span>All Categories</span>
                     </span>
-                    <span className="text-xs text-stone-400">({products.length})</span>
+                    <span className="text-xs text-stone-500">({products.length})</span>
                   </button>
                 </li>
 
@@ -520,14 +521,14 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
                     <li key={cat.key}>
                       <button
                         onClick={() => handleSelectCategory(cat.key)}
-                        className={`w-full text-left py-1 px-1.5 rounded-xs transition-colors flex items-center justify-between group cursor-pointer ${
+                        className={`w-full text-left py-1.5 px-2 rounded-lg transition-colors flex items-center justify-between group cursor-pointer ${
                           isSelected
-                            ? 'font-bold text-stone-900 bg-stone-100'
-                            : 'hover:text-stone-900 hover:bg-stone-50'
+                            ? 'font-bold text-[#f5be38] bg-white/10'
+                            : 'hover:text-white hover:bg-white/5'
                         }`}
                       >
                         <span className="flex items-center gap-2">
-                          <span className={`w-1.5 h-1.5 rounded-full ${isSelected ? 'bg-amber-600' : 'bg-stone-300 group-hover:bg-stone-500'}`} />
+                          <span className={`w-1.5 h-1.5 rounded-full ${isSelected ? 'bg-[#f5be38]' : 'bg-stone-600 group-hover:bg-[#f5be38]'}`} />
                           <span className="leading-snug">{cat.label}</span>
                         </span>
                       </button>
@@ -538,17 +539,17 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
             </div>
 
             {/* Recent Posts Widget */}
-            <div>
-              <h3 className="text-base font-bold text-stone-900 tracking-tight pb-2 border-b border-stone-200">
+            <div className="p-4 rounded-2xl bg-[#121217] border border-white/10 shadow-lg">
+              <h3 className="text-sm font-black text-white tracking-wide uppercase pb-2.5 border-b border-white/10">
                 Recent Posts
               </h3>
-              <ul className="mt-3 space-y-3.5 text-xs text-stone-700">
+              <ul className="mt-3 space-y-3 text-xs text-stone-300">
                 {RECENT_POSTS_DATA.map((post) => (
                   <li key={post.id} className="leading-snug">
                     <button
                       type="button"
                       onClick={() => setSelectedPost(post)}
-                      className="text-left font-medium text-stone-700 hover:text-amber-700 transition-colors cursor-pointer block"
+                      className="text-left font-medium text-stone-300 hover:text-[#f5be38] transition-colors cursor-pointer block"
                     >
                       {post.title}
                     </button>
@@ -558,22 +559,20 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
             </div>
 
             {/* PRODUCTS Widget (Mini Thumbnails from screenshot) */}
-            <div>
-              <h3 className="text-xs font-bold uppercase tracking-wider text-stone-900 pb-2 border-b border-stone-200">
+            <div className="p-4 rounded-2xl bg-[#121217] border border-white/10 shadow-lg">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-white pb-2.5 border-b border-white/10">
                 PRODUCTS
               </h3>
-              <div className="mt-4 space-y-4">
+              <div className="mt-4 space-y-3.5">
                 {SIDEBAR_WIDGET_PRODUCTS.map((item) => (
                   <div 
                     key={item.id} 
-                    className="flex items-start gap-3 group cursor-pointer"
+                    className="flex items-start gap-3 group cursor-pointer p-1.5 rounded-xl hover:bg-white/5 transition-colors"
                     onClick={() => {
-                      // Find in main products or mock select
                       const existing = products.find((p) => p.name.includes(item.name.substring(0, 15)));
                       if (existing) {
                         onSelectProduct(existing);
                       } else {
-                        // Open confirm price directly with constructed product
                         setConfirmPriceProduct({
                           id: item.id,
                           sku: 'INK-SB-01',
@@ -594,7 +593,7 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
                       }
                     }}
                   >
-                    <div className="w-12 h-12 rounded-xs overflow-hidden bg-stone-100 border border-stone-200 shrink-0">
+                    <div className="w-12 h-12 rounded-lg overflow-hidden bg-black/40 border border-white/10 shrink-0">
                       <img
                         src={item.image}
                         alt={item.name}
@@ -602,10 +601,10 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
                       />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h4 className="text-xs font-medium text-stone-800 leading-snug group-hover:text-amber-700 transition-colors line-clamp-2">
+                      <h4 className="text-xs font-medium text-stone-200 leading-snug group-hover:text-[#f5be38] transition-colors line-clamp-2">
                         {item.name}
                       </h4>
-                      <div className="text-xs font-bold text-stone-900 mt-1">
+                      <div className="text-xs font-extrabold text-[#f5be38] mt-1">
                         {item.price}
                       </div>
                     </div>
@@ -621,12 +620,12 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
           {/* ========================================================== */}
           <main className="flex-1 min-w-0">
             {/* Top Controls Bar matching screenshot */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 mb-6 border-b border-stone-200">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 mb-6 border-b border-white/10">
               {/* Results count (e.g. Showing 1-16 of 170 results) */}
-              <div className="text-xs sm:text-sm text-stone-600">
+              <div className="text-xs sm:text-sm text-stone-400">
                 {totalResults > 0 ? (
                   <span>
-                    Showing {startIndex + 1}–{endIndex} of {totalResults} results
+                    Showing <strong className="text-white">{startIndex + 1}–{endIndex}</strong> of <strong className="text-white">{totalResults}</strong> results
                   </span>
                 ) : (
                   <span>No products found for this criteria</span>
@@ -639,7 +638,7 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
                   <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value)}
-                    className="appearance-none text-xs sm:text-sm py-1.5 pl-3 pr-8 bg-white border border-stone-300 rounded-xs text-stone-800 focus:outline-hidden focus:border-stone-500 cursor-pointer"
+                    className="appearance-none text-xs sm:text-sm py-1.5 pl-3 pr-8 bg-[#121217] border border-white/15 rounded-lg text-white focus:outline-hidden focus:border-[#f5be38] cursor-pointer"
                   >
                     <option value="default">Default sorting</option>
                     <option value="popularity">Sort by popularity</option>
@@ -647,18 +646,18 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
                     <option value="price-low">Sort by price: low to high</option>
                     <option value="price-high">Sort by price: high to low</option>
                   </select>
-                  <ChevronDown className="w-3.5 h-3.5 text-stone-500 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                  <ChevronDown className="w-3.5 h-3.5 text-stone-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                 </div>
 
                 {/* Grid & List View Toggle Icons */}
-                <div className="flex items-center border border-stone-300 rounded-xs overflow-hidden">
+                <div className="flex items-center border border-white/15 rounded-lg overflow-hidden bg-[#121217]">
                   <button
                     type="button"
                     onClick={() => setViewMode('grid')}
-                    className={`p-1.5 transition-colors cursor-pointer ${
+                    className={`p-2 transition-colors cursor-pointer ${
                       viewMode === 'grid' 
-                        ? 'bg-stone-800 text-white' 
-                        : 'bg-white text-stone-600 hover:bg-stone-100'
+                        ? 'bg-[#f5be38] text-black' 
+                        : 'text-stone-400 hover:text-white hover:bg-white/10'
                     }`}
                     title="Grid view"
                   >
@@ -667,10 +666,10 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
                   <button
                     type="button"
                     onClick={() => setViewMode('list')}
-                    className={`p-1.5 transition-colors cursor-pointer ${
+                    className={`p-2 transition-colors cursor-pointer ${
                       viewMode === 'list' 
-                        ? 'bg-stone-800 text-white' 
-                        : 'bg-white text-stone-600 hover:bg-stone-100'
+                        ? 'bg-[#f5be38] text-black' 
+                        : 'text-stone-400 hover:text-white hover:bg-white/10'
                     }`}
                     title="List view"
                   >
@@ -682,34 +681,34 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
 
             {/* Highlighted Banner if navigating from homepage */}
             {highlightedProduct && (
-              <div id="highlighted-product-banner" className="mb-6 p-4 sm:p-5 bg-gradient-to-r from-amber-50 to-orange-50 border-2 border-amber-300 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm animate-fadeIn">
+              <div id="highlighted-product-banner" className="mb-6 p-4 sm:p-5 bg-gradient-to-r from-[#181824] to-[#121217] border-2 border-[#f5be38] rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-[0_0_25px_rgba(245,190,56,0.15)] animate-fadeIn">
                 <div className="flex items-center gap-3.5 min-w-0">
-                  <div className="w-14 h-14 rounded-lg overflow-hidden bg-white border border-amber-300 shrink-0 shadow-xs">
+                  <div className="w-14 h-14 rounded-xl overflow-hidden bg-black/50 border border-[#f5be38]/50 shrink-0 shadow-sm">
                     <img src={highlightedProduct.image} alt={highlightedProduct.name} className="w-full h-full object-cover" />
                   </div>
                   <div className="min-w-0">
-                    <div className="flex items-center gap-1.5 text-xs font-bold text-amber-800 uppercase tracking-wider">
-                      <Sparkles className="w-3.5 h-3.5 text-amber-600 animate-pulse" />
+                    <div className="flex items-center gap-1.5 text-xs font-extrabold text-[#f5be38] uppercase tracking-wider">
+                      <Sparkles className="w-3.5 h-3.5 text-[#f5be38] animate-pulse" />
                       <span>Viewing Selected Item from Homepage</span>
                     </div>
-                    <h3 className="text-sm sm:text-base font-bold text-stone-900 truncate mt-0.5">
+                    <h3 className="text-sm sm:text-base font-bold text-white truncate mt-0.5">
                       {highlightedProduct.name}
                     </h3>
-                    <p className="text-xs text-stone-600 mt-0.5">
-                      Showing this item below together with all other designs & options available in <span className="font-bold text-stone-800">{currentCategoryLabel}</span>.
+                    <p className="text-xs text-stone-400 mt-0.5">
+                      Showing this item below together with all other designs &amp; options available in <span className="font-bold text-[#f5be38]">{currentCategoryLabel}</span>.
                     </p>
                   </div>
                 </div>
                 <div className="flex items-center gap-2 shrink-0 self-end sm:self-center">
                   <button
                     onClick={() => onSelectProduct(highlightedProduct)}
-                    className="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-md shadow-xs transition-colors cursor-pointer"
+                    className="px-4 py-2 bg-[#f5be38] hover:bg-[#ffd15c] text-black text-xs font-black rounded-lg shadow-md transition-colors cursor-pointer"
                   >
-                    Configure & Order
+                    Configure &amp; Order
                   </button>
                   <button
                     onClick={() => setActiveHighlightedId(null)}
-                    className="p-2 text-stone-400 hover:text-stone-700 rounded-md hover:bg-white/60 transition-colors cursor-pointer"
+                    className="p-2 text-stone-400 hover:text-white rounded-lg hover:bg-white/10 transition-colors cursor-pointer"
                     title="Dismiss highlight"
                   >
                     <X className="w-4 h-4" />
@@ -720,16 +719,16 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
 
             {/* Empty State */}
             {currentProducts.length === 0 && (
-              <div className="p-12 text-center bg-stone-50 rounded-xl border border-stone-200">
-                <p className="text-base font-semibold text-stone-700">No products matching your selection.</p>
-                <p className="text-xs text-stone-500 mt-1">Try clearing your search query or selecting a different category from the sidebar.</p>
+              <div className="p-12 text-center bg-[#121217] rounded-2xl border border-white/10">
+                <p className="text-base font-semibold text-white">No products matching your selection.</p>
+                <p className="text-xs text-stone-400 mt-1">Try clearing your search query or selecting a different category from the sidebar.</p>
                 <button
                   onClick={() => {
                     setSelectedCategoryKey('all');
                     setSearchKeyword('');
                     setSearchInput('');
                   }}
-                  className="mt-4 px-4 py-2 bg-stone-900 text-white text-xs font-bold rounded-lg hover:bg-stone-800 transition-colors cursor-pointer"
+                  className="mt-4 px-5 py-2.5 bg-[#f5be38] text-black text-xs font-black rounded-xl hover:bg-[#ffd15c] transition-colors cursor-pointer shadow-md"
                 >
                   View All Products
                 </button>
@@ -800,14 +799,14 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
                   return (
                     <React.Fragment key={product.id}>
                       <div 
-                        className={`flex flex-col sm:flex-row items-start gap-6 lg:gap-10 pb-10 sm:pb-14 border-b border-stone-200/80 last:border-b-0 transition-all ${
+                        className={`flex flex-col sm:flex-row items-start gap-6 lg:gap-10 pb-10 sm:pb-14 border-b border-white/10 last:border-b-0 transition-all ${
                           isHighlighted 
-                            ? 'bg-amber-50/50 p-4 sm:p-6 rounded-xl border-2 border-amber-400 ring-2 ring-amber-300/40 shadow-sm' 
+                            ? 'bg-[#181824] p-5 sm:p-7 rounded-2xl border-2 border-[#f5be38] shadow-[0_0_25px_rgba(245,190,56,0.15)]' 
                             : ''
                         }`}
                       >
                         {/* Left: Product Image */}
-                        <div className="w-full sm:w-64 lg:w-72 shrink-0 aspect-4/3 sm:aspect-square bg-stone-50 rounded-xs overflow-hidden border border-stone-200/90 group cursor-pointer relative"
+                        <div className="w-full sm:w-64 lg:w-72 shrink-0 aspect-4/3 sm:aspect-square bg-[#121217] rounded-xl overflow-hidden border border-white/10 group cursor-pointer relative"
                           onClick={() => onSelectProduct(product)}
                         >
                           <img
@@ -817,12 +816,12 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
                             loading="lazy"
                           />
                           {isHighlighted ? (
-                            <span className="absolute top-2 left-2 px-2 py-0.5 text-[10px] font-bold bg-amber-500 text-stone-950 rounded-xs shadow-xs uppercase tracking-wider flex items-center gap-1">
+                            <span className="absolute top-2.5 left-2.5 px-2.5 py-0.5 text-[10px] font-black bg-[#f5be38] text-black rounded-md shadow-md uppercase tracking-wider flex items-center gap-1">
                               <Sparkles className="w-2.5 h-2.5" />
                               Selected Item
                             </span>
                           ) : product.badge ? (
-                            <span className="absolute top-2 left-2 px-2 py-0.5 text-[10px] font-bold bg-amber-500 text-black rounded-xs shadow-xs uppercase tracking-wider">
+                            <span className="absolute top-2.5 left-2.5 px-2.5 py-0.5 text-[10px] font-black bg-[#f5be38] text-black rounded-md shadow-md uppercase tracking-wider">
                               {product.badge}
                             </span>
                           ) : null}
@@ -831,8 +830,8 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
                         {/* Right: Product Details matching screenshot */}
                         <div className="flex-1 min-w-0 space-y-3">
                           {isHighlighted && (
-                            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-900 text-xs font-bold border border-amber-300">
-                              <CheckCircle2 className="w-3.5 h-3.5 text-amber-600" />
+                            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#f5be38]/15 text-[#f5be38] text-xs font-bold border border-[#f5be38]/30">
+                              <CheckCircle2 className="w-3.5 h-3.5 text-[#f5be38]" />
                               <span>Exact Match from Homepage Showcase</span>
                             </div>
                           )}
@@ -840,46 +839,46 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
                           {/* Title */}
                           <h3 
                             onClick={() => onSelectProduct(product)}
-                            className="text-lg sm:text-xl font-medium text-stone-900 leading-snug hover:text-amber-700 transition-colors cursor-pointer"
+                            className="text-lg sm:text-xl font-bold text-white leading-snug hover:text-[#f5be38] transition-colors cursor-pointer"
                           >
                             {product.name}
                           </h3>
 
                           {/* Price */}
-                          <div className="text-xs font-bold text-stone-500">
-                            <span className="text-stone-700 text-sm font-semibold">{formattedPrice}</span>
+                          <div className="text-sm font-bold text-stone-400">
+                            <span className="text-[#f5be38] text-base sm:text-lg font-black">{formattedPrice}</span>
                           </div>
 
                           {/* Description Text */}
-                          <p className="text-xs sm:text-sm text-stone-600 leading-relaxed max-w-2xl">
+                          <p className="text-xs sm:text-sm text-stone-300 leading-relaxed max-w-2xl">
                             {product.description || product.shortDescription}
                           </p>
 
-                          {/* Bullet Specs with Green Checkmark */}
-                          <div className="space-y-1 py-1">
+                          {/* Bullet Specs with Gold Checkmark */}
+                          <div className="space-y-1.5 py-1">
                             {dynamicSpecs.map((spec, sIdx) => (
-                              <div key={sIdx} className="flex items-center gap-2 text-xs sm:text-sm text-stone-800">
-                                <Check className="w-3.5 h-3.5 text-[#22c55e] stroke-[2.5] shrink-0" />
+                              <div key={sIdx} className="flex items-center gap-2 text-xs sm:text-sm text-stone-200">
+                                <Check className="w-3.5 h-3.5 text-[#f5be38] stroke-[2.5] shrink-0" />
                                 <span>{spec}</span>
                               </div>
                             ))}
                           </div>
 
-                          {/* Action Buttons: Confirm Price (Green Button matching screenshot) */}
+                          {/* Action Buttons: Confirm Price (Gold Button) + View Details */}
                           <div className="pt-2 flex flex-wrap items-center gap-3">
                             <button
                               type="button"
                               onClick={() => setConfirmPriceProduct(product)}
-                              className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xs bg-[#22c55e] hover:bg-[#16a34a] text-white font-bold text-xs sm:text-sm shadow-xs transition-colors cursor-pointer"
+                              className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-[#f5be38] hover:bg-[#ffd15c] text-black font-black text-xs sm:text-sm shadow-lg shadow-[#f5be38]/20 transition-all cursor-pointer"
                             >
-                              <MessageCircle className="w-4 h-4 fill-white stroke-none" />
+                              <MessageCircle className="w-4 h-4 fill-black stroke-none" />
                               <span>Confirm Price</span>
                             </button>
 
                             <button
                               type="button"
                               onClick={() => onSelectProduct(product)}
-                              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xs bg-stone-900 hover:bg-stone-800 text-white font-semibold text-xs sm:text-sm shadow-xs transition-colors cursor-pointer"
+                              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-white font-bold text-xs sm:text-sm border border-white/15 shadow-sm transition-colors cursor-pointer"
                             >
                               <span>View Product Details</span>
                             </button>
@@ -889,10 +888,10 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
 
                       {/* Helpful divider separating the clicked item from other items in the same category */}
                       {pIndex === 0 && isHighlighted && currentProducts.length > 1 && (
-                        <div className="py-3 px-4 bg-stone-50 border border-stone-200 rounded-lg flex items-center justify-between text-xs text-stone-600">
-                          <span className="font-semibold text-stone-800 flex items-center gap-1.5">
-                            <span className="w-2 h-2 rounded-full bg-amber-500 inline-block"></span>
-                            More Designs & Products in {currentCategoryLabel} ({currentProducts.length - 1} other options)
+                        <div className="py-3 px-4 bg-[#121217] border border-white/10 rounded-xl flex items-center justify-between text-xs text-stone-300">
+                          <span className="font-semibold text-white flex items-center gap-1.5">
+                            <span className="w-2 h-2 rounded-full bg-[#f5be38] inline-block"></span>
+                            More Designs &amp; Products in {currentCategoryLabel} ({currentProducts.length - 1} other options)
                           </span>
                           <span className="text-stone-400 text-[11px] hidden sm:inline">Browse alternatives below</span>
                         </div>
@@ -916,14 +915,14 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
                   return (
                     <div 
                       key={product.id}
-                      className={`border rounded-lg overflow-hidden bg-white hover:shadow-lg transition-all flex flex-col group ${
+                      className={`border rounded-2xl overflow-hidden bg-[#121217] hover:border-[#f5be38]/60 hover:shadow-[0_0_20px_rgba(245,190,56,0.15)] transition-all flex flex-col group ${
                         isHighlighted 
-                          ? 'border-2 border-amber-500 ring-2 ring-amber-300/50 shadow-md' 
-                          : 'border-stone-200'
+                          ? 'border-2 border-[#f5be38] ring-2 ring-[#f5be38]/40 shadow-lg' 
+                          : 'border-white/10'
                       }`}
                     >
                       <div 
-                        className="aspect-square bg-stone-50 overflow-hidden relative cursor-pointer"
+                        className="aspect-square bg-black/40 overflow-hidden relative cursor-pointer"
                         onClick={() => onSelectProduct(product)}
                       >
                         <img 
@@ -932,12 +931,12 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
                         />
                         {isHighlighted ? (
-                          <span className="absolute top-2 left-2 px-2 py-0.5 text-[10px] font-bold bg-amber-500 text-stone-950 rounded-xs shadow-xs uppercase tracking-wider flex items-center gap-1">
+                          <span className="absolute top-2.5 left-2.5 px-2.5 py-0.5 text-[10px] font-black bg-[#f5be38] text-black rounded-md shadow-md uppercase tracking-wider flex items-center gap-1">
                             <Sparkles className="w-2.5 h-2.5" />
                             Selected
                           </span>
                         ) : product.badge ? (
-                          <span className="absolute top-2 left-2 px-2 py-0.5 text-[10px] font-bold bg-amber-500 text-black rounded-xs shadow-xs uppercase">
+                          <span className="absolute top-2.5 left-2.5 px-2.5 py-0.5 text-[10px] font-black bg-[#f5be38] text-black rounded-md shadow-md uppercase">
                             {product.badge}
                           </span>
                         ) : null}
@@ -950,14 +949,14 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
                           </p>
                           <h3 
                             onClick={() => onSelectProduct(product)}
-                            className="text-sm font-bold text-stone-900 leading-snug hover:text-amber-700 transition-colors cursor-pointer line-clamp-2 mt-0.5"
+                            className="text-sm font-bold text-white leading-snug hover:text-[#f5be38] transition-colors cursor-pointer line-clamp-2 mt-0.5"
                           >
                             {product.name}
                           </h3>
-                          <div className="text-sm font-extrabold text-stone-800 mt-1">
+                          <div className="text-sm font-extrabold text-[#f5be38] mt-1">
                             {formattedPrice}
                           </div>
-                          <p className="text-xs text-stone-500 line-clamp-2 mt-1">
+                          <p className="text-xs text-stone-400 line-clamp-2 mt-1">
                             {product.shortDescription || product.description}
                           </p>
                         </div>
@@ -966,9 +965,9 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
                           <button
                             type="button"
                             onClick={() => setConfirmPriceProduct(product)}
-                            className="w-full flex items-center justify-center gap-1.5 py-2 px-3 rounded-md bg-[#22c55e] hover:bg-[#16a34a] text-white font-bold text-xs shadow-xs transition-colors cursor-pointer"
+                            className="w-full flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-[#f5be38] hover:bg-[#ffd15c] text-black font-black text-xs shadow-md transition-all cursor-pointer"
                           >
-                            <MessageCircle className="w-3.5 h-3.5 fill-white stroke-none" />
+                            <MessageCircle className="w-3.5 h-3.5 fill-black stroke-none" />
                             <span>Confirm Price</span>
                           </button>
                         </div>
@@ -981,7 +980,7 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
 
             {/* Pagination Controls */}
             {totalPages > 1 && (
-              <div className="mt-12 pt-6 border-t border-stone-200 flex items-center justify-center gap-2">
+              <div className="mt-12 pt-6 border-t border-white/10 flex items-center justify-center gap-2">
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
                   <button
                     key={pageNum}
@@ -990,10 +989,10 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
                       setCurrentPage(pageNum);
                       window.scrollTo({ top: 0, behavior: 'smooth' });
                     }}
-                    className={`w-9 h-9 flex items-center justify-center rounded-xs text-xs font-bold transition-colors cursor-pointer ${
+                    className={`w-9 h-9 flex items-center justify-center rounded-xl text-xs font-black transition-colors cursor-pointer ${
                       currentPage === pageNum
-                        ? 'bg-stone-900 text-white'
-                        : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
+                        ? 'bg-[#f5be38] text-black shadow-md'
+                        : 'bg-[#121217] hover:bg-white/10 text-stone-300 border border-white/10'
                     }`}
                   >
                     {pageNum}
@@ -1007,7 +1006,7 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
                       setCurrentPage(currentPage + 1);
                       window.scrollTo({ top: 0, behavior: 'smooth' });
                     }}
-                    className="px-3 h-9 flex items-center gap-1 rounded-xs bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-bold transition-colors cursor-pointer"
+                    className="px-3.5 h-9 flex items-center gap-1 rounded-xl bg-[#121217] hover:bg-white/10 text-stone-300 border border-white/10 text-xs font-bold transition-colors cursor-pointer"
                   >
                     <span>Next</span>
                     <ChevronRight className="w-3.5 h-3.5" />
