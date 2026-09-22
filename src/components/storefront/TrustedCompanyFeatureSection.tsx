@@ -11,7 +11,10 @@ export const TrustedCompanyFeatureSection: React.FC<TrustedCompanyFeatureSection
   const [imageSrc, setImageSrc] = useState(TRUSTED_COMPANY_CDN_IMAGE);
 
   return (
-    <section className="bg-white text-stone-900 py-14 sm:py-20 border-b border-stone-200 relative overflow-hidden">
+    <section className="bg-[#fbf9f4] text-stone-900 py-16 sm:py-24 border-b border-amber-950/10 relative overflow-hidden">
+      {/* Subtle ambient warm texture */}
+      <div className="absolute inset-0 bg-[radial-gradient(#e7dfd5_1px,transparent_1px)] [background-size:20px_20px] opacity-70 pointer-events-none" />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
           
@@ -23,8 +26,8 @@ export const TrustedCompanyFeatureSection: React.FC<TrustedCompanyFeatureSection
             transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-6 space-y-4 sm:space-y-6"
           >
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-stone-100 border border-stone-200 text-stone-700 text-xs font-bold tracking-wide">
-              <span className="w-2 h-2 rounded-full bg-[#f5be38]" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-100/70 border border-amber-300/60 text-amber-950 text-xs font-black tracking-wide shadow-sm">
+              <span className="w-2 h-2 rounded-full bg-[#f5be38] shadow-[0_0_8px_rgba(245,190,56,0.8)]" />
               <span>ESTABLISHED COMMERCIAL PRINTING HUB</span>
             </div>
 
@@ -32,27 +35,27 @@ export const TrustedCompanyFeatureSection: React.FC<TrustedCompanyFeatureSection
               Nigeria's Trusted Online Printing Company
             </h2>
 
-            <p className="text-xs sm:text-[14.5px] text-stone-700 leading-relaxed font-normal">
+            <p className="text-sm sm:text-[15px] text-stone-700 leading-relaxed font-normal">
               SILVER &amp; GOLD INKSHINE LTD is a professional online printing company in Bayelsa &amp; Lagos, Nigeria. We serve businesses, schools, churches, event planners, product owners and corporate organisations who need fast, affordable and reliable printing solutions. Our goal is simple — help Nigerian brands look professional, advertise better and print with confidence. Whether you need one urgent item or bulk printing for a nationwide campaign, we are ready to support you with fast response, clean production and fair pricing.
             </p>
 
-            <div className="pt-1 flex flex-wrap items-center gap-6 text-xs sm:text-sm font-semibold text-stone-800">
-              <div className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#f5be38]" />
+            <div className="pt-2 flex flex-wrap items-center gap-6 text-xs sm:text-sm font-bold text-stone-800">
+              <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-3.5 py-1.5 rounded-xl border border-stone-200/80 shadow-sm">
+                <span className="w-2 h-2 rounded-full bg-[#f5be38]" />
                 <span>Modern Offset &amp; UV Fleet</span>
               </div>
-              <div className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#f5be38]" />
+              <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-3.5 py-1.5 rounded-xl border border-stone-200/80 shadow-sm">
+                <span className="w-2 h-2 rounded-full bg-[#f5be38]" />
                 <span>Zero-Color-Shift Pre-Press</span>
               </div>
-              <div className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#f5be38]" />
+              <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-3.5 py-1.5 rounded-xl border border-stone-200/80 shadow-sm">
+                <span className="w-2 h-2 rounded-full bg-[#f5be38]" />
                 <span>Nationwide Express Logistics</span>
               </div>
             </div>
           </motion.div>
 
-          {/* Right Column: High Quality Press Room Production Photo seamlessly blended with white background */}
+          {/* Right Column: High Quality Press Room Production Photo seamlessly blended with cream background */}
           <motion.div 
             initial={{ opacity: 0, scale: 0.96, x: 25 }}
             whileInView={{ opacity: 1, scale: 1, x: 0 }}
@@ -62,7 +65,7 @@ export const TrustedCompanyFeatureSection: React.FC<TrustedCompanyFeatureSection
           >
             {/* Seamless blended container with radial mask and feathered perimeter edge blends */}
             <div className="relative w-full max-w-lg aspect-[4/5] sm:aspect-[5/6] overflow-hidden flex items-center justify-center">
-              {/* Photo with radial edge feathering directly melting into the white background */}
+              {/* Photo with radial edge feathering directly melting into the cream background */}
               <img
                 src={imageSrc}
                 alt="SILVER & GOLD INKSHINE LTD Nigeria's Trusted Online Printing Partner"
@@ -79,11 +82,11 @@ export const TrustedCompanyFeatureSection: React.FC<TrustedCompanyFeatureSection
                 }}
               />
 
-              {/* Directional gradient overlays to ensure seamless perimeter dissolution into pure white */}
-              <div className="absolute inset-y-0 left-0 w-20 sm:w-28 bg-gradient-to-r from-white via-white/80 to-transparent pointer-events-none" />
-              <div className="absolute inset-y-0 right-0 w-20 sm:w-28 bg-gradient-to-l from-white via-white/80 to-transparent pointer-events-none" />
-              <div className="absolute inset-x-0 top-0 h-20 sm:h-28 bg-gradient-to-b from-white via-white/80 to-transparent pointer-events-none" />
-              <div className="absolute inset-x-0 bottom-0 h-20 sm:h-28 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none" />
+              {/* Directional gradient overlays to ensure seamless perimeter dissolution into cream white */}
+              <div className="absolute inset-y-0 left-0 w-20 sm:w-28 bg-gradient-to-r from-[#fbf9f4] via-[#fbf9f4]/80 to-transparent pointer-events-none" />
+              <div className="absolute inset-y-0 right-0 w-20 sm:w-28 bg-gradient-to-l from-[#fbf9f4] via-[#fbf9f4]/80 to-transparent pointer-events-none" />
+              <div className="absolute inset-x-0 top-0 h-20 sm:h-28 bg-gradient-to-b from-[#fbf9f4] via-[#fbf9f4]/80 to-transparent pointer-events-none" />
+              <div className="absolute inset-x-0 bottom-0 h-20 sm:h-28 bg-gradient-to-t from-[#fbf9f4] via-[#fbf9f4]/80 to-transparent pointer-events-none" />
 
               {/* Overlaid Brand Badge with crisp styling */}
               <motion.div 
