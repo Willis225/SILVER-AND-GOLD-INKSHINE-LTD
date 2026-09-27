@@ -1,17 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { motion, type Variants } from 'motion/react';
+import { motion } from 'motion/react';
 import { 
   ArrowRight, 
   Sparkles,
-  CheckCircle2
+  CheckCircle2,
+  Printer,
+  ShieldCheck,
+  Truck,
+  Clock,
+  Layers,
+  FileCheck
 } from 'lucide-react';
-import { HeroImageSlider } from './HeroImageSlider';
+import { HeroVideoPlayer } from './HeroVideoPlayer';
 import { HeroSlideItem } from '../../types/websiteContent';
 
 interface HeroSectionProps {
   onExploreProducts: () => void;
   onOpenPricingSandbox: () => void;
   onSelectProductQuickView: (productId: string) => void;
+  onSelectCategory?: (category: string) => void;
   slides?: HeroSlideItem[];
   headline?: string;
   subheadline?: string;
@@ -20,33 +27,11 @@ interface HeroSectionProps {
   backgroundImageUrl?: string;
 }
 
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.08,
-      delayChildren: 0.08,
-    },
-  },
-};
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 18 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.55,
-      ease: [0.16, 1, 0.3, 1],
-    },
-  },
-};
-
 export const HeroSection: React.FC<HeroSectionProps> = ({
   onExploreProducts,
   onOpenPricingSandbox,
   onSelectProductQuickView,
+  onSelectCategory,
   slides,
   headline = '#1 Online Printing Company in Bayelsa',
   subheadline = 'Banners • Branding • Digital Printing',
@@ -80,195 +65,131 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   };
 
   return (
-    <section className="relative overflow-hidden bg-transparent text-white pt-8 pb-16 sm:pt-12 sm:pb-24 lg:pt-16 lg:pb-28 border-b border-white/10">
+    <section className="relative bg-[#09090d] text-white pt-8 pb-12 sm:pt-12 sm:pb-16 lg:pt-16 lg:pb-20 border-b border-white/10 overflow-hidden">
       {/* 
-        Ultra-High-Visibility Animated Hero Background Overlay:
-        - 100% Crisp Opacity with Enhanced Saturation & Brightness
-        - Lightweight edge vignettes so the user's custom overlay image is fully visible across the viewport
-        - Continuous slow Ken Burns cinematic motion (scale and gentle pan)
-        - Animated print-carriage laser sweep beam passing continuously across the visual
+        Professional Commercial Printing Press Backdrop:
+        - Deep rich onyx/graphite foundation with subtle printing press registration grid
+        - Warm gold ambient gradient giving metallic press luster
+        - Controlled dark gradient scrim over the workshop image so typography stays grounded and 100% readable without artificial floating boxes
       */}
       <div className="absolute inset-0 pointer-events-none select-none overflow-hidden z-0">
-        {/* Continuous Animated Image Layer - 100% Unobscured and Vivid */}
-        <motion.div
-          animate={{
-            scale: [1, 1.06, 1],
-            x: [0, -12, 0],
-            y: [0, -6, 0],
-          }}
-          transition={{
-            duration: 16,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="w-full h-full relative"
-        >
+        {/* Subtle Press Registration Grid */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:4rem_4rem] opacity-70" />
+        
+        {/* Ambient Gold Press Light Bloons */}
+        <div className="absolute -top-32 -left-32 w-96 sm:w-[500px] h-96 sm:h-[500px] rounded-full bg-[radial-gradient(circle,rgba(245,190,56,0.14)_0%,transparent_70%)] blur-3xl" />
+        <div className="absolute top-1/2 -right-32 w-96 sm:w-[500px] h-96 sm:h-[500px] rounded-full bg-[radial-gradient(circle,rgba(245,190,56,0.1)_0%,transparent_70%)] blur-3xl" />
+
+        {/* Ambient Press Machinery Imagery with Measured Dark Scrim */}
+        <div className="absolute right-0 top-0 bottom-0 w-full lg:w-2/3 opacity-25 mix-blend-luminosity overflow-hidden">
           <img 
             src={activeImage} 
             alt="Silver & Gold Inkshine Ltd Commercial Printing Press Background" 
-            className="w-full h-full object-cover object-center brightness-125 contrast-115 opacity-100 saturate-110"
+            className="w-full h-full object-cover object-center"
             referrerPolicy="no-referrer"
             onError={handleImageError}
           />
-        </motion.div>
-
-        {/* Minimal hairline bottom border blend only - Zero black gradient blankets */}
-        <div className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-[#08080a] to-transparent pointer-events-none" />
-
-        {/* Animated Print-Carriage Scanning Light Beam */}
-        <motion.div
-          animate={{
-            x: ['-100%', '280%'],
-          }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: "linear",
-            repeatDelay: 2,
-          }}
-          className="absolute inset-y-0 w-64 bg-gradient-to-r from-transparent via-[#f5be38]/25 to-transparent pointer-events-none skew-x-12"
-        />
-
-        {/* Pulsing Atmospheric Studio Light Blooms */}
-        <motion.div 
-          animate={{
-            scale: [1, 1.15, 1],
-            opacity: [0.18, 0.32, 0.18],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute top-1/4 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[550px] lg:w-[650px] h-[350px] sm:h-[550px] lg:h-[650px] rounded-full bg-[radial-gradient(circle,rgba(245,190,56,0.25)_0%,rgba(212,175,55,0.08)_50%,transparent_75%)] blur-3xl pointer-events-none" 
-        />
-        <motion.div 
-          animate={{
-            scale: [1, 1.18, 1],
-            opacity: [0.15, 0.28, 0.15],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1,
-          }}
-          className="absolute top-1/3 right-10 w-[300px] sm:w-[450px] h-[300px] sm:h-[450px] rounded-full bg-[radial-gradient(circle,rgba(6,182,212,0.22)_0%,transparent_70%)] blur-3xl pointer-events-none" 
-        />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#09090d] via-[#09090d]/90 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#09090d] via-transparent to-[#09090d]" />
+        </div>
       </div>
 
-      {/* Glowing gold hairline edge at bottom */}
-      <div className="absolute inset-x-0 bottom-0 h-[2px] bg-gradient-to-r from-transparent via-[#f5be38]/85 to-transparent shadow-[0_0_22px_#f5be38] pointer-events-none z-20" />
-
+      {/* Main Hero Container */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
-          {/* Left Column: Darkened Glassmorphic Floating Panel ensuring razor-sharp, crystal-clear text readability */}
-          <motion.div 
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="lg:col-span-6 xl:col-span-6 space-y-6 sm:space-y-7 relative bg-[#08080a]/80 sm:bg-[#08080a]/75 backdrop-blur-xl p-6 sm:p-8 rounded-3xl border border-white/15 shadow-[0_25px_60px_rgba(0,0,0,0.75)] ring-1 ring-white/10"
-          >
-            {/* Eyebrow Pill Badge with Gold Accent & Floating Micro-Motion */}
-            <motion.div 
-              variants={itemVariants}
-              whileHover={{ scale: 1.03, y: -2 }}
-              className="inline-flex items-center gap-2.5 px-3.5 sm:px-4 py-1.5 rounded-full border border-[#f5be38]/40 bg-[#121217]/95 text-xs text-white backdrop-blur-md shadow-[0_2px_15px_rgba(245,190,56,0.2)] group cursor-default"
-            >
-              <span className="w-2 h-2 rounded-full bg-[#f5be38] shadow-[0_0_8px_#f5be38] animate-ping shrink-0" />
-              <span className="tracking-widest uppercase text-[10.5px] sm:text-[11.5px] font-black text-[#f5be38]">
-                {eyebrow}
+          {/* Left Column: Natural, Authoritative Printing Press Typography (NO ARTIFICIAL FLOATING BOX) */}
+          <div className="lg:col-span-7 xl:col-span-7 space-y-6 sm:space-y-7">
+            
+            {/* Eyebrow & Brand Kicker: Refined Editorial Hallmark */}
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#121217] border border-[#f5be38]/30 shadow-sm">
+                <span className="w-2 h-2 rounded-full bg-[#f5be38] shadow-[0_0_8px_#f5be38]" />
+                <span className="text-[11px] sm:text-xs font-black tracking-wider uppercase text-[#f5be38]">
+                  {eyebrow}
+                </span>
+                <Sparkles className="w-3.5 h-3.5 text-[#f5be38]" />
+              </div>
+              <span className="text-xs font-semibold text-stone-400 hidden sm:inline-flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-stone-600" />
+                Yenagoa &amp; Nationwide Hub
               </span>
-              <Sparkles className="w-3.5 h-3.5 text-[#f5be38] opacity-90 shrink-0 group-hover:rotate-12 transition-transform" />
-            </motion.div>
+            </div>
 
-            {/* Headline, Sub-headline, Gold Divider, and Subtitle */}
-            <motion.div variants={itemVariants} className="space-y-3">
-              {/* Primary Headline: Bold Large White Font with crisp shadow */}
-              <h1 className="text-3xl xs:text-4xl sm:text-5xl lg:text-[46px] xl:text-[54px] font-black tracking-tight text-white leading-[1.08] drop-shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
+            {/* Headline and Subheadline: Bold, Balanced, Dominant */}
+            <div className="space-y-3">
+              <h1 className="text-3xl xs:text-4xl sm:text-5xl lg:text-[46px] xl:text-[52px] font-black tracking-tight text-white leading-[1.08] text-balance">
                 {headline}
               </h1>
 
-              {/* Sub-headline: Shimmering Radiant Gold Font */}
-              <div className="text-2xl xs:text-3xl sm:text-4xl lg:text-[38px] xl:text-[44px] font-black tracking-tight leading-[1.12]">
-                <span className="gold-shimmer-text drop-shadow-[0_2px_18px_rgba(245,190,56,0.45)] inline-block">
+              {/* Radiant Metallic Gold Subheadline */}
+              <div className="text-2xl xs:text-3xl sm:text-4xl lg:text-[36px] xl:text-[42px] font-black tracking-tight leading-tight">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f5be38] via-[#ffd56b] to-[#d4af37] drop-shadow-sm inline-block">
                   {subheadline}
                 </span>
               </div>
 
-              {/* Horizontal hairline light beam with constellation accent */}
-              <div className="relative py-1 pt-1 max-w-xl">
-                <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-[#f5be38]/70 to-transparent shadow-[0_0_12px_rgba(245,190,56,0.5)]" />
-                <div className="absolute inset-0 flex items-center justify-center gap-1.5 text-[#f5be38]/85 text-[7px] pointer-events-none select-none tracking-[0.14em]">
-                  <span>••••••</span>
-                  <span className="text-[#fff2b2] text-[11px] font-serif px-0.5">✧</span>
-                  <span>••••••</span>
+              {/* CMYK Registration Hairline Rule (Honoring authentic printing press craft) */}
+              <div className="flex items-center gap-2.5 pt-1 max-w-xl">
+                <div className="flex items-center gap-1 shrink-0">
+                  <span className="w-2.5 h-2.5 rounded-sm bg-[#00a8e8] title='Cyan'" title="Cyan" />
+                  <span className="w-2.5 h-2.5 rounded-sm bg-[#e01a4f] title='Magenta'" title="Magenta" />
+                  <span className="w-2.5 h-2.5 rounded-sm bg-[#f5be38] title='Yellow'" title="Yellow" />
+                  <span className="w-2.5 h-2.5 rounded-sm bg-black border border-white/20 title='Key Black'" title="Key Black" />
                 </div>
+                <div className="h-[1px] flex-1 bg-gradient-to-r from-[#f5be38]/50 via-white/15 to-transparent" />
+                <span className="text-[10px] font-mono tracking-widest text-[#f5be38]/80 uppercase shrink-0">
+                  2400 DPI CMYK
+                </span>
               </div>
 
-              {/* Subtitle text - High-contrast & razor-sharp legibility */}
-              <p className="text-stone-100 text-sm sm:text-base leading-relaxed max-w-xl font-normal pt-1 drop-shadow-[0_1px_4px_rgba(0,0,0,0.6)]">
+              {/* Subtitle Description Write-up (Preserving exact wording) */}
+              <p className="text-stone-300 text-sm sm:text-base leading-relaxed max-w-2xl font-normal pt-1">
                 {description}
               </p>
-            </motion.div>
+            </div>
 
-            {/* Social Proof Realtime Avatar Cluster (matching concept from reference) */}
-            <motion.div variants={itemVariants} className="flex items-center gap-3 pt-1">
-              <div className="flex -space-x-2.5 overflow-hidden">
+            {/* Realtime Client Trust Proof */}
+            <div className="flex items-center gap-3.5 pt-1">
+              <div className="flex -space-x-2 overflow-hidden shrink-0">
                 <img
-                  className="inline-block h-8 w-8 rounded-full ring-2 ring-[#08080a] object-cover"
+                  className="inline-block h-8 w-8 rounded-full ring-2 ring-[#09090d] object-cover"
                   src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80"
                   alt="Client"
                   referrerPolicy="no-referrer"
                 />
                 <img
-                  className="inline-block h-8 w-8 rounded-full ring-2 ring-[#08080a] object-cover"
+                  className="inline-block h-8 w-8 rounded-full ring-2 ring-[#09090d] object-cover"
                   src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80"
                   alt="Client"
                   referrerPolicy="no-referrer"
                 />
                 <img
-                  className="inline-block h-8 w-8 rounded-full ring-2 ring-[#08080a] object-cover"
+                  className="inline-block h-8 w-8 rounded-full ring-2 ring-[#09090d] object-cover"
                   src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&q=80"
                   alt="Client"
                   referrerPolicy="no-referrer"
                 />
-                <img
-                  className="inline-block h-8 w-8 rounded-full ring-2 ring-[#08080a] object-cover"
-                  src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=80"
-                  alt="Client"
-                  referrerPolicy="no-referrer"
-                />
-                <div className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#f5be38] text-black font-black text-[11px] ring-2 ring-[#08080a] shadow-sm">
+                <div className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#f5be38] text-black font-black text-[11px] ring-2 ring-[#09090d] shadow-sm">
                   +5k
                 </div>
               </div>
               <div className="text-xs">
-                <span className="font-extrabold text-white text-[13px] block drop-shadow-sm">168K+ Realtime Clients</span>
-                <span className="text-stone-300 block text-[11.5px] font-medium">Corporate brands &amp; businesses served</span>
+                <span className="font-extrabold text-white text-[13px] block">168K+ Realtime Clients</span>
+                <span className="text-stone-400 block text-[11.5px] font-medium">Corporate brands, SMEs &amp; event planners served</span>
               </div>
-            </motion.div>
+            </div>
 
-            {/* Action Buttons: Radiant Gold Pill Button & Ghost Outline Pill with Spring Physics */}
-            <motion.div 
-              variants={itemVariants}
-              className="flex flex-col xs:flex-row items-stretch xs:items-center gap-3.5 pt-1 w-full xs:w-auto"
-            >
-              {/* WhatsApp Button: Solid Radiant Gold with Black Typography & Pill Shape */}
-              <motion.a
-                whileHover={{ scale: 1.04, y: -2 }}
-                whileTap={{ scale: 0.96 }}
+            {/* Primary Action Buttons */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-1">
+              {/* WhatsApp Button: Solid Radiant Gold with WhatsApp Icon */}
+              <a
                 href="https://wa.me/2347030372539?text=Hello%20Silver%20%26%20Gold%20Inkshine%20Ltd%2C%20I%20would%20like%20to%20inquire%20about%20printing%20services"
                 target="_blank"
                 rel="noreferrer"
                 id="hero-whatsapp-btn"
-                className="relative overflow-hidden bg-[#f5be38] hover:bg-[#ffd15c] text-black font-extrabold text-xs sm:text-sm px-7 py-3.5 rounded-full flex items-center justify-center gap-2.5 shadow-[0_0_30px_rgba(245,190,56,0.35)] transition-colors group cursor-pointer text-center"
+                className="relative overflow-hidden bg-[#f5be38] hover:bg-[#ffd15c] text-black font-extrabold text-xs sm:text-sm px-7 py-3.5 rounded-full flex items-center justify-center gap-2.5 shadow-[0_4px_20px_rgba(245,190,56,0.3)] transition-all hover:scale-[1.02] active:scale-[0.98] group cursor-pointer text-center"
               >
-                {/* Continuous subtle metallic light sweep */}
-                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full duration-1000 bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform pointer-events-none" />
-
-                {/* WhatsApp Chat Bubble Icon */}
                 <svg 
                   viewBox="0 0 24 24" 
                   className="w-4 h-4 fill-black shrink-0"
@@ -276,68 +197,85 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
                 </svg>
                 <span>Chat on WhatsApp Now</span>
-              </motion.a>
+              </a>
 
-              {/* View Our Services: Transparent Glass Pill with White Border & Circular Arrow */}
-              <motion.button
-                whileHover={{ scale: 1.04, y: -2 }}
-                whileTap={{ scale: 0.96 }}
+              {/* View Services & Explore Catalog Button */}
+              <button
+                type="button"
                 onClick={onExploreProducts}
                 id="hero-view-services-btn"
-                className="relative bg-[#121217]/90 hover:bg-white/10 border border-white/25 hover:border-[#f5be38]/50 text-white font-bold text-xs sm:text-sm px-6 py-3.5 rounded-full transition-colors shadow-md shadow-black/40 flex items-center justify-center gap-2 group backdrop-blur-md cursor-pointer text-center"
+                className="bg-[#14141a] hover:bg-[#1a1a24] border border-white/20 hover:border-[#f5be38]/50 text-white font-bold text-xs sm:text-sm px-6 py-3.5 rounded-full transition-all hover:scale-[1.02] active:scale-[0.98] shadow-md flex items-center justify-center gap-2 group cursor-pointer text-center"
               >
-                <span>View Our Services</span>
-                <div className="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-[#f5be38] group-hover:text-black transition-colors">
-                  <ArrowRight className="w-3 h-3 text-white group-hover:text-black transition-transform group-hover:translate-x-0.5" />
+                <span>Explore Print Catalog</span>
+                <ArrowRight className="w-4 h-4 text-[#f5be38] transition-transform group-hover:translate-x-1" />
+              </button>
+            </div>
+
+            {/* Quick Guarantees: 3 Clean Inline Items */}
+            <div className="pt-2 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-stone-300">
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-[#f5be38] shrink-0" />
+                <span className="font-medium text-stone-200">Same-Day &amp; 24hr Turnaround</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-[#f5be38] shrink-0" />
+                <span className="font-medium text-stone-200">Free Bleed &amp; Pre-Press Audit</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-[#f5be38] shrink-0" />
+                <span className="font-medium text-stone-200">Bayelsa &amp; Nationwide Delivery</span>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Right Column: Sleek Industrial Video Showcase Monitor (Proportionate & Compact) */}
+          <div className="lg:col-span-5 xl:col-span-5 flex flex-col items-center lg:items-end">
+            <div className="w-full max-w-md lg:max-w-[430px]">
+              
+              {/* Executive Production Studio Frame */}
+              <div className="relative rounded-2xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.8)] bg-[#0d0d12] border border-white/20 ring-1 ring-[#f5be38]/30">
+                
+                {/* Monitor Top Status Bar */}
+                <div className="px-4 py-2.5 bg-[#14141a] border-b border-white/10 flex items-center justify-between text-xs">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_6px_#10b981]" />
+                    <span className="font-extrabold tracking-wider uppercase text-[11px] text-[#f5be38]">
+                      SILVER &amp; GOLD INKSHINE
+                    </span>
+                  </div>
+                  <span className="text-[10px] font-semibold tracking-wider uppercase text-stone-400">
+                    FACTORY &amp; PRODUCTION TOUR
+                  </span>
                 </div>
-              </motion.button>
-            </motion.div>
 
-            {/* Quick-links / Features pill indicators with entrance animation */}
-            <motion.div 
-              variants={itemVariants}
-              className="pt-1 flex flex-wrap items-center gap-4 text-xs text-stone-200"
-            >
-              <div className="flex items-center gap-1.5 hover:text-white transition-colors cursor-default">
-                <CheckCircle2 className="w-4 h-4 text-[#f5be38] shrink-0 drop-shadow" />
-                <span className="font-semibold text-white/95">Same-Day &amp; 24hr Turnaround</span>
-              </div>
-              <div className="flex items-center gap-1.5 hover:text-white transition-colors cursor-default">
-                <CheckCircle2 className="w-4 h-4 text-[#f5be38] shrink-0 drop-shadow" />
-                <span className="font-semibold text-white/95">Free Bleed &amp; Pre-Press Audit</span>
-              </div>
-              <div className="flex items-center gap-1.5 hover:text-white transition-colors cursor-default">
-                <CheckCircle2 className="w-4 h-4 text-[#f5be38] shrink-0 drop-shadow" />
-                <span className="font-semibold text-white/95">Bayelsa &amp; Nationwide Delivery</span>
-              </div>
-            </motion.div>
-          </motion.div>
+                {/* Video Player */}
+                <div className="p-1 sm:p-1.5 bg-black">
+                  <HeroVideoPlayer 
+                    initialVideoUrl="https://www.kapwing.com/w/JxRjisdMGT"
+                  />
+                </div>
 
-          {/* Right Column: 3D-feel Brand Suite Mockup Scene with Glowing Gold Orbital Rings */}
-          <motion.div 
-            initial={{ opacity: 0, y: 24, scale: 0.97 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.7, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-6 xl:col-span-6 flex flex-col items-center lg:items-end relative"
-          >
-            {/* Status indicator pill confirming custom overlay visibility */}
-            <div className="mb-2.5 flex items-center gap-2 px-3 py-1 rounded-full bg-[#08080a]/75 border border-[#f5be38]/40 backdrop-blur-md text-[11px] text-[#f5be38] shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
-              <span className="w-2 h-2 rounded-full bg-[#f5be38] animate-pulse shadow-[0_0_8px_#f5be38]" />
-              <span className="font-bold tracking-wider uppercase">Live Studio Overlay Active</span>
+                {/* Monitor Bottom Footer: Capability Pillars */}
+                <div className="px-3.5 py-2.5 bg-[#121217] border-t border-white/10 grid grid-cols-3 gap-2 text-center text-[10px] font-medium text-stone-300">
+                  <div className="flex items-center justify-center gap-1.5">
+                    <Printer className="w-3 h-3 text-[#f5be38] shrink-0" />
+                    <span>2400 DPI Offset</span>
+                  </div>
+                  <div className="flex items-center justify-center gap-1.5 border-x border-white/10">
+                    <Layers className="w-3 h-3 text-[#f5be38] shrink-0" />
+                    <span>Precision Die-Cut</span>
+                  </div>
+                  <div className="flex items-center justify-center gap-1.5">
+                    <ShieldCheck className="w-3 h-3 text-[#f5be38] shrink-0" />
+                    <span>100% Quality QA</span>
+                  </div>
+                </div>
+
+              </div>
+
             </div>
-
-            {/* Glowing gold orbital rings and background trajectory (matching reference concept) */}
-            <div className="absolute -top-10 -right-10 w-[420px] h-[420px] rounded-full border border-[#f5be38]/20 pointer-events-none -z-10 animate-spin" style={{ animationDuration: '45s' }} />
-            <div className="absolute -bottom-8 -left-8 w-[340px] h-[340px] rounded-full border border-dashed border-[#f5be38]/15 pointer-events-none -z-10" />
-
-            <div className="w-full max-w-xl relative">
-              {/* Product Visual Presentation Scene Card */}
-              <div className="relative rounded-3xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.7)] bg-[#101015]/40 border border-white/20 p-2 sm:p-2.5 backdrop-blur-md ring-1 ring-[#f5be38]/30 group">
-                {/* Pure Interactive Animated Sliding Image Showcase */}
-                <HeroImageSlider slides={slides} />
-              </div>
-            </div>
-          </motion.div>
+          </div>
 
         </div>
       </div>

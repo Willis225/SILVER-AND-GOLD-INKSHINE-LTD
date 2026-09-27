@@ -49,9 +49,10 @@ const SLIDES: SlideItem[] = [
 
 interface HeroImageSliderProps {
   slides?: SlideItem[];
+  className?: string;
 }
 
-export const HeroImageSlider: React.FC<HeroImageSliderProps> = ({ slides: propSlides }) => {
+export const HeroImageSlider: React.FC<HeroImageSliderProps> = ({ slides: propSlides, className = "" }) => {
   const activeSlides = propSlides && propSlides.length > 0 ? propSlides : SLIDES;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(1);
@@ -129,7 +130,7 @@ export const HeroImageSlider: React.FC<HeroImageSliderProps> = ({ slides: propSl
   return (
     <div 
       id="hero-image-slider-container"
-      className="relative w-full h-[240px] xs:h-[280px] sm:h-[360px] md:h-[430px] overflow-hidden rounded-xl bg-[#08080a] select-none group cursor-pointer"
+      className={`relative w-full h-[320px] xs:h-[380px] sm:h-[460px] md:h-[520px] lg:h-full lg:min-h-[540px] overflow-hidden rounded-xl bg-[#08080a] select-none group cursor-pointer ${className}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onTouchStart={handleTouchStart}

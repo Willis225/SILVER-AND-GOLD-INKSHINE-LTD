@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { motion } from 'motion/react';
 import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
+import { CompanyLogoMark } from '../common/CompanyLogo';
 
 interface GoogleReview {
   id: string;
@@ -103,10 +104,13 @@ export const GoogleReviewsSection: React.FC = () => {
           >
             <div className="flex flex-col items-center gap-3">
               {/* Profile Avatar / Logo */}
-              <div className="w-14 h-14 rounded-full bg-[#f5be38] flex items-center justify-center text-white shadow-md overflow-hidden p-1">
-                <div className="w-full h-full rounded-full border border-black/20 flex flex-col items-center justify-center text-[8px] font-black leading-none bg-black text-[#f5be38]">
-                  <span>INKSHINE</span>
-                  <span className="text-[6px] text-white">PRINT</span>
+              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#0c0c10] via-black to-[#1a1a24] flex items-center justify-center text-white shadow-md overflow-hidden p-1 border-2 border-[#f5be38] group-hover:scale-105 transition-transform duration-300">
+                <div className="w-full h-full rounded-full flex flex-col items-center justify-center text-center p-0.5">
+                  <CompanyLogoMark className="w-6 h-6 shrink-0 drop-shadow-[0_2px_4px_rgba(0,0,0,0.4)]" />
+                  <div className="flex flex-col items-center leading-none mt-0.5">
+                    <span className="text-[7px] font-black tracking-wider text-[#f5be38]">INKSHINE</span>
+                    <span className="text-[5px] font-extrabold tracking-widest text-stone-300">PRINT</span>
+                  </div>
                 </div>
               </div>
 

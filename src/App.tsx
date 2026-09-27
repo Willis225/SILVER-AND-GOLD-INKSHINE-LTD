@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { Header } from './components/layout/Header';
 import { HeroSection } from './components/storefront/HeroSection';
 import { BrandIntroSection } from './components/storefront/BrandIntroSection';
+import { PrintingCategoriesQuickNav } from './components/storefront/PrintingCategoriesQuickNav';
 import { ServicesShowcaseSection } from './components/storefront/ServicesShowcaseSection';
 import { BusinessStationerySection } from './components/storefront/BusinessStationerySection';
 import { BannersDisplayStandsSection } from './components/storefront/BannersDisplayStandsSection';
@@ -503,46 +504,7 @@ export default function App() {
   const totalCartCount = cartItems.reduce((acc, curr) => acc + curr.quantity, 0);
 
   return (
-    <div className="min-h-screen bg-[#08080a] text-stone-100 font-sans antialiased flex flex-col justify-between selection:bg-[#f5be38] selection:text-black bg-grid-pattern relative">
-      {/* Ambient animated background overlay for homepage storefront */}
-      {viewMode === 'storefront' && (
-        <div className="fixed inset-0 pointer-events-none select-none z-0 overflow-hidden">
-          <motion.div
-            animate={{
-              scale: [1, 1.08, 1],
-              opacity: [0.65, 0.85, 0.65],
-            }}
-            transition={{
-              duration: 16,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            className="w-full h-full"
-          >
-            <img
-              src={
-                websiteContent.heroBackgroundImage && 
-                websiteContent.heroBackgroundImage !== '/homepage-bg.jpg' && 
-                websiteContent.heroBackgroundImage !== '/7aa493911d023086a5442472c889df70.jpg' &&
-                websiteContent.heroBackgroundImage !== '/hero-banner-main.webp' &&
-                !websiteContent.heroBackgroundImage.includes('unsplash')
-                  ? websiteContent.heroBackgroundImage
-                  : 'https://cdn.hstockplus.org/uploads/public/img-1790066633477-1b16a758309b0fff.webp'
-              }
-              alt="Homepage Overlay Background"
-              className="w-full h-full object-cover object-center brightness-125 contrast-115 saturate-110"
-              referrerPolicy="no-referrer"
-              onError={(e) => {
-                const target = e.currentTarget;
-                if (target.src !== window.location.origin + '/homepage-bg.webp') {
-                  target.src = '/homepage-bg.webp';
-                }
-              }}
-            />
-          </motion.div>
-        </div>
-      )}
-
+    <div className="min-h-screen bg-[#08080a] text-stone-100 font-sans antialiased flex flex-col justify-between selection:bg-[#f5be38] selection:text-black relative">
       {/* Global Header (Rendered on storefront, pdp, checkout, and sandbox) */}
       {viewMode !== 'admin' && (
         <Header
@@ -647,11 +609,12 @@ export default function App() {
 
         {viewMode === 'storefront' && (
           <>
-            {/* Hero Section */}
+            {/* 1. Hero Section (Clean, high-impact printing press layout with permanent video showcase) */}
             <HeroSection
               onExploreProducts={scrollToCatalog}
               onOpenPricingSandbox={() => setViewMode('stage1_sandbox')}
               onSelectProductQuickView={handleOpenProductById}
+              onSelectCategory={(cat) => handleOpenCategories(cat)}
               slides={websiteContent.heroSlides}
               headline={websiteContent.heroHeadline}
               subheadline={websiteContent.heroSubheadline}
@@ -668,10 +631,16 @@ export default function App() {
               }
             />
 
-            {/* Brand Introduction & Promotions Overview (Matching Reference) */}
+            {/* 2. Instant Printing Press Category Navigator & 4 Quality Pillars ("What would you like to print today?") */}
+            <PrintingCategoriesQuickNav
+              onSelectCategory={(cat) => handleOpenCategories(cat)}
+              onExploreCatalog={() => handleOpenCategories('all')}
+            />
+
+            {/* 3. Brand Introduction & Promotions Overview (100% Quality, 12% Bulk Discounts, Fast Delivery) */}
             <BrandIntroSection onExploreProducts={scrollToCatalog} />
 
-            {/* Top-Quality Printing Services Showcase Carousel (Matching Reference) */}
+            {/* 4. Top-Quality Printing Services Showcase Carousel */}
             <ServicesShowcaseSection
               title={websiteContent.showcaseTitle}
               description={websiteContent.showcaseDescription}
@@ -684,68 +653,68 @@ export default function App() {
               }}
             />
 
-            {/* Business Stationery & Office Printing Carousel (Matching Reference) */}
+            {/* 5. Business Stationery & Office Printing Carousel */}
             <BusinessStationerySection
               products={products}
               onViewProducts={() => handleOpenCategories('cards_invitations')}
               onSelectItem={handleSectionItemSelect}
             />
 
-            {/* Banners, Display Stands & Advertising Materials Carousel (Matching Reference) */}
+            {/* 6. Banners, Display Stands & Advertising Materials Carousel */}
             <BannersDisplayStandsSection
               products={products}
               onViewProducts={() => handleOpenCategories('banners_stands')}
               onSelectItem={handleSectionItemSelect}
             />
 
-            {/* Branded Corporate Gifts & Promotional Items (Matching Reference) */}
-            <BrandedGiftsSection
-              products={products}
-              onViewProducts={() => handleOpenCategories('gift_items_souvenirs')}
-              onSelectItem={handleSectionItemSelect}
-            />
-
-            {/* Nigeria's Trusted Online Printing Company Feature (Matching Reference) */}
-            <TrustedCompanyFeatureSection />
-
-            {/* Packaging, Labels & Stickers Printing Carousel (Matching Reference) */}
+            {/* 7. Packaging, Labels & Custom Cartons (Commercial print priority) */}
             <PackagingLabelsSection
               products={products}
               onViewProducts={() => handleOpenCategories('packaging_shipping_cartons')}
               onSelectItem={handleSectionItemSelect}
             />
 
-            {/* Event, Exhibition and Activation Branding Materials (Matching Reference) */}
-            <EventExhibitionSection
+            {/* 8. Branded Corporate Gifts & Promotional Items */}
+            <BrandedGiftsSection
               products={products}
-              onViewProducts={() => handleOpenCategories('events_exhibitions')}
+              onViewProducts={() => handleOpenCategories('gift_items_souvenirs')}
               onSelectItem={handleSectionItemSelect}
             />
 
-            {/* Signage Making Company in Lagos, Nigeria (Matching Reference) */}
+            {/* 9. Signage Making & 3D Letter Fabrication */}
             <SignageCompanySection
               products={products}
               onViewProducts={() => handleOpenCategories('signages')}
               onSelectItem={handleSectionItemSelect}
             />
 
-            {/* Why Businesses Choose SILVER & GOLD INKSHINE LTD */}
-            <WhyChooseUsSection
-              title={websiteContent.whyChooseTitle}
-              description={websiteContent.whyChooseDescription}
+            {/* 10. Event, Exhibition and Activation Branding Materials */}
+            <EventExhibitionSection
+              products={products}
+              onViewProducts={() => handleOpenCategories('events_exhibitions')}
+              onSelectItem={handleSectionItemSelect}
             />
 
-            {/* Custom Award Plaques and Trophies Printing (Matching Reference) */}
+            {/* 11. Nigeria's Trusted Online Printing Company Feature */}
+            <TrustedCompanyFeatureSection />
+
+            {/* 12. Custom Award Plaques and Trophies Printing */}
             <CustomAwardsSection
               products={products}
               onViewProducts={() => handleOpenCategories('awards')}
               onSelectItem={handleSectionItemSelect}
             />
 
-            {/* Trust & Social Proof (Reviews, Client Logos, Completed Jobs) */}
+            {/* 13. Why Businesses Choose SILVER & GOLD INKSHINE LTD */}
+            <WhyChooseUsSection
+              title={websiteContent.whyChooseTitle}
+              description={websiteContent.whyChooseDescription}
+            />
+
+            {/* 14. Trust & Social Proof (Verified Reviews, Client Logos, Real Completed Jobs) */}
             <SocialProofSection />
 
-            {/* Official Production Plant & Location Map */}
+            {/* 15. Official Production Plant & Location Map */}
             <LocationMapSection
               mapUrl={websiteContent.googleMapsUrl}
               embedUrl={websiteContent.googleMapsEmbedUrl}
