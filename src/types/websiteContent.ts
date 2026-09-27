@@ -122,7 +122,7 @@ export const DEFAULT_SHOWCASE_SERVICES: ShowcaseServiceItem[] = [
     id: 'showcase-annual-reports',
     title: 'Annual Reports, Handbooks & Catalogues Printing',
     price: '₦2,500 / copy',
-    imageUrl: '/corporate-annual-report-magazine.jpg',
+    imageUrl: '/annual-reports-handbooks-catalogues.jpg',
     category: 'books_magazines',
     description: 'Crisp color fidelity with perfect square-spine PUR binding for corporate institutions.'
   },

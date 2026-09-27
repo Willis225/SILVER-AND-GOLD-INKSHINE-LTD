@@ -1220,7 +1220,8 @@ export const SAMPLE_PRODUCTS: Product[] = [
     minQuantity: 1,
     turnaroundDays: 3,
     badge: 'Celebration VIP',
-    image: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80',
+    image: '/frosted-acrylic-wedding-invitation.jpg',
+    images: ['/frosted-acrylic-wedding-invitation.jpg'],
     optionGroups: [
       {
         id: 'opt-wedding-pack',

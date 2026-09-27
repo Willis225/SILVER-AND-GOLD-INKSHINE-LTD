@@ -76,12 +76,22 @@ export function getLockedImagesMap(): Record<string, LockedImageEntry> {
             isUserCustomized: true,
           };
         }
-        if (!parsed['showcase_showcase-annual-reports'] || parsed['showcase_showcase-annual-reports'].imageUrl?.includes('photo-1544716278-ca5e3f4abd8c')) {
+        if (!parsed['showcase_showcase-annual-reports'] || parsed['showcase_showcase-annual-reports'].imageUrl?.includes('photo-1544716278-ca5e3f4abd8c') || parsed['showcase_showcase-annual-reports'].imageUrl?.includes('corporate-annual-report-magazine')) {
           parsed['showcase_showcase-annual-reports'] = {
             id: 'showcase_showcase-annual-reports',
-            imageUrl: '/corporate-annual-report-magazine.jpg',
-            images: ['/corporate-annual-report-magazine.jpg'],
+            imageUrl: '/annual-reports-handbooks-catalogues.jpg',
+            images: ['/annual-reports-handbooks-catalogues.jpg'],
             title: 'Annual Reports & Financial Statements Printing',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['showcase-annual-reports'] || parsed['showcase-annual-reports'].imageUrl?.includes('photo-1544716278-ca5e3f4abd8c') || parsed['showcase-annual-reports'].imageUrl?.includes('corporate-annual-report-magazine')) {
+          parsed['showcase-annual-reports'] = {
+            id: 'showcase-annual-reports',
+            imageUrl: '/annual-reports-handbooks-catalogues.jpg',
+            images: ['/annual-reports-handbooks-catalogues.jpg'],
+            title: 'Annual Reports, Handbooks & Catalogues Printing',
             lockedAt: new Date().toISOString(),
             isUserCustomized: true,
           };
@@ -136,6 +146,36 @@ export function getLockedImagesMap(): Record<string, LockedImageEntry> {
             isUserCustomized: true,
           };
         }
+        if (!parsed['stationery-business-cards'] || parsed['stationery-business-cards'].imageUrl?.includes('photo-1589829545856')) {
+          parsed['stationery-business-cards'] = {
+            id: 'stationery-business-cards',
+            imageUrl: '/business-cards-lagos.jpg',
+            images: ['/business-cards-lagos.jpg'],
+            title: 'Business Cards Printing in Lagos – Custom & Premium Cards',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['stationery-book-printing'] || parsed['stationery-book-printing'].imageUrl?.includes('photo-1544716278')) {
+          parsed['stationery-book-printing'] = {
+            id: 'stationery-book-printing',
+            imageUrl: '/book-printing-lagos.jpg',
+            images: ['/book-printing-lagos.jpg'],
+            title: 'Book Printing in Lagos Nigeria',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['prod-wedding-acrylic-suite'] || parsed['prod-wedding-acrylic-suite'].imageUrl?.includes('photo-1519741497674')) {
+          parsed['prod-wedding-acrylic-suite'] = {
+            id: 'prod-wedding-acrylic-suite',
+            imageUrl: '/frosted-acrylic-wedding-invitation.jpg',
+            images: ['/frosted-acrylic-wedding-invitation.jpg'],
+            title: 'Royal Foil-Stamped Frosted Acrylic Wedding Invitation Suite & Welcome Easel',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
         inMemoryLockRegistry = parsed;
         return inMemoryLockRegistry!;
       }
@@ -171,9 +211,17 @@ export function getLockedImagesMap(): Record<string, LockedImageEntry> {
     },
     'showcase_showcase-annual-reports': {
       id: 'showcase_showcase-annual-reports',
-      imageUrl: '/corporate-annual-report-magazine.jpg',
-      images: ['/corporate-annual-report-magazine.jpg'],
+      imageUrl: '/annual-reports-handbooks-catalogues.jpg',
+      images: ['/annual-reports-handbooks-catalogues.jpg'],
       title: 'Annual Reports & Financial Statements Printing',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'showcase-annual-reports': {
+      id: 'showcase-annual-reports',
+      imageUrl: '/annual-reports-handbooks-catalogues.jpg',
+      images: ['/annual-reports-handbooks-catalogues.jpg'],
+      title: 'Annual Reports, Handbooks & Catalogues Printing',
       lockedAt: new Date().toISOString(),
       isUserCustomized: true,
     },
@@ -214,6 +262,30 @@ export function getLockedImagesMap(): Record<string, LockedImageEntry> {
       imageUrl: '/premium-matte-business-cards.jpg',
       images: ['/premium-matte-business-cards.jpg'],
       title: 'Premium Matte Laminated Business Cards (Pack of 100)',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'stationery-business-cards': {
+      id: 'stationery-business-cards',
+      imageUrl: '/business-cards-lagos.jpg',
+      images: ['/business-cards-lagos.jpg'],
+      title: 'Business Cards Printing in Lagos – Custom & Premium Cards',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'stationery-book-printing': {
+      id: 'stationery-book-printing',
+      imageUrl: '/book-printing-lagos.jpg',
+      images: ['/book-printing-lagos.jpg'],
+      title: 'Book Printing in Lagos Nigeria',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'prod-wedding-acrylic-suite': {
+      id: 'prod-wedding-acrylic-suite',
+      imageUrl: '/frosted-acrylic-wedding-invitation.jpg',
+      images: ['/frosted-acrylic-wedding-invitation.jpg'],
+      title: 'Royal Foil-Stamped Frosted Acrylic Wedding Invitation Suite & Welcome Easel',
       lockedAt: new Date().toISOString(),
       isUserCustomized: true,
     }

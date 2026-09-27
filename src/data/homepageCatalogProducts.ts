@@ -23,8 +23,8 @@ export const HOMEPAGE_SHOWCASE_PRODUCTS: Product[] = [
     minQuantity: 20,
     turnaroundDays: 3,
     badge: 'AGM Standard',
-    image: '/corporate-annual-report-magazine.jpg',
-    images: ['/corporate-annual-report-magazine.jpg'],
+    image: '/annual-reports-handbooks-catalogues.jpg',
+    images: ['/annual-reports-handbooks-catalogues.jpg'],
     optionGroups: [
       {
         id: 'opt-book-pages',
@@ -76,7 +76,8 @@ export const HOMEPAGE_SHOWCASE_PRODUCTS: Product[] = [
     minQuantity: 100,
     turnaroundDays: 2,
     badge: 'Popular',
-    image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=800&q=80',
+    image: '/business-cards-lagos.jpg',
+    images: ['/business-cards-lagos.jpg'],
     optionGroups: [
       {
         id: 'opt-corner',
@@ -212,7 +213,8 @@ export const HOMEPAGE_SHOWCASE_PRODUCTS: Product[] = [
     minQuantity: 50,
     turnaroundDays: 5,
     badge: 'Publishing',
-    image: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80',
+    image: '/book-printing-lagos.jpg',
+    images: ['/book-printing-lagos.jpg'],
     optionGroups: [
       {
         id: 'opt-book-cover',
