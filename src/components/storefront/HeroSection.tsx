@@ -9,6 +9,7 @@ import {
   Star
 } from 'lucide-react';
 import { HeroSlideItem } from '../../types/websiteContent';
+import { HeroImageOrbitCycle } from './HeroImageOrbitCycle';
 
 interface HeroSectionProps {
   onExploreProducts: () => void;
@@ -271,31 +272,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
           </div>
 
-          {/* Right Column: Clean Professional Image Frame */}
-          <div className="lg:col-span-5 xl:col-span-5 flex flex-col items-center lg:items-end">
-            <div className="w-full max-w-md lg:max-w-[430px]">
-              
-              {/* Executive Image Frame */}
-              <div className="relative rounded-3xl overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.9),0_0_35px_rgba(245,190,56,0.15)] bg-black border border-white/20 hover:border-[#f5be38]/50 ring-1 ring-[#f5be38]/20 transition-all duration-500 group">
-                
-                {/* Image Stage */}
-                <div className="relative aspect-[1145/1374] overflow-hidden bg-black flex items-center justify-center">
-                  <img
-                    src="/inkshine-brand-portrait.png"
-                    alt="Silver & Gold Inkshine"
-                    className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
-                    loading="eager"
-                  />
-
-                  {/* Subtle specular light sweep effect on hover */}
-                  <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                    <div className="absolute inset-0 -translate-x-[150%] skew-x-[-25deg] bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-1000 ease-out group-hover:translate-x-[150%]" />
-                  </div>
-                </div>
-
-              </div>
-
-            </div>
+          {/* Right Column: Hero Image with Orbiting Light Cycle & Product Spotlight */}
+          <div className="lg:col-span-5 xl:col-span-5 flex flex-col items-center lg:items-end justify-center">
+            <HeroImageOrbitCycle />
           </div>
 
         </div>
