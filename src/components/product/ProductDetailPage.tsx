@@ -198,15 +198,19 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
               ))}
             </div>
 
-            {/* Logistics & Delivery Estimator for Nigeria */}
+            {/* Optional Location Delivery Estimator */}
             <div className="bg-[#121217] rounded-2xl border border-white/10 p-5 space-y-3 shadow-lg">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2 text-xs font-bold text-white">
                   <Truck className="w-4 h-4 text-[#f5be38]" />
-                  <span>Check Nigerian Delivery Timeline &amp; Rates</span>
+                  <span>Delivery to Your Location (Optional)</span>
                 </div>
-                <span className="text-[10px] text-stone-400 font-mono">Central Press Dispatch</span>
+                <span className="text-[10px] text-stone-400 font-medium">To Your Address</span>
               </div>
+
+              <p className="text-[11px] text-stone-400">
+                When your job is ready, we can deliver directly to your specific office or home address upon request:
+              </p>
 
               <div className="space-y-2">
                 <select
@@ -223,11 +227,11 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
 
                 <div className="bg-[#181822] rounded-xl p-3 text-xs flex items-center justify-between text-stone-300 border border-white/5">
                   <div>
-                    <span className="text-stone-400 block text-[11px]">Estimated Arrival:</span>
+                    <span className="text-stone-400 block text-[11px]">Estimated Timeline:</span>
                     <strong className="text-white font-bold">{currentZone.estimatedDays}</strong>
                   </div>
                   <div className="text-right">
-                    <span className="text-stone-400 block text-[11px]">Standard Logistics Fee:</span>
+                    <span className="text-stone-400 block text-[11px]">Location Delivery Rate:</span>
                     <strong className="font-mono text-[#f5be38] font-bold">
                       {formatNaira(currentZone.baseFeeNgn)}
                     </strong>
@@ -236,7 +240,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
 
                 {currentZone.expressAvailable && (
                   <div className="text-[11px] text-[#f5be38] bg-[#f5be38]/10 border border-[#f5be38]/30 p-2.5 rounded-xl flex items-center justify-between">
-                    <span>⚡ Same-Day Express Logistics available for {currentZone.name}</span>
+                    <span>⚡ Priority Rush Delivery available for {currentZone.name}</span>
                     <span className="font-mono font-bold text-white">{formatNaira(currentZone.expressFeeNgn!)}</span>
                   </div>
                 )}
@@ -729,7 +733,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                   </div>
                   <div className="bg-[#181822] p-3.5 rounded-xl border border-white/10">
                     <strong className="text-white block mb-1">Abuja, PH &amp; Interstate:</strong>
-                    <span className="text-stone-400">2–3 business days via GIG Logistics, Air Express, and hub freight.</span>
+                    <span className="text-stone-400">Direct delivery to your address or office location upon completion.</span>
                   </div>
                 </div>
               </div>

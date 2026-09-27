@@ -3,9 +3,7 @@ import {
   Phone, 
   Mail, 
   ArrowRight,
-  ExternalLink,
   MapPin,
-  Navigation,
   Clock,
   ChevronRight,
   ShieldCheck,
@@ -15,7 +13,6 @@ import {
   FileCheck,
   CheckCircle2,
   Building2,
-  Lock,
   BadgeCheck
 } from 'lucide-react';
 import { ProductCategory } from '../../types/schema';
@@ -86,7 +83,7 @@ export const Footer: React.FC<FooterProps> = ({
               </div>
               <div className="flex items-center gap-1.5 text-stone-200">
                 <CheckCircle2 className="w-4 h-4 text-white shrink-0" />
-                <span>Doorstep Delivery Across 36 States</span>
+                <span>Direct Delivery to Your Location Upon Request</span>
               </div>
             </div>
           </div>
@@ -317,16 +314,16 @@ export const Footer: React.FC<FooterProps> = ({
             </div>
           </div>
 
-          {/* Column 3: Logistics Hubs, Contact & Secure Payments (Monochrome Styling) */}
+          {/* Column 3: Press Plants, Contact & Direct WhatsApp Payment (Monochrome Styling) */}
           <div className="md:col-span-3 lg:col-span-3 space-y-4">
             <div className="flex items-center gap-2 border-b border-white/15 pb-2">
               <span className="w-2 h-2 rounded-full bg-white" />
               <h3 className="font-black text-lg sm:text-xl text-white tracking-wide">
-                Production &amp; Logistics Hub
+                Press Plant &amp; Offices
               </h3>
             </div>
 
-            {/* Dual Location Hubs */}
+            {/* Production Locations */}
             <div className="text-xs text-stone-200 leading-relaxed bg-white/5 p-3.5 rounded-xl border border-white/10 space-y-2.5">
               <div>
                 <div className="flex items-center gap-1.5 text-white font-black text-[11px] uppercase tracking-wider mb-0.5">
@@ -338,82 +335,20 @@ export const Footer: React.FC<FooterProps> = ({
 
               <div className="pt-2 border-t border-white/10">
                 <div className="flex items-center gap-1.5 text-white font-black text-[11px] uppercase tracking-wider mb-0.5">
-                  <Truck className="w-3.5 h-3.5 text-white" />
-                  <span>Lagos Transit &amp; Dispatch Hub</span>
+                  <MapPin className="w-3.5 h-3.5 text-white" />
+                  <span>Lagos Workshop &amp; Office</span>
                 </div>
                 <span className="text-white font-medium">7 George St, off Apata Street, Somolu, Lagos 100231.</span>
               </div>
-            </div>
 
-            {/* Direct GPS Button */}
-            <a
-              href="https://maps.app.goo.gl/FHkoQGNuL8p13jnG6"
-              target="_blank"
-              rel="noreferrer"
-              className="w-full py-2.5 px-3.5 rounded-xl bg-white hover:bg-stone-200 text-black border border-white text-xs font-black flex items-center justify-center gap-2 transition-all shadow-xs group"
-            >
-              <Navigation className="w-3.5 h-3.5 text-black" />
-              <span>Get GPS Directions on Google Maps</span>
-              <ExternalLink className="w-3.5 h-3.5 opacity-70" />
-            </a>
-
-            {/* Phone & Working Hours */}
-            <div className="text-xs text-stone-200 bg-white/5 p-3 rounded-xl border border-white/10 space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="text-stone-400 font-bold">Hotline &amp; WhatsApp:</span>
-                <a href="tel:+2347030372539" className="text-white font-black hover:underline">
-                  +234 703 037 2539
-                </a>
-              </div>
-              <div className="flex items-center justify-between pt-1 border-t border-white/10">
-                <span className="text-stone-400 font-bold">Factory Hours:</span>
-                <span className="text-white font-bold">Mon–Sat: 8am – 7pm</span>
-              </div>
-              <div className="flex items-center gap-1.5 pt-1 text-[11px] text-stone-300 font-bold">
-                <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
-                <span>Receiving print orders &amp; dispatching nationwide</span>
-              </div>
-            </div>
-
-            {/* Monochromatic Payment Badges */}
-            <div className="pt-2">
-              <div className="text-[11px] text-stone-400 font-bold uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                <Lock className="w-3 h-3 text-white" />
-                <span>Verified Payment Channels</span>
-              </div>
-              <div className="flex items-center gap-2 flex-wrap">
-                {/* Paystack */}
-                <div className="h-7 px-2.5 rounded-md bg-white/10 border border-white/20 flex items-center justify-center shadow-xs">
-                  <span className="font-black text-[11px] text-white tracking-tight">
-                    PAYSTACK
-                  </span>
+              <div className="pt-2 border-t border-white/10">
+                <div className="flex items-center gap-1.5 text-white font-bold text-[11px] uppercase tracking-wider mb-0.5">
+                  <Truck className="w-3.5 h-3.5 text-white" />
+                  <span>Location Delivery Upon Request</span>
                 </div>
-
-                {/* Verve */}
-                <div className="h-7 px-2.5 rounded-md bg-white/10 border border-white/20 flex items-center justify-center shadow-xs">
-                  <span className="font-black text-[11px] text-white italic tracking-tight">
-                    VERVE
-                  </span>
-                </div>
-
-                {/* Mastercard */}
-                <div className="h-7 px-2.5 rounded-md bg-white text-black flex items-center justify-center gap-1 shadow-xs font-black text-[10px] tracking-tight uppercase">
-                  <span>MASTERCARD</span>
-                </div>
-
-                {/* VISA */}
-                <div className="h-7 px-2.5 rounded-md bg-white text-black flex items-center justify-center shadow-xs">
-                  <span className="font-black text-xs italic tracking-tighter">
-                    VISA
-                  </span>
-                </div>
-
-                {/* Bank Transfer / NIP */}
-                <div className="h-7 px-2.5 rounded-md bg-white/10 border border-white/20 flex items-center justify-center shadow-xs">
-                  <span className="font-black text-[10px] text-white tracking-tight">
-                    DIRECT BANK TRANSFER
-                  </span>
-                </div>
+                <p className="text-stone-300 text-[11px] leading-relaxed">
+                  When you want your finished work delivered, we can deliver directly to your specific location or office address upon your request.
+                </p>
               </div>
             </div>
 

@@ -10,7 +10,8 @@ import {
   FileText,
   CreditCard,
   Plus,
-  Minus
+  Minus,
+  MessageSquare
 } from 'lucide-react';
 import { Product, calculateDynamicPrice } from '../../types/schema';
 import { NIGERIAN_SHIPPING_ZONES } from '../../data/seedData';
@@ -196,20 +197,24 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 </div>
               ))}
 
-              {/* Nigerian Delivery Destination Selector */}
-              <div className="bg-[#121217] border border-[#f5be38]/30 rounded-2xl p-4 space-y-3">
+              {/* Location Delivery Preference (Optional) */}
+              <div className="bg-[#121217] border border-white/15 rounded-2xl p-4 space-y-3">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-1.5 text-xs font-bold text-[#f5be38]">
-                    <Truck className="w-4 h-4 text-[#f5be38]" />
-                    <span>Nationwide Delivery Destination</span>
+                  <div className="flex items-center gap-1.5 text-xs font-bold text-white">
+                    <Truck className="w-4 h-4 text-white" />
+                    <span>Location Delivery (Optional)</span>
                   </div>
-                  <span className="text-[10px] text-stone-400 font-mono">Nigeria Logistics</span>
+                  <span className="text-[10px] text-stone-400 font-medium">To Your Address</span>
                 </div>
+
+                <p className="text-[11px] text-stone-400">
+                  Select your destination state if you would like your finished work delivered directly to your location upon completion:
+                </p>
 
                 <select
                   value={selectedZoneId}
                   onChange={(e) => setSelectedZoneId(e.target.value)}
-                  className="w-full bg-[#181820] border border-white/15 rounded-xl p-2.5 text-xs font-medium text-white focus:ring-2 focus:ring-[#f5be38]"
+                  className="w-full bg-[#181820] border border-white/15 rounded-xl p-2.5 text-xs font-medium text-white focus:ring-2 focus:ring-white"
                 >
                   {NIGERIAN_SHIPPING_ZONES.map((zone) => (
                     <option key={zone.id} value={zone.id} className="bg-[#181820] text-white">
@@ -226,11 +231,11 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                         type="checkbox"
                         checked={isExpress}
                         onChange={(e) => setIsExpress(e.target.checked)}
-                        className="rounded text-[#f5be38] focus:ring-[#f5be38] h-4 w-4 bg-[#121217] border-white/20"
+                        className="rounded text-white focus:ring-white h-4 w-4 bg-[#121217] border-white/20"
                       />
-                      <span>Urgent Express Dispatch</span>
+                      <span>Priority Rush Production &amp; Delivery</span>
                     </div>
-                    <span className="font-bold text-[#f5be38] font-mono">
+                    <span className="font-bold text-white font-mono">
                       +{formatNaira(currentZone.expressFeeNgn! - currentZone.baseFeeNgn)}
                     </span>
                   </label>
@@ -249,12 +254,12 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 <span className="font-mono font-medium text-stone-200">{formatNaira(itemsSubtotalNgn)}</span>
               </div>
               <div className="flex justify-between text-stone-400">
-                <span>Shipping ({currentZone.name}):</span>
+                <span>Location Delivery ({currentZone.name}):</span>
                 <span className="font-mono font-medium text-stone-200">{formatNaira(shippingFeeNgn)}</span>
               </div>
               <div className="flex justify-between text-white font-bold text-sm pt-2 border-t border-white/10">
-                <span>Grand Total:</span>
-                <span className="text-base font-black font-mono text-[#f5be38]">
+                <span>Estimated Total:</span>
+                <span className="text-base font-black font-mono text-white">
                   {formatNaira(grandTotalNgn)}
                 </span>
               </div>
@@ -263,22 +268,22 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
             <button
               onClick={handleTriggerCheckout}
               disabled={checkoutCompleteNotice}
-              className="w-full py-3.5 px-4 rounded-full bg-[#f5be38] hover:bg-[#ffd15c] active:scale-98 text-black font-black text-sm flex items-center justify-center gap-2 shadow-[0_0_25px_rgba(245,190,56,0.3)] transition-all cursor-pointer"
+              className="w-full py-3.5 px-4 rounded-full bg-white hover:bg-stone-200 active:scale-98 text-black font-black text-sm flex items-center justify-center gap-2 shadow-lg transition-all cursor-pointer"
             >
               {checkoutCompleteNotice ? (
-                <span>Redirecting to Paystack / Flutterwave...</span>
+                <span>Opening WhatsApp Checkout...</span>
               ) : (
                 <>
-                  <CreditCard className="w-4 h-4" />
-                  <span>Proceed to Payment • {formatNaira(grandTotalNgn)}</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <MessageSquare className="w-4.5 h-4.5 text-black" />
+                  <span>Proceed to WhatsApp Checkout • {formatNaira(grandTotalNgn)}</span>
+                  <ArrowRight className="w-4 h-4 text-black" />
                 </>
               )}
             </button>
 
-            <div className="flex items-center justify-center gap-2 text-[10px] text-stone-500 text-center">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#f5be38]" />
-              <span>Secured by Paystack & Flutterwave • Lagos Somolu Production</span>
+            <div className="flex items-center justify-center gap-2 text-[10px] text-stone-400 text-center">
+              <ShieldCheck className="w-3.5 h-3.5 text-white" />
+              <span>Direct WhatsApp Order • Company Account Provided on WhatsApp</span>
             </div>
           </div>
         )}

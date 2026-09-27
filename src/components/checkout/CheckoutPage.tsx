@@ -3,7 +3,6 @@ import {
   ArrowLeft, 
   Check, 
   ShieldCheck, 
-  CreditCard, 
   Truck, 
   Building2, 
   Clock, 
@@ -12,19 +11,16 @@ import {
   Printer, 
   MessageSquare, 
   Copy, 
-  Download, 
   AlertCircle, 
   Tag, 
-  Lock,
   ChevronRight,
-  PackageCheck
+  PackageCheck,
+  ExternalLink
 } from 'lucide-react';
 import { CartItem } from '../storefront/CartDrawer';
 import { NIGERIAN_SHIPPING_ZONES } from '../../data/seedData';
 import { CustomerDetails, Order } from '../../types/schema';
 import { CompanyLogoMark } from '../common/CompanyLogo';
-import { PaystackModal } from './PaystackModal';
-import { FlutterwaveModal } from './FlutterwaveModal';
 
 interface CheckoutPageProps {
   cartItems: CartItem[];
@@ -41,22 +37,23 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
   onReturnToHome,
   onOrderPlaced,
 }) => {
-  // Step state: 1: Delivery Details, 2: Payment & Review, 3: Order Confirmed
+  // Step state: 1: Contact & Delivery Preference, 2: Review & Send to WhatsApp, 3: Order Submitted to WhatsApp
   const [currentStep, setCurrentStep] = useState<1 | 2 | 3>(1);
 
   // Customer Form State
   const [customer, setCustomer] = useState<CustomerDetails>({
-    fullName: 'Adeyemi Babatunde',
-    email: 'babatunde@leadwaycorporate.ng',
-    phone: '+234 803 456 7890',
-    companyName: 'Leadway Corporate Services Ltd',
-    deliveryAddress: 'Plot 12, Commercial Avenue, Sabo',
-    landmark: 'Opposite First Bank, near Yaba Tech Gate',
-    city: 'Yaba / Lagos Mainland',
+    fullName: '',
+    email: '',
+    phone: '',
+    companyName: '',
+    deliveryAddress: '',
+    landmark: '',
+    city: 'Lagos',
     state: 'Lagos State',
   });
 
-  // Logistics selection
+  // Wants location delivery toggle
+  const [wantsLocationDelivery, setWantsLocationDelivery] = useState<boolean>(true);
   const [shippingZoneId, setShippingZoneId] = useState<string>(NIGERIAN_SHIPPING_ZONES[0].id);
   const [isExpress, setIsExpress] = useState<boolean>(false);
 
@@ -65,25 +62,21 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
   const [appliedDiscountPercent, setAppliedDiscountPercent] = useState<number>(0);
   const [couponError, setCouponError] = useState<string | null>(null);
 
-  // Payment gateway selection
-  const [paymentGateway, setPaymentGateway] = useState<'paystack' | 'flutterwave' | 'bank_transfer'>('paystack');
-  const [showPaystackModal, setShowPaystackModal] = useState(false);
-  const [showFlutterwaveModal, setShowFlutterwaveModal] = useState(false);
-
   // Confirmed order state
   const [confirmedOrder, setConfirmedOrder] = useState<Order | null>(null);
   const [copiedRef, setCopiedRef] = useState(false);
+  const [copiedSummary, setCopiedSummary] = useState(false);
 
   const selectedZone = NIGERIAN_SHIPPING_ZONES.find((z) => z.id === shippingZoneId) || NIGERIAN_SHIPPING_ZONES[0];
-  const shippingFeeNgn = isExpress && selectedZone.expressAvailable 
-    ? (selectedZone.expressFeeNgn || selectedZone.baseFeeNgn) 
-    : selectedZone.baseFeeNgn;
+  const deliveryFeeNgn = wantsLocationDelivery 
+    ? (isExpress && selectedZone.expressAvailable && selectedZone.expressFeeNgn ? selectedZone.expressFeeNgn : selectedZone.baseFeeNgn)
+    : 0;
 
   const itemsSubtotalNgn = cartItems.reduce((acc, curr) => acc + curr.totalPriceNgn, 0);
   const discountNgn = Math.round(itemsSubtotalNgn * (appliedDiscountPercent / 100));
   const subtotalAfterDiscount = itemsSubtotalNgn - discountNgn;
   const vatNgn = Math.round(subtotalAfterDiscount * 0.075); // 7.5% Nigerian statutory VAT
-  const grandTotalNgn = subtotalAfterDiscount + shippingFeeNgn + vatNgn;
+  const grandTotalNgn = subtotalAfterDiscount + deliveryFeeNgn + vatNgn;
 
   const formatNaira = (amount: number) => {
     return '₦' + Math.round(amount).toLocaleString('en-NG');
@@ -107,41 +100,79 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
     setCustomer((prev) => ({ ...prev, [field]: val }));
   };
 
-  const handleStartPayment = () => {
-    if (paymentGateway === 'paystack') {
-      setShowPaystackModal(true);
-    } else if (paymentGateway === 'flutterwave') {
-      setShowFlutterwaveModal(true);
-    } else {
-      // Direct Bank Transfer
-      finalizeOrder('MANUAL_BANK_TRANSFER_' + Date.now());
-    }
+  // Build the complete WhatsApp message text
+  const generateWhatsAppMessage = (orderNum: string): string => {
+    const itemsText = cartItems.map((item, idx) => {
+      const opts = Object.entries(item.selectedOptions)
+        .map(([g, o]) => `${g}: ${o}`)
+        .join(', ');
+      return `${idx + 1}. *${item.product.name}*\n   - Qty: ${item.quantity}\n   - Rate: ${formatNaira(item.unitPriceNgn)}\n   - Total: ${formatNaira(item.totalPriceNgn)}\n   - Artwork: ${item.artworkType}${item.uploadedFileName ? ` (${item.uploadedFileName})` : ''}${opts ? `\n   - Specs: ${opts}` : ''}`;
+    }).join('\n\n');
+
+    const deliveryText = wantsLocationDelivery
+      ? `*Deliver to my location:*\n${customer.deliveryAddress || 'Address to be confirmed'}${customer.landmark ? ` (Landmark: ${customer.landmark})` : ''}, ${customer.city}, ${customer.state}\n- Delivery Fee: ${formatNaira(deliveryFeeNgn)}`
+      : `*Direct Collection:*\nCustomer will collect directly from Silver & Gold Inkshine Ltd press office.`;
+
+    return `*SILVER & GOLD INKSHINE LTD — NEW ORDER SUBMISSION*\n` +
+      `--------------------------------------------------\n` +
+      `*Order Ref:* ${orderNum}\n` +
+      `*Client Name:* ${customer.fullName || 'Valued Client'}\n` +
+      `*Phone/WhatsApp:* ${customer.phone || 'Direct WhatsApp'}\n` +
+      `${customer.companyName ? `*Company:* ${customer.companyName}\n` : ''}` +
+      `${customer.email ? `*Email:* ${customer.email}\n` : ''}` +
+      `--------------------------------------------------\n` +
+      `*ORDERED ITEMS:*\n\n${itemsText}\n\n` +
+      `--------------------------------------------------\n` +
+      `*DELIVERY PREFERENCE:*\n${deliveryText}\n\n` +
+      `*FINANCIAL SUMMARY:*\n` +
+      `- Items Subtotal: ${formatNaira(itemsSubtotalNgn)}\n` +
+      `${discountNgn > 0 ? `- Discount: -${formatNaira(discountNgn)}\n` : ''}` +
+      `- Location Delivery: ${formatNaira(deliveryFeeNgn)}\n` +
+      `- Statutory VAT (7.5%): ${formatNaira(vatNgn)}\n` +
+      `*TOTAL DUE: ${formatNaira(grandTotalNgn)}*\n` +
+      `--------------------------------------------------\n` +
+      `*PAYMENT REQUEST:*\n` +
+      `Hello Silver & Gold Inkshine Ltd, I have submitted my order details above. Please review my specifications and send me your official company bank account number so I can make payment on WhatsApp. Thank you!`;
   };
 
-  const finalizeOrder = (paymentRef: string) => {
-    const orderNum = 'RP-NG-' + Math.floor(100000 + Math.random() * 900000);
+  const handleSendToWhatsApp = () => {
+    const orderNum = 'SG-ORD-' + Math.floor(100000 + Math.random() * 900000);
+    const message = generateWhatsAppMessage(orderNum);
+    const whatsappUrl = `https://wa.me/2347030372539?text=${encodeURIComponent(message)}`;
+
     const newOrder: Order = {
       id: `ord-${Date.now()}`,
       orderNumber: orderNum,
       createdAt: new Date().toISOString(),
       customer,
-      items: cartItems.map((item) => ({
+      items: cartItems.map((item, idx) => ({
+        id: `item-${idx}-${Date.now()}`,
         productId: item.product.id,
         productName: item.product.name,
+        productImage: item.product.image,
         quantity: item.quantity,
         unitPriceNgn: item.unitPriceNgn,
         totalPriceNgn: item.totalPriceNgn,
-        selectedOptions: item.selectedOptions,
-        artworkSubmissionType: item.artworkType,
-        uploadedArtworkUrl: item.uploadedFileName,
+        selectedOptions: Object.entries(item.selectedOptions).map(([groupName, optionName]) => ({
+          groupName,
+          optionName,
+          modifierValue: 0
+        })),
+        artwork: {
+          id: `art-${Date.now()}`,
+          type: item.artworkType === 'hire_designer' ? 'hire_designer' : 'direct_upload',
+          fileName: item.uploadedFileName,
+          uploadedAt: new Date().toISOString()
+        },
+        turnaroundEstimate: `${item.product.turnaroundDays} business days`
       })),
       subtotalNgn: itemsSubtotalNgn,
-      shippingFeeNgn,
+      shippingFeeNgn: deliveryFeeNgn,
       discountNgn,
       grandTotalNgn,
-      paymentGateway,
-      paymentStatus: paymentGateway === 'bank_transfer' ? 'pending' : 'paid',
-      paymentReference: paymentRef,
+      paymentGateway: 'bank_transfer',
+      paymentStatus: 'pending',
+      paymentReference: 'WHATSAPP_PENDING_' + orderNum,
       orderStatus: 'artwork_review',
       shippingZoneId,
       trackingNumber: 'TRK-' + Math.random().toString(36).substring(2, 8).toUpperCase(),
@@ -150,10 +181,11 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
     setConfirmedOrder(newOrder);
     onOrderPlaced?.(newOrder);
     setCurrentStep(3);
-    setShowPaystackModal(false);
-    setShowFlutterwaveModal(false);
     onClearCart();
     window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Open WhatsApp directly in new window
+    window.open(whatsappUrl, '_blank');
   };
 
   const copyOrderRef = () => {
@@ -164,191 +196,180 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
     }
   };
 
-  // Step 3: Render Confirmed Order & Tracking receipt
+  const copySummaryText = () => {
+    if (confirmedOrder) {
+      const msg = generateWhatsAppMessage(confirmedOrder.orderNumber);
+      navigator.clipboard.writeText(msg);
+      setCopiedSummary(true);
+      setTimeout(() => setCopiedSummary(false), 2000);
+    }
+  };
+
+  // STEP 3: ORDER SUBMITTED TO WHATSAPP DESK
   if (currentStep === 3 && confirmedOrder) {
+    const whatsappUrl = `https://wa.me/2347030372539?text=${encodeURIComponent(generateWhatsAppMessage(confirmedOrder.orderNumber))}`;
+
     return (
-      <div className="bg-[#08080a] min-h-screen py-10 text-stone-100">
+      <div className="bg-[#070709] min-h-screen py-10 sm:py-16 text-stone-100">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           
-          {/* Success Banner */}
-          <div className="bg-[#121217] text-white rounded-3xl p-6 sm:p-8 shadow-2xl text-center space-y-4 border border-[#f5be38]/30 relative overflow-hidden">
-            <div className="absolute -right-20 -top-20 w-60 h-60 bg-[#f5be38]/10 rounded-full blur-3xl pointer-events-none" />
-            <div className="w-16 h-16 bg-[#f5be38] text-black rounded-full flex items-center justify-center mx-auto shadow-lg shadow-[#f5be38]/30">
-              <CheckCircle2 className="w-10 h-10" />
+          {/* Header Card */}
+          <div className="bg-[#121217] rounded-3xl border border-white/20 p-6 sm:p-8 space-y-5 text-center shadow-2xl relative overflow-hidden">
+            <div className="w-16 h-16 rounded-full bg-white text-black mx-auto flex items-center justify-center shadow-lg">
+              <MessageSquare className="w-8 h-8 fill-black" />
             </div>
 
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-white">
-                Commercial Print Order Received & Queued!
+            <div className="space-y-2">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-white text-xs font-bold uppercase tracking-wider">
+                <Check className="w-3.5 h-3.5 text-white" />
+                <span>Order Forwarded to WhatsApp Desk</span>
+              </div>
+              <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+                Order Request Submitted to Silver &amp; Gold Inkshine Ltd
               </h1>
-              <p className="text-xs sm:text-sm text-stone-300 max-w-xl mx-auto mt-2 leading-relaxed">
-                Your order is being routed to our central Somolu & Ikeja Graphic Arts production press. An official confirmation email with payment receipt has been dispatched to <strong className="text-[#f5be38]">{confirmedOrder.customer.email}</strong>.
+              <p className="text-stone-300 text-sm max-w-xl mx-auto leading-relaxed">
+                Thank you, <strong className="text-white">{confirmedOrder.customer.fullName || 'Valued Customer'}</strong>! We have opened WhatsApp with your full order specifications. Our team will verify your details and send our official company account number directly on WhatsApp to make payment.
               </p>
             </div>
 
-            <div className="inline-flex items-center gap-3 bg-black/70 border border-[#f5be38]/40 px-5 py-2.5 rounded-2xl backdrop-blur-md">
-              <span className="text-xs text-stone-400">Official Order No:</span>
-              <span className="font-mono text-sm sm:text-base font-black text-[#f5be38]">
+            {/* Order Reference Badge */}
+            <div className="inline-flex items-center gap-3 bg-[#181822] px-4 py-2.5 rounded-2xl border border-white/20 text-xs sm:text-sm">
+              <span className="text-stone-400 font-medium">Order Reference:</span>
+              <span className="font-mono font-black text-white text-base tracking-wider">
                 {confirmedOrder.orderNumber}
               </span>
               <button
                 onClick={copyOrderRef}
-                className="p-1.5 rounded-lg hover:bg-[#f5be38]/20 text-[#f5be38] transition-colors"
-                title="Copy order reference"
+                className="p-1 text-stone-300 hover:text-white transition-colors cursor-pointer"
+                title="Copy Reference"
               >
-                {copiedRef ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+                {copiedRef ? <Check className="w-4 h-4 text-white" /> : <Copy className="w-4 h-4" />}
+              </button>
+            </div>
+
+            {/* Direct WhatsApp Action Buttons */}
+            <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="w-full sm:w-auto px-6 py-3.5 rounded-full bg-white hover:bg-stone-200 text-black font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-xl transition-all cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+              >
+                <MessageSquare className="w-4.5 h-4.5 text-black" />
+                <span>Open WhatsApp Chat (+234 703 037 2539)</span>
+                <ExternalLink className="w-3.5 h-3.5 text-black" />
+              </a>
+
+              <button
+                type="button"
+                onClick={copySummaryText}
+                className="w-full sm:w-auto px-5 py-3.5 rounded-full bg-[#181822] hover:bg-[#222230] text-white font-bold text-xs sm:text-sm border border-white/20 flex items-center justify-center gap-2 transition-all cursor-pointer"
+              >
+                <Copy className="w-4 h-4 text-white" />
+                <span>{copiedSummary ? 'Order Summary Copied!' : 'Copy Summary to Clipboard'}</span>
               </button>
             </div>
           </div>
 
-          {/* Real-time Order Production Stepper */}
-          <div className="bg-[#121217] rounded-3xl border border-white/10 p-6 sm:p-8 shadow-xl space-y-6">
-            <div className="flex items-center justify-between border-b border-white/10 pb-4">
-              <div>
-                <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                  <Clock className="w-4 h-4 text-[#f5be38]" />
-                  <span>Real-Time Production & Dispatch Status</span>
-                </h3>
-                <span className="text-xs text-stone-400">
-                  Estimated Dispatch Date: <strong className="text-stone-200">Within 24–48 Hours</strong>
-                </span>
-              </div>
-              <span className="px-3 py-1 bg-[#f5be38]/15 text-[#f5be38] border border-[#f5be38]/30 text-xs font-bold rounded-full">
-                Status: Pre-Press Inspection
-              </span>
-            </div>
+          {/* Next Steps Guide */}
+          <div className="bg-[#121217] rounded-3xl border border-white/15 p-6 sm:p-7 space-y-4">
+            <h2 className="text-sm font-black uppercase tracking-wider text-white flex items-center gap-2 border-b border-white/10 pb-3">
+              <Clock className="w-4 h-4 text-white" />
+              <span>How Payment &amp; Production Works:</span>
+            </h2>
 
-            {/* Stepper Steps */}
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-              {[
-                { step: 1, label: 'Order Paid', desc: confirmedOrder.paymentGateway.toUpperCase(), done: true, current: false },
-                { step: 2, label: 'Pre-Press Check', desc: '300 DPI Bleed Audit', done: false, current: true },
-                { step: 3, label: 'High-Res Press', desc: '1440 DPI Printing', done: false, current: false },
-                { step: 4, label: 'Cassette Mount', desc: 'Assembly & QC', done: false, current: false },
-                { step: 5, label: 'Dispatch / Courier', desc: selectedZone.name, done: false, current: false },
-              ].map((st) => (
-                <div 
-                  key={st.step} 
-                  className={`p-3.5 rounded-2xl border text-left transition-all ${
-                    st.done
-                      ? 'bg-[#181824] border-[#f5be38]/40 text-stone-200'
-                      : st.current
-                      ? 'bg-[#181824] border-[#f5be38] text-white ring-2 ring-[#f5be38]/30'
-                      : 'bg-[#0e0e12] border-white/5 text-stone-500'
-                  }`}
-                >
-                  <div className="flex items-center justify-between text-xs font-bold">
-                    <span className={st.done || st.current ? 'text-[#f5be38]' : 'text-stone-500'}>Stage 0{st.step}</span>
-                    {st.done ? (
-                      <Check className="w-4 h-4 text-[#f5be38]" />
-                    ) : st.current ? (
-                      <span className="h-2 w-2 rounded-full bg-[#f5be38] animate-ping" />
-                    ) : null}
-                  </div>
-                  <div className="font-bold text-xs mt-1.5">{st.label}</div>
-                  <div className="text-[10px] text-stone-400 mt-0.5">{st.desc}</div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+              <div className="p-4 rounded-2xl bg-white/[0.04] border border-white/10 space-y-2">
+                <div className="w-7 h-7 rounded-full bg-white text-black font-black flex items-center justify-center text-xs">
+                  1
                 </div>
-              ))}
-            </div>
-
-            {/* Direct WhatsApp Despatch Link */}
-            <div className="bg-[#181824] border border-[#f5be38]/30 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <div className="p-2.5 rounded-xl bg-[#f5be38] text-black shrink-0 shadow-md">
-                  <MessageSquare className="w-5 h-5" />
-                </div>
-                <div>
-                  <h4 className="text-xs font-bold text-white">
-                    Receive Real-Time Production Photos via WhatsApp
-                  </h4>
-                  <p className="text-[11px] text-stone-300">
-                    Connect directly with our print floor supervisor to receive photos of your banners as they come off the wide-format press.
-                  </p>
-                </div>
+                <div className="font-bold text-white text-sm">Direct Contact on WhatsApp</div>
+                <p className="text-stone-300 leading-relaxed">
+                  Send your order message on WhatsApp. Our customer service desk at Silver &amp; Gold Inkshine Ltd will acknowledge your request.
+                </p>
               </div>
 
-              <a
-                href={`https://wa.me/2347030372539?text=Hello%20Silver%20%26%20Gold%20Inkshine%2C%20I%20am%20tracking%20my%20order%20${confirmedOrder.orderNumber}`}
-                target="_blank"
-                rel="noreferrer"
-                className="px-5 py-2.5 rounded-full bg-[#f5be38] hover:bg-[#ffd15c] text-black text-xs font-black whitespace-nowrap shadow-lg shadow-[#f5be38]/20 flex items-center gap-2 transition-all cursor-pointer"
-              >
-                <span>Chat with Pressmaster</span>
-                <ChevronRight className="w-3.5 h-3.5" />
-              </a>
+              <div className="p-4 rounded-2xl bg-white/[0.04] border border-white/10 space-y-2">
+                <div className="w-7 h-7 rounded-full bg-white text-black font-black flex items-center justify-center text-xs">
+                  2
+                </div>
+                <div className="font-bold text-white text-sm">Official Account Forwarded</div>
+                <p className="text-stone-300 leading-relaxed">
+                  We will forward our official corporate company bank account number directly in the WhatsApp chat for you to make payment.
+                </p>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-white/[0.04] border border-white/10 space-y-2">
+                <div className="w-7 h-7 rounded-full bg-white text-black font-black flex items-center justify-center text-xs">
+                  3
+                </div>
+                <div className="font-bold text-white text-sm">Payment Confirmation &amp; Print</div>
+                <p className="text-stone-300 leading-relaxed">
+                  Send your transfer receipt on WhatsApp. Your job card is instantly queued on our Heidelberg/Roland machines, and if requested, delivered directly to your location!
+                </p>
+              </div>
             </div>
           </div>
 
-          {/* Official Printable Tax & Commercial Invoice Receipt */}
-          <div className="bg-[#121217] rounded-3xl border border-white/10 p-6 sm:p-8 shadow-xl space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-5">
-              <div className="flex items-center gap-3.5">
-                <div className="w-12 h-12 shrink-0 drop-shadow-md">
-                  <CompanyLogoMark className="w-full h-full" />
-                </div>
-                <div>
-                  <span className="font-mono text-xs font-black text-[#f5be38] uppercase tracking-wider block">
-                    Commercial Invoice &amp; Tax Receipt
-                  </span>
-                  <h3 className="text-xl font-black text-white">
-                    Silver &amp; Gold Inkshine Ltd
-                  </h3>
-                  <p className="text-[11px] text-stone-400">
-                    RC: 1849204 • TIN: 24891029-0001 • Plot 14 Commercial Ave, Somolu, Lagos State
-                  </p>
-                </div>
+          {/* Proforma Order Summary */}
+          <div className="bg-[#121217] rounded-3xl border border-white/15 p-6 sm:p-7 space-y-5">
+            <div className="flex items-center justify-between border-b border-white/10 pb-4">
+              <div>
+                <h3 className="text-base font-black text-white">
+                  Proforma Order Invoice
+                </h3>
+                <p className="text-xs text-stone-400">
+                  Issued by Silver &amp; Gold Inkshine Ltd
+                </p>
               </div>
 
               <button
                 type="button"
                 onClick={() => window.print()}
-                className="self-start sm:self-auto px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-stone-200 text-xs font-bold flex items-center gap-2 border border-white/10 transition-colors cursor-pointer"
+                className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white text-stone-200 hover:text-black text-xs font-bold flex items-center gap-2 border border-white/20 transition-all cursor-pointer"
               >
-                <Printer className="w-4 h-4 text-[#f5be38]" />
+                <Printer className="w-3.5 h-3.5" />
                 <span>Print Invoice</span>
               </button>
             </div>
 
-            {/* Billing & Delivery Meta */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-xs">
-              <div className="space-y-1 bg-[#181824] p-4 rounded-2xl border border-white/5">
-                <span className="text-[#f5be38] font-bold uppercase tracking-wider text-[10px]">
-                  Billed To / Corporate Client:
-                </span>
+            {/* Client & Delivery Meta */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+              <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/10 space-y-1">
+                <span className="text-stone-400 font-bold uppercase text-[10px]">Client Details:</span>
                 <div className="font-bold text-white text-sm">{confirmedOrder.customer.fullName}</div>
-                {confirmedOrder.customer.companyName && (
-                  <div className="text-stone-300">{confirmedOrder.customer.companyName}</div>
-                )}
-                <div className="text-stone-400">{confirmedOrder.customer.email}</div>
-                <div className="text-stone-400">{confirmedOrder.customer.phone}</div>
+                {confirmedOrder.customer.companyName && <div className="text-stone-300">{confirmedOrder.customer.companyName}</div>}
+                <div className="text-stone-400">WhatsApp: {confirmedOrder.customer.phone}</div>
+                {confirmedOrder.customer.email && <div className="text-stone-400">{confirmedOrder.customer.email}</div>}
               </div>
 
-              <div className="space-y-1 bg-[#181824] p-4 rounded-2xl border border-white/5">
-                <span className="text-[#f5be38] font-bold uppercase tracking-wider text-[10px]">
-                  Delivery Destination:
-                </span>
-                <div className="font-bold text-white text-sm">{confirmedOrder.customer.deliveryAddress}</div>
-                {confirmedOrder.customer.landmark && (
-                  <div className="text-stone-400">Landmark: {confirmedOrder.customer.landmark}</div>
+              <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/10 space-y-1">
+                <span className="text-stone-400 font-bold uppercase text-[10px]">Delivery Preference:</span>
+                {wantsLocationDelivery ? (
+                  <>
+                    <div className="font-bold text-white text-sm">Direct Location Delivery</div>
+                    <div className="text-stone-300">{confirmedOrder.customer.deliveryAddress || 'Address specified via WhatsApp'}</div>
+                    {confirmedOrder.customer.landmark && <div className="text-stone-400">Landmark: {confirmedOrder.customer.landmark}</div>}
+                    <div className="text-stone-400">{confirmedOrder.customer.city}, {confirmedOrder.customer.state}</div>
+                  </>
+                ) : (
+                  <>
+                    <div className="font-bold text-white text-sm">Direct Press Collection</div>
+                    <div className="text-stone-300">Customer will collect directly from Silver &amp; Gold Inkshine Ltd press office.</div>
+                  </>
                 )}
-                <div className="text-stone-400">
-                  {confirmedOrder.customer.city}, {confirmedOrder.customer.state}
-                </div>
-                <div className="text-[#f5be38] font-semibold mt-1">
-                  Logistics Zone: {selectedZone.name} ({isExpress ? 'Express Dispatch' : 'Standard Hub'})
-                </div>
               </div>
             </div>
 
             {/* Items Table */}
             <div className="border border-white/10 rounded-2xl overflow-hidden text-xs">
               <table className="w-full text-left">
-                <thead className="bg-[#181824] text-stone-300 font-semibold border-b border-white/10">
+                <thead className="bg-[#181822] text-stone-300 font-semibold border-b border-white/10">
                   <tr>
                     <th className="p-3">Item Description</th>
                     <th className="p-3 text-center">Qty</th>
                     <th className="p-3 text-right">Unit Rate</th>
-                    <th className="p-3 text-right">Amount</th>
+                    <th className="p-3 text-right">Total</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-white/5">
@@ -357,457 +378,417 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
                       <td className="p-3">
                         <div className="font-bold text-white">{it.productName}</div>
                         <div className="text-[10px] text-stone-400">
-                          Artwork: {it.artworkSubmissionType.replace('_', ' ').toUpperCase()} {it.uploadedArtworkUrl ? `(${it.uploadedArtworkUrl})` : ''}
+                          Artwork: {it.artwork?.fileName ? it.artwork.fileName : it.artwork?.type}
                         </div>
                       </td>
                       <td className="p-3 text-center font-mono font-bold text-stone-200">{it.quantity}</td>
                       <td className="p-3 text-right font-mono text-stone-300">{formatNaira(it.unitPriceNgn)}</td>
-                      <td className="p-3 text-right font-mono font-bold text-[#f5be38]">{formatNaira(it.totalPriceNgn)}</td>
+                      <td className="p-3 text-right font-mono font-bold text-white">{formatNaira(it.totalPriceNgn)}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
 
-            {/* Financial Totals Box */}
-            <div className="bg-[#181824] rounded-2xl p-4 border border-white/10 max-w-sm ml-auto space-y-2 text-xs">
+            {/* Financial Summary */}
+            <div className="bg-[#181822] rounded-2xl p-4 border border-white/10 max-w-sm ml-auto space-y-2 text-xs">
               <div className="flex justify-between text-stone-300">
                 <span>Subtotal:</span>
                 <span className="font-mono text-white">{formatNaira(confirmedOrder.subtotalNgn)}</span>
               </div>
               {confirmedOrder.discountNgn > 0 && (
-                <div className="flex justify-between text-[#f5be38] font-bold">
-                  <span>Corporate Discount:</span>
-                  <span className="font-mono">-{formatNaira(confirmedOrder.discountNgn)}</span>
+                <div className="flex justify-between text-stone-300">
+                  <span>Discount:</span>
+                  <span className="font-mono text-white">-{formatNaira(confirmedOrder.discountNgn)}</span>
                 </div>
               )}
-              <div className="flex justify-between text-stone-300">
-                <span>Logistics & Dispatch ({selectedZone.name}):</span>
-                <span className="font-mono text-white">{formatNaira(confirmedOrder.shippingFeeNgn)}</span>
-              </div>
+              {wantsLocationDelivery && (
+                <div className="flex justify-between text-stone-300">
+                  <span>Location Delivery:</span>
+                  <span className="font-mono text-white">{formatNaira(confirmedOrder.shippingFeeNgn)}</span>
+                </div>
+              )}
               <div className="flex justify-between text-stone-300">
                 <span>VAT (7.5%):</span>
                 <span className="font-mono text-white">{formatNaira(Math.round(confirmedOrder.subtotalNgn * 0.075))}</span>
               </div>
               <div className="pt-2 border-t border-white/10 flex justify-between text-sm font-black text-white">
-                <span>Grand Total Paid:</span>
-                <span className="font-mono text-[#f5be38] text-base">{formatNaira(confirmedOrder.grandTotalNgn)}</span>
-              </div>
-              <div className="text-[10px] text-stone-400 text-right pt-1">
-                Ref: {confirmedOrder.paymentReference}
+                <span>Total Due:</span>
+                <span className="font-mono text-white text-base">{formatNaira(confirmedOrder.grandTotalNgn)}</span>
               </div>
             </div>
 
+            {/* Return Button */}
             <div className="flex justify-between pt-4 border-t border-white/10">
               <button
                 type="button"
                 onClick={onReturnToHome}
-                className="px-6 py-3 rounded-full bg-[#f5be38] hover:bg-[#ffd15c] text-black text-xs font-black flex items-center gap-2 transition-all shadow-md cursor-pointer"
+                className="px-6 py-3 rounded-full bg-white hover:bg-stone-200 text-black text-xs font-black flex items-center gap-2 transition-all shadow-md cursor-pointer"
               >
                 <span>Return to Storefront Catalog</span>
                 <ChevronRight className="w-4 h-4" />
               </button>
             </div>
           </div>
+
         </div>
       </div>
     );
   }
 
-  // Active Checkout Stepper (Step 1 or Step 2)
+  // ACTIVE CHECKOUT FORM (Steps 1 & 2)
   return (
-    <div className="bg-[#08080a] min-h-screen py-8 sm:py-12 text-stone-100">
+    <div className="bg-[#070709] min-h-screen py-8 sm:py-12 text-stone-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         
         {/* Header with Step Indicator */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/15 pb-5">
           <div className="flex items-center gap-3">
             <button
               onClick={onBackToCart}
-              className="p-2.5 rounded-xl bg-[#121217] border border-white/10 hover:border-[#f5be38]/50 hover:bg-[#181822] text-stone-200 transition-colors cursor-pointer"
+              className="p-2.5 rounded-xl bg-[#121217] border border-white/15 hover:bg-white hover:text-black text-stone-200 transition-colors cursor-pointer"
             >
-              <ArrowLeft className="w-4 h-4 text-[#f5be38]" />
+              <ArrowLeft className="w-4 h-4" />
             </button>
             <div>
               <h1 className="text-xl sm:text-2xl font-black text-white">
-                Corporate Order Checkout
+                Order Finalization Desk
               </h1>
               <p className="text-xs text-stone-400">
-                Secure 256-Bit SSL Checkout with nationwide Nigerian dispatch.
+                Orders &amp; payments are processed directly with Silver &amp; Gold Inkshine Ltd on WhatsApp.
               </p>
             </div>
           </div>
 
           {/* Stepper Indicator */}
           <div className="flex items-center gap-3 text-xs font-bold">
-            <div className={`flex items-center gap-2 ${currentStep === 1 ? 'text-[#f5be38]' : 'text-stone-300'}`}>
+            <div className={`flex items-center gap-2 ${currentStep === 1 ? 'text-white' : 'text-stone-400'}`}>
               <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-black ${
-                currentStep === 1 ? 'bg-[#f5be38] text-black shadow-md shadow-[#f5be38]/20' : 'bg-[#f5be38]/20 text-[#f5be38] border border-[#f5be38]/40'
+                currentStep === 1 ? 'bg-white text-black' : 'bg-white/20 text-white'
               }`}>
                 {currentStep === 1 ? '1' : '✓'}
               </span>
-              <span>1. Delivery &amp; Address</span>
+              <span>1. Contact &amp; Delivery</span>
             </div>
-
-            <span className="text-stone-600">→</span>
-
-            <div className={`flex items-center gap-2 ${currentStep === 2 ? 'text-[#f5be38]' : 'text-stone-500'}`}>
+            <span className="text-stone-600">/</span>
+            <div className={`flex items-center gap-2 ${currentStep === 2 ? 'text-white' : 'text-stone-400'}`}>
               <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-black ${
-                currentStep === 2 ? 'bg-[#f5be38] text-black shadow-md shadow-[#f5be38]/20' : 'bg-[#181822] text-stone-500 border border-white/10'
+                currentStep === 2 ? 'bg-white text-black' : 'bg-white/10 text-stone-400'
               }`}>
                 2
               </span>
-              <span>2. Payment &amp; Gateways</span>
+              <span>2. WhatsApp Payment Desk</span>
             </div>
           </div>
         </div>
 
-        {/* Two-Column Checkout Layout */}
+        {/* Notice on WhatsApp Payment Workflow */}
+        <div className="p-4 rounded-2xl bg-white/[0.04] border border-white/15 text-xs text-stone-300 flex items-start gap-3">
+          <MessageSquare className="w-5 h-5 text-white shrink-0 mt-0.5" />
+          <div className="space-y-1">
+            <div className="font-bold text-white text-sm">
+              Official Payment Policy: Contact &amp; Pay via WhatsApp
+            </div>
+            <p className="leading-relaxed">
+              We do not accept automated card payments on this website. Once you submit your order, your complete job specifications are sent to our direct WhatsApp line. Silver &amp; Gold Inkshine Ltd will review your project and send our official company account number on WhatsApp for you to make payment.
+            </p>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
-          {/* Left Form Area */}
+          {/* Left Column: Form Steps */}
           <div className="lg:col-span-7 space-y-6">
             
-            {/* Step 1: Customer Contact & Nigerian Address */}
+            {/* Step 1: Customer Details & Delivery Preference */}
             {currentStep === 1 && (
-              <div className="bg-[#121217] rounded-3xl border border-white/10 p-6 sm:p-7 space-y-5 shadow-xl">
-                <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                  <h2 className="text-sm font-bold text-white flex items-center gap-2">
-                    <Truck className="w-4 h-4 text-[#f5be38]" />
-                    <span>Contact &amp; Nigerian Delivery Destination</span>
+              <div className="bg-[#121217] rounded-3xl border border-white/15 p-6 sm:p-7 space-y-6 shadow-xl">
+                <div className="border-b border-white/10 pb-3">
+                  <h2 className="text-base font-black text-white flex items-center gap-2">
+                    <span>1. Contact Details &amp; Location Delivery</span>
                   </h2>
-                  <span className="text-[10px] text-stone-400 font-mono">Step 1 of 2</span>
+                  <p className="text-xs text-stone-400 mt-1">
+                    Provide your contact info so we can send the payment account number on WhatsApp.
+                  </p>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                   <div>
-                    <label className="font-bold text-stone-300 block mb-1">
-                      Full Name *
+                    <label className="font-bold text-white block mb-1">
+                      Your Full Name *
                     </label>
                     <input
                       type="text"
                       required
                       value={customer.fullName}
                       onChange={(e) => handleCustomerChange('fullName', e.target.value)}
-                      placeholder="e.g. Adeyemi Babatunde"
-                      className="w-full bg-[#181824] border border-white/10 rounded-xl p-2.5 text-xs text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-[#f5be38] focus:border-transparent transition-all"
+                      placeholder="e.g. Babatunde Adeyemi"
+                      className="w-full bg-[#181824] border border-white/15 rounded-xl p-2.5 text-xs text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-white transition-all"
                     />
                   </div>
 
                   <div>
-                    <label className="font-bold text-stone-300 block mb-1">
-                      Corporate Company Name (Optional for Invoicing)
-                    </label>
-                    <input
-                      type="text"
-                      value={customer.companyName || ''}
-                      onChange={(e) => handleCustomerChange('companyName', e.target.value)}
-                      placeholder="e.g. Leadway Assurance / Access Holdings"
-                      className="w-full bg-[#181824] border border-white/10 rounded-xl p-2.5 text-xs text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-[#f5be38] focus:border-transparent transition-all"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="font-bold text-stone-300 block mb-1">
-                      Email Address (For Invoices &amp; Pre-Press Proofs) *
-                    </label>
-                    <input
-                      type="email"
-                      required
-                      value={customer.email}
-                      onChange={(e) => handleCustomerChange('email', e.target.value)}
-                      placeholder="babatunde@company.ng"
-                      className="w-full bg-[#181824] border border-white/10 rounded-xl p-2.5 text-xs text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-[#f5be38] focus:border-transparent transition-all"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="font-bold text-stone-300 block mb-1">
-                      WhatsApp / Phone Number *
+                    <label className="font-bold text-white block mb-1">
+                      WhatsApp Phone Number * (To Receive Account Details)
                     </label>
                     <input
                       type="tel"
                       required
                       value={customer.phone}
                       onChange={(e) => handleCustomerChange('phone', e.target.value)}
-                      placeholder="+234 803 000 0000"
-                      className="w-full bg-[#181824] border border-white/10 rounded-xl p-2.5 text-xs text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-[#f5be38] focus:border-transparent transition-all"
-                    />
-                  </div>
-
-                  <div className="sm:col-span-2">
-                    <label className="font-bold text-stone-300 block mb-1">
-                      Street Address *
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={customer.deliveryAddress}
-                      onChange={(e) => handleCustomerChange('deliveryAddress', e.target.value)}
-                      placeholder="e.g. Plot 14 Commercial Avenue, Somolu"
-                      className="w-full bg-[#181824] border border-white/10 rounded-xl p-2.5 text-xs text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-[#f5be38] focus:border-transparent transition-all"
-                    />
-                  </div>
-
-                  <div className="sm:col-span-2">
-                    <label className="font-bold text-stone-300 block mb-1">
-                      Landmark / Nearest Bus Stop (Crucial for Dispatch Riders) *
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={customer.landmark || ''}
-                      onChange={(e) => handleCustomerChange('landmark', e.target.value)}
-                      placeholder="e.g. Beside First Bank Somolu, Near Ikeja City Mall"
-                      className="w-full bg-[#181824] border border-white/10 rounded-xl p-2.5 text-xs text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-[#f5be38] focus:border-transparent transition-all"
+                      placeholder="e.g. +234 803 000 0000"
+                      className="w-full bg-[#181824] border border-white/15 rounded-xl p-2.5 text-xs text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-white transition-all"
                     />
                   </div>
 
                   <div>
-                    <label className="font-bold text-stone-300 block mb-1">
-                      Destination Shipping Zone *
+                    <label className="font-bold text-white block mb-1">
+                      Email Address (Optional)
                     </label>
-                    <select
-                      value={shippingZoneId}
-                      onChange={(e) => setShippingZoneId(e.target.value)}
-                      className="w-full bg-[#181824] border border-white/10 rounded-xl p-2.5 text-xs font-semibold text-white focus:outline-none focus:ring-2 focus:ring-[#f5be38] focus:border-transparent transition-all"
-                    >
-                      {NIGERIAN_SHIPPING_ZONES.map((z) => (
-                        <option key={z.id} value={z.id} className="bg-[#121217] text-white">
-                          {z.name} ({z.region}) — {formatNaira(z.baseFeeNgn)}
-                        </option>
-                      ))}
-                    </select>
+                    <input
+                      type="email"
+                      value={customer.email}
+                      onChange={(e) => handleCustomerChange('email', e.target.value)}
+                      placeholder="e.g. client@company.ng"
+                      className="w-full bg-[#181824] border border-white/15 rounded-xl p-2.5 text-xs text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-white transition-all"
+                    />
                   </div>
 
                   <div>
-                    <label className="font-bold text-stone-300 block mb-1">
-                      City &amp; State
+                    <label className="font-bold text-white block mb-1">
+                      Company / Organization Name (Optional)
                     </label>
                     <input
                       type="text"
-                      value={customer.city + ', ' + customer.state}
-                      onChange={(e) => handleCustomerChange('city', e.target.value)}
-                      className="w-full bg-[#181824] border border-white/10 rounded-xl p-2.5 text-xs text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-[#f5be38] focus:border-transparent transition-all"
+                      value={customer.companyName || ''}
+                      onChange={(e) => handleCustomerChange('companyName', e.target.value)}
+                      placeholder="e.g. Apex Global Ventures"
+                      className="w-full bg-[#181824] border border-white/15 rounded-xl p-2.5 text-xs text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-white transition-all"
                     />
                   </div>
                 </div>
 
-                {/* Dispatch Speed Toggle */}
-                {selectedZone.expressAvailable && (
-                  <div className="pt-3 border-t border-white/10">
-                    <label className="p-3.5 rounded-2xl border border-white/10 bg-[#181824] flex items-center justify-between cursor-pointer hover:border-[#f5be38]/50 transition-colors">
-                      <div className="flex items-center gap-3">
-                        <input
-                          type="checkbox"
-                          checked={isExpress}
-                          onChange={(e) => setIsExpress(e.target.checked)}
-                          className="h-4 w-4 rounded accent-[#f5be38]"
-                        />
-                        <div>
-                          <span className="text-xs font-bold text-white block">
-                            Upgrade to Same-Day / Next-Day Priority Courier
-                          </span>
-                          <span className="text-[11px] text-stone-400">
-                            Guaranteed priority press queue and dedicated dispatch rider.
-                          </span>
+                {/* Location Delivery Toggle */}
+                <div className="pt-4 border-t border-white/10 space-y-4">
+                  <div className="font-bold text-white text-xs uppercase tracking-wider">
+                    Location Delivery Preference
+                  </div>
+
+                  <div className="space-y-2.5">
+                    <label
+                      onClick={() => setWantsLocationDelivery(true)}
+                      className={`p-4 rounded-2xl border flex items-start gap-3 cursor-pointer transition-all ${
+                        wantsLocationDelivery
+                          ? 'border-white bg-white/10'
+                          : 'border-white/10 bg-[#181824] hover:border-white/20'
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name="delivery_pref"
+                        checked={wantsLocationDelivery}
+                        onChange={() => setWantsLocationDelivery(true)}
+                        className="mt-0.5 accent-white"
+                      />
+                      <div className="space-y-1">
+                        <div className="text-xs font-bold text-white flex items-center gap-2">
+                          <Truck className="w-4 h-4 text-white" />
+                          <span>Yes, deliver the finished work directly to my location</span>
                         </div>
+                        <p className="text-[11px] text-stone-300 leading-relaxed">
+                          We can deliver directly to your specific home, office, or site address upon completion. (No pickup depots).
+                        </p>
                       </div>
-                      <span className="font-mono text-xs font-bold text-[#f5be38]">
-                        {formatNaira(selectedZone.expressFeeNgn!)}
-                      </span>
+                    </label>
+
+                    <label
+                      onClick={() => setWantsLocationDelivery(false)}
+                      className={`p-4 rounded-2xl border flex items-start gap-3 cursor-pointer transition-all ${
+                        !wantsLocationDelivery
+                          ? 'border-white bg-white/10'
+                          : 'border-white/10 bg-[#181824] hover:border-white/20'
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name="delivery_pref"
+                        checked={!wantsLocationDelivery}
+                        onChange={() => setWantsLocationDelivery(false)}
+                        className="mt-0.5 accent-white"
+                      />
+                      <div className="space-y-1">
+                        <div className="text-xs font-bold text-white flex items-center gap-2">
+                          <Building2 className="w-4 h-4 text-white" />
+                          <span>No, I will collect directly from your press office</span>
+                        </div>
+                        <p className="text-[11px] text-stone-300 leading-relaxed">
+                          Collect directly from our press complex (Yenagoa or Lagos Somolu office). No delivery fee added.
+                        </p>
+                      </div>
                     </label>
                   </div>
-                )}
+
+                  {/* Delivery Address Fields if Location Delivery Selected */}
+                  {wantsLocationDelivery && (
+                    <div className="pt-2 space-y-3 bg-[#181824] p-4 rounded-2xl border border-white/10 text-xs">
+                      <div>
+                        <label className="font-bold text-white block mb-1">
+                          Delivery Destination State / Region *
+                        </label>
+                        <select
+                          value={shippingZoneId}
+                          onChange={(e) => setShippingZoneId(e.target.value)}
+                          className="w-full bg-[#121217] border border-white/15 rounded-xl p-2.5 text-xs font-semibold text-white focus:outline-none focus:ring-2 focus:ring-white transition-all"
+                        >
+                          {NIGERIAN_SHIPPING_ZONES.map((z) => (
+                            <option key={z.id} value={z.id} className="bg-[#121217] text-white">
+                              {z.name} ({z.region}) — {formatNaira(z.baseFeeNgn)}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div>
+                        <label className="font-bold text-white block mb-1">
+                          Exact Delivery Street Address *
+                        </label>
+                        <input
+                          type="text"
+                          value={customer.deliveryAddress}
+                          onChange={(e) => handleCustomerChange('deliveryAddress', e.target.value)}
+                          placeholder="e.g. Plot 14 Commercial Avenue, Victoria Island"
+                          className="w-full bg-[#121217] border border-white/15 rounded-xl p-2.5 text-xs text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-white transition-all"
+                        />
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                          <label className="font-bold text-white block mb-1">
+                            Nearest Landmark / Bus Stop
+                          </label>
+                          <input
+                            type="text"
+                            value={customer.landmark || ''}
+                            onChange={(e) => handleCustomerChange('landmark', e.target.value)}
+                            placeholder="e.g. Opposite GTBank, Near Gate"
+                            className="w-full bg-[#121217] border border-white/15 rounded-xl p-2.5 text-xs text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-white transition-all"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="font-bold text-white block mb-1">
+                            City &amp; Area
+                          </label>
+                          <input
+                            type="text"
+                            value={customer.city}
+                            onChange={(e) => handleCustomerChange('city', e.target.value)}
+                            placeholder="e.g. Ikeja, Lagos"
+                            className="w-full bg-[#121217] border border-white/15 rounded-xl p-2.5 text-xs text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-white transition-all"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
 
                 <div className="pt-2">
                   <button
                     type="button"
-                    onClick={() => setCurrentStep(2)}
-                    className="w-full py-4 px-6 rounded-full bg-[#f5be38] hover:bg-[#ffd15c] active:scale-98 text-black font-extrabold text-sm flex items-center justify-center gap-2 shadow-[0_0_25px_rgba(245,190,56,0.3)] transition-all cursor-pointer"
+                    onClick={() => {
+                      if (!customer.fullName.trim() || !customer.phone.trim()) {
+                        alert('Please provide your name and WhatsApp phone number so we can forward the account details.');
+                        return;
+                      }
+                      setCurrentStep(2);
+                    }}
+                    className="w-full py-4 px-6 rounded-full bg-white hover:bg-stone-200 active:scale-98 text-black font-black text-sm flex items-center justify-center gap-2 shadow-lg transition-all cursor-pointer"
                   >
-                    <span>Proceed to Payment Gateways</span>
-                    <ChevronRight className="w-4 h-4" />
+                    <span>Proceed to WhatsApp Payment Desk</span>
+                    <ChevronRight className="w-4 h-4 text-black" />
                   </button>
                 </div>
               </div>
             )}
 
-            {/* Step 2: Payment Gateway Selection */}
+            {/* Step 2: Review Order & Send to WhatsApp */}
             {currentStep === 2 && (
-              <div className="bg-[#121217] rounded-3xl border border-white/10 p-6 sm:p-7 space-y-6 shadow-xl">
+              <div className="bg-[#121217] rounded-3xl border border-white/15 p-6 sm:p-7 space-y-6 shadow-xl">
                 <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                  <h2 className="text-sm font-bold text-white flex items-center gap-2">
-                    <CreditCard className="w-4 h-4 text-[#f5be38]" />
-                    <span>Select Payment Gateway (Nigerian Banking Channels)</span>
+                  <h2 className="text-base font-black text-white flex items-center gap-2">
+                    <MessageSquare className="w-4 h-4 text-white" />
+                    <span>2. Review Order &amp; Request Payment Account</span>
                   </h2>
                   <button
                     onClick={() => setCurrentStep(1)}
-                    className="text-xs text-[#f5be38] hover:text-[#ffd15c] font-medium cursor-pointer"
+                    className="text-xs text-stone-300 hover:text-white font-bold cursor-pointer underline underline-offset-2"
                   >
-                    Edit Address
+                    Edit Contact &amp; Address
                   </button>
                 </div>
 
-                {/* Gateway Radio Cards */}
-                <div className="space-y-3">
-                  {/* Paystack */}
-                  <label
-                    onClick={() => setPaymentGateway('paystack')}
-                    className={`p-4 rounded-2xl border flex items-center justify-between cursor-pointer transition-all ${
-                      paymentGateway === 'paystack'
-                        ? 'border-[#0BA4DB] bg-[#0BA4DB]/10 ring-2 ring-[#0BA4DB]/30 shadow-md'
-                        : 'border-white/10 bg-[#181824] hover:border-white/20'
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <input
-                        type="radio"
-                        name="gateway"
-                        checked={paymentGateway === 'paystack'}
-                        onChange={() => setPaymentGateway('paystack')}
-                        className="accent-[#0BA4DB]"
-                      />
-                      <div>
-                        <div className="text-xs font-bold text-white flex items-center gap-2">
-                          <span>Paystack Checkout</span>
-                          <span className="bg-[#0BA4DB] text-white text-[9px] px-1.5 py-0.5 rounded font-black">
-                            POPULAR
-                          </span>
-                        </div>
-                        <div className="text-[11px] text-stone-400">
-                          Verve, Mastercard, Visa, Direct Bank Transfer &amp; USSD (*737#, *966#).
-                        </div>
-                      </div>
-                    </div>
-                    <span className="text-xs font-mono font-bold text-[#0BA4DB]">
-                      Instant Confirmation
-                    </span>
-                  </label>
-
-                  {/* Flutterwave */}
-                  <label
-                    onClick={() => setPaymentGateway('flutterwave')}
-                    className={`p-4 rounded-2xl border flex items-center justify-between cursor-pointer transition-all ${
-                      paymentGateway === 'flutterwave'
-                        ? 'border-[#FB9129] bg-[#FB9129]/10 ring-2 ring-[#FB9129]/30 shadow-md'
-                        : 'border-white/10 bg-[#181824] hover:border-white/20'
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <input
-                        type="radio"
-                        name="gateway"
-                        checked={paymentGateway === 'flutterwave'}
-                        onChange={() => setPaymentGateway('flutterwave')}
-                        className="accent-[#FB9129]"
-                      />
-                      <div>
-                        <div className="text-xs font-bold text-white">
-                          Flutterwave / Rave
-                        </div>
-                        <div className="text-[11px] text-stone-400">
-                          Card, Barter, Mobile Money &amp; Virtual Accounts.
-                        </div>
-                      </div>
-                    </div>
-                    <span className="text-xs font-mono font-bold text-[#FB9129]">
-                      Multi-Option
-                    </span>
-                  </label>
-
-                  {/* Direct Corporate Bank Transfer */}
-                  <label
-                    onClick={() => setPaymentGateway('bank_transfer')}
-                    className={`p-4 rounded-2xl border flex items-center justify-between cursor-pointer transition-all ${
-                      paymentGateway === 'bank_transfer'
-                        ? 'border-[#f5be38] bg-[#f5be38]/10 ring-2 ring-[#f5be38]/30 shadow-md'
-                        : 'border-white/10 bg-[#181824] hover:border-white/20'
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <input
-                        type="radio"
-                        name="gateway"
-                        checked={paymentGateway === 'bank_transfer'}
-                        onChange={() => setPaymentGateway('bank_transfer')}
-                        className="accent-[#f5be38]"
-                      />
-                      <div>
-                        <div className="text-xs font-bold text-white">
-                          Direct Corporate Bank Transfer / Invoice
-                        </div>
-                        <div className="text-[11px] text-stone-400">
-                          Pay directly to Titan Trust or GTBank corporate account. Recommended for enterprises.
-                        </div>
-                      </div>
-                    </div>
-                    <span className="text-xs font-mono font-bold text-[#f5be38]">
-                      Proforma Invoice
-                    </span>
-                  </label>
+                {/* Summary of Buyer Details */}
+                <div className="bg-[#181824] p-4 rounded-2xl border border-white/10 space-y-2 text-xs">
+                  <div className="font-bold text-white text-sm">{customer.fullName}</div>
+                  <div className="text-stone-300">WhatsApp: <strong className="text-white">{customer.phone}</strong></div>
+                  {customer.companyName && <div className="text-stone-400">Company: {customer.companyName}</div>}
+                  <div className="pt-1 text-stone-300 border-t border-white/5">
+                    <strong>Delivery: </strong>
+                    {wantsLocationDelivery 
+                      ? `Deliver to location: ${customer.deliveryAddress || 'Address specified via WhatsApp'}, ${customer.city} (${selectedZone.name})`
+                      : 'Direct collection at press office'}
+                  </div>
                 </div>
 
-                {/* Bank details if direct transfer */}
-                {paymentGateway === 'bank_transfer' && (
-                  <div className="bg-[#181824] border border-[#f5be38]/30 rounded-2xl p-4 space-y-2 text-xs">
-                    <div className="font-bold text-[#f5be38]">
-                      Silver &amp; Gold Inkshine Ltd — Corporate Accounts:
-                    </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-stone-300">
-                      <div className="p-3 bg-[#121217] rounded-xl border border-white/10">
-                        <strong className="block text-white">GTBank Corporate:</strong>
-                        <span className="font-mono text-sm font-bold text-[#f5be38]">0123456789</span>
-                        <div className="text-[10px] text-stone-400">Silver &amp; Gold Inkshine Ltd</div>
-                      </div>
-                      <div className="p-3 bg-[#121217] rounded-xl border border-white/10">
-                        <strong className="block text-white">Titan Trust Bank:</strong>
-                        <span className="font-mono text-sm font-bold text-[#f5be38]">1009823412</span>
-                        <div className="text-[10px] text-stone-400">Silver &amp; Gold Inkshine Ltd</div>
-                      </div>
-                    </div>
-                    <p className="text-[11px] text-stone-400 pt-1">
-                      Please use your full name or Order No. as the transfer narration for immediate automated matching.
-                    </p>
+                {/* Direct WhatsApp Payment Box */}
+                <div className="p-4 rounded-2xl bg-white/[0.06] border border-white/20 text-xs text-stone-200 space-y-3">
+                  <div className="font-black text-white text-sm flex items-center gap-2">
+                    <MessageSquare className="w-4.5 h-4.5 text-white" />
+                    <span>Ready to finalize your order on WhatsApp</span>
                   </div>
-                )}
+                  <p className="leading-relaxed text-stone-300">
+                    Clicking below will format your complete order specifications and open a direct chat with <strong className="text-white">Silver &amp; Gold Inkshine Ltd (+234 703 037 2539)</strong> on WhatsApp.
+                  </p>
+                  <p className="leading-relaxed text-stone-300">
+                    Our team will verify your job specifications and send our official company account number directly on WhatsApp to make payment.
+                  </p>
+                </div>
 
-                {/* Primary Trigger Button */}
+                {/* Primary WhatsApp Order Button */}
                 <div className="pt-2">
                   <button
                     type="button"
-                    onClick={handleStartPayment}
-                    className="w-full py-4 px-6 rounded-full bg-[#f5be38] hover:bg-[#ffd15c] active:scale-98 text-black font-black text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-[0_0_25px_rgba(245,190,56,0.3)] transition-all cursor-pointer"
+                    onClick={handleSendToWhatsApp}
+                    className="w-full py-4 px-6 rounded-full bg-white hover:bg-stone-200 active:scale-98 text-black font-black text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-xl transition-all cursor-pointer"
                   >
-                    <Lock className="w-4 h-4 text-black" />
-                    <span>
-                      {paymentGateway === 'bank_transfer'
-                        ? `Generate Invoice & Place Order • ${formatNaira(grandTotalNgn)}`
-                        : `Pay ${formatNaira(grandTotalNgn)} via ${paymentGateway === 'paystack' ? 'Paystack' : 'Flutterwave'}`}
-                    </span>
+                    <MessageSquare className="w-5 h-5 text-black" />
+                    <span>Send Order via WhatsApp &amp; Receive Account Number</span>
                   </button>
+                </div>
+
+                <div className="text-center text-[11px] text-stone-400">
+                  Direct communication with Silver &amp; Gold Inkshine Ltd • Official Company Account Details
                 </div>
               </div>
             )}
           </div>
 
-          {/* Right Column: Order Summary & Coupon */}
+          {/* Right Column: Order Summary & Promo Code */}
           <div className="lg:col-span-5 space-y-6">
-            
-            {/* Order Items Review */}
-            <div className="bg-[#121217] rounded-3xl border border-white/10 p-6 space-y-5 shadow-xl">
+            <div className="bg-[#121217] rounded-3xl border border-white/15 p-6 space-y-5 shadow-xl">
               <div className="flex items-center justify-between border-b border-white/10 pb-3">
                 <span className="text-xs font-bold text-white">
                   Order Items ({cartItems.length})
                 </span>
                 <button
                   onClick={onBackToCart}
-                  className="text-xs font-semibold text-[#f5be38] hover:text-[#ffd15c] cursor-pointer"
+                  className="text-xs font-bold text-stone-300 hover:text-white cursor-pointer underline underline-offset-2"
                 >
                   Modify Cart
                 </button>
               </div>
 
+              {/* Items List */}
               <div className="divide-y divide-white/5 max-h-72 overflow-y-auto pr-1">
                 {cartItems.map((item) => (
                   <div key={item.id} className="py-3 flex gap-3 text-xs">
@@ -827,7 +808,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
                         Artwork: {item.artworkType.replace('_', ' ').toUpperCase()}
                       </div>
                     </div>
-                    <div className="text-right font-mono font-bold text-[#f5be38]">
+                    <div className="text-right font-mono font-bold text-white">
                       {formatNaira(item.totalPriceNgn)}
                     </div>
                   </div>
@@ -844,21 +825,21 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
                       value={couponCode}
                       onChange={(e) => setCouponCode(e.target.value)}
                       placeholder="Coupon (e.g. LAGOSPRINT10)"
-                      className="w-full pl-8 pr-2.5 py-2 bg-[#181824] border border-white/10 rounded-xl text-xs uppercase font-mono font-bold text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-[#f5be38] focus:border-transparent transition-all"
+                      className="w-full pl-8 pr-2.5 py-2 bg-[#181824] border border-white/15 rounded-xl text-xs uppercase font-mono font-bold text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-white transition-all"
                     />
                   </div>
                   <button
                     type="submit"
-                    className="px-4 py-2 bg-[#f5be38] hover:bg-[#ffd15c] text-black rounded-xl text-xs font-black transition-colors cursor-pointer"
+                    className="px-4 py-2 bg-white hover:bg-stone-200 text-black rounded-xl text-xs font-black transition-colors cursor-pointer"
                   >
                     Apply
                   </button>
                 </div>
 
                 {appliedDiscountPercent > 0 && (
-                  <div className="text-[11px] text-[#f5be38] font-bold flex items-center gap-1">
+                  <div className="text-[11px] text-white font-bold flex items-center gap-1">
                     <Check className="w-3.5 h-3.5" />
-                    <span>Corporate discount applied ({appliedDiscountPercent}% OFF)!</span>
+                    <span>Discount applied ({appliedDiscountPercent}% OFF)!</span>
                   </div>
                 )}
 
@@ -878,18 +859,25 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
                 </div>
 
                 {discountNgn > 0 && (
-                  <div className="flex justify-between text-[#f5be38] font-bold">
-                    <span>Promo Code Discount:</span>
-                    <span className="font-mono">-{formatNaira(discountNgn)}</span>
+                  <div className="flex justify-between text-stone-300 font-bold">
+                    <span>Promo Discount:</span>
+                    <span className="font-mono text-white">-{formatNaira(discountNgn)}</span>
                   </div>
                 )}
 
-                <div className="flex justify-between text-stone-300">
-                  <span>
-                    Logistics Delivery ({selectedZone.name}{isExpress ? ' • Priority' : ''}):
-                  </span>
-                  <span className="font-mono text-white">{formatNaira(shippingFeeNgn)}</span>
-                </div>
+                {wantsLocationDelivery ? (
+                  <div className="flex justify-between text-stone-300">
+                    <span>
+                      Location Delivery ({selectedZone.name}):
+                    </span>
+                    <span className="font-mono text-white">{formatNaira(deliveryFeeNgn)}</span>
+                  </div>
+                ) : (
+                  <div className="flex justify-between text-stone-300">
+                    <span>Direct Collection at Press:</span>
+                    <span className="font-mono text-white">₦0</span>
+                  </div>
+                )}
 
                 <div className="flex justify-between text-stone-300">
                   <span>VAT (7.5% Nigerian Statutory):</span>
@@ -898,7 +886,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
 
                 <div className="pt-3 border-t border-white/10 flex justify-between text-base font-black text-white">
                   <span>Total Due:</span>
-                  <span className="font-mono text-[#f5be38] text-lg">
+                  <span className="font-mono text-white text-lg">
                     {formatNaira(grandTotalNgn)}
                   </span>
                 </div>
@@ -907,42 +895,22 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
               {/* Trust Badges */}
               <div className="pt-3 border-t border-white/10 flex items-center justify-around text-[10px] text-stone-400">
                 <span className="flex items-center gap-1">
-                  <ShieldCheck className="w-3.5 h-3.5 text-[#f5be38]" />
+                  <ShieldCheck className="w-3.5 h-3.5 text-white" />
                   <span>Verified Press</span>
                 </span>
                 <span className="flex items-center gap-1">
-                  <Truck className="w-3.5 h-3.5 text-[#f5be38]" />
-                  <span>36 States Delivery</span>
+                  <Truck className="w-3.5 h-3.5 text-white" />
+                  <span>Location Delivery</span>
                 </span>
                 <span className="flex items-center gap-1">
-                  <Lock className="w-3.5 h-3.5 text-sky-400" />
-                  <span>CBN Regulated Gateways</span>
+                  <MessageSquare className="w-3.5 h-3.5 text-white" />
+                  <span>Official WhatsApp</span>
                 </span>
               </div>
             </div>
           </div>
+
         </div>
-
-        {/* Modal: Paystack Checkout */}
-        {showPaystackModal && (
-          <PaystackModal
-            amountNgn={grandTotalNgn}
-            email={customer.email}
-            onSuccess={(ref) => finalizeOrder(ref)}
-            onClose={() => setShowPaystackModal(false)}
-          />
-        )}
-
-        {/* Modal: Flutterwave Checkout */}
-        {showFlutterwaveModal && (
-          <FlutterwaveModal
-            amountNgn={grandTotalNgn}
-            email={customer.email}
-            customerName={customer.fullName}
-            onSuccess={(ref) => finalizeOrder(ref)}
-            onClose={() => setShowFlutterwaveModal(false)}
-          />
-        )}
       </div>
     </div>
   );

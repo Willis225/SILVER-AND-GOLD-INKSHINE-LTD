@@ -76,7 +76,7 @@ export const RecentPostModal: React.FC<RecentPostModalProps> = ({
               <li><strong className="text-white">Artwork Resolution:</strong> Ensure designs are exported at 300 DPI in CMYK format with at least 3mm–5mm bleed margin to avoid edge cropping.</li>
               <li><strong className="text-white">Substrate Selection:</strong> Match paper weight and coating to the intended lifespan (e.g. 150gsm gloss art for mass handbills, 300gsm card with matte lamination for executive presentation).</li>
               <li><strong className="text-white">Color Management:</strong> Digital press output and offset lithography render colors with subtle differences; pre-press proofs safeguard brand consistency.</li>
-              <li><strong className="text-white">Logistics &amp; Packaging:</strong> Industrial shrink-wrapping and moisture-proof cartons ensure safe nationwide transit without edge damage.</li>
+              <li><strong className="text-white">Protective Packaging:</strong> Industrial shrink-wrapping and moisture-proof cartons ensure safe transit without edge damage.</li>
             </ul>
 
             <p>

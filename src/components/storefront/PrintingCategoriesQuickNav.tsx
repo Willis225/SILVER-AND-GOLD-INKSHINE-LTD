@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'motion/react';
 import { 
   FileText, 
   Flag, 
@@ -116,7 +117,13 @@ export const PrintingCategoriesQuickNav: React.FC<PrintingCategoriesQuickNavProp
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         
         {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-5 mb-10 sm:mb-12">
+        <motion.div 
+          initial={{ opacity: 0, x: -60 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="flex flex-col sm:flex-row sm:items-end justify-between gap-5 mb-10 sm:mb-12"
+        >
           <div>
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 text-white text-xs font-black tracking-widest uppercase mb-3 shadow-xs">
               <span className="w-2.5 h-2.5 rounded-full bg-white ring-4 ring-white/20 animate-pulse" />
@@ -138,10 +145,17 @@ export const PrintingCategoriesQuickNav: React.FC<PrintingCategoriesQuickNavProp
             <span>View All Print Categories</span>
             <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
           </button>
-        </div>
+        </motion.div>
 
         {/* Reflective Conduit Light Line Connecting Categories (Pure Silver / Monochrome) */}
-        <div className="relative mb-6 sm:mb-8">
+        <motion.div 
+          initial={{ opacity: 0, scaleX: 0 }}
+          whileInView={{ opacity: 1, scaleX: 1 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          style={{ originX: 0 }}
+          className="relative mb-6 sm:mb-8"
+        >
           {/* Base connector line */}
           <div className="w-full h-1 rounded-full bg-white/10 overflow-hidden relative shadow-inner">
             {/* Animated flowing reflective light beam */}
@@ -154,15 +168,26 @@ export const PrintingCategoriesQuickNav: React.FC<PrintingCategoriesQuickNavProp
               <span key={i} className="w-2 h-2 rounded-full bg-white ring-2 ring-[#09090d] shadow-[0_0_6px_rgba(255,255,255,0.6)]" />
             ))}
           </div>
-        </div>
+        </motion.div>
 
-        {/* 8 Luxury Monochrome Black & White Category Boxes */}
+        {/* 8 Luxury Monochrome Black & White Category Boxes with Scroll Entrance from Left to Right */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
-          {PRINT_CATEGORIES.map((cat) => {
+          {PRINT_CATEGORIES.map((cat, idx) => {
             const Icon = cat.icon;
+            // Cascade delay so each box comes out progressively from left to right as scrolled towards
+            const staggerDelay = (idx % 4) * 0.12 + Math.floor(idx / 4) * 0.08;
+
             return (
-              <div
+              <motion.div
                 key={cat.id}
+                initial={{ opacity: 0, x: -85 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, amount: 0.15, margin: "0px 0px -40px 0px" }}
+                transition={{ 
+                  duration: 0.7, 
+                  delay: staggerDelay, 
+                  ease: [0.22, 1, 0.36, 1] 
+                }}
                 onClick={() => onSelectCategory(cat.id)}
                 className="group relative bg-[#121217] hover:bg-[#181822] border border-white/15 hover:border-white/50 rounded-2xl sm:rounded-3xl p-6 sm:p-7 min-h-[300px] flex flex-col justify-between overflow-hidden cursor-pointer shadow-md hover:shadow-[0_20px_45px_rgba(255,255,255,0.06)] transform-gpu transition-all duration-500 ease-out hover:scale-105 hover:-translate-y-2 active:scale-95 will-change-transform"
               >
@@ -221,7 +246,7 @@ export const PrintingCategoriesQuickNav: React.FC<PrintingCategoriesQuickNavProp
                   </div>
                 </div>
 
-              </div>
+              </motion.div>
             );
           })}
         </div>

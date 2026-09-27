@@ -130,7 +130,7 @@ Please confirm availability, production turnaround and artwork preflight check. 
                 <option value="Lagos, Nigeria (Doorstep)">Lagos (Doorstep Delivery)</option>
                 <option value="Abuja FCT (Doorstep / Express)">Abuja FCT</option>
                 <option value="Port Harcourt, Rivers State">Port Harcourt</option>
-                <option value="Bayelsa State (Yenagoa Office Pickup)">Bayelsa (Yenagoa)</option>
+                <option value="Bayelsa State (Yenagoa Office)">Bayelsa (Yenagoa Office)</option>
                 <option value="Ibadan, Oyo State">Ibadan</option>
                 <option value="Kano / Kaduna / North">Kano / Kaduna</option>
                 <option value="Enugu / Onitsha / East">Enugu / Onitsha</option>
@@ -143,7 +143,7 @@ Please confirm availability, production turnaround and artwork preflight check. 
           <div className="p-3.5 bg-[#f5be38]/10 rounded-xl border border-[#f5be38]/30 flex items-center justify-between">
             <div>
               <span className="text-xs font-bold text-[#f5be38] block">Total Price Estimate ({quantity} unit{quantity > 1 ? 's' : ''})</span>
-              <span className="text-[11px] text-stone-300">Official VAT-inclusive guide with nationwide logistics</span>
+              <span className="text-[11px] text-stone-300">Official VAT-inclusive estimate with location delivery</span>
             </div>
             <div className="text-lg font-black text-[#f5be38]">
               {formattedTotal}
@@ -158,7 +158,7 @@ Please confirm availability, production turnaround and artwork preflight check. 
             </div>
             <div className="flex items-center gap-1.5">
               <Truck className="w-3.5 h-3.5 text-[#f5be38] shrink-0" />
-              <span>Doorstep Delivery Across Nigeria</span>
+              <span>Direct Delivery to Your Location</span>
             </div>
             <div className="flex items-center gap-1.5">
               <ShieldCheck className="w-3.5 h-3.5 text-[#f5be38] shrink-0" />

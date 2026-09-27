@@ -50,7 +50,7 @@ export const TrustedCompanyFeatureSection: React.FC<TrustedCompanyFeatureSection
               </div>
               <div className="flex items-center gap-2 bg-[#121217] px-3.5 py-2 rounded-xl border border-white/15 shadow-sm">
                 <span className="w-2 h-2 rounded-full bg-white" />
-                <span>Nationwide Express Logistics</span>
+                <span>Direct Location Delivery</span>
               </div>
             </div>
           </motion.div>

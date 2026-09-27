@@ -66,7 +66,7 @@ export const WhyChooseUsSection: React.FC<WhyChooseUsSectionProps> = ({
       tag: 'Nationwide Reach',
       description:
         'SILVER & GOLD INKSHINE LTD makes it easy to get your printed materials delivered quickly anywhere in Nigeria. From Bayelsa and Lagos to Abuja, Port Harcourt and beyond, our fast nationwide delivery service ensures your banners, business cards, souvenirs, packaging and promotional items reach you safely and on time.',
-      features: ['Doorstep Logistics Partners', 'Protective Moisture Packaging', 'Tracking Updates on Dispatch'],
+      features: ['Direct Location Delivery Upon Request', 'Protective Moisture Packaging', 'Real-Time WhatsApp Updates'],
       accentGradient: 'from-yellow-400/20 via-[#f5be38]/10 to-transparent',
     },
   ];

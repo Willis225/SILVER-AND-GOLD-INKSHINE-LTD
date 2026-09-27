@@ -1986,7 +1986,7 @@ export interface FaqItem {
 export const PRINT_FAQS: FaqItem[] = [
   {
     question: 'How fast can I receive my roll-up banners in Lagos or Abuja?',
-    answer: 'Standard roll-up banner production takes 1–2 business days. For urgent corporate events in Lagos, we offer Same-Day / Next-Day Express Dispatch. For Abuja, Port Harcourt, and other states, delivery takes 2–3 business days via our air and dedicated hub logistics partners.',
+    answer: 'Standard roll-up banner production takes 1–2 business days. For urgent corporate events in Lagos, we offer Same-Day / Next-Day Express Dispatch. For Abuja, Port Harcourt, and other states, direct location delivery to your address takes 2–3 business days upon your request.',
     category: 'Turnaround & Delivery',
   },
   {
@@ -2005,8 +2005,8 @@ export const PRINT_FAQS: FaqItem[] = [
     category: 'Product Specifications',
   },
   {
-    question: 'Can I pay via Bank Transfer or Corporate Invoice?',
-    answer: 'Yes. In addition to online debit card payments via Paystack and Flutterwave, we support Direct Bank Transfer to our corporate account and issue automated Proforma Invoices with VAT breakdown for corporate procurement approval.',
+    question: 'How do I make payment for my order?',
+    answer: 'Payments are made via WhatsApp transfer. Once you choose the product you want, message us directly on WhatsApp. Silver & Gold Inkshine Ltd will review your job and forward our official company account number for you to make payment.',
     category: 'Payments & Billing',
   },
   {

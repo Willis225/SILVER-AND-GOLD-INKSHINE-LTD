@@ -210,9 +210,9 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
                   <div className="w-8 h-8 rounded-lg bg-[#f5be38]/10 text-[#f5be38] flex items-center justify-center">
                     <Truck className="w-4 h-4" />
                   </div>
-                  <h4 className="font-bold text-sm text-white">Nationwide Logistics</h4>
+                  <h4 className="font-bold text-sm text-white">Direct Location Delivery</h4>
                   <p className="text-xs text-stone-400 leading-relaxed">
-                    Same-day and 24-hour intra-state express delivery in Yenagoa and Bayelsa State. Daily secure inter-state dispatches across Port Harcourt, Delta, Abuja, and Lagos.
+                    When you want your finished work delivered, we deliver directly to your specific office or location across Yenagoa, Bayelsa, Port Harcourt, Lagos, Abuja, and other states upon your request.
                   </p>
                 </div>
 
