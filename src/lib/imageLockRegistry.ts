@@ -736,6 +736,16 @@ export function getLockedImagesMap(): Record<string, LockedImageEntry> {
             isUserCustomized: true,
           };
         }
+        if (!parsed['prod-carport-tensile-canopy'] || parsed['prod-carport-tensile-canopy'].imageUrl?.includes('photo-1590674899')) {
+          parsed['prod-carport-tensile-canopy'] = {
+            id: 'prod-carport-tensile-canopy',
+            imageUrl: '/carport-tensile-canopy.jpg',
+            images: ['/carport-tensile-canopy.jpg'],
+            title: 'Heavy-Duty Galvanized Steel Tensile Fabric Carport & Entrance Canopy',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
         inMemoryLockRegistry = parsed;
         return inMemoryLockRegistry!;
       }
@@ -1270,6 +1280,14 @@ export function getLockedImagesMap(): Record<string, LockedImageEntry> {
       imageUrl: '/teardrop-flying-feather-banner.jpg',
       images: ['/teardrop-flying-feather-banner.jpg'],
       title: 'Teardrop Flying Feather Banner (Outdoor Flag)',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'prod-carport-tensile-canopy': {
+      id: 'prod-carport-tensile-canopy',
+      imageUrl: '/carport-tensile-canopy.jpg',
+      images: ['/carport-tensile-canopy.jpg'],
+      title: 'Heavy-Duty Galvanized Steel Tensile Fabric Carport & Entrance Canopy',
       lockedAt: new Date().toISOString(),
       isUserCustomized: true,
     }

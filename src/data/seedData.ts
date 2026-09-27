@@ -1273,7 +1273,8 @@ export const SAMPLE_PRODUCTS: Product[] = [
     minQuantity: 1,
     turnaroundDays: 7,
     badge: 'Structural',
-    image: 'https://images.unsplash.com/photo-1590674899484-d5640e854abe?auto=format&fit=crop&w=800&q=80',
+    image: '/carport-tensile-canopy.jpg',
+    images: ['/carport-tensile-canopy.jpg'],
     optionGroups: [
       {
         id: 'opt-carport-size',
