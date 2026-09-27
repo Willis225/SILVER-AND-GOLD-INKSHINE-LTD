@@ -102,17 +102,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           {/* Left Column: Natural, Authoritative Printing Press Typography (NO ARTIFICIAL FLOATING BOX) */}
           <div className="lg:col-span-7 xl:col-span-7 space-y-6 sm:space-y-7">
             
-            {/* Eyebrow & Brand Kicker: Refined Editorial Hallmark */}
+            {/* Eyebrow & Brand Kicker: Refined Editorial Hallmark (Monochrome) */}
             <div className="flex flex-wrap items-center gap-3">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#121217] border border-[#f5be38]/30 shadow-sm">
-                <span className="w-2 h-2 rounded-full bg-[#f5be38] shadow-[0_0_8px_#f5be38]" />
-                <span className="text-[11px] sm:text-xs font-black tracking-wider uppercase text-[#f5be38]">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 shadow-sm">
+                <span className="w-2 h-2 rounded-full bg-white shadow-[0_0_8px_#ffffff]" />
+                <span className="text-[11px] sm:text-xs font-black tracking-wider uppercase text-white">
                   {eyebrow}
                 </span>
-                <Sparkles className="w-3.5 h-3.5 text-[#f5be38]" />
+                <Sparkles className="w-3.5 h-3.5 text-white" />
               </div>
               <span className="text-xs font-semibold text-stone-400 hidden sm:inline-flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-stone-600" />
+                <span className="w-1.5 h-1.5 rounded-full bg-stone-500" />
                 Yenagoa &amp; Nationwide Hub
               </span>
             </div>
@@ -123,24 +123,24 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 {headline}
               </h1>
 
-              {/* Radiant Metallic Gold Subheadline */}
+              {/* Radiant Metallic Silver-White Subheadline */}
               <div className="text-2xl xs:text-3xl sm:text-4xl lg:text-[36px] xl:text-[42px] font-black tracking-tight leading-tight">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f5be38] via-[#ffd56b] to-[#d4af37] drop-shadow-sm inline-block">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-stone-100 to-stone-300 drop-shadow-sm inline-block">
                   {subheadline}
                 </span>
               </div>
 
-              {/* CMYK Registration Hairline Rule (Honoring authentic printing press craft) */}
+              {/* Monochromatic Registration Rule (Honoring authentic printing press craft) */}
               <div className="flex items-center gap-2.5 pt-1 max-w-xl">
                 <div className="flex items-center gap-1 shrink-0">
-                  <span className="w-2.5 h-2.5 rounded-sm bg-[#00a8e8] title='Cyan'" title="Cyan" />
-                  <span className="w-2.5 h-2.5 rounded-sm bg-[#e01a4f] title='Magenta'" title="Magenta" />
-                  <span className="w-2.5 h-2.5 rounded-sm bg-[#f5be38] title='Yellow'" title="Yellow" />
-                  <span className="w-2.5 h-2.5 rounded-sm bg-black border border-white/20 title='Key Black'" title="Key Black" />
+                  <span className="w-2.5 h-2.5 rounded-sm bg-white" title="Process 100%" />
+                  <span className="w-2.5 h-2.5 rounded-sm bg-stone-300" title="Process 75%" />
+                  <span className="w-2.5 h-2.5 rounded-sm bg-stone-500" title="Process 50%" />
+                  <span className="w-2.5 h-2.5 rounded-sm bg-black border border-white/40" title="Key Black" />
                 </div>
-                <div className="h-[1px] flex-1 bg-gradient-to-r from-[#f5be38]/50 via-white/15 to-transparent" />
-                <span className="text-[10px] font-mono tracking-widest text-[#f5be38]/80 uppercase shrink-0">
-                  2400 DPI CMYK
+                <div className="h-[1px] flex-1 bg-gradient-to-r from-white/40 via-white/15 to-transparent" />
+                <span className="text-[10px] font-mono tracking-widest text-stone-300 uppercase shrink-0">
+                  2400 DPI OFFSET &amp; DIGITAL
                 </span>
               </div>
 
@@ -152,9 +152,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
             {/* Realtime Client Trust Proof - Premium Glassmorphic Badge */}
             <div className="pt-2">
-              <div className="inline-flex flex-wrap sm:flex-nowrap items-center gap-3.5 sm:gap-4 p-2 sm:px-3.5 sm:py-2.5 rounded-2xl bg-white/[0.06] hover:bg-white/[0.09] border border-white/15 hover:border-[#f5be38]/50 backdrop-blur-md transition-all duration-300 shadow-[0_8px_24px_rgba(0,0,0,0.35)] group">
+              <div className="inline-flex flex-wrap sm:flex-nowrap items-center gap-3.5 sm:gap-4 p-2 sm:px-3.5 sm:py-2.5 rounded-2xl bg-white/[0.06] hover:bg-white/[0.09] border border-white/15 hover:border-white/40 backdrop-blur-md transition-all duration-300 shadow-[0_8px_24px_rgba(0,0,0,0.35)] group">
                 
-                {/* Avatars Stack with Glowing Gold Counter (Authentic Black African Corporate Clients & Event Planners) */}
+                {/* Avatars Stack with Glowing White Counter (Authentic Black African Corporate Clients & Event Planners) */}
                 <div className="flex items-center -space-x-2.5 overflow-visible shrink-0 pl-1">
                   <div className="relative">
                     <img
@@ -190,7 +190,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   </div>
 
                   {/* High-visibility Counter Badge */}
-                  <div className="relative z-10 inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-gradient-to-br from-[#f5be38] to-[#d49e1a] text-black font-black text-xs ring-2 ring-[#09090d] shadow-md transition-transform duration-200 group-hover:scale-110">
+                  <div className="relative z-10 inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-white text-black font-black text-xs ring-2 ring-[#09090d] shadow-md transition-transform duration-200 group-hover:scale-110">
                     +5k
                   </div>
                 </div>
@@ -205,17 +205,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                       168K+ Realtime Clients
                     </span>
                     {/* Live Pulsing Dot */}
-                    <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-[10px] font-bold text-emerald-300">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-white/10 border border-white/20 text-[10px] font-bold text-white">
+                      <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
                       Live
                     </span>
                   </div>
 
                   <div className="flex items-center gap-1.5 text-xs">
                     {/* 5 Rating Stars */}
-                    <div className="flex items-center text-[#f5be38]">
+                    <div className="flex items-center text-white">
                       {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-3 h-3 fill-[#f5be38]" />
+                        <Star key={i} className="w-3 h-3 fill-white" />
                       ))}
                     </div>
                     <span className="text-stone-300 font-medium text-[11px] sm:text-xs">
@@ -229,13 +229,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
             {/* Primary Action Buttons */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-1">
-              {/* WhatsApp Button: Solid Radiant Gold with WhatsApp Icon */}
+              {/* WhatsApp Button: Solid High-Contrast White */}
               <a
                 href="https://wa.me/2347030372539?text=Hello%20Silver%20%26%20Gold%20Inkshine%20Ltd%2C%20I%20would%20like%20to%20inquire%20about%20printing%20services"
                 target="_blank"
                 rel="noreferrer"
                 id="hero-whatsapp-btn"
-                className="relative overflow-hidden bg-[#f5be38] hover:bg-[#ffd15c] text-black font-extrabold text-xs sm:text-sm px-7 py-3.5 rounded-full flex items-center justify-center gap-2.5 shadow-[0_4px_20px_rgba(245,190,56,0.3)] transition-all hover:scale-[1.02] active:scale-[0.98] group cursor-pointer text-center"
+                className="relative overflow-hidden bg-white hover:bg-stone-200 text-black font-extrabold text-xs sm:text-sm px-7 py-3.5 rounded-full flex items-center justify-center gap-2.5 shadow-[0_4px_20px_rgba(255,255,255,0.2)] transition-all hover:scale-[1.02] active:scale-[0.98] group cursor-pointer text-center"
               >
                 <svg 
                   viewBox="0 0 24 24" 
@@ -251,25 +251,25 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 type="button"
                 onClick={onExploreProducts}
                 id="hero-view-services-btn"
-                className="bg-[#14141a] hover:bg-[#1a1a24] border border-white/20 hover:border-[#f5be38]/50 text-white font-bold text-xs sm:text-sm px-6 py-3.5 rounded-full transition-all hover:scale-[1.02] active:scale-[0.98] shadow-md flex items-center justify-center gap-2 group cursor-pointer text-center"
+                className="bg-[#14141a] hover:bg-[#1a1a24] border border-white/20 hover:border-white/50 text-white font-bold text-xs sm:text-sm px-6 py-3.5 rounded-full transition-all hover:scale-[1.02] active:scale-[0.98] shadow-md flex items-center justify-center gap-2 group cursor-pointer text-center"
               >
                 <span>Explore Print Catalog</span>
-                <ArrowRight className="w-4 h-4 text-[#f5be38] transition-transform group-hover:translate-x-1" />
+                <ArrowRight className="w-4 h-4 text-white transition-transform group-hover:translate-x-1" />
               </button>
             </div>
 
             {/* Quick Guarantees: 3 Clean Inline Items */}
             <div className="pt-2 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-stone-300">
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-[#f5be38] shrink-0" />
+                <CheckCircle2 className="w-4 h-4 text-white shrink-0" />
                 <span className="font-medium text-stone-200">Same-Day &amp; 24hr Turnaround</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-[#f5be38] shrink-0" />
+                <CheckCircle2 className="w-4 h-4 text-white shrink-0" />
                 <span className="font-medium text-stone-200">Free Bleed &amp; Pre-Press Audit</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-[#f5be38] shrink-0" />
+                <CheckCircle2 className="w-4 h-4 text-white shrink-0" />
                 <span className="font-medium text-stone-200">Bayelsa &amp; Nationwide Delivery</span>
               </div>
             </div>
@@ -281,13 +281,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             <div className="w-full max-w-md lg:max-w-[430px]">
               
               {/* Executive Production Studio Frame */}
-              <div className="relative rounded-2xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.8)] bg-[#0d0d12] border border-white/20 ring-1 ring-[#f5be38]/30">
+              <div className="relative rounded-2xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.8)] bg-[#0d0d12] border border-white/20 ring-1 ring-white/20">
                 
                 {/* Monitor Top Status Bar */}
                 <div className="px-4 py-2.5 bg-[#14141a] border-b border-white/10 flex items-center justify-between text-xs">
                   <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_6px_#10b981]" />
-                    <span className="font-extrabold tracking-wider uppercase text-[11px] text-[#f5be38]">
+                    <span className="w-2.5 h-2.5 rounded-full bg-white animate-pulse shadow-[0_0_6px_#ffffff]" />
+                    <span className="font-extrabold tracking-wider uppercase text-[11px] text-white">
                       SILVER &amp; GOLD INKSHINE
                     </span>
                   </div>
@@ -306,15 +306,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 {/* Monitor Bottom Footer: Capability Pillars */}
                 <div className="px-3.5 py-2.5 bg-[#121217] border-t border-white/10 grid grid-cols-3 gap-2 text-center text-[10px] font-medium text-stone-300">
                   <div className="flex items-center justify-center gap-1.5">
-                    <Printer className="w-3 h-3 text-[#f5be38] shrink-0" />
+                    <Printer className="w-3 h-3 text-white shrink-0" />
                     <span>2400 DPI Offset</span>
                   </div>
                   <div className="flex items-center justify-center gap-1.5 border-x border-white/10">
-                    <Layers className="w-3 h-3 text-[#f5be38] shrink-0" />
+                    <Layers className="w-3 h-3 text-white shrink-0" />
                     <span>Precision Die-Cut</span>
                   </div>
                   <div className="flex items-center justify-center gap-1.5">
-                    <ShieldCheck className="w-3 h-3 text-[#f5be38] shrink-0" />
+                    <ShieldCheck className="w-3 h-3 text-white shrink-0" />
                     <span>100% Quality QA</span>
                   </div>
                 </div>

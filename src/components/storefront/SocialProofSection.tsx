@@ -180,17 +180,9 @@ export const SocialProofSection: React.FC = () => {
   const totalReviewsCount = 29 + (reviews.length - DEFAULT_REVIEWS.length);
 
   return (
-    <section className="relative text-stone-900 border-y border-stone-200 overflow-hidden bg-stone-50">
-      {/* Provided Section Background Image Layer */}
-      <div className="absolute inset-0 z-0">
-        <img
-          src="https://cdn.hstockplus.org/uploads/public/img-1790091847996-3aa2bb1c6a4e12cd.webp"
-          alt="Section Background"
-          className="w-full h-full object-cover object-center pointer-events-none"
-          referrerPolicy="no-referrer"
-        />
-        <div className="absolute inset-0 bg-white/70 backdrop-blur-[0.5px]" />
-      </div>
+    <section className="relative text-stone-900 border-y border-stone-200 overflow-hidden bg-white">
+      {/* Subtle architectural hairline grid background */}
+      <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:24px_24px] opacity-60 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 space-y-16 relative z-10">
         
@@ -225,8 +217,8 @@ export const SocialProofSection: React.FC = () => {
           className="space-y-4 text-center"
         >
           <div>
-            <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-50 border border-amber-200/80 text-amber-900 text-xs sm:text-[13px] font-black uppercase tracking-wider shadow-xs">
-              <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+            <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-stone-100 border border-stone-300 text-stone-900 text-xs sm:text-[13px] font-black uppercase tracking-wider shadow-xs">
+              <span className="w-2 h-2 rounded-full bg-black animate-pulse" />
               <span>TRUSTED BY NIGERIA&apos;S LEADING ENTERPRISES, FINTECHS &amp; INSTITUTIONS</span>
             </span>
           </div>
@@ -241,7 +233,7 @@ export const SocialProofSection: React.FC = () => {
               {[...ENTERPRISE_BRANDS, ...ENTERPRISE_BRANDS].map((brand, idx) => (
                 <div
                   key={`${brand.id}-${idx}`}
-                  className="bg-white hover:bg-stone-50/80 border border-stone-200/90 hover:border-amber-400/80 rounded-2xl px-5 py-3.5 flex items-center gap-3.5 transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-1 shrink-0 h-[68px] min-w-[210px] sm:min-w-[240px] group cursor-pointer"
+                  className="bg-white hover:bg-stone-50/80 border border-stone-200 hover:border-stone-900 rounded-2xl px-5 py-3.5 flex items-center gap-3.5 transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-1 shrink-0 h-[68px] min-w-[210px] sm:min-w-[240px] group cursor-pointer"
                 >
                   <div className="h-8 sm:h-9 w-24 sm:w-28 flex items-center justify-center shrink-0 transition-transform group-hover:scale-105 duration-200">
                     {brand.renderLogo()}
@@ -251,7 +243,7 @@ export const SocialProofSection: React.FC = () => {
                     <span className="font-extrabold text-xs text-stone-900 tracking-tight truncate max-w-[90px] sm:max-w-[110px]">
                       {brand.name}
                     </span>
-                    <span className="text-[10px] font-bold text-amber-800 bg-amber-100/60 px-2 py-0.5 rounded-full inline-block mt-0.5 group-hover:bg-amber-100 transition-colors">
+                    <span className="text-[10px] font-bold text-stone-700 bg-stone-100 border border-stone-200 px-2 py-0.5 rounded-full inline-block mt-0.5 group-hover:bg-stone-200 transition-colors">
                       {brand.badge}
                     </span>
                   </div>
@@ -270,8 +262,8 @@ export const SocialProofSection: React.FC = () => {
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="text-center space-y-2"
           >
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-amber-100/80 text-amber-900 border border-amber-300 text-xs font-bold uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-stone-100 text-stone-900 border border-stone-300 text-xs font-bold uppercase tracking-wider">
+              <Sparkles className="w-3.5 h-3.5 text-stone-700" />
               <span>Read &amp; Share Customer Reviews on Google</span>
             </div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-stone-900 tracking-tight">

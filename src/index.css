@@ -77,17 +77,15 @@ canvas {
 .gold-silver-shimmer {
   background: linear-gradient(
     105deg,
-    #d4af37 0%,
-    #f5be38 12%,
-    #fff3b5 22%,
-    #f8fafc 32%,
-    #e2e8f0 42%,
+    #18181b 0%,
+    #27272a 12%,
+    #71717a 22%,
+    #e4e4e7 35%,
     #ffffff 50%,
-    #e2e8f0 58%,
-    #f8fafc 68%,
-    #fff3b5 78%,
-    #f5be38 88%,
-    #d4af37 100%
+    #e4e4e7 65%,
+    #71717a 78%,
+    #27272a 88%,
+    #18181b 100%
   );
   background-size: 240% 100%;
   animation: goldSilverShimmer 8s ease-in-out infinite;

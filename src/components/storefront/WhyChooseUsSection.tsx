@@ -92,24 +92,24 @@ export const WhyChooseUsSection: React.FC<WhyChooseUsSectionProps> = ({
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,#070709_90%)] opacity-80" />
       </div>
 
-      {/* Classic Animated Ambient Glow Orbs */}
+      {/* Subtle Animated Ambient Sheen */}
       <motion.div 
         animate={{ 
           y: [0, -25, 0],
           scale: [1, 1.12, 1],
-          opacity: [0.08, 0.16, 0.08]
+          opacity: [0.03, 0.07, 0.03]
         }}
         transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-1/4 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-gradient-to-tr from-[#f5be38] to-[#d4af37] blur-[130px] rounded-full pointer-events-none" 
+        className="absolute top-1/4 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-white blur-[130px] rounded-full pointer-events-none" 
       />
       <motion.div 
         animate={{ 
           y: [0, 20, 0],
           scale: [1, 1.15, 1],
-          opacity: [0.06, 0.14, 0.06]
+          opacity: [0.02, 0.06, 0.02]
         }}
         transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-        className="absolute bottom-10 right-10 w-[450px] h-[350px] bg-gradient-to-bl from-[#ffd15c] to-[#b8860b] blur-[120px] rounded-full pointer-events-none" 
+        className="absolute bottom-10 right-10 w-[450px] h-[350px] bg-white blur-[120px] rounded-full pointer-events-none" 
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -182,7 +182,7 @@ export const WhyChooseUsSection: React.FC<WhyChooseUsSectionProps> = ({
                   whileHover={{ scale: 1.05, x: 2 }}
                   className="flex items-center gap-1.5 text-stone-100 bg-black/40 px-3 py-1 rounded-lg border border-white/10 transition-colors hover:border-[#f5be38]/40 backdrop-blur-sm shadow-sm"
                 >
-                  <MapPin className="w-4 h-4 text-[#f5be38]" />
+                  <MapPin className="w-4 h-4 text-white" />
                   <span>Bayelsa, Lagos &amp; All 36 States</span>
                 </motion.div>
               </div>
@@ -195,7 +195,7 @@ export const WhyChooseUsSection: React.FC<WhyChooseUsSectionProps> = ({
                   Ready to print your order?
                 </div>
                 
-                {/* Classic Shimmering Button */}
+                {/* Shimmering Button */}
                 <motion.a
                   whileHover={{ scale: 1.04, y: -2 }}
                   whileTap={{ scale: 0.97 }}
@@ -203,14 +203,8 @@ export const WhyChooseUsSection: React.FC<WhyChooseUsSectionProps> = ({
                   target="_blank"
                   rel="noreferrer"
                   onClick={onSendFile}
-                  className="relative overflow-hidden w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-3.5 bg-gradient-to-r from-[#f5be38] via-[#ffd15c] to-[#e5ab20] hover:from-[#ffd15c] hover:to-[#f5be38] text-black font-black text-sm rounded-xl shadow-[0_4px_25px_rgba(245,190,56,0.45)] transition-all group cursor-pointer"
+                  className="relative overflow-hidden w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-3.5 bg-white hover:bg-stone-200 text-black font-black text-sm rounded-xl shadow-lg border border-white transition-all group cursor-pointer"
                 >
-                  {/* Button Sheen Sweep Effect */}
-                  <motion.div 
-                    animate={{ x: ['-100%', '200%'] }}
-                    transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 2, ease: 'easeInOut' }}
-                    className="absolute inset-0 w-1/2 bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12 pointer-events-none"
-                  />
                   <FileUp className="w-4 h-4 text-black relative z-10" />
                   <span className="relative z-10">Send Print Ready File</span>
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1 relative z-10" />

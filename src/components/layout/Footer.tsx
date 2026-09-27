@@ -7,7 +7,16 @@ import {
   MapPin,
   Navigation,
   Clock,
-  ChevronRight
+  ChevronRight,
+  ShieldCheck,
+  Truck,
+  Sparkles,
+  ArrowUp,
+  FileCheck,
+  CheckCircle2,
+  Building2,
+  Lock,
+  BadgeCheck
 } from 'lucide-react';
 import { ProductCategory } from '../../types/schema';
 import { InfoModalTab } from '../common/CompanyInfoModal';
@@ -34,442 +43,409 @@ export const Footer: React.FC<FooterProps> = ({
     }
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
-    <footer className="bg-[#07070a] text-stone-100 border-t-2 border-[#f5be38]/30 relative z-20">
-      {/* Main Footer Container */}
+    <footer className="bg-[#07070a] text-stone-100 border-t-2 border-white/20 relative z-20 overflow-hidden">
+      
+      {/* ========================================================================= */}
+      {/* 1. HIGH-IMPACT PRE-FOOTER CONVERSION BANNER (Monochrome Luxury Bridge)    */}
+      {/* ========================================================================= */}
+      <div className="relative bg-gradient-to-r from-[#0a0a0f] via-[#14141e] to-[#0a0a0f] border-b border-white/10 py-10 sm:py-14 px-4 sm:px-6 lg:px-8">
+        {/* Subtle decorative silver light glow */}
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-white/[0.04] rounded-full blur-3xl pointer-events-none -z-10" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-white/[0.03] rounded-full blur-3xl pointer-events-none -z-10" />
+
+        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
+          {/* Left Text Block */}
+          <div className="max-w-2xl space-y-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-white text-[11px] sm:text-xs font-black tracking-widest uppercase">
+              <Sparkles className="w-3.5 h-3.5 text-white" />
+              <span>Full-Service Commercial Printing Press</span>
+            </div>
+
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight leading-tight">
+              Ready to bring your next print project to life?
+            </h2>
+
+            <p className="text-stone-300 text-sm sm:text-base font-normal leading-relaxed">
+              Get an instant pre-press file audit, transparent volume pricing, or discuss your bespoke corporate requirements directly with our senior press engineers.
+            </p>
+
+            {/* 3 Quick Value Badges */}
+            <div className="pt-2 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-stone-300">
+              <div className="flex items-center gap-1.5 text-stone-200">
+                <CheckCircle2 className="w-4 h-4 text-white shrink-0" />
+                <span>Free Bleed &amp; Resolution Inspection</span>
+              </div>
+              <div className="flex items-center gap-1.5 text-stone-200">
+                <CheckCircle2 className="w-4 h-4 text-white shrink-0" />
+                <span>24–48hr Rush Order Dispatch</span>
+              </div>
+              <div className="flex items-center gap-1.5 text-stone-200">
+                <CheckCircle2 className="w-4 h-4 text-white shrink-0" />
+                <span>Doorstep Delivery Across 36 States</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Action Buttons */}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 w-full lg:w-auto shrink-0">
+            {/* WhatsApp Direct Chat Button */}
+            <a
+              href="https://wa.me/2347030372539?text=Hello%20Silver%20%26%20Gold%20Inkshine%20Ltd%2C%20I%20would%20like%20to%20discuss%20a%20commercial%20print%20job"
+              target="_blank"
+              rel="noreferrer"
+              className="bg-white hover:bg-stone-200 text-black font-extrabold text-xs sm:text-sm px-6 py-3.5 rounded-xl flex items-center justify-center gap-2.5 shadow-[0_4px_16px_rgba(255,255,255,0.2)] transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+            >
+              <svg viewBox="0 0 24 24" className="w-4.5 h-4.5 fill-black shrink-0">
+                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+              </svg>
+              <span>Chat on WhatsApp</span>
+            </a>
+
+            {/* Request Custom Quote Trigger */}
+            <button
+              type="button"
+              onClick={onOpenQuoteModal}
+              className="bg-[#181822] hover:bg-[#222230] text-white font-extrabold text-xs sm:text-sm px-6 py-3.5 rounded-xl border border-white/30 flex items-center justify-center gap-2 shadow-sm transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+            >
+              <span>Request Custom Quote</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* ========================================================================= */}
+      {/* 2. MAIN FOOTER CONTENT COLUMNS                                            */}
+      {/* ========================================================================= */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-12">
           
-          {/* ========================================================= */}
-          {/* Column 1: Brand, About Writeup, Social Icons & Actions    */}
-          {/* ========================================================= */}
+          {/* Column 1: Brand, About Writeup, Social Proof Badges & Direct Links */}
           <div className="md:col-span-5 lg:col-span-4 space-y-6">
-            {/* Logo */}
+            {/* Logo Mark and Title */}
             <div className="flex items-center gap-3.5">
-              {/* Official Silver & Gold Inkshine Emblem */}
-              <div className="relative w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center shrink-0 drop-shadow-md">
+              <div className="relative w-12 h-12 flex items-center justify-center shrink-0 drop-shadow-md">
                 <CompanyLogoMark className="w-full h-full" />
               </div>
 
-              {/* Brand Text */}
               <div>
-                <div className="text-lg sm:text-2xl font-black tracking-tight leading-none flex items-center gap-1.5">
+                <div className="text-xl sm:text-2xl font-black tracking-tight leading-none flex items-center gap-1.5">
                   <span className="text-white drop-shadow-[0_1px_2px_rgba(255,255,255,0.2)] font-black">
                     SILVER
                   </span>
-                  <span className="text-[#f5be38] font-bold text-sm sm:text-base">&amp;</span>
-                  <span className="text-[#f5be38] drop-shadow-[0_1px_4px_rgba(245,190,56,0.35)] font-black">
+                  <span className="text-stone-300 font-bold text-sm sm:text-base">&amp;</span>
+                  <span className="text-white drop-shadow-[0_1px_4px_rgba(255,255,255,0.2)] font-black">
                     GOLD
                   </span>
                 </div>
-                <div className="text-[11px] sm:text-xs font-black tracking-[0.25em] text-white leading-none mt-1.5 drop-shadow-xs">
+                <div className="text-[11px] sm:text-xs font-black tracking-[0.25em] text-stone-300 leading-none mt-1.5 drop-shadow-xs">
                   INKSHINE LTD
                 </div>
               </div>
             </div>
 
-            {/* High-Contrast Description Writeup */}
-            <p className="text-sm sm:text-[15px] text-stone-100 leading-relaxed text-left font-normal">
-              <strong className="text-white font-bold">Silver &amp; Gold Inkshine Ltd</strong> is a complete commercial printing company based in Lagos, Nigeria, and proudly recognized as the Nation&apos;s No.1 trusted online shop for printing. We deliver professional, high-quality print solutions that help businesses, organizations, and individuals stand out. Silver &amp; Gold Inkshine Ltd is proud to be featured on <strong className="text-white font-bold">Business Insider</strong>, a trusted global business and media platform. This recognition strengthens our commitment to providing quality printing, branding, and advertising solutions across Nigeria.{' '}
-              <button 
-                type="button"
-                onClick={() => onOpenInfoModal?.('contact')}
-                className="text-[#f5be38] hover:text-[#ffd666] font-bold underline underline-offset-2 cursor-pointer"
-              >
-                Contact us
-              </button>{' '}
-              for more info. Read our{' '}
+            {/* Credibility & Corporate Description */}
+            <p className="text-sm sm:text-[14.5px] text-stone-200 leading-relaxed text-left font-normal">
+              <strong className="text-white font-bold">Silver &amp; Gold Inkshine Ltd</strong> is an accredited commercial printing corporation, proudly recognized as Nigeria&apos;s trusted hub for high-precision offset and digital production. We deliver tailored branding and print solutions that empower corporate institutions, SMEs, government bodies, and event planners across all 36 States. Featured on <strong className="text-white font-bold">Business Insider</strong>.
+            </p>
+
+            {/* Corporate Registration & Trust Seals */}
+            <div className="p-3.5 rounded-xl bg-white/[0.04] border border-white/10 space-y-2 text-xs">
+              <div className="flex items-center justify-between text-stone-300">
+                <span className="flex items-center gap-1.5 text-stone-200 font-bold">
+                  <BadgeCheck className="w-4 h-4 text-white" />
+                  <span>Corporate Affairs Commission:</span>
+                </span>
+                <span className="font-mono text-white font-black px-2 py-0.5 rounded bg-white/10 border border-white/20">
+                  RC Certified
+                </span>
+              </div>
+              <div className="flex items-center justify-between text-stone-300">
+                <span className="flex items-center gap-1.5 text-stone-200 font-bold">
+                  <ShieldCheck className="w-4 h-4 text-white" />
+                  <span>Quality Assurance:</span>
+                </span>
+                <span className="text-white font-bold">
+                  100% Pre-Press Guarantee
+                </span>
+              </div>
+            </div>
+
+            {/* Quick Policy Triggers */}
+            <div className="text-xs text-stone-400 space-x-2 pt-1">
               <button 
                 type="button"
                 onClick={() => onOpenInfoModal?.('terms')}
-                className="text-[#f5be38] hover:text-[#ffd666] font-bold underline underline-offset-2 cursor-pointer"
+                className="text-white hover:text-stone-300 font-bold underline underline-offset-2 cursor-pointer"
               >
                 Terms &amp; Conditions
               </button>
-              ,{' '}
+              <span>•</span>
               <button 
                 type="button"
                 onClick={() => onOpenInfoModal?.('privacy')}
-                className="text-[#f5be38] hover:text-[#ffd666] font-bold underline underline-offset-2 cursor-pointer"
+                className="text-white hover:text-stone-300 font-bold underline underline-offset-2 cursor-pointer"
               >
                 Privacy Policy
-              </button>{' '}
-              and{' '}
+              </button>
+              <span>•</span>
               <button 
                 type="button"
-                onClick={() => onOpenInfoModal?.('terms')}
-                className="text-[#f5be38] hover:text-[#ffd666] font-bold underline underline-offset-2 cursor-pointer"
+                onClick={() => onOpenInfoModal?.('contact')}
+                className="text-white hover:text-stone-300 font-bold underline underline-offset-2 cursor-pointer"
               >
                 Return Policy
-              </button>.
-            </p>
-
-            {/* Social Media Circular Badges */}
-            <div className="flex items-center gap-3 pt-1">
-              {/* Instagram */}
-              <a 
-                href="https://instagram.com" 
-                target="_blank" 
-                rel="noreferrer" 
-                aria-label="Instagram"
-                className="w-9 h-9 rounded-full bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] flex items-center justify-center text-white shadow-md hover:scale-105 transition-transform"
-              >
-                <svg viewBox="0 0 24 24" className="w-4.5 h-4.5 fill-none stroke-white stroke-2">
-                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                </svg>
-              </a>
-
-              {/* YouTube */}
-              <a 
-                href="https://youtube.com" 
-                target="_blank" 
-                rel="noreferrer" 
-                aria-label="YouTube"
-                className="w-9 h-9 rounded-full bg-[#FF0000] flex items-center justify-center text-white shadow-md hover:scale-105 transition-transform"
-              >
-                <svg viewBox="0 0 24 24" className="w-4.5 h-4.5 fill-white">
-                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                </svg>
-              </a>
-
-              {/* Facebook */}
-              <a 
-                href="https://facebook.com" 
-                target="_blank" 
-                rel="noreferrer" 
-                aria-label="Facebook"
-                className="w-9 h-9 rounded-full bg-[#1877F2] flex items-center justify-center text-white shadow-md hover:scale-105 transition-transform"
-              >
-                <svg viewBox="0 0 24 24" className="w-4.5 h-4.5 fill-white">
-                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                </svg>
-              </a>
-
-              {/* Pinterest */}
-              <a 
-                href="https://pinterest.com" 
-                target="_blank" 
-                rel="noreferrer" 
-                aria-label="Pinterest"
-                className="w-9 h-9 rounded-full bg-[#E60023] flex items-center justify-center text-white shadow-md hover:scale-105 transition-transform"
-              >
-                <svg viewBox="0 0 24 24" className="w-4.5 h-4.5 fill-white">
-                  <path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.546.535 6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"/>
-                </svg>
-              </a>
-
-              {/* LinkedIn */}
-              <a 
-                href="https://linkedin.com" 
-                target="_blank" 
-                rel="noreferrer" 
-                aria-label="LinkedIn"
-                className="w-9 h-9 rounded-full bg-[#0A66C2] flex items-center justify-center text-white shadow-md hover:scale-105 transition-transform"
-              >
-                <svg viewBox="0 0 24 24" className="w-4.5 h-4.5 fill-white">
-                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                </svg>
-              </a>
-
-              {/* Email */}
-              <a 
-                href="mailto:orders@silverandgold.ng" 
-                aria-label="Email"
-                className="w-9 h-9 rounded-full bg-white/15 text-white flex items-center justify-center shadow-md hover:bg-[#f5be38] hover:text-black transition-colors"
-              >
-                <Mail className="w-4.5 h-4.5 stroke-[2.2]" />
-              </a>
+              </button>
             </div>
 
-            {/* Action Buttons */}
-            <div className="space-y-3 pt-2">
-              <div>
-                <button
-                  type="button"
-                  onClick={() => onOpenQuoteModal ? onOpenQuoteModal() : window.open("https://wa.me/2347030372539?text=Hello%20Silver%20%26%20Gold%20Inkshine%20Ltd%2C%20I%20would%20like%20to%20request%20a%20quote", "_blank")}
-                  className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-gradient-to-r from-[#d4af37] via-[#f5be38] to-[#b8860b] hover:from-[#e5c158] hover:via-[#fed766] hover:to-[#c69214] text-stone-950 font-black text-sm shadow-lg transition-all cursor-pointer border border-amber-300 active:scale-95"
+            {/* Social Media Channels (Clean Monochrome Pills) */}
+            <div className="pt-1">
+              <div className="text-[11px] text-stone-400 font-bold uppercase tracking-wider mb-2">Connect With Our Studio</div>
+              <div className="flex items-center gap-3">
+                {/* Instagram */}
+                <a 
+                  href="https://instagram.com" 
+                  target="_blank" 
+                  rel="noreferrer" 
+                  aria-label="Instagram"
+                  className="w-9 h-9 rounded-full bg-white/10 hover:bg-white text-white hover:text-black border border-white/20 flex items-center justify-center shadow-md transition-all"
                 >
-                  <span>Get a Quote</span>
-                  <ArrowRight className="w-4 h-4 stroke-[2.5]" />
-                </button>
-              </div>
+                  <svg viewBox="0 0 24 24" className="w-4 h-4 fill-none stroke-current stroke-2">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
+                </a>
 
-              <div>
-                <a
-                  href="https://share.google/5obB8jqnby72M5IDG"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-lg bg-[#65a30d] hover:bg-[#52840a] text-white font-bold text-xs sm:text-[13.5px] shadow-md transition-colors cursor-pointer text-left leading-snug max-w-sm group border border-lime-400/40"
+                {/* Facebook */}
+                <a 
+                  href="https://facebook.com" 
+                  target="_blank" 
+                  rel="noreferrer" 
+                  aria-label="Facebook"
+                  className="w-9 h-9 rounded-full bg-white/10 hover:bg-white text-white hover:text-black border border-white/20 flex items-center justify-center shadow-md transition-all"
                 >
-                  <span className="shrink-0 w-5.5 h-5.5 rounded-full bg-white flex items-center justify-center shadow-xs">
-                    <svg viewBox="0 0 24 24" className="w-4 h-4" aria-hidden="true">
-                      <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                      <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                      <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
-                      <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
-                    </svg>
-                  </span>
-                  <span>Add Silver &amp; Gold Inkshine Ltd as a Preferred Source on Google</span>
-                  <ExternalLink className="w-4 h-4 opacity-90 group-hover:opacity-100 shrink-0 ml-auto text-lime-200" />
+                  <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                  </svg>
+                </a>
+
+                {/* YouTube */}
+                <a 
+                  href="https://youtube.com" 
+                  target="_blank" 
+                  rel="noreferrer" 
+                  aria-label="YouTube"
+                  className="w-9 h-9 rounded-full bg-white/10 hover:bg-white text-white hover:text-black border border-white/20 flex items-center justify-center shadow-md transition-all"
+                >
+                  <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current">
+                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                  </svg>
                 </a>
               </div>
             </div>
           </div>
 
-          {/* ========================================================= */}
-          {/* Column 2: Quick Links (2 Sub-Columns side-by-side)        */}
-          {/* ========================================================= */}
+          {/* Column 2: Structured Print Categories (Organized by Customer Intent) */}
           <div className="md:col-span-4 lg:col-span-5 space-y-4">
             <div className="flex items-center gap-2 border-b border-white/15 pb-2">
-              <span className="w-2 h-2 rounded-full bg-[#f5be38]" />
+              <span className="w-2 h-2 rounded-full bg-white" />
               <h3 className="font-black text-lg sm:text-xl text-white tracking-wide">
-                Quick Links &amp; Categories
+                Commercial Print Catalog
               </h3>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-2.5 text-sm font-medium text-stone-100">
-              {/* Left Sub-Column */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-[13px]">
+              
+              {/* Category Group A: Stationery & Marketing */}
               <div className="space-y-2">
+                <div className="text-[11px] font-black uppercase tracking-wider text-white border-b border-white/10 pb-1 mb-2">
+                  Stationery &amp; Marketing
+                </div>
                 {[
-                  { key: 'advertising_materials', label: 'Advertising Materials' },
-                  { key: 'awards', label: 'Awards' },
-                  { key: 'banners_stands', label: 'Banners & Stands' },
-                  { key: 'books_magazines', label: 'Books & Magazines' },
-                  { key: 'cards_invitations', label: 'Cards & Invitations' },
-                  { key: 'carports', label: 'Carports' },
-                  { key: 'custom_apparels_caps', label: 'Custom Apparels & Caps' },
-                  { key: 'events_exhibitions', label: 'Events & Exhibitions' },
-                  { key: 'flyer_handbill', label: 'Flyer & Handbill Printing' },
-                  { key: 'food_packaging', label: 'Food Packaging' },
-                  { key: 'signages', label: 'Signages' }
+                  { key: 'cards_invitations', label: 'Business Cards & Invitations' },
+                  { key: 'flyers_handbills', label: 'Flyers, Posters & Leaflets' },
+                  { key: 'books_magazines', label: 'Books, Brochures & Annual Reports' },
+                  { key: 'office_stationery', label: 'Letterheads & Office Stationery' },
+                  { key: 'paper_bags_tags', label: 'Paper Bags & Hang Tags' },
+                  { key: 'stickers_labels', label: 'Waterproof Die-Cut Stickers' },
+                  { key: 'wedding', label: 'Wedding Stationery & Programs' },
                 ].map((item) => (
                   <button 
                     key={item.key}
                     type="button" 
                     onClick={() => handleCategoryClick(item.key)}
-                    className="flex items-center gap-1.5 text-stone-200 hover:text-[#f5be38] transition-colors text-left py-0.5 group w-full cursor-pointer"
+                    className="flex items-center gap-1.5 text-stone-300 hover:text-white transition-colors text-left py-0.5 group w-full cursor-pointer"
                   >
-                    <ChevronRight className="w-3.5 h-3.5 text-[#f5be38]/70 group-hover:text-[#f5be38] group-hover:translate-x-0.5 transition-all shrink-0" />
+                    <ChevronRight className="w-3.5 h-3.5 text-stone-500 group-hover:text-white group-hover:translate-x-0.5 transition-all shrink-0" />
                     <span className="group-hover:underline">{item.label}</span>
                   </button>
                 ))}
               </div>
 
-              {/* Right Sub-Column */}
+              {/* Category Group B: Large Format & Branding */}
               <div className="space-y-2">
+                <div className="text-[11px] font-black uppercase tracking-wider text-white border-b border-white/10 pb-1 mb-2">
+                  Large Format &amp; Packaging
+                </div>
                 {[
-                  { key: 'frames_wall_arts', label: 'Frames & Wall Arts' },
-                  { key: 'gift_items_souvenirs', label: 'Gift Items & Souvenirs' },
-                  { key: 'office_stationery', label: 'Office Stationery & Branding' },
-                  { key: 'outdoor_displays', label: 'Outdoor Displays' },
-                  { key: 'packages', label: 'Packages' },
-                  { key: 'packaging_cartons', label: 'Packaging & Shipping Cartons' },
-                  { key: 'paper_bags_tags', label: 'Paper Bags & Tags' },
-                  { key: 'stickers_labels', label: 'Stickers & Labels' },
-                  { key: 'vehicle_branding', label: 'Vehicle Branding' },
-                  { key: 'wedding', label: 'Wedding Printing' },
-                  { key: 'printing_machines', label: 'Printing Machines' },
-                  { key: 'events_exhibitions', label: 'Event Planner Lagos' }
+                  { key: 'banners_stands', label: 'Roll-Up Banners & Teardrop Flags' },
+                  { key: 'signages', label: '3D Illuminated Signages & Letters' },
+                  { key: 'packaging_shipping_cartons', label: 'Packaging Boxes & Cartons' },
+                  { key: 'custom_apparels_caps', label: 'Screen & DTF Custom Apparels' },
+                  { key: 'awards', label: 'Crystal Awards & Souvenirs' },
+                  { key: 'vehicle_branding', label: 'Fleet & Vehicle Vinyl Wrapping' },
+                  { key: 'frames_wall_arts', label: 'Canvas Frames & Wall Arts' },
                 ].map((item) => (
                   <button 
-                    key={item.label}
+                    key={item.key}
                     type="button" 
                     onClick={() => handleCategoryClick(item.key)}
-                    className="flex items-center gap-1.5 text-stone-200 hover:text-[#f5be38] transition-colors text-left py-0.5 group w-full cursor-pointer"
+                    className="flex items-center gap-1.5 text-stone-300 hover:text-white transition-colors text-left py-0.5 group w-full cursor-pointer"
                   >
-                    <ChevronRight className="w-3.5 h-3.5 text-[#f5be38]/70 group-hover:text-[#f5be38] group-hover:translate-x-0.5 transition-all shrink-0" />
+                    <ChevronRight className="w-3.5 h-3.5 text-stone-500 group-hover:text-white group-hover:translate-x-0.5 transition-all shrink-0" />
                     <span className="group-hover:underline">{item.label}</span>
                   </button>
                 ))}
               </div>
+
             </div>
           </div>
 
-          {/* ========================================================= */}
-          {/* Column 3: Contact Us, Business Hours & Map Preview        */}
-          {/* ========================================================= */}
+          {/* Column 3: Logistics Hubs, Contact & Secure Payments (Monochrome Styling) */}
           <div className="md:col-span-3 lg:col-span-3 space-y-4">
             <div className="flex items-center gap-2 border-b border-white/15 pb-2">
-              <span className="w-2 h-2 rounded-full bg-[#f5be38]" />
+              <span className="w-2 h-2 rounded-full bg-white" />
               <h3 className="font-black text-lg sm:text-xl text-white tracking-wide">
-                Contact &amp; Location
+                Production &amp; Logistics Hub
               </h3>
             </div>
 
-            {/* Address */}
-            <div className="text-sm text-stone-200 leading-relaxed bg-white/5 p-3 rounded-xl border border-white/10">
-              <div className="flex items-center gap-1.5 text-[#f5be38] font-black text-xs uppercase tracking-wider mb-1">
-                <MapPin className="w-3.5 h-3.5" />
-                <span>Head Office</span>
+            {/* Dual Location Hubs */}
+            <div className="text-xs text-stone-200 leading-relaxed bg-white/5 p-3.5 rounded-xl border border-white/10 space-y-2.5">
+              <div>
+                <div className="flex items-center gap-1.5 text-white font-black text-[11px] uppercase tracking-wider mb-0.5">
+                  <Building2 className="w-3.5 h-3.5 text-white" />
+                  <span>Main Press &amp; Production Plant</span>
+                </div>
+                <span className="text-white font-medium">Yenagoa Industrial Zone, Bayelsa State, Nigeria.</span>
               </div>
-              <span className="text-white font-medium">7 George St, off Apata Street, Somolu, Lagos 100231, Lagos State, Nigeria.</span>
+
+              <div className="pt-2 border-t border-white/10">
+                <div className="flex items-center gap-1.5 text-white font-black text-[11px] uppercase tracking-wider mb-0.5">
+                  <Truck className="w-3.5 h-3.5 text-white" />
+                  <span>Lagos Transit &amp; Dispatch Hub</span>
+                </div>
+                <span className="text-white font-medium">7 George St, off Apata Street, Somolu, Lagos 100231.</span>
+              </div>
             </div>
 
-            {/* Phone */}
-            <div className="flex items-center gap-2.5 text-sm text-stone-100 bg-white/5 p-2.5 rounded-xl border border-white/10">
-              <div className="w-7 h-7 rounded-lg bg-[#f5be38]/20 flex items-center justify-center text-[#f5be38] shrink-0">
-                <Phone className="w-4 h-4 fill-none stroke-current stroke-[2.2]" />
-              </div>
-              <div>
-                <div className="text-[11px] text-stone-400 font-bold uppercase">Phone &amp; WhatsApp</div>
-                <a 
-                  href="tel:+2347030372539" 
-                  className="font-bold text-white hover:text-[#f5be38] transition-colors"
-                >
+            {/* Direct GPS Button */}
+            <a
+              href="https://maps.app.goo.gl/FHkoQGNuL8p13jnG6"
+              target="_blank"
+              rel="noreferrer"
+              className="w-full py-2.5 px-3.5 rounded-xl bg-white hover:bg-stone-200 text-black border border-white text-xs font-black flex items-center justify-center gap-2 transition-all shadow-xs group"
+            >
+              <Navigation className="w-3.5 h-3.5 text-black" />
+              <span>Get GPS Directions on Google Maps</span>
+              <ExternalLink className="w-3.5 h-3.5 opacity-70" />
+            </a>
+
+            {/* Phone & Working Hours */}
+            <div className="text-xs text-stone-200 bg-white/5 p-3 rounded-xl border border-white/10 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-stone-400 font-bold">Hotline &amp; WhatsApp:</span>
+                <a href="tel:+2347030372539" className="text-white font-black hover:underline">
                   +234 703 037 2539
                 </a>
               </div>
-            </div>
-
-            {/* Email */}
-            <div className="flex items-center gap-2.5 text-sm text-stone-100 bg-white/5 p-2.5 rounded-xl border border-white/10">
-              <div className="w-7 h-7 rounded-lg bg-[#f5be38]/20 flex items-center justify-center text-[#f5be38] shrink-0">
-                <Mail className="w-4 h-4 fill-none stroke-current stroke-[2.2]" />
+              <div className="flex items-center justify-between pt-1 border-t border-white/10">
+                <span className="text-stone-400 font-bold">Factory Hours:</span>
+                <span className="text-white font-bold">Mon–Sat: 8am – 7pm</span>
               </div>
-              <div>
-                <div className="text-[11px] text-stone-400 font-bold uppercase">Official Email</div>
-                <a 
-                  href="mailto:orders@silverandgold.ng" 
-                  className="font-bold text-white hover:text-[#f5be38] transition-colors break-all"
-                >
-                  orders@silverandgold.ng
-                </a>
+              <div className="flex items-center gap-1.5 pt-1 text-[11px] text-stone-300 font-bold">
+                <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
+                <span>Receiving print orders &amp; dispatching nationwide</span>
               </div>
             </div>
 
-            {/* Operating Hours */}
-            <div className="text-xs sm:text-sm text-stone-200 bg-white/5 p-3 rounded-xl border border-white/10 space-y-1.5">
-              <div className="flex items-center gap-1.5 text-[#f5be38] font-black text-xs uppercase tracking-wider mb-1">
-                <Clock className="w-3.5 h-3.5" />
-                <span>Working Hours</span>
-              </div>
-              <div className="flex items-center justify-between text-stone-200">
-                <span>Mon – Fri:</span>
-                <strong className="text-white font-bold">09:00 AM – 05:30 PM</strong>
-              </div>
-              <div className="flex items-center justify-between text-stone-200">
-                <span>Saturday:</span>
-                <strong className="text-white font-bold">10:00 AM – 04:00 PM</strong>
-              </div>
-              <div className="flex items-center justify-between text-stone-200">
-                <span>Sunday:</span>
-                <strong className="text-amber-400 font-bold">Closed</strong>
-              </div>
-            </div>
-
-            {/* Interactive Google Map Preview & Link */}
-            <div className="pt-1 space-y-2">
-              <div className="rounded-2xl overflow-hidden border border-white/20 bg-stone-900 shadow-md">
-                <div className="relative h-28 w-full bg-stone-950">
-                  <iframe
-                    title="Silver & Gold Printing House Location Map"
-                    src="https://maps.google.com/maps?q=9.081999,8.675277&hl=en&z=16&output=embed"
-                    width="100%"
-                    height="100%"
-                    style={{ border: 0 }}
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    className="w-full h-full block filter contrast-105"
-                  />
-                  <div className="absolute top-2 left-2 bg-black/90 backdrop-blur-xs px-2.5 py-1 rounded-md border border-white/20 text-[10.5px] text-[#f5be38] font-black flex items-center gap-1">
-                    <MapPin className="w-3 h-3 text-[#f5be38]" />
-                    <span>Silver &amp; Gold Printing House</span>
-                  </div>
-                </div>
-
-                <div className="p-2.5 bg-stone-950 border-t border-white/15 space-y-2">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-[#f5be38] font-bold flex items-center gap-1">
-                      <Navigation className="w-3 h-3" />
-                      Google Maps Link
-                    </span>
-                    <a
-                      href="https://maps.app.goo.gl/FHkoQGNuL8p13jnG6"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="text-white hover:text-[#f5be38] text-xs font-bold flex items-center gap-0.5 underline"
-                    >
-                      <span>Open Maps</span>
-                      <ExternalLink className="w-3 h-3" />
-                    </a>
-                  </div>
-
-                  <a
-                    href="https://maps.app.goo.gl/FHkoQGNuL8p13jnG6"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="w-full py-2 px-3 rounded-lg bg-[#b8860b] hover:bg-[#d4af37] text-black text-xs font-extrabold flex items-center justify-center gap-1.5 transition-colors shadow-md"
-                  >
-                    <span>Get GPS Directions on Google Maps</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            {/* Payment Method Badges */}
+            {/* Monochromatic Payment Badges */}
             <div className="pt-2">
-              <div className="text-[11px] text-stone-400 font-bold uppercase mb-1.5">Accepted Payment Methods</div>
+              <div className="text-[11px] text-stone-400 font-bold uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                <Lock className="w-3 h-3 text-white" />
+                <span>Verified Payment Channels</span>
+              </div>
               <div className="flex items-center gap-2 flex-wrap">
+                {/* Paystack */}
+                <div className="h-7 px-2.5 rounded-md bg-white/10 border border-white/20 flex items-center justify-center shadow-xs">
+                  <span className="font-black text-[11px] text-white tracking-tight">
+                    PAYSTACK
+                  </span>
+                </div>
+
+                {/* Verve */}
+                <div className="h-7 px-2.5 rounded-md bg-white/10 border border-white/20 flex items-center justify-center shadow-xs">
+                  <span className="font-black text-[11px] text-white italic tracking-tight">
+                    VERVE
+                  </span>
+                </div>
+
+                {/* Mastercard */}
+                <div className="h-7 px-2.5 rounded-md bg-white text-black flex items-center justify-center gap-1 shadow-xs font-black text-[10px] tracking-tight uppercase">
+                  <span>MASTERCARD</span>
+                </div>
+
                 {/* VISA */}
-                <div className="h-7 px-2.5 rounded-sm bg-white flex items-center justify-center shadow-xs">
-                  <span className="font-black text-xs italic tracking-tighter text-[#1A1F71]">
+                <div className="h-7 px-2.5 rounded-md bg-white text-black flex items-center justify-center shadow-xs">
+                  <span className="font-black text-xs italic tracking-tighter">
                     VISA
                   </span>
                 </div>
 
-                {/* PayPal */}
-                <div className="h-7 px-2.5 rounded-sm bg-white flex items-center justify-center shadow-xs">
-                  <span className="font-extrabold text-xs italic text-[#003087]">
-                    Pay<span className="text-[#0079C1]">Pal</span>
-                  </span>
-                </div>
-
-                {/* Maestro */}
-                <div className="h-7 px-2 rounded-sm bg-white flex items-center justify-center gap-1 shadow-xs">
-                  <div className="flex -space-x-1">
-                    <span className="w-3 h-3 rounded-full bg-[#EB001B]" />
-                    <span className="w-3 h-3 rounded-full bg-[#0099DF]" />
-                  </div>
-                  <span className="font-extrabold text-[10px] text-stone-800 ml-0.5">
-                    maestro
-                  </span>
-                </div>
-
-                {/* MasterCard */}
-                <div className="h-7 px-2 rounded-sm bg-white flex items-center justify-center gap-1 shadow-xs">
-                  <div className="flex -space-x-1">
-                    <span className="w-3 h-3 rounded-full bg-[#EB001B]" />
-                    <span className="w-3 h-3 rounded-full bg-[#F79E1B]" />
-                  </div>
-                  <span className="font-extrabold text-[10px] text-stone-800 ml-0.5">
-                    mastercard
-                  </span>
-                </div>
-
-                {/* Discover */}
-                <div className="h-7 px-2.5 rounded-sm bg-white flex items-center justify-center shadow-xs">
-                  <span className="font-black text-[10px] tracking-tight text-stone-900">
-                    DISC<span className="text-[#FF6000]">O</span>VER
+                {/* Bank Transfer / NIP */}
+                <div className="h-7 px-2.5 rounded-md bg-white/10 border border-white/20 flex items-center justify-center shadow-xs">
+                  <span className="font-black text-[10px] text-white tracking-tight">
+                    DIRECT BANK TRANSFER
                   </span>
                 </div>
               </div>
             </div>
+
           </div>
 
         </div>
       </div>
 
-      {/* ========================================================= */}
-      {/* Bottom Full-Width Bar with Clean Border                   */}
-      {/* ========================================================= */}
-      <div className="bg-[#030305] border-t border-white/20 text-white py-5 px-4 text-center">
-        <p className="text-xs sm:text-sm font-semibold text-stone-200">
-          Copyright &copy; {new Date().getFullYear()} <strong className="text-white font-bold">Silver &amp; Gold Inkshine Ltd</strong>. All rights reserved.
-        </p>
+      {/* ========================================================================= */}
+      {/* 3. BOTTOM FULL-WIDTH COPYRIGHT STRIP (Safe Area for Frosted Glass Dock)    */}
+      {/* ========================================================================= */}
+      <div className="bg-[#030305] border-t border-white/15 text-stone-300 py-6 px-4 sm:px-6 lg:px-8 pb-32 sm:pb-36">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+          
+          {/* Copyright Notice */}
+          <p className="text-xs sm:text-sm font-medium text-stone-300">
+            &copy; {new Date().getFullYear()} <strong className="text-white font-bold">Silver &amp; Gold Inkshine Ltd</strong>. All rights reserved. Registered commercial printer in Nigeria.
+          </p>
+
+          {/* Back to Top Smooth Action */}
+          <button
+            type="button"
+            onClick={scrollToTop}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-white text-stone-200 hover:text-black font-bold text-xs border border-white/20 hover:border-white transition-all cursor-pointer shadow-xs active:scale-95"
+          >
+            <span>Back to Top</span>
+            <ArrowUp className="w-3.5 h-3.5" />
+          </button>
+
+        </div>
       </div>
+
     </footer>
   );
 };

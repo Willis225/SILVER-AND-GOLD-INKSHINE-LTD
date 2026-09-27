@@ -39,9 +39,9 @@ export const LocationMapSection: React.FC<LocationMapSectionProps> = ({
 
   return (
     <section id="location-map-section" className="py-16 sm:py-24 bg-[#08080a] text-white relative overflow-hidden border-t border-white/10 bg-grid-pattern">
-      {/* Subtle gold ambient glow background */}
-      <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#f5be38]/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-10 w-96 h-96 bg-[#f5be38]/5 rounded-full blur-3xl pointer-events-none" />
+      {/* Subtle silver ambient glow background */}
+      <div className="absolute top-0 right-1/4 w-96 h-96 bg-white/[0.03] rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-10 w-96 h-96 bg-white/[0.02] rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
@@ -52,13 +52,13 @@ export const LocationMapSection: React.FC<LocationMapSectionProps> = ({
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="text-center max-w-3xl mx-auto mb-12 space-y-3"
         >
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#f5be38]/15 border border-[#f5be38]/30 text-[#f5be38] text-xs font-black tracking-widest uppercase">
-            <MapPin className="w-3.5 h-3.5 text-[#f5be38] animate-bounce" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 text-white text-xs font-black tracking-widest uppercase">
+            <MapPin className="w-3.5 h-3.5 text-white" />
             <span>Official Factory &amp; Operations Map</span>
           </div>
           
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight text-white">
-            Find Us on <span className="text-[#f5be38] drop-shadow-sm">Google Maps</span>
+            Find Us on <span className="text-white drop-shadow-sm">Google Maps</span>
           </h2>
           
           <p className="text-sm sm:text-base text-stone-300 leading-relaxed">
@@ -178,7 +178,7 @@ export const LocationMapSection: React.FC<LocationMapSectionProps> = ({
             {/* Primary Location Card */}
             <div className="p-5 sm:p-6 rounded-3xl bg-[#121217] border border-white/10 backdrop-blur-md space-y-4 shadow-xl">
               <div className="flex items-start gap-3.5">
-                <div className="w-10 h-10 rounded-2xl bg-[#f5be38]/20 border border-[#f5be38]/30 flex items-center justify-center text-[#f5be38] shrink-0 mt-0.5">
+                <div className="w-10 h-10 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center text-white shrink-0 mt-0.5">
                   <MapPin className="w-5 h-5" />
                 </div>
                 <div className="space-y-1">
@@ -192,8 +192,8 @@ export const LocationMapSection: React.FC<LocationMapSectionProps> = ({
               </div>
 
               {/* Direct Map Line Box */}
-              <div className="p-3 rounded-2xl bg-black/60 border border-[#f5be38]/25 space-y-2">
-                <div className="flex items-center justify-between text-[11px] text-[#f5be38] font-bold">
+              <div className="p-3 rounded-2xl bg-black/60 border border-white/20 space-y-2">
+                <div className="flex items-center justify-between text-[11px] text-white font-bold">
                   <span className="flex items-center gap-1">
                     <Navigation className="w-3 h-3" />
                     Direct Google Maps Line
@@ -205,11 +205,11 @@ export const LocationMapSection: React.FC<LocationMapSectionProps> = ({
                   href={mapUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="block p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-[#ffd15c] hover:text-white transition-colors break-all group"
+                  className="block p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-stone-200 hover:text-white transition-colors break-all group"
                 >
                   <div className="flex items-center justify-between gap-2">
                     <span className="truncate">{mapUrl}</span>
-                    <ExternalLink className="w-3.5 h-3.5 text-stone-400 group-hover:text-[#f5be38] shrink-0" />
+                    <ExternalLink className="w-3.5 h-3.5 text-stone-400 group-hover:text-white shrink-0" />
                   </div>
                 </a>
               </div>
@@ -217,7 +217,7 @@ export const LocationMapSection: React.FC<LocationMapSectionProps> = ({
               {/* Operating Hours */}
               <div className="pt-2 border-t border-white/10 space-y-2">
                 <div className="flex items-center gap-2 text-xs font-bold text-stone-200">
-                  <Clock className="w-4 h-4 text-[#f5be38] shrink-0" />
+                  <Clock className="w-4 h-4 text-white shrink-0" />
                   <span>Press Working Hours</span>
                 </div>
                 <div className="grid grid-cols-2 gap-2 text-xs text-stone-300">
@@ -233,8 +233,8 @@ export const LocationMapSection: React.FC<LocationMapSectionProps> = ({
               </div>
 
               {/* Courier & Delivery Feature */}
-              <div className="flex items-center gap-3 p-3 rounded-2xl bg-[#f5be38]/10 border border-[#f5be38]/25 text-xs text-stone-200">
-                <Truck className="w-4 h-4 text-[#f5be38] shrink-0" />
+              <div className="flex items-center gap-3 p-3 rounded-2xl bg-white/5 border border-white/15 text-xs text-stone-200">
+                <Truck className="w-4 h-4 text-white shrink-0" />
                 <span className="leading-snug">
                   Doorstep delivery available across all 36 Nigerian states &amp; FCT Abuja in 3–5 working days.
                 </span>
@@ -249,10 +249,10 @@ export const LocationMapSection: React.FC<LocationMapSectionProps> = ({
                 href="https://wa.me/2347030372539?text=Hello%20Silver%20%26%20Gold%20Inkshine%2C%20I%20saw%20your%20Google%20Maps%20location%20and%20would%20like%20to%20place%20a%20print%20order."
                 target="_blank"
                 rel="noreferrer"
-                className="w-full py-2.5 px-4 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-extrabold text-xs flex items-center justify-center gap-2 transition-all shadow-md active:scale-98 cursor-pointer"
+                className="w-full py-2.5 px-4 rounded-xl bg-white hover:bg-stone-200 text-black font-extrabold text-xs flex items-center justify-center gap-2 transition-all shadow-md active:scale-98 cursor-pointer"
               >
                 <span>Chat with Operations on WhatsApp</span>
-                <ExternalLink className="w-3.5 h-3.5" />
+                <ExternalLink className="w-3.5 h-3.5 text-black" />
               </motion.a>
 
               <div className="grid grid-cols-2 gap-2">
@@ -262,7 +262,7 @@ export const LocationMapSection: React.FC<LocationMapSectionProps> = ({
                   href="tel:+2347030372539"
                   className="py-2.5 px-3 rounded-xl bg-white/10 hover:bg-white/15 text-stone-200 hover:text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors border border-white/10 cursor-pointer"
                 >
-                  <Phone className="w-3.5 h-3.5 text-[#f5be38]" />
+                  <Phone className="w-3.5 h-3.5 text-white" />
                   <span>Call Direct</span>
                 </motion.a>
 
@@ -272,7 +272,7 @@ export const LocationMapSection: React.FC<LocationMapSectionProps> = ({
                     whileTap={{ scale: 0.98 }}
                     type="button"
                     onClick={onRequestQuote}
-                    className="py-2.5 px-3 rounded-xl bg-[#f5be38] hover:bg-[#ffd15c] text-black font-extrabold text-xs flex items-center justify-center gap-1 transition-all cursor-pointer shadow-md active:scale-98"
+                    className="py-2.5 px-3 rounded-xl bg-stone-100 hover:bg-white text-black font-extrabold text-xs flex items-center justify-center gap-1 transition-all cursor-pointer shadow-md active:scale-98 border border-white"
                   >
                     <span>Instant Quote</span>
                   </motion.button>

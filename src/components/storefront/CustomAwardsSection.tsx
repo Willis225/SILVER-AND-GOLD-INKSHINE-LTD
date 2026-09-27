@@ -65,17 +65,9 @@ export const CustomAwardsSection: React.FC<CustomAwardsSectionProps> = ({
   }, [products]);
 
   return (
-    <section className="relative text-stone-900 py-16 sm:py-24 border-b border-stone-200 overflow-hidden bg-stone-50">
-      {/* Provided Section Background Image Layer */}
-      <div className="absolute inset-0 z-0">
-        <img
-          src="https://cdn.hstockplus.org/uploads/public/img-1790091847996-3aa2bb1c6a4e12cd.webp"
-          alt="Section Background"
-          className="w-full h-full object-cover object-center pointer-events-none"
-          referrerPolicy="no-referrer"
-        />
-        <div className="absolute inset-0 bg-white/70 backdrop-blur-[0.5px]" />
-      </div>
+    <section className="relative text-stone-900 py-16 sm:py-24 border-b border-stone-200 overflow-hidden bg-white">
+      {/* Subtle architectural hairline grid background */}
+      <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:24px_24px] opacity-60 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-10">
         
@@ -85,7 +77,7 @@ export const CustomAwardsSection: React.FC<CustomAwardsSectionProps> = ({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-40px" }}
           transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-          className="relative flex flex-col lg:flex-row lg:items-end justify-between gap-6 p-6 sm:p-10 rounded-3xl border border-stone-200 shadow-xl overflow-hidden group transition-all duration-300"
+          className="relative flex flex-col lg:flex-row lg:items-end justify-between gap-6 p-6 sm:p-10 rounded-3xl border border-stone-200 shadow-xl overflow-hidden group transition-all duration-300 bg-stone-950"
         >
           {/* Background Image Layer */}
           <div className="absolute inset-0 z-0">
@@ -96,15 +88,15 @@ export const CustomAwardsSection: React.FC<CustomAwardsSectionProps> = ({
               referrerPolicy="no-referrer"
             />
             {/* High-legibility gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-r from-stone-950/90 via-stone-900/80 to-stone-950/75 backdrop-blur-[1.5px]" />
+            <div className="absolute inset-0 bg-gradient-to-r from-stone-950/95 via-stone-900/85 to-stone-950/80 backdrop-blur-[1.5px]" />
           </div>
 
-          {/* Top Gold Border Accent */}
-          <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-transparent via-[#f5be38] to-transparent opacity-90 z-10" />
+          {/* Top Border Accent */}
+          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-white/50 to-transparent opacity-90 z-10" />
 
           <div className="space-y-3 max-w-3xl relative z-10">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#f5be38]/20 border border-[#f5be38]/50 text-[#f5be38] text-xs font-black uppercase tracking-wider shadow-[0_0_15px_rgba(245,190,56,0.2)]">
-              <Sparkles className="w-3.5 h-3.5 text-[#f5be38]" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 text-white text-xs font-black uppercase tracking-wider">
+              <Sparkles className="w-3.5 h-3.5 text-white" />
               <span>Recognition &amp; Excellence</span>
             </div>
 
@@ -112,7 +104,7 @@ export const CustomAwardsSection: React.FC<CustomAwardsSectionProps> = ({
               Custom Award Plaques and Trophies Printing
             </h2>
 
-            <p className="text-stone-200 text-sm sm:text-base leading-relaxed font-normal">
+            <p className="text-stone-300 text-sm sm:text-base leading-relaxed font-normal">
               Celebrate excellence with beautifully custom award plaques, trophies and decorative items from SILVER &amp; GOLD INKSHINE LTD. We produce acrylic plaques, crystal glass awards, wooden shields, engraved medals and customised recognition items for schools, corporate organisations, sports competitions, graduations and community events across Nigeria.
             </p>
           </div>
@@ -123,7 +115,7 @@ export const CustomAwardsSection: React.FC<CustomAwardsSectionProps> = ({
               whileTap={{ scale: 0.96 }}
               type="button"
               onClick={onViewProducts}
-              className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-[#f5be38] hover:bg-[#ffd15c] text-black font-black text-sm rounded-xl shadow-[0_4px_25px_rgba(245,190,56,0.35)] transition-all group cursor-pointer"
+              className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-white hover:bg-stone-200 text-black font-black text-sm rounded-xl shadow-lg border border-white transition-all group cursor-pointer"
             >
               <span>View Products</span>
               <ArrowRight className="w-4 h-4 text-black transition-transform group-hover:translate-x-1" />
@@ -142,10 +134,10 @@ export const CustomAwardsSection: React.FC<CustomAwardsSectionProps> = ({
               transition={{ duration: 0.55, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
               whileHover={{ y: -6 }}
               onClick={() => onSelectItem?.(item)}
-              className="group relative rounded-3xl bg-white border border-stone-200 hover:border-amber-400 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between cursor-pointer"
+              className="group relative rounded-3xl bg-white border border-stone-200 hover:border-stone-950 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between cursor-pointer"
             >
               {/* Top hover accent */}
-              <div className="absolute top-0 left-0 right-0 h-[2px] bg-amber-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20" />
+              <div className="absolute top-0 left-0 right-0 h-[2px] bg-stone-950 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20" />
 
               <div>
                 {/* Image Stage */}
@@ -160,7 +152,7 @@ export const CustomAwardsSection: React.FC<CustomAwardsSectionProps> = ({
                     />
                   ) : (
                     <div className="w-full h-full p-4 flex flex-col items-center justify-center bg-stone-100 text-stone-700 text-center">
-                      <div className="text-xs font-bold text-amber-700 mb-1">Silver &amp; Gold</div>
+                      <div className="text-xs font-bold text-stone-900 mb-1">Silver &amp; Gold</div>
                       <div className="text-[11px] font-semibold">{item.title}</div>
                     </div>
                   )}
@@ -168,7 +160,7 @@ export const CustomAwardsSection: React.FC<CustomAwardsSectionProps> = ({
                   {/* Floating Custom Badge */}
                   {item.badge && (
                     <div className="absolute top-3 left-3 z-10">
-                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-stone-900/90 text-[#f5be38] border border-[#f5be38]/40 backdrop-blur-md shadow-md">
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-stone-950 text-white border border-stone-700 shadow-md">
                         {item.badge}
                       </span>
                     </div>
@@ -176,7 +168,7 @@ export const CustomAwardsSection: React.FC<CustomAwardsSectionProps> = ({
 
                   {/* Direct Action Overlay on Hover */}
                   <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4 z-10 pointer-events-none group-hover:pointer-events-auto">
-                    <span className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#f5be38] hover:bg-[#ffd15c] text-black font-extrabold text-xs rounded-xl shadow-lg transition-transform hover:scale-105">
+                    <span className="inline-flex items-center gap-2 px-4 py-2.5 bg-stone-950 hover:bg-black text-white font-extrabold text-xs rounded-xl shadow-lg transition-transform hover:scale-105">
                       <ShoppingBag className="w-3.5 h-3.5" />
                       <span>Customize &amp; Order</span>
                     </span>
@@ -185,7 +177,7 @@ export const CustomAwardsSection: React.FC<CustomAwardsSectionProps> = ({
 
                 {/* Card Content */}
                 <div className="p-5 space-y-2">
-                  <h3 className="font-extrabold text-stone-900 text-[15px] group-hover:text-amber-800 transition-colors leading-snug line-clamp-2">
+                  <h3 className="font-extrabold text-stone-900 text-[15px] group-hover:text-black transition-colors leading-snug line-clamp-2">
                     {item.title}
                   </h3>
                 </div>
@@ -193,13 +185,13 @@ export const CustomAwardsSection: React.FC<CustomAwardsSectionProps> = ({
 
               {/* Card Price & Action Footer */}
               <div className="p-5 pt-3 border-t border-stone-100 bg-stone-50/80 flex items-center justify-between">
-                <span className="text-sm sm:text-base font-black text-amber-700 font-sans">
+                <span className="text-sm sm:text-base font-black text-stone-950 font-sans">
                   {item.price}
                 </span>
 
-                <span className="text-xs font-bold text-stone-500 group-hover:text-stone-900 inline-flex items-center gap-1 transition-colors">
+                <span className="text-xs font-bold text-stone-500 group-hover:text-stone-950 inline-flex items-center gap-1 transition-colors">
                   <span>View Details</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-amber-600 transition-transform group-hover:translate-x-1" />
+                  <ArrowRight className="w-3.5 h-3.5 text-stone-700 transition-transform group-hover:translate-x-1" />
                 </span>
               </div>
 

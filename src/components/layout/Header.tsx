@@ -117,16 +117,16 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header className="sticky top-0 z-40 bg-[#000000] border-b border-white/10 shadow-lg">
-      {/* Top Utility Bar: Shining Gold and Mix of Silver (Pure Metallic Shimmer, No Black) */}
-      <div className="gold-silver-shimmer text-stone-950 text-xs py-1.5 px-4 sm:px-6 lg:px-8 border-b border-amber-400/40 shadow-xs relative overflow-hidden">
+      {/* Top Utility Bar: Liquid Silver & Chrome Shimmer */}
+      <div className="gold-silver-shimmer text-stone-950 text-xs py-1.5 px-4 sm:px-6 lg:px-8 border-b border-white/20 shadow-xs relative overflow-hidden">
         {/* Subtle luminous metallic gloss sheen */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/35 via-transparent to-amber-200/20" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/35 via-transparent to-white/10" />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-[-25deg] animate-connecting-light" />
 
         <div className="relative max-w-7xl mx-auto flex items-center justify-between gap-2 z-10">
           {/* Left Text: Fast Delivery with Truck Icon */}
           <div className="font-black text-[11px] sm:text-xs md:text-sm tracking-wide text-neutral-950 flex items-center gap-1.5 drop-shadow-[0_1px_1px_rgba(255,255,255,0.85)] shrink-0">
-            <span className="w-2 h-2 rounded-full bg-amber-600 shadow-[0_0_8px_rgba(217,119,6,0.9)] animate-pulse" />
+            <span className="w-2 h-2 rounded-full bg-black shadow-[0_0_8px_rgba(0,0,0,0.6)] animate-pulse" />
             <Truck className="w-3.5 h-3.5 text-neutral-900 shrink-0" />
             <span className="hidden xs:inline">Fast Nationwide Delivery</span>
             <span className="xs:hidden">Fast Delivery</span>
@@ -136,9 +136,9 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="flex items-center gap-2 sm:gap-4 shrink-0">
             <a
               href="tel:+2347030372539"
-              className="bg-white/85 hover:bg-white text-neutral-950 hover:text-black font-black text-[10px] sm:text-xs px-2.5 sm:px-3 py-1 rounded-full transition-all shadow-xs border border-amber-500/50 hover:border-amber-600 flex items-center gap-1.5 shrink-0 backdrop-blur-xs"
+              className="bg-white hover:bg-stone-200 text-neutral-950 hover:text-black font-black text-[10px] sm:text-xs px-2.5 sm:px-3 py-1 rounded-full transition-all shadow-xs border border-white/60 flex items-center gap-1.5 shrink-0 backdrop-blur-xs"
             >
-              <Phone className="w-3 h-3 text-amber-700 shrink-0" />
+              <Phone className="w-3 h-3 text-neutral-900 shrink-0" />
               <span>+234 703 037 2539</span>
             </a>
 
