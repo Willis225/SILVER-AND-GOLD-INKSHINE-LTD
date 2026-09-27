@@ -9,7 +9,8 @@ import {
   Truck,
   Clock,
   Layers,
-  FileCheck
+  FileCheck,
+  Star
 } from 'lucide-react';
 import { HeroVideoPlayer } from './HeroVideoPlayer';
 import { HeroSlideItem } from '../../types/websiteContent';
@@ -149,34 +150,80 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               </p>
             </div>
 
-            {/* Realtime Client Trust Proof */}
-            <div className="flex items-center gap-3.5 pt-1">
-              <div className="flex -space-x-2 overflow-hidden shrink-0">
-                <img
-                  className="inline-block h-8 w-8 rounded-full ring-2 ring-[#09090d] object-cover"
-                  src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80"
-                  alt="Client"
-                  referrerPolicy="no-referrer"
-                />
-                <img
-                  className="inline-block h-8 w-8 rounded-full ring-2 ring-[#09090d] object-cover"
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80"
-                  alt="Client"
-                  referrerPolicy="no-referrer"
-                />
-                <img
-                  className="inline-block h-8 w-8 rounded-full ring-2 ring-[#09090d] object-cover"
-                  src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&q=80"
-                  alt="Client"
-                  referrerPolicy="no-referrer"
-                />
-                <div className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#f5be38] text-black font-black text-[11px] ring-2 ring-[#09090d] shadow-sm">
-                  +5k
+            {/* Realtime Client Trust Proof - Premium Glassmorphic Badge */}
+            <div className="pt-2">
+              <div className="inline-flex flex-wrap sm:flex-nowrap items-center gap-3.5 sm:gap-4 p-2 sm:px-3.5 sm:py-2.5 rounded-2xl bg-white/[0.06] hover:bg-white/[0.09] border border-white/15 hover:border-[#f5be38]/50 backdrop-blur-md transition-all duration-300 shadow-[0_8px_24px_rgba(0,0,0,0.35)] group">
+                
+                {/* Avatars Stack with Glowing Gold Counter (Authentic Black African Corporate Clients & Event Planners) */}
+                <div className="flex items-center -space-x-2.5 overflow-visible shrink-0 pl-1">
+                  <div className="relative">
+                    <img
+                      className="inline-block h-9 w-9 sm:h-10 sm:w-10 rounded-full ring-2 ring-[#09090d] object-cover shadow-sm transition-transform duration-200 group-hover:scale-105"
+                      src="https://images.unsplash.com/photo-1531384441138-2736e62e0919?auto=format&fit=crop&w=140&q=80"
+                      alt="Verified African Enterprise Client"
+                      referrerPolicy="no-referrer"
+                    />
+                  </div>
+                  <div className="relative">
+                    <img
+                      className="inline-block h-9 w-9 sm:h-10 sm:w-10 rounded-full ring-2 ring-[#09090d] object-cover shadow-sm transition-transform duration-200 group-hover:scale-105"
+                      src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=140&q=80"
+                      alt="Verified African Corporate Brand Manager"
+                      referrerPolicy="no-referrer"
+                    />
+                  </div>
+                  <div className="relative">
+                    <img
+                      className="inline-block h-9 w-9 sm:h-10 sm:w-10 rounded-full ring-2 ring-[#09090d] object-cover shadow-sm transition-transform duration-200 group-hover:scale-105"
+                      src="https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?auto=format&fit=crop&w=140&q=80"
+                      alt="Verified African SME Executive"
+                      referrerPolicy="no-referrer"
+                    />
+                  </div>
+                  <div className="relative">
+                    <img
+                      className="inline-block h-9 w-9 sm:h-10 sm:w-10 rounded-full ring-2 ring-[#09090d] object-cover shadow-sm transition-transform duration-200 group-hover:scale-105"
+                      src="https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?auto=format&fit=crop&w=140&q=80"
+                      alt="Verified African Event Director"
+                      referrerPolicy="no-referrer"
+                    />
+                  </div>
+
+                  {/* High-visibility Counter Badge */}
+                  <div className="relative z-10 inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-gradient-to-br from-[#f5be38] to-[#d49e1a] text-black font-black text-xs ring-2 ring-[#09090d] shadow-md transition-transform duration-200 group-hover:scale-110">
+                    +5k
+                  </div>
                 </div>
-              </div>
-              <div className="text-xs">
-                <span className="font-extrabold text-white text-[13px] block">168K+ Realtime Clients</span>
-                <span className="text-stone-400 block text-[11.5px] font-medium">Corporate brands, SMEs &amp; event planners served</span>
+
+                {/* Divider Line on Desktop */}
+                <div className="hidden sm:block w-[1px] h-8 bg-white/15" />
+
+                {/* Text & Social Proof Metrics */}
+                <div className="text-left space-y-0.5">
+                  <div className="flex items-center gap-2">
+                    <span className="font-black text-white text-sm sm:text-[15px] tracking-tight">
+                      168K+ Realtime Clients
+                    </span>
+                    {/* Live Pulsing Dot */}
+                    <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-[10px] font-bold text-emerald-300">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                      Live
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-1.5 text-xs">
+                    {/* 5 Rating Stars */}
+                    <div className="flex items-center text-[#f5be38]">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="w-3 h-3 fill-[#f5be38]" />
+                      ))}
+                    </div>
+                    <span className="text-stone-300 font-medium text-[11px] sm:text-xs">
+                      Corporate brands, SMEs &amp; event planners served
+                    </span>
+                  </div>
+                </div>
+
               </div>
             </div>
 

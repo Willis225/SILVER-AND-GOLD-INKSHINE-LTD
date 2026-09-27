@@ -323,7 +323,7 @@ export const PrintingCategoriesQuickNav: React.FC<PrintingCategoriesQuickNavProp
               <div
                 key={cat.id}
                 onClick={() => onSelectCategory(cat.id)}
-                className={`group relative ${cat.baseBgClass} border ${cat.borderColor} ${cat.hoverBorderColor} rounded-2xl sm:rounded-3xl p-6 sm:p-7 min-h-[300px] flex flex-col justify-between overflow-hidden cursor-pointer shadow-md ${cat.shadowHover} transform transition-all duration-300 ease-out hover:scale-[1.05] sm:hover:scale-[1.06] hover:-translate-y-2.5 active:scale-95`}
+                className={`group relative ${cat.baseBgClass} border ${cat.borderColor} ${cat.hoverBorderColor} rounded-2xl sm:rounded-3xl p-6 sm:p-7 min-h-[300px] flex flex-col justify-between overflow-hidden cursor-pointer shadow-md ${cat.shadowHover} transform-gpu transition-all duration-500 ease-out hover:scale-105 hover:-translate-y-2 hover:shadow-2xl active:scale-95 will-change-transform`}
               >
                 {/* 1. Underlying Realistic Product Background (Subtle & Reduced Intensity so Write-ups Show Clearly) */}
                 <div 
@@ -334,15 +334,20 @@ export const PrintingCategoriesQuickNav: React.FC<PrintingCategoriesQuickNavProp
                 {/* 2. Soft Ambient Tint/Vignette for Maximum Contrast */}
                 <div className={`absolute inset-0 ${cat.overlayGradientClass} pointer-events-none`} />
 
-                {/* 3. Continuous Reflective Light Sweep (Metallic / Gloss Spot Varnish Shine) */}
+                {/* 3. Subtle Ambient Idle Light Shimmer */}
                 <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                  <div className={`w-1/2 h-full bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-[-25deg] animate-reflective-shine ${cat.shineClass}`} />
+                  <div className={`w-1/2 h-full bg-gradient-to-r from-transparent via-white/15 to-transparent skew-x-[-25deg] animate-reflective-shine ${cat.shineClass}`} />
                 </div>
 
-                {/* 4. Interactive Hover Reflective Light Flash */}
-                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-[-20deg] pointer-events-none" />
+                {/* 4. Interactive Hover Reflective Light Overlay (Sweeps across card when hovered) */}
+                <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-2xl sm:rounded-3xl z-20">
+                  <div className="absolute inset-0 -translate-x-[150%] skew-x-[-25deg] bg-gradient-to-r from-transparent via-white/10 via-white/35 via-white/10 to-transparent transition-transform duration-1000 ease-out group-hover:translate-x-[150%]" />
+                </div>
 
-                {/* 5. Top Row: Minimalist Crisp Icon + Category Tag Badge */}
+                {/* 5. Soft Specular Ambient Glow on Hover */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-10" />
+
+                {/* 6. Top Row: Minimalist Crisp Icon + Category Tag Badge */}
                 <div className="relative z-10 flex items-center justify-between mb-6">
                   <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-2xl ${cat.iconBoxBg} border flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:-rotate-3 shadow-xs`}>
                     <Icon className={`w-6 h-6 sm:w-7 sm:h-7 ${cat.iconColor}`} />

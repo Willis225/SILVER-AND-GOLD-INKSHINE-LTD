@@ -1877,7 +1877,7 @@ export const GOOGLE_REVIEWS: GoogleReview[] = [
   {
     id: 'rev-1',
     author: 'Ariyo Marvelous',
-    avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&q=80',
+    avatar: 'https://images.unsplash.com/photo-1531384441138-2736e62e0919?auto=format&fit=crop&w=100&q=80',
     rating: 5,
     date: '5 months ago',
     review: 'I printed a rollup banner for my office campaign and the result was excellent. The design was clear, the stand was solid, and delivery was right on schedule without any delays.',
@@ -1898,7 +1898,7 @@ export const GOOGLE_REVIEWS: GoogleReview[] = [
   {
     id: 'rev-3',
     author: 'John Success',
-    avatar: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=100&q=80',
+    avatar: 'https://images.unsplash.com/photo-1522529599102-193c0d76b5b6?auto=format&fit=crop&w=100&q=80',
     rating: 5,
     date: '3 years ago',
     review: 'I ordered for Flex Banner material, SAV sticker material and ABS. I received free shipping because it was my first large order and everything was in perfect condition.',
@@ -1908,7 +1908,7 @@ export const GOOGLE_REVIEWS: GoogleReview[] = [
   {
     id: 'rev-4',
     author: 'Micheal Johnson',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80',
+    avatar: 'https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?auto=format&fit=crop&w=100&q=80',
     rating: 5,
     date: '3 years ago',
     review: '"I had a wonderful experience got my Promotional/promo table in time and I would highly recommend this business to anyone looking for reliable branding in Lagos."',
