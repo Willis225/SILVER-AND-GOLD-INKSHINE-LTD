@@ -237,4 +237,51 @@ canvas {
   animation: lightBeamSweep 4s ease-in-out infinite;
 }
 
+/* Connecting reflective light line across categories */
+@keyframes connectingLightFlow {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+.animate-connecting-light {
+  animation: connectingLightFlow 5s ease-in-out infinite;
+}
+
+/* Reflective varnish sheen sweep */
+@keyframes reflectiveShineSweep {
+  0% {
+    transform: translateX(-120%) skewX(-25deg);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.35;
+  }
+  60% {
+    opacity: 0.45;
+  }
+  100% {
+    transform: translateX(220%) skewX(-25deg);
+    opacity: 0;
+  }
+}
+
+.animate-reflective-shine {
+  animation: reflectiveShineSweep 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Staggered shine delays for natural organic ripple */
+.shine-delay-1 { animation-delay: 0s; }
+.shine-delay-2 { animation-delay: 0.7s; }
+.shine-delay-3 { animation-delay: 1.4s; }
+.shine-delay-4 { animation-delay: 2.1s; }
+.shine-delay-5 { animation-delay: 2.8s; }
+.shine-delay-6 { animation-delay: 3.5s; }
+.shine-delay-7 { animation-delay: 4.2s; }
+.shine-delay-8 { animation-delay: 4.9s; }
+
+
 

@@ -8,7 +8,8 @@ import {
   Shirt, 
   Signpost, 
   Award, 
-  ArrowRight
+  ArrowRight,
+  Sparkles
 } from 'lucide-react';
 import { ProductCategory } from '../../types/schema';
 
@@ -23,20 +24,26 @@ interface CategoryQuickItem {
   subtitle: string;
   icon: React.FC<{ className?: string }>;
   tag: string;
-  // Bold color block design styles
-  cardBg: string;
-  cardHoverBg: string;
+  // Product-specific background image (strictly printing press products, no humans)
+  bgImage: string;
+  imageBlendClass: string;
+  baseBgClass: string;
+  overlayGradientClass: string;
+  borderColor: string;
+  hoverBorderColor: string;
+  // Text & accents
   textColor: string;
   subtitleColor: string;
   tagBg: string;
   tagText: string;
+  tagBorder: string;
   iconBoxBg: string;
   iconColor: string;
   buttonBg: string;
   buttonHoverBg: string;
   buttonText: string;
-  borderColor: string;
   shadowHover: string;
+  shineClass: string;
 }
 
 const PRINT_CATEGORIES: CategoryQuickItem[] = [
@@ -46,19 +53,25 @@ const PRINT_CATEGORIES: CategoryQuickItem[] = [
     subtitle: 'Cards, Letterheads, Envelopes',
     icon: FileText,
     tag: 'Fast Turnaround',
-    cardBg: 'bg-[#f5be38]',
-    cardHoverBg: 'hover:bg-[#fabf28]',
-    textColor: 'text-neutral-950',
-    subtitleColor: 'text-neutral-900/80',
-    tagBg: 'bg-black/10 border-black/20',
-    tagText: 'text-neutral-950',
-    iconBoxBg: 'bg-black/10 border-black/15',
+    // Clean stack of luxury printed business cards & stationery flatlay
+    bgImage: 'https://images.unsplash.com/photo-1596524430615-b46475ddff6e?auto=format&fit=crop&w=700&q=80',
+    imageBlendClass: 'opacity-15 group-hover:opacity-25 mix-blend-multiply',
+    baseBgClass: 'bg-[#f5be38]',
+    overlayGradientClass: 'bg-gradient-to-t from-amber-400/30 via-transparent to-white/40',
+    borderColor: 'border-amber-400',
+    hoverBorderColor: 'hover:border-amber-300',
+    textColor: 'text-neutral-950 font-black',
+    subtitleColor: 'text-neutral-900 font-bold',
+    tagBg: 'bg-black/10 backdrop-blur-xs',
+    tagText: 'text-neutral-950 font-black',
+    tagBorder: 'border-black/20',
+    iconBoxBg: 'bg-black/10 backdrop-blur-xs border-black/15',
     iconColor: 'text-neutral-950',
     buttonBg: 'bg-neutral-950 text-white',
-    buttonHoverBg: 'hover:bg-neutral-800',
+    buttonHoverBg: 'group-hover:bg-neutral-900',
     buttonText: 'text-white',
-    borderColor: 'border-amber-400',
-    shadowHover: 'hover:shadow-[0_16px_32px_rgba(245,190,56,0.32)]',
+    shadowHover: 'hover:shadow-[0_20px_40px_rgba(245,190,56,0.35)]',
+    shineClass: 'shine-delay-1',
   },
   {
     id: 'banners_stands',
@@ -66,19 +79,25 @@ const PRINT_CATEGORIES: CategoryQuickItem[] = [
     subtitle: 'Teardrop flags, Backdrops, Stands',
     icon: Flag,
     tag: 'Heavy Duty',
-    cardBg: 'bg-[#1e3a8a]',
-    cardHoverBg: 'hover:bg-[#1e40af]',
-    textColor: 'text-white',
-    subtitleColor: 'text-blue-100/90',
-    tagBg: 'bg-white/15 border-white/20',
-    tagText: 'text-white',
-    iconBoxBg: 'bg-white/15 border-white/20',
+    // Retractable roll-up exhibition display stand mockup
+    bgImage: 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=700&q=80',
+    imageBlendClass: 'opacity-20 group-hover:opacity-30 mix-blend-luminosity',
+    baseBgClass: 'bg-[#1e3a8a]',
+    overlayGradientClass: 'bg-gradient-to-t from-blue-950/80 via-blue-900/40 to-blue-800/20',
+    borderColor: 'border-blue-500/50',
+    hoverBorderColor: 'hover:border-blue-400',
+    textColor: 'text-white font-black drop-shadow-xs',
+    subtitleColor: 'text-blue-100 font-medium',
+    tagBg: 'bg-white/15 backdrop-blur-xs',
+    tagText: 'text-white font-black',
+    tagBorder: 'border-white/25',
+    iconBoxBg: 'bg-white/15 backdrop-blur-xs border-white/25',
     iconColor: 'text-white',
     buttonBg: 'bg-white text-[#1e3a8a]',
-    buttonHoverBg: 'hover:bg-blue-50',
+    buttonHoverBg: 'group-hover:bg-blue-50',
     buttonText: 'text-[#1e3a8a]',
-    borderColor: 'border-blue-700/80',
-    shadowHover: 'hover:shadow-[0_16px_32px_rgba(30,58,138,0.32)]',
+    shadowHover: 'hover:shadow-[0_20px_40px_rgba(30,58,138,0.4)]',
+    shineClass: 'shine-delay-2',
   },
   {
     id: 'flyers_handbills',
@@ -86,19 +105,25 @@ const PRINT_CATEGORIES: CategoryQuickItem[] = [
     subtitle: 'Promo leaflets, Brochures, Posters',
     icon: Megaphone,
     tag: 'Bulk Discounts',
-    cardBg: 'bg-[#dc2626]',
-    cardHoverBg: 'hover:bg-[#ef4444]',
-    textColor: 'text-white',
-    subtitleColor: 'text-red-100/90',
-    tagBg: 'bg-white/15 border-white/20',
-    tagText: 'text-white',
-    iconBoxBg: 'bg-white/15 border-white/20',
+    // Stacks of printed offset flyers and marketing brochures
+    bgImage: 'https://images.unsplash.com/photo-1585776245991-cf89dd7fc73a?auto=format&fit=crop&w=700&q=80',
+    imageBlendClass: 'opacity-20 group-hover:opacity-30 mix-blend-luminosity',
+    baseBgClass: 'bg-[#dc2626]',
+    overlayGradientClass: 'bg-gradient-to-t from-red-950/80 via-red-900/40 to-red-800/20',
+    borderColor: 'border-red-400/50',
+    hoverBorderColor: 'hover:border-red-300',
+    textColor: 'text-white font-black drop-shadow-xs',
+    subtitleColor: 'text-red-100 font-medium',
+    tagBg: 'bg-white/15 backdrop-blur-xs',
+    tagText: 'text-white font-black',
+    tagBorder: 'border-white/25',
+    iconBoxBg: 'bg-white/15 backdrop-blur-xs border-white/25',
     iconColor: 'text-white',
     buttonBg: 'bg-white text-[#dc2626]',
-    buttonHoverBg: 'hover:bg-red-50',
+    buttonHoverBg: 'group-hover:bg-red-50',
     buttonText: 'text-[#dc2626]',
-    borderColor: 'border-red-600/80',
-    shadowHover: 'hover:shadow-[0_16px_32px_rgba(220,38,38,0.32)]',
+    shadowHover: 'hover:shadow-[0_20px_40px_rgba(220,38,38,0.4)]',
+    shineClass: 'shine-delay-3',
   },
   {
     id: 'packaging_shipping_cartons',
@@ -106,19 +131,25 @@ const PRINT_CATEGORIES: CategoryQuickItem[] = [
     subtitle: 'Custom boxes, Food packaging',
     icon: Package,
     tag: 'Sturdy Board',
-    cardBg: 'bg-[#047857]',
-    cardHoverBg: 'hover:bg-[#059669]',
-    textColor: 'text-white',
-    subtitleColor: 'text-emerald-100/90',
-    tagBg: 'bg-white/15 border-white/20',
-    tagText: 'text-white',
-    iconBoxBg: 'bg-white/15 border-white/20',
+    // Rigid gift packaging boxes, cartons and cardboard containers
+    bgImage: 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=700&q=80',
+    imageBlendClass: 'opacity-20 group-hover:opacity-30 mix-blend-luminosity',
+    baseBgClass: 'bg-[#047857]',
+    overlayGradientClass: 'bg-gradient-to-t from-emerald-950/80 via-emerald-900/40 to-emerald-800/20',
+    borderColor: 'border-emerald-400/50',
+    hoverBorderColor: 'hover:border-emerald-300',
+    textColor: 'text-white font-black drop-shadow-xs',
+    subtitleColor: 'text-emerald-100 font-medium',
+    tagBg: 'bg-white/15 backdrop-blur-xs',
+    tagText: 'text-white font-black',
+    tagBorder: 'border-white/25',
+    iconBoxBg: 'bg-white/15 backdrop-blur-xs border-white/25',
     iconColor: 'text-white',
     buttonBg: 'bg-white text-[#047857]',
-    buttonHoverBg: 'hover:bg-emerald-50',
+    buttonHoverBg: 'group-hover:bg-emerald-50',
     buttonText: 'text-[#047857]',
-    borderColor: 'border-emerald-600/80',
-    shadowHover: 'hover:shadow-[0_16px_32px_rgba(4,120,87,0.32)]',
+    shadowHover: 'hover:shadow-[0_20px_40px_rgba(4,120,87,0.4)]',
+    shineClass: 'shine-delay-4',
   },
   {
     id: 'stickers_labels',
@@ -126,19 +157,25 @@ const PRINT_CATEGORIES: CategoryQuickItem[] = [
     subtitle: 'Die-cut vinyl, Bottle labels',
     icon: Tag,
     tag: 'Waterproof',
-    cardBg: 'bg-[#0284c7]',
-    cardHoverBg: 'hover:bg-[#0369a1]',
-    textColor: 'text-white',
-    subtitleColor: 'text-sky-100/90',
-    tagBg: 'bg-white/15 border-white/20',
-    tagText: 'text-white',
-    iconBoxBg: 'bg-white/15 border-white/20',
+    // Rolls of printed custom vinyl stickers and product bottle labels
+    bgImage: 'https://images.unsplash.com/photo-1607344645866-009c320c5ab8?auto=format&fit=crop&w=700&q=80',
+    imageBlendClass: 'opacity-20 group-hover:opacity-30 mix-blend-luminosity',
+    baseBgClass: 'bg-[#0284c7]',
+    overlayGradientClass: 'bg-gradient-to-t from-sky-950/80 via-sky-900/40 to-sky-800/20',
+    borderColor: 'border-sky-400/50',
+    hoverBorderColor: 'hover:border-sky-300',
+    textColor: 'text-white font-black drop-shadow-xs',
+    subtitleColor: 'text-sky-100 font-medium',
+    tagBg: 'bg-white/15 backdrop-blur-xs',
+    tagText: 'text-white font-black',
+    tagBorder: 'border-white/25',
+    iconBoxBg: 'bg-white/15 backdrop-blur-xs border-white/25',
     iconColor: 'text-white',
     buttonBg: 'bg-white text-[#0284c7]',
-    buttonHoverBg: 'hover:bg-sky-50',
+    buttonHoverBg: 'group-hover:bg-sky-50',
     buttonText: 'text-[#0284c7]',
-    borderColor: 'border-sky-600/80',
-    shadowHover: 'hover:shadow-[0_16px_32px_rgba(2,132,199,0.32)]',
+    shadowHover: 'hover:shadow-[0_20px_40px_rgba(2,132,199,0.4)]',
+    shineClass: 'shine-delay-5',
   },
   {
     id: 'custom_apparels_caps',
@@ -146,19 +183,25 @@ const PRINT_CATEGORIES: CategoryQuickItem[] = [
     subtitle: 'Branded T-shirts, Polos, Caps',
     icon: Shirt,
     tag: 'Screen & DTF',
-    cardBg: 'bg-[#7c3aed]',
-    cardHoverBg: 'hover:bg-[#8b5cf6]',
-    textColor: 'text-white',
-    subtitleColor: 'text-purple-100/90',
-    tagBg: 'bg-white/15 border-white/20',
-    tagText: 'text-white',
-    iconBoxBg: 'bg-white/15 border-white/20',
+    // Folded screen-printed t-shirts and apparel mockup (PRODUCT ONLY, NO HUMANS)
+    bgImage: 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=700&q=80',
+    imageBlendClass: 'opacity-20 group-hover:opacity-30 mix-blend-luminosity',
+    baseBgClass: 'bg-[#7c3aed]',
+    overlayGradientClass: 'bg-gradient-to-t from-purple-950/80 via-purple-900/40 to-purple-800/20',
+    borderColor: 'border-purple-400/50',
+    hoverBorderColor: 'hover:border-purple-300',
+    textColor: 'text-white font-black drop-shadow-xs',
+    subtitleColor: 'text-purple-100 font-medium',
+    tagBg: 'bg-white/15 backdrop-blur-xs',
+    tagText: 'text-white font-black',
+    tagBorder: 'border-white/25',
+    iconBoxBg: 'bg-white/15 backdrop-blur-xs border-white/25',
     iconColor: 'text-white',
     buttonBg: 'bg-white text-[#7c3aed]',
-    buttonHoverBg: 'hover:bg-purple-50',
+    buttonHoverBg: 'group-hover:bg-purple-50',
     buttonText: 'text-[#7c3aed]',
-    borderColor: 'border-purple-600/80',
-    shadowHover: 'hover:shadow-[0_16px_32px_rgba(124,58,237,0.32)]',
+    shadowHover: 'hover:shadow-[0_20px_40px_rgba(124,58,237,0.4)]',
+    shineClass: 'shine-delay-6',
   },
   {
     id: 'signages',
@@ -166,19 +209,25 @@ const PRINT_CATEGORIES: CategoryQuickItem[] = [
     subtitle: 'Shop front signs, Acrylics, Pylons',
     icon: Signpost,
     tag: 'Illuminated',
-    cardBg: 'bg-[#18181b]',
-    cardHoverBg: 'hover:bg-[#27272a]',
-    textColor: 'text-white',
-    subtitleColor: 'text-neutral-300',
-    tagBg: 'bg-[#f5be38]/20 border-[#f5be38]/40',
-    tagText: 'text-[#f5be38]',
-    iconBoxBg: 'bg-[#f5be38]/20 border-[#f5be38]/30',
+    // High-clarity illuminated 3D channel letters (user-approved favorite)
+    bgImage: 'https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=700&q=80',
+    imageBlendClass: 'opacity-25 group-hover:opacity-35 mix-blend-luminosity',
+    baseBgClass: 'bg-[#141416]',
+    overlayGradientClass: 'bg-gradient-to-t from-black/85 via-[#1c1c20]/60 to-[#09090b]/40',
+    borderColor: 'border-amber-400/60',
+    hoverBorderColor: 'hover:border-amber-300',
+    textColor: 'text-white font-black drop-shadow-xs',
+    subtitleColor: 'text-neutral-300 font-medium',
+    tagBg: 'bg-[#f5be38]/20 backdrop-blur-xs',
+    tagText: 'text-[#f5be38] font-black',
+    tagBorder: 'border-[#f5be38]/40',
+    iconBoxBg: 'bg-[#f5be38]/20 backdrop-blur-xs border-[#f5be38]/30',
     iconColor: 'text-[#f5be38]',
     buttonBg: 'bg-[#f5be38] text-neutral-950',
-    buttonHoverBg: 'hover:bg-amber-300',
+    buttonHoverBg: 'group-hover:bg-amber-300',
     buttonText: 'text-neutral-950',
-    borderColor: 'border-neutral-800',
-    shadowHover: 'hover:shadow-[0_16px_32px_rgba(24,24,27,0.45)]',
+    shadowHover: 'hover:shadow-[0_20px_40px_rgba(245,190,56,0.3)]',
+    shineClass: 'shine-delay-7',
   },
   {
     id: 'awards',
@@ -186,19 +235,25 @@ const PRINT_CATEGORIES: CategoryQuickItem[] = [
     subtitle: 'Crystal plaques, Trophies, Gifts',
     icon: Award,
     tag: 'Premium Metal',
-    cardBg: 'bg-[#b45309]',
-    cardHoverBg: 'hover:bg-[#d97706]',
-    textColor: 'text-white',
-    subtitleColor: 'text-amber-100/90',
-    tagBg: 'bg-white/15 border-white/20',
-    tagText: 'text-white',
-    iconBoxBg: 'bg-white/15 border-white/20',
+    // Polished crystal award plaque and metallic gold trophy
+    bgImage: 'https://images.unsplash.com/photo-1578269174936-2709b6aeb913?auto=format&fit=crop&w=700&q=80',
+    imageBlendClass: 'opacity-20 group-hover:opacity-30 mix-blend-luminosity',
+    baseBgClass: 'bg-[#b45309]',
+    overlayGradientClass: 'bg-gradient-to-t from-amber-950/80 via-amber-900/40 to-amber-800/20',
+    borderColor: 'border-amber-500/50',
+    hoverBorderColor: 'hover:border-amber-400',
+    textColor: 'text-white font-black drop-shadow-xs',
+    subtitleColor: 'text-amber-100 font-medium',
+    tagBg: 'bg-white/15 backdrop-blur-xs',
+    tagText: 'text-white font-black',
+    tagBorder: 'border-white/25',
+    iconBoxBg: 'bg-white/15 backdrop-blur-xs border-white/25',
     iconColor: 'text-white',
     buttonBg: 'bg-white text-[#b45309]',
-    buttonHoverBg: 'hover:bg-amber-50',
+    buttonHoverBg: 'group-hover:bg-amber-50',
     buttonText: 'text-[#b45309]',
-    borderColor: 'border-amber-700/80',
-    shadowHover: 'hover:shadow-[0_16px_32px_rgba(180,83,9,0.32)]',
+    shadowHover: 'hover:shadow-[0_20px_40px_rgba(180,83,9,0.4)]',
+    shineClass: 'shine-delay-8',
   },
 ];
 
@@ -207,20 +262,24 @@ export const PrintingCategoriesQuickNav: React.FC<PrintingCategoriesQuickNavProp
   onExploreCatalog,
 }) => {
   return (
-    <section className="bg-white text-neutral-900 py-12 sm:py-16 border-b border-stone-200 relative z-10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="bg-white text-neutral-900 py-14 sm:py-20 border-b border-stone-200 relative overflow-hidden z-10">
+      
+      {/* Dynamic ambient reflective light aura behind cards */}
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] max-w-full h-[400px] bg-gradient-to-r from-amber-200/20 via-sky-200/15 to-purple-200/20 rounded-full blur-3xl pointer-events-none -z-10" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         
         {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 sm:mb-10">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-5 mb-10 sm:mb-12">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-200/80 text-amber-900 text-xs font-black tracking-widest uppercase mb-2 shadow-2xs">
-              <span className="w-2 h-2 rounded-full bg-[#f5be38] ring-2 ring-amber-300/50" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-50 border border-amber-300 text-amber-950 text-xs font-black tracking-widest uppercase mb-3 shadow-xs">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#f5be38] ring-4 ring-amber-300/40 animate-pulse" />
               <span>Full-Service Commercial Printing Press</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-neutral-900 tracking-tight">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-neutral-900 tracking-tight leading-tight">
               What would you like to print today?
             </h2>
-            <p className="text-stone-600 text-sm sm:text-base mt-1.5 font-normal max-w-2xl">
+            <p className="text-stone-600 text-sm sm:text-base mt-2 font-normal max-w-2xl">
               Select any category below for instant online pricing, material specs, and instant ordering.
             </p>
           </div>
@@ -228,55 +287,94 @@ export const PrintingCategoriesQuickNav: React.FC<PrintingCategoriesQuickNavProp
           <button
             type="button"
             onClick={onExploreCatalog}
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-neutral-900 bg-stone-100 hover:bg-[#f5be38] hover:text-black border border-stone-200 hover:border-[#f5be38] transition-all duration-200 group cursor-pointer self-start sm:self-auto shadow-2xs"
+            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-xs sm:text-sm font-black text-neutral-900 bg-stone-100 hover:bg-[#f5be38] hover:text-black border border-stone-300 hover:border-[#f5be38] transition-all duration-300 group cursor-pointer self-start sm:self-auto shadow-xs hover:shadow-md hover:scale-105 active:scale-95"
           >
             <span>View All Print Categories</span>
             <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
           </button>
         </div>
 
-        {/* 8 Bold Color-Block Category Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+        {/* Reflective Conduit Light Line Connecting Categories */}
+        <div className="relative mb-6 sm:mb-8">
+          {/* Base connector line */}
+          <div className="w-full h-1 rounded-full bg-stone-100 overflow-hidden relative shadow-inner">
+            {/* Animated flowing reflective light beam */}
+            <div className="absolute inset-0 w-1/3 bg-gradient-to-r from-transparent via-[#f5be38] via-sky-400 via-rose-400 to-transparent blur-[1px] animate-connecting-light" />
+          </div>
+
+          {/* Micro reflective node indicators that link the cards */}
+          <div className="hidden sm:flex justify-between items-center -mt-1.5 px-6 pointer-events-none">
+            <span className="w-2 h-2 rounded-full bg-[#f5be38] ring-2 ring-white shadow-xs" />
+            <span className="w-2 h-2 rounded-full bg-blue-500 ring-2 ring-white shadow-xs" />
+            <span className="w-2 h-2 rounded-full bg-red-500 ring-2 ring-white shadow-xs" />
+            <span className="w-2 h-2 rounded-full bg-emerald-500 ring-2 ring-white shadow-xs" />
+            <span className="w-2 h-2 rounded-full bg-sky-500 ring-2 ring-white shadow-xs" />
+            <span className="w-2 h-2 rounded-full bg-purple-500 ring-2 ring-white shadow-xs" />
+            <span className="w-2 h-2 rounded-full bg-amber-400 ring-2 ring-white shadow-xs" />
+            <span className="w-2 h-2 rounded-full bg-amber-600 ring-2 ring-white shadow-xs" />
+          </div>
+        </div>
+
+        {/* 8 Lively Animated Category Boxes with High Contrast & Clear Write-ups */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
           {PRINT_CATEGORIES.map((cat) => {
             const Icon = cat.icon;
             return (
               <div
                 key={cat.id}
                 onClick={() => onSelectCategory(cat.id)}
-                className={`group relative ${cat.cardBg} ${cat.cardHoverBg} ${cat.borderColor} border rounded-2xl p-5 sm:p-6 transition-all duration-300 hover:-translate-y-1.5 cursor-pointer flex flex-col justify-between overflow-hidden shadow-sm ${cat.shadowHover}`}
+                className={`group relative ${cat.baseBgClass} border ${cat.borderColor} ${cat.hoverBorderColor} rounded-2xl sm:rounded-3xl p-6 sm:p-7 min-h-[300px] flex flex-col justify-between overflow-hidden cursor-pointer shadow-md ${cat.shadowHover} transform transition-all duration-300 ease-out hover:scale-[1.05] sm:hover:scale-[1.06] hover:-translate-y-2.5 active:scale-95`}
               >
-                {/* Subtle sheen highlight in top right */}
-                <div className="absolute -top-12 -right-12 w-28 h-28 bg-white/10 rounded-full blur-xl pointer-events-none" />
+                {/* 1. Underlying Realistic Product Background (Subtle & Reduced Intensity so Write-ups Show Clearly) */}
+                <div 
+                  className={`absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-110 pointer-events-none ${cat.imageBlendClass}`}
+                  style={{ backgroundImage: `url('${cat.bgImage}')` }}
+                />
 
-                <div>
-                  {/* Top: Icon + Upper Tag Badge */}
-                  <div className="flex items-center justify-between mb-4">
-                    <div className={`w-11 h-11 sm:w-12 sm:h-12 rounded-xl ${cat.iconBoxBg} border flex items-center justify-center transition-transform group-hover:scale-110 duration-200 shadow-2xs`}>
-                      <Icon className={`w-5 h-5 sm:w-6 sm:h-6 ${cat.iconColor}`} />
-                    </div>
-                    <span className={`text-[10px] sm:text-[11px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full border ${cat.tagBg} ${cat.tagText}`}>
-                      {cat.tag}
-                    </span>
+                {/* 2. Soft Ambient Tint/Vignette for Maximum Contrast */}
+                <div className={`absolute inset-0 ${cat.overlayGradientClass} pointer-events-none`} />
+
+                {/* 3. Continuous Reflective Light Sweep (Metallic / Gloss Spot Varnish Shine) */}
+                <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                  <div className={`w-1/2 h-full bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-[-25deg] animate-reflective-shine ${cat.shineClass}`} />
+                </div>
+
+                {/* 4. Interactive Hover Reflective Light Flash */}
+                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-[-20deg] pointer-events-none" />
+
+                {/* 5. Top Row: Minimalist Crisp Icon + Category Tag Badge */}
+                <div className="relative z-10 flex items-center justify-between mb-6">
+                  <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-2xl ${cat.iconBoxBg} border flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:-rotate-3 shadow-xs`}>
+                    <Icon className={`w-6 h-6 sm:w-7 sm:h-7 ${cat.iconColor}`} />
                   </div>
 
-                  {/* High-Impact Title */}
-                  <h3 className={`font-black text-lg sm:text-xl tracking-tight leading-snug mb-1.5 ${cat.textColor}`}>
+                  <span className={`text-[11px] sm:text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full border ${cat.tagBorder} ${cat.tagBg} ${cat.tagText} shadow-2xs`}>
+                    {cat.tag}
+                  </span>
+                </div>
+
+                {/* 6. Middle Content: High-Impact Typography & Material Subtitle */}
+                <div className="relative z-10 flex-1 flex flex-col justify-center">
+                  <h3 className={`text-xl sm:text-2xl leading-tight mb-2 tracking-tight transition-transform duration-300 group-hover:translate-x-0.5 ${cat.textColor}`}>
                     {cat.title}
                   </h3>
 
-                  {/* Material Specs / Subtitle */}
-                  <p className={`text-xs sm:text-[13px] font-medium leading-relaxed ${cat.subtitleColor}`}>
+                  <p className={`text-xs sm:text-sm leading-relaxed ${cat.subtitleColor}`}>
                     {cat.subtitle}
                   </p>
                 </div>
 
-                {/* Bottom Action: "Order Now" Button with Arrow */}
-                <div className="mt-5 pt-4 border-t border-black/10">
-                  <div className={`w-full inline-flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-black transition-all duration-200 ${cat.buttonBg} ${cat.buttonHoverBg} shadow-2xs group-hover:shadow-sm`}>
-                    <span className="tracking-wide">Order Now</span>
-                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                {/* 7. Bottom Action: Popping "Order Now" Button with Animated Arrow */}
+                <div className="relative z-10 mt-6 pt-4 border-t border-black/10 group-hover:border-white/20 transition-colors">
+                  <div className={`w-full inline-flex items-center justify-between px-4 py-3 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-black transition-all duration-300 ${cat.buttonBg} ${cat.buttonHoverBg} shadow-xs group-hover:shadow-md group-hover:scale-[1.02]`}>
+                    <span className="tracking-wide uppercase">Order Now</span>
+                    <div className="flex items-center gap-1">
+                      <Sparkles className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1.5" />
+                    </div>
                   </div>
                 </div>
+
               </div>
             );
           })}
