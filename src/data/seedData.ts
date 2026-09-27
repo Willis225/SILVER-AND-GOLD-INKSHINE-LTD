@@ -258,7 +258,8 @@ export const SAMPLE_PRODUCTS: Product[] = [
     minQuantity: 1,
     turnaroundDays: 2,
     badge: 'Best Seller',
-    image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80',
+    image: '/luxury-rollup-banner-stand.jpg',
+    images: ['/luxury-rollup-banner-stand.jpg'],
     optionGroups: [
       {
         id: 'opt-size',
@@ -671,7 +672,8 @@ export const SAMPLE_PRODUCTS: Product[] = [
     minQuantity: 1,
     turnaroundDays: 2,
     badge: 'Waterproof',
-    image: 'https://images.unsplash.com/photo-1572375992501-4b0892d50c69?auto=format&fit=crop&w=800&q=80',
+    image: '/product-packaging-labels-stickers.jpg',
+    images: ['/product-packaging-labels-stickers.jpg'],
     optionGroups: [
       {
         id: 'opt-sticker-substrate',
@@ -721,7 +723,8 @@ export const SAMPLE_PRODUCTS: Product[] = [
     minQuantity: 1,
     turnaroundDays: 2,
     badge: 'High Impact',
-    image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80',
+    image: '/brochures-event-programs-flyers.jpg',
+    images: ['/brochures-event-programs-flyers.jpg'],
     optionGroups: [
       {
         id: 'opt-flyer-size',
@@ -1145,7 +1148,8 @@ export const SAMPLE_PRODUCTS: Product[] = [
     minQuantity: 1,
     turnaroundDays: 2,
     badge: 'VIP Tribute',
-    image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=800&q=80',
+    image: '/crystal-glass-award-plaque.jpg',
+    images: ['/crystal-glass-award-plaque.jpg'],
     optionGroups: [
       {
         id: 'opt-award-material',

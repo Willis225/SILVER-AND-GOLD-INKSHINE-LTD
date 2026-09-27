@@ -25,48 +25,48 @@ const SHOWCASE_ITEMS: ShowcaseItem[] = [
   {
     id: 'showcase-annual-reports',
     title: 'Annual Reports & Financial Statements Printing in Lagos, Nigeria',
-    price: '₦10,000.00',
-    numericPrice: 10000,
+    price: 'Price on Request',
+    numericPrice: 0,
     imageUrl: '/annual-reports-handbooks-catalogues.jpg',
     category: 'books_magazines',
   },
   {
     id: 'showcase-nylon-printer',
     title: 'Nylon Printing Machine in Nigeria | Buy Packaging Printer',
-    price: '₦24,000.00',
-    numericPrice: 24000,
+    price: 'Price on Request',
+    numericPrice: 0,
     imageUrl: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80',
     category: 'printing_machines',
   },
   {
     id: 'showcase-teardrop-banners',
     title: 'Teardrop Banners',
-    price: '₦70,000.00',
-    numericPrice: 70000,
+    price: 'Price on Request',
+    numericPrice: 0,
     imageUrl: 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=600&q=80',
     category: 'banners_stands',
   },
   {
     id: 'showcase-souvenir-bags',
     title: 'Souvenirs Bags',
-    price: '₦1,300.00',
-    numericPrice: 1300,
+    price: 'Price on Request',
+    numericPrice: 0,
     imageUrl: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80',
     category: 'paper_bags_tags',
   },
   {
     id: 'showcase-luxury-rollup',
     title: 'Luxury Rollup Banner Stand (Teardrop Chrome Base)',
-    price: '₦34,500.00',
-    numericPrice: 34500,
-    imageUrl: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=600&q=80',
+    price: 'Price on Request',
+    numericPrice: 0,
+    imageUrl: '/luxury-rollup-banner-stand.jpg',
     category: 'banners_stands',
   },
   {
     id: 'showcase-business-cards',
     title: 'Corporate Soft-Touch Laminated Business Cards (Pack of 100)',
-    price: '₦8,500.00',
-    numericPrice: 8500,
+    price: 'Price on Request',
+    numericPrice: 0,
     imageUrl: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=600&q=80',
     category: 'cards_invitations',
   },
@@ -331,9 +331,11 @@ export const ServicesShowcaseSection: React.FC<ServicesShowcaseSectionProps> = (
                       {item.title}
                     </h3>
                     
-                    {/* Gold Price */}
-                    <div className="text-xs sm:text-[14px] font-black text-[#f5be38] mt-2 font-mono">
-                      {item.price}
+                    {/* Price on Request Tag */}
+                    <div className="mt-2">
+                      <span className="inline-block px-2.5 py-0.5 rounded-full bg-amber-400/10 border border-amber-400/30 text-[11px] sm:text-xs font-bold text-[#f5be38] tracking-wide">
+                        Price on Request
+                      </span>
                     </div>
                   </div>
                 </motion.div>

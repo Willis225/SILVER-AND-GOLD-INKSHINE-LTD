@@ -176,6 +176,146 @@ export function getLockedImagesMap(): Record<string, LockedImageEntry> {
             isUserCustomized: true,
           };
         }
+        if (!parsed['showcase-luxury-rollup'] || parsed['showcase-luxury-rollup'].imageUrl?.includes('photo-1540575467063') || parsed['showcase-luxury-rollup'].imageUrl?.includes('photo-1581092160607')) {
+          parsed['showcase-luxury-rollup'] = {
+            id: 'showcase-luxury-rollup',
+            imageUrl: '/luxury-rollup-banner-stand.jpg',
+            images: ['/luxury-rollup-banner-stand.jpg'],
+            title: 'Luxury Rollup Banner Stand (Teardrop Chrome Base)',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['prod-rollup-luxury'] || parsed['prod-rollup-luxury'].imageUrl?.includes('photo-1540575467063')) {
+          parsed['prod-rollup-luxury'] = {
+            id: 'prod-rollup-luxury',
+            imageUrl: '/luxury-rollup-banner-stand.jpg',
+            images: ['/luxury-rollup-banner-stand.jpg'],
+            title: 'Luxury Rollup Banner (Broad Base)',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['display-backdrop-banner'] || parsed['display-backdrop-banner'].imageUrl?.includes('photo-1540575467063')) {
+          parsed['display-backdrop-banner'] = {
+            id: 'display-backdrop-banner',
+            imageUrl: '/advertisement-backdrop-banner.jpg',
+            images: ['/advertisement-backdrop-banner.jpg'],
+            title: 'Advertisement Backdrop Banner',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['showcase-brochures-flyers'] || parsed['showcase-brochures-flyers'].imageUrl?.includes('photo-1511578314322')) {
+          parsed['showcase-brochures-flyers'] = {
+            id: 'showcase-brochures-flyers',
+            imageUrl: '/brochures-event-programs-flyers.jpg',
+            images: ['/brochures-event-programs-flyers.jpg'],
+            title: 'Brochures, Event Programs & Flyers Printing',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['prod-flyers-handbills-a5'] || parsed['prod-flyers-handbills-a5'].imageUrl?.includes('photo-1563986768609')) {
+          parsed['prod-flyers-handbills-a5'] = {
+            id: 'prod-flyers-handbills-a5',
+            imageUrl: '/brochures-event-programs-flyers.jpg',
+            images: ['/brochures-event-programs-flyers.jpg'],
+            title: 'A5 Gloss Double-Sided Marketing Flyers & Handbills (Pack of 500)',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['showcase-premium-stickers'] || parsed['showcase-premium-stickers'].imageUrl?.includes('photo-1544816155')) {
+          parsed['showcase-premium-stickers'] = {
+            id: 'showcase-premium-stickers',
+            imageUrl: '/product-packaging-labels-stickers.jpg',
+            images: ['/product-packaging-labels-stickers.jpg'],
+            title: 'Custom Product Packaging Labels & Stickers',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['prod-stickers-labels-vinyl'] || parsed['prod-stickers-labels-vinyl'].imageUrl?.includes('photo-1572375992501')) {
+          parsed['prod-stickers-labels-vinyl'] = {
+            id: 'prod-stickers-labels-vinyl',
+            imageUrl: '/product-packaging-labels-stickers.jpg',
+            images: ['/product-packaging-labels-stickers.jpg'],
+            title: 'Custom Die-Cut Vinyl Stickers & Product Bottle Labels (Pack of 200)',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['award-acrylic-plaque'] || parsed['award-acrylic-plaque'].imageUrl?.includes('photo-1534447677') || parsed['award-acrylic-plaque'].imageUrl?.includes('photo-1578269174')) {
+          parsed['award-acrylic-plaque'] = {
+            id: 'award-acrylic-plaque',
+            imageUrl: '/acrylic-award-plaque.jpg',
+            images: ['/acrylic-award-plaque.jpg'],
+            title: 'Custom Branded Acrylic Award Plaque Printing in Lagos',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['award-crystal-plaque'] || parsed['award-crystal-plaque'].imageUrl?.includes('cdn.hstockplus.org') || parsed['award-crystal-plaque'].imageUrl?.includes('photo-1578269174')) {
+          parsed['award-crystal-plaque'] = {
+            id: 'award-crystal-plaque',
+            imageUrl: '/crystal-glass-award-plaque.jpg',
+            images: ['/crystal-glass-award-plaque.jpg'],
+            title: 'Customized Branded Crystal Glass Award Plaque Printing in Lagos | Custom Award Plaques',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['prod-awards-crystal-plaque'] || parsed['prod-awards-crystal-plaque'].imageUrl?.includes('photo-1589829545856')) {
+          parsed['prod-awards-crystal-plaque'] = {
+            id: 'prod-awards-crystal-plaque',
+            imageUrl: '/crystal-glass-award-plaque.jpg',
+            images: ['/crystal-glass-award-plaque.jpg'],
+            title: 'Precision Laser-Etched Optical Crystal Plaque & Wooden Trophy',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['display-ad-portfolio'] || parsed['display-ad-portfolio'].imageUrl?.includes('cdn.hstockplus.org')) {
+          parsed['display-ad-portfolio'] = {
+            id: 'display-ad-portfolio',
+            imageUrl: '/advertising-materials-portfolio.jpg',
+            images: ['/advertising-materials-portfolio.jpg'],
+            title: 'Advertising Materials Portfolio Collection',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['display-flyer-work-3'] || parsed['display-flyer-work-3'].imageUrl?.includes('cdn.hstockplus.org')) {
+          parsed['display-flyer-work-3'] = {
+            id: 'display-flyer-work-3',
+            imageUrl: '/flyers-work-3.jpg',
+            images: ['/flyers-work-3.jpg'],
+            title: 'Flyers - Work #3',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['display-flyer-work-2'] || parsed['display-flyer-work-2'].imageUrl?.includes('photo-1511578314')) {
+          parsed['display-flyer-work-2'] = {
+            id: 'display-flyer-work-2',
+            imageUrl: '/flyers-work-2.jpg',
+            images: ['/flyers-work-2.jpg'],
+            title: 'Flyers - Work #2',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['display-flyer-work-1'] || parsed['display-flyer-work-1'].imageUrl?.includes('photo-1540575467')) {
+          parsed['display-flyer-work-1'] = {
+            id: 'display-flyer-work-1',
+            imageUrl: '/flyers-work-1.jpg',
+            images: ['/flyers-work-1.jpg'],
+            title: 'Flyers - Work #1',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
         inMemoryLockRegistry = parsed;
         return inMemoryLockRegistry!;
       }
@@ -286,6 +426,118 @@ export function getLockedImagesMap(): Record<string, LockedImageEntry> {
       imageUrl: '/frosted-acrylic-wedding-invitation.jpg',
       images: ['/frosted-acrylic-wedding-invitation.jpg'],
       title: 'Royal Foil-Stamped Frosted Acrylic Wedding Invitation Suite & Welcome Easel',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'showcase-luxury-rollup': {
+      id: 'showcase-luxury-rollup',
+      imageUrl: '/luxury-rollup-banner-stand.jpg',
+      images: ['/luxury-rollup-banner-stand.jpg'],
+      title: 'Luxury Rollup Banner Stand (Teardrop Chrome Base)',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'prod-rollup-luxury': {
+      id: 'prod-rollup-luxury',
+      imageUrl: '/luxury-rollup-banner-stand.jpg',
+      images: ['/luxury-rollup-banner-stand.jpg'],
+      title: 'Luxury Rollup Banner (Broad Base)',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'display-backdrop-banner': {
+      id: 'display-backdrop-banner',
+      imageUrl: '/advertisement-backdrop-banner.jpg',
+      images: ['/advertisement-backdrop-banner.jpg'],
+      title: 'Advertisement Backdrop Banner',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'showcase-brochures-flyers': {
+      id: 'showcase-brochures-flyers',
+      imageUrl: '/brochures-event-programs-flyers.jpg',
+      images: ['/brochures-event-programs-flyers.jpg'],
+      title: 'Brochures, Event Programs & Flyers Printing',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'prod-flyers-handbills-a5': {
+      id: 'prod-flyers-handbills-a5',
+      imageUrl: '/brochures-event-programs-flyers.jpg',
+      images: ['/brochures-event-programs-flyers.jpg'],
+      title: 'A5 Gloss Double-Sided Marketing Flyers & Handbills (Pack of 500)',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'showcase-premium-stickers': {
+      id: 'showcase-premium-stickers',
+      imageUrl: '/product-packaging-labels-stickers.jpg',
+      images: ['/product-packaging-labels-stickers.jpg'],
+      title: 'Custom Product Packaging Labels & Stickers',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'prod-stickers-labels-vinyl': {
+      id: 'prod-stickers-labels-vinyl',
+      imageUrl: '/product-packaging-labels-stickers.jpg',
+      images: ['/product-packaging-labels-stickers.jpg'],
+      title: 'Custom Die-Cut Vinyl Stickers & Product Bottle Labels (Pack of 200)',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'award-acrylic-plaque': {
+      id: 'award-acrylic-plaque',
+      imageUrl: '/acrylic-award-plaque.jpg',
+      images: ['/acrylic-award-plaque.jpg'],
+      title: 'Custom Branded Acrylic Award Plaque Printing in Lagos',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'award-crystal-plaque': {
+      id: 'award-crystal-plaque',
+      imageUrl: '/crystal-glass-award-plaque.jpg',
+      images: ['/crystal-glass-award-plaque.jpg'],
+      title: 'Customized Branded Crystal Glass Award Plaque Printing in Lagos | Custom Award Plaques',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'prod-awards-crystal-plaque': {
+      id: 'prod-awards-crystal-plaque',
+      imageUrl: '/crystal-glass-award-plaque.jpg',
+      images: ['/crystal-glass-award-plaque.jpg'],
+      title: 'Precision Laser-Etched Optical Crystal Plaque & Wooden Trophy',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'display-ad-portfolio': {
+      id: 'display-ad-portfolio',
+      imageUrl: '/advertising-materials-portfolio.jpg',
+      images: ['/advertising-materials-portfolio.jpg'],
+      title: 'Advertising Materials Portfolio Collection',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'display-flyer-work-3': {
+      id: 'display-flyer-work-3',
+      imageUrl: '/flyers-work-3.jpg',
+      images: ['/flyers-work-3.jpg'],
+      title: 'Flyers - Work #3',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'display-flyer-work-2': {
+      id: 'display-flyer-work-2',
+      imageUrl: '/flyers-work-2.jpg',
+      images: ['/flyers-work-2.jpg'],
+      title: 'Flyers - Work #2',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'display-flyer-work-1': {
+      id: 'display-flyer-work-1',
+      imageUrl: '/flyers-work-1.jpg',
+      images: ['/flyers-work-1.jpg'],
+      title: 'Flyers - Work #1',
       lockedAt: new Date().toISOString(),
       isUserCustomized: true,
     }

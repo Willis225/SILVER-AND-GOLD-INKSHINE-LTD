@@ -17,9 +17,9 @@ const DEFAULT_DISPLAY_ITEMS: DisplayStandItem[] = [
     id: 'display-ad-portfolio',
     badge: 'Featured Job',
     title: 'Advertising Materials Portfolio Collection',
-    price: '₦25,000',
-    numericPrice: 25000,
-    imageUrl: 'https://cdn.hstockplus.org/uploads/public/img-1789638023483-0654f1a516c4673a.webp',
+    price: 'Price on Request',
+    numericPrice: 0,
+    imageUrl: '/advertising-materials-portfolio.jpg',
     category: 'advertising_materials',
   },
   {
@@ -28,7 +28,7 @@ const DEFAULT_DISPLAY_ITEMS: DisplayStandItem[] = [
     title: 'Flyers - Work #3',
     price: 'Price on Request',
     numericPrice: 0,
-    imageUrl: 'https://cdn.hstockplus.org/uploads/public/img-1789638255572-4a3ec89bf3a4c4fa.webp',
+    imageUrl: '/flyers-work-3.jpg',
     category: 'flyers_handbills',
   },
   {
@@ -37,7 +37,7 @@ const DEFAULT_DISPLAY_ITEMS: DisplayStandItem[] = [
     title: 'Flyers - Work #2',
     price: 'Price on Request',
     numericPrice: 0,
-    imageUrl: 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=700&q=80',
+    imageUrl: '/flyers-work-2.jpg',
     category: 'flyers_handbills',
   },
   {
@@ -46,7 +46,7 @@ const DEFAULT_DISPLAY_ITEMS: DisplayStandItem[] = [
     title: 'Flyers - Work #1',
     price: 'Price on Request',
     numericPrice: 0,
-    imageUrl: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=700&q=80',
+    imageUrl: '/flyers-work-1.jpg',
     category: 'flyers_handbills',
   },
 ];

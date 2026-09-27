@@ -19,7 +19,7 @@ const DEFAULT_AWARD_ITEMS: AwardItem[] = [
     title: 'Custom Branded Acrylic Award Plaque Printing in Lagos',
     price: '₦24,000',
     numericPrice: 24000,
-    imageUrl: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=700&q=80',
+    imageUrl: '/acrylic-award-plaque.jpg',
     category: 'awards',
   },
   {
@@ -28,7 +28,7 @@ const DEFAULT_AWARD_ITEMS: AwardItem[] = [
     title: 'Customized Branded Crystal Glass Award Plaque Printing in Lagos | Custom Award Plaques',
     price: '₦34,000',
     numericPrice: 34000,
-    imageUrl: 'https://cdn.hstockplus.org/uploads/public/img-1789638184148-5858e68459451c46.webp',
+    imageUrl: '/crystal-glass-award-plaque.jpg',
     category: 'awards',
   },
   {

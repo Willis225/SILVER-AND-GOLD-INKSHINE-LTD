@@ -121,7 +121,7 @@ export const DEFAULT_SHOWCASE_SERVICES: ShowcaseServiceItem[] = [
   {
     id: 'showcase-annual-reports',
     title: 'Annual Reports, Handbooks & Catalogues Printing',
-    price: '₦2,500 / copy',
+    price: 'Price on Request',
     imageUrl: '/annual-reports-handbooks-catalogues.jpg',
     category: 'books_magazines',
     description: 'Crisp color fidelity with perfect square-spine PUR binding for corporate institutions.'
@@ -129,24 +129,24 @@ export const DEFAULT_SHOWCASE_SERVICES: ShowcaseServiceItem[] = [
   {
     id: 'showcase-luxury-rollup',
     title: 'Luxury Rollup Banner Stand Printing',
-    price: '₦34,500 each',
-    imageUrl: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80',
+    price: 'Price on Request',
+    imageUrl: '/luxury-rollup-banner-stand.jpg',
     category: 'banners_stands',
     description: 'Heavy aluminium teardrop base with photographic anti-curl Solite media.'
   },
   {
     id: 'showcase-brochures-flyers',
     title: 'Brochures, Event Programs & Flyers Printing',
-    price: '₦35,000 / 100 pcs',
-    imageUrl: 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=600&q=80',
+    price: 'Price on Request',
+    imageUrl: '/brochures-event-programs-flyers.jpg',
     category: 'flyers_handbills',
     description: 'High-speed digital printing on 150gsm/250gsm gloss art paper.'
   },
   {
     id: 'showcase-premium-stickers',
     title: 'Custom Product Packaging Labels & Stickers',
-    price: '₦8,500 / 100 pcs',
-    imageUrl: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80',
+    price: 'Price on Request',
+    imageUrl: '/product-packaging-labels-stickers.jpg',
     category: 'stickers_labels',
     description: 'Waterproof vinyl, clear transparent, or foil stamped with precision contour cutting.'
   }
