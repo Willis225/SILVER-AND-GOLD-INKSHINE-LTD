@@ -103,7 +103,8 @@ export const SAMPLE_PRODUCTS: Product[] = [
     minQuantity: 100,
     turnaroundDays: 3,
     badge: 'School Special',
-    image: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80',
+    image: '/exercise-books-40-60.jpg',
+    images: ['/exercise-books-40-60.jpg'],
     optionGroups: [
       {
         id: 'opt-leaf-count',
@@ -377,7 +378,8 @@ export const SAMPLE_PRODUCTS: Product[] = [
     minQuantity: 1, // 1 pack = 100 cards
     turnaroundDays: 3,
     badge: 'Essential',
-    image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=800&q=80',
+    image: '/premium-matte-business-cards.jpg',
+    images: ['/premium-matte-business-cards.jpg'],
     optionGroups: [
       {
         id: 'opt-corner',
@@ -768,7 +770,8 @@ export const SAMPLE_PRODUCTS: Product[] = [
     minQuantity: 1,
     turnaroundDays: 3,
     badge: 'C-Suite Pack',
-    image: 'https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=800&q=80',
+    image: '/executive-letterheads-folders.jpg',
+    images: ['/executive-letterheads-folders.jpg'],
     optionGroups: [
       {
         id: 'opt-stationery-paper',
@@ -816,7 +819,8 @@ export const SAMPLE_PRODUCTS: Product[] = [
     minQuantity: 1,
     turnaroundDays: 4,
     badge: 'AGM Standard',
-    image: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80',
+    image: '/corporate-annual-report-magazine.jpg',
+    images: ['/corporate-annual-report-magazine.jpg'],
     optionGroups: [
       {
         id: 'opt-book-pages',
@@ -865,7 +869,8 @@ export const SAMPLE_PRODUCTS: Product[] = [
     minQuantity: 1,
     turnaroundDays: 1,
     badge: 'Legal Ready',
-    image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=800&q=80',
+    image: '/company-stamp-cac-seal.jpg',
+    images: ['/company-stamp-cac-seal.jpg'],
     optionGroups: [
       {
         id: 'opt-stamp-device',

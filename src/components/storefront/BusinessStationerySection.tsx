@@ -14,12 +14,12 @@ interface BusinessStationerySectionProps {
 
 const DEFAULT_STATIONERY_ITEMS: StationeryItem[] = [
   {
-    id: 'stationery-annual-report',
-    badge: 'AGM Standard',
-    title: 'Corporate Annual Report & Company Profile Magazine (50 Copies)',
-    price: 'Price on Request',
-    numericPrice: 0,
-    imageUrl: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=700&q=80',
+    id: 'prod-exercise-books',
+    badge: 'School Special',
+    title: '40 and 60 Leaves Exercise Books Printing',
+    price: '₦399 / unit',
+    numericPrice: 399,
+    imageUrl: '/exercise-books-40-60.jpg',
     category: 'books_magazines',
   },
   {
@@ -28,7 +28,7 @@ const DEFAULT_STATIONERY_ITEMS: StationeryItem[] = [
     title: 'Premium Matte Laminated Business Cards (Pack of 100)',
     price: '₦18,500',
     numericPrice: 18500,
-    imageUrl: 'https://cdn.hstockplus.org/uploads/public/img-1789638161792-fdf550c93a995761.webp',
+    imageUrl: '/premium-matte-business-cards.jpg',
     category: 'cards_invitations',
   },
   {
@@ -37,7 +37,7 @@ const DEFAULT_STATIONERY_ITEMS: StationeryItem[] = [
     title: 'Executive Corporate Letterheads & Presentation Folders Suite (100 Sets)',
     price: '₦48,000',
     numericPrice: 48000,
-    imageUrl: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=700&q=80',
+    imageUrl: '/executive-letterheads-folders.jpg',
     category: 'office_stationery',
   },
   {
@@ -46,7 +46,7 @@ const DEFAULT_STATIONERY_ITEMS: StationeryItem[] = [
     title: 'Premium Plastic Business Cards',
     price: '₦48,000',
     numericPrice: 48000,
-    imageUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=700&q=80',
+    imageUrl: '/premium-plastic-business-cards.jpg',
     category: 'cards_invitations',
   },
 ];

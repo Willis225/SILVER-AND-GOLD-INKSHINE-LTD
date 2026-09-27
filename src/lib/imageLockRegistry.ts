@@ -46,6 +46,96 @@ export function getLockedImagesMap(): Record<string, LockedImageEntry> {
     if (raw) {
       const parsed = JSON.parse(raw);
       if (parsed && typeof parsed === 'object') {
+        if (!parsed['prod-exercise-books'] || parsed['prod-exercise-books'].imageUrl?.includes('photo-1544716278-ca5e3f4abd8c')) {
+          parsed['prod-exercise-books'] = {
+            id: 'prod-exercise-books',
+            imageUrl: '/exercise-books-40-60.jpg',
+            images: ['/exercise-books-40-60.jpg'],
+            title: '40 and 60 Leaves Exercise Books Printing',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['prod-office-stationery-suite'] || parsed['prod-office-stationery-suite'].imageUrl?.includes('photo-1586075010923-2dd4570fb338') || parsed['prod-office-stationery-suite'].imageUrl?.includes('photo-1589829545856')) {
+          parsed['prod-office-stationery-suite'] = {
+            id: 'prod-office-stationery-suite',
+            imageUrl: '/executive-letterheads-folders.jpg',
+            images: ['/executive-letterheads-folders.jpg'],
+            title: 'Executive Corporate Letterheads & Presentation Folders Suite (100 Sets)',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['prod-books-magazines-annual'] || parsed['prod-books-magazines-annual'].imageUrl?.includes('photo-1544716278-ca5e3f4abd8c')) {
+          parsed['prod-books-magazines-annual'] = {
+            id: 'prod-books-magazines-annual',
+            imageUrl: '/corporate-annual-report-magazine.jpg',
+            images: ['/corporate-annual-report-magazine.jpg'],
+            title: 'Corporate Annual Report & Company Profile Magazine (50 Copies)',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['showcase_showcase-annual-reports'] || parsed['showcase_showcase-annual-reports'].imageUrl?.includes('photo-1544716278-ca5e3f4abd8c')) {
+          parsed['showcase_showcase-annual-reports'] = {
+            id: 'showcase_showcase-annual-reports',
+            imageUrl: '/corporate-annual-report-magazine.jpg',
+            images: ['/corporate-annual-report-magazine.jpg'],
+            title: 'Annual Reports & Financial Statements Printing',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['stationery-plastic-cards'] || parsed['stationery-plastic-cards'].imageUrl?.includes('photo-1544717305') || parsed['stationery-plastic-cards'].imageUrl?.includes('photo-1559526324')) {
+          parsed['stationery-plastic-cards'] = {
+            id: 'stationery-plastic-cards',
+            imageUrl: '/premium-plastic-business-cards.jpg',
+            images: ['/premium-plastic-business-cards.jpg'],
+            title: 'Premium Plastic Business Cards',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['prod-stamps-seals-corporate'] || parsed['prod-stamps-seals-corporate'].imageUrl?.includes('photo-1589829545856')) {
+          parsed['prod-stamps-seals-corporate'] = {
+            id: 'prod-stamps-seals-corporate',
+            imageUrl: '/company-stamp-cac-seal.jpg',
+            images: ['/company-stamp-cac-seal.jpg'],
+            title: 'Shiny Self-Inking Company Stamp & Heavy-Duty CAC Embossing Seal',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['stationery-certificates'] || parsed['stationery-certificates'].imageUrl?.includes('photo-1589829545856')) {
+          parsed['stationery-certificates'] = {
+            id: 'stationery-certificates',
+            imageUrl: '/certificate-printing-lagos.jpg',
+            images: ['/certificate-printing-lagos.jpg'],
+            title: 'Certificate Printing in Lagos – Professional Award & Academic Certificates',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['prod-business-cards'] || parsed['prod-business-cards'].imageUrl?.includes('photo-1589829545856') || parsed['prod-business-cards'].imageUrl?.includes('cdn.hstockplus.org')) {
+          parsed['prod-business-cards'] = {
+            id: 'prod-business-cards',
+            imageUrl: '/premium-matte-business-cards.jpg',
+            images: ['/premium-matte-business-cards.jpg'],
+            title: 'Premium Matte Laminated Business Cards (Pack of 100)',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['stationery-matte-cards'] || parsed['stationery-matte-cards'].imageUrl?.includes('photo-1589829545856') || parsed['stationery-matte-cards'].imageUrl?.includes('cdn.hstockplus.org')) {
+          parsed['stationery-matte-cards'] = {
+            id: 'stationery-matte-cards',
+            imageUrl: '/premium-matte-business-cards.jpg',
+            images: ['/premium-matte-business-cards.jpg'],
+            title: 'Premium Matte Laminated Business Cards (Pack of 100)',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
         inMemoryLockRegistry = parsed;
         return inMemoryLockRegistry!;
       }
@@ -54,7 +144,80 @@ export function getLockedImagesMap(): Record<string, LockedImageEntry> {
     console.warn('Could not read image locks from localStorage:', err);
   }
 
-  inMemoryLockRegistry = {};
+  inMemoryLockRegistry = {
+    'prod-exercise-books': {
+      id: 'prod-exercise-books',
+      imageUrl: '/exercise-books-40-60.jpg',
+      images: ['/exercise-books-40-60.jpg'],
+      title: '40 and 60 Leaves Exercise Books Printing',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'prod-office-stationery-suite': {
+      id: 'prod-office-stationery-suite',
+      imageUrl: '/executive-letterheads-folders.jpg',
+      images: ['/executive-letterheads-folders.jpg'],
+      title: 'Executive Corporate Letterheads & Presentation Folders Suite (100 Sets)',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'prod-books-magazines-annual': {
+      id: 'prod-books-magazines-annual',
+      imageUrl: '/corporate-annual-report-magazine.jpg',
+      images: ['/corporate-annual-report-magazine.jpg'],
+      title: 'Corporate Annual Report & Company Profile Magazine (50 Copies)',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'showcase_showcase-annual-reports': {
+      id: 'showcase_showcase-annual-reports',
+      imageUrl: '/corporate-annual-report-magazine.jpg',
+      images: ['/corporate-annual-report-magazine.jpg'],
+      title: 'Annual Reports & Financial Statements Printing',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'stationery-plastic-cards': {
+      id: 'stationery-plastic-cards',
+      imageUrl: '/premium-plastic-business-cards.jpg',
+      images: ['/premium-plastic-business-cards.jpg'],
+      title: 'Premium Plastic Business Cards',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'prod-stamps-seals-corporate': {
+      id: 'prod-stamps-seals-corporate',
+      imageUrl: '/company-stamp-cac-seal.jpg',
+      images: ['/company-stamp-cac-seal.jpg'],
+      title: 'Shiny Self-Inking Company Stamp & Heavy-Duty CAC Embossing Seal',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'stationery-certificates': {
+      id: 'stationery-certificates',
+      imageUrl: '/certificate-printing-lagos.jpg',
+      images: ['/certificate-printing-lagos.jpg'],
+      title: 'Certificate Printing in Lagos – Professional Award & Academic Certificates',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'prod-business-cards': {
+      id: 'prod-business-cards',
+      imageUrl: '/premium-matte-business-cards.jpg',
+      images: ['/premium-matte-business-cards.jpg'],
+      title: 'Premium Matte Laminated Business Cards (Pack of 100)',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'stationery-matte-cards': {
+      id: 'stationery-matte-cards',
+      imageUrl: '/premium-matte-business-cards.jpg',
+      images: ['/premium-matte-business-cards.jpg'],
+      title: 'Premium Matte Laminated Business Cards (Pack of 100)',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    }
+  };
   return inMemoryLockRegistry;
 }
 

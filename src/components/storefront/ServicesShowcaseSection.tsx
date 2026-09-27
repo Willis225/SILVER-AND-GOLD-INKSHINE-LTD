@@ -27,7 +27,7 @@ const SHOWCASE_ITEMS: ShowcaseItem[] = [
     title: 'Annual Reports & Financial Statements Printing in Lagos, Nigeria',
     price: '₦10,000.00',
     numericPrice: 10000,
-    imageUrl: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=600&q=80',
+    imageUrl: '/corporate-annual-report-magazine.jpg',
     category: 'books_magazines',
   },
   {

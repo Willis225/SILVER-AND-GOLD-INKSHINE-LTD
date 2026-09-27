@@ -23,7 +23,8 @@ export const HOMEPAGE_SHOWCASE_PRODUCTS: Product[] = [
     minQuantity: 20,
     turnaroundDays: 3,
     badge: 'AGM Standard',
-    image: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80',
+    image: '/corporate-annual-report-magazine.jpg',
+    images: ['/corporate-annual-report-magazine.jpg'],
     optionGroups: [
       {
         id: 'opt-book-pages',
@@ -127,7 +128,8 @@ export const HOMEPAGE_SHOWCASE_PRODUCTS: Product[] = [
     minQuantity: 100,
     turnaroundDays: 4,
     badge: 'VIP Choice',
-    image: 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=800&q=80',
+    image: '/premium-plastic-business-cards.jpg',
+    images: ['/premium-plastic-business-cards.jpg'],
     optionGroups: [
       {
         id: 'opt-pvc-type',
@@ -168,7 +170,8 @@ export const HOMEPAGE_SHOWCASE_PRODUCTS: Product[] = [
     minQuantity: 10,
     turnaroundDays: 2,
     badge: 'Accredited',
-    image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=800&q=80',
+    image: '/certificate-printing-lagos.jpg',
+    images: ['/certificate-printing-lagos.jpg'],
     optionGroups: [
       {
         id: 'opt-cert-stock',
