@@ -42,11 +42,11 @@ const DEFAULT_PACKAGING_ITEMS: PackagingItem[] = [
   },
   {
     id: 'pkg-pouch-packaging',
-    badge: 'Custom Box',
-    title: 'Design and Print Custom Branded Pouch & Box Packaging in Lagos',
-    price: '₦85.00',
-    numericPrice: 85,
-    imageUrl: 'https://cdn.hstockplus.org/uploads/public/img-1789638210286-d54286b63f154e3c.webp',
+    badge: 'Custom Pouch',
+    title: 'Design and Print custom branded pouch Packaging in Lagos',
+    price: 'Price on Request',
+    numericPrice: 0,
+    imageUrl: '/custom-branded-pouch-packaging.jpg',
     category: 'packaging_shipping_cartons',
   },
 ];

@@ -476,6 +476,186 @@ export function getLockedImagesMap(): Record<string, LockedImageEntry> {
             isUserCustomized: true,
           };
         }
+        if (!parsed['award-wooden-plaque'] || parsed['award-wooden-plaque'].imageUrl?.includes('photo-1567427017') || parsed['award-wooden-plaque'].imageUrl?.includes('photo-1578269174')) {
+          parsed['award-wooden-plaque'] = {
+            id: 'award-wooden-plaque',
+            imageUrl: '/wooden-award-plaque.jpg',
+            images: ['/wooden-award-plaque.jpg'],
+            title: 'Wooden Award Plaque',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['award-star-trophy'] || parsed['award-star-trophy'].imageUrl?.includes('photo-1579546929') || parsed['award-star-trophy'].imageUrl?.includes('photo-1578269174')) {
+          parsed['award-star-trophy'] = {
+            id: 'award-star-trophy',
+            imageUrl: '/star-award-trophy-medals.jpg',
+            images: ['/star-award-trophy-medals.jpg'],
+            title: 'Custom Engraved Star Award Trophy & Medals',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['event-a3-poster'] || parsed['event-a3-poster'].imageUrl?.includes('photo-1542744094')) {
+          parsed['event-a3-poster'] = {
+            id: 'event-a3-poster',
+            imageUrl: '/promo-special-a3-poster.jpg',
+            images: ['/promo-special-a3-poster.jpg'],
+            title: 'A3 Poster',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['event-pos-banners'] || parsed['event-pos-banners'].imageUrl?.includes('photo-1540575467')) {
+          parsed['event-pos-banners'] = {
+            id: 'event-pos-banners',
+            imageUrl: '/retail-pos-banners.jpg',
+            images: ['/retail-pos-banners.jpg'],
+            title: 'POS Banners',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['event-wall-frames'] || parsed['event-wall-frames'].imageUrl?.includes('photo-1600585154')) {
+          parsed['event-wall-frames'] = {
+            id: 'event-wall-frames',
+            imageUrl: '/wall-pictures-photo-frames.jpg',
+            images: ['/wall-pictures-photo-frames.jpg'],
+            title: 'Wall Pictures & Photo Frames',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['event-spin-wheel'] || parsed['event-spin-wheel'].imageUrl?.includes('photo-1511578314')) {
+          parsed['event-spin-wheel'] = {
+            id: 'event-spin-wheel',
+            imageUrl: '/spin-to-win-wheel.jpg',
+            images: ['/spin-to-win-wheel.jpg'],
+            title: 'Spin To Win Wheel',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['gift-drawstring-bag'] || parsed['gift-drawstring-bag'].imageUrl?.includes('photo-1544816155')) {
+          parsed['gift-drawstring-bag'] = {
+            id: 'gift-drawstring-bag',
+            imageUrl: '/drawstring-bag-printing.jpg',
+            images: ['/drawstring-bag-printing.jpg'],
+            title: 'Drawstring Bag Printing',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['gift-pop-socket'] || parsed['gift-pop-socket'].imageUrl?.includes('photo-1584917865')) {
+          parsed['gift-pop-socket'] = {
+            id: 'gift-pop-socket',
+            imageUrl: '/custom-pop-socket-phone-holder.jpg',
+            images: ['/custom-pop-socket-phone-holder.jpg'],
+            title: 'Custom Pop Socket Phone Holder',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['gift-jute-bag'] || parsed['gift-jute-bag'].imageUrl?.includes('photo-1544816155')) {
+          parsed['gift-jute-bag'] = {
+            id: 'gift-jute-bag',
+            imageUrl: '/custom-jute-bag-printing.jpg',
+            images: ['/custom-jute-bag-printing.jpg'],
+            title: 'Custom Jute Bag Printing in Nigeria',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['gift-wristband'] || parsed['gift-wristband'].imageUrl?.includes('photo-1584917865')) {
+          parsed['gift-wristband'] = {
+            id: 'gift-wristband',
+            imageUrl: '/custom-wristband-printing.jpg',
+            images: ['/custom-wristband-printing.jpg'],
+            title: 'Custom Wristband Printing in Lagos, Nigeria – Silicone, Fabric & Rubber Bands',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['pkg-pouch-packaging'] || parsed['pkg-pouch-packaging'].imageUrl?.includes('cdn.hstockplus.org') || parsed['pkg-pouch-packaging'].imageUrl?.includes('photo-1544816155')) {
+          parsed['pkg-pouch-packaging'] = {
+            id: 'pkg-pouch-packaging',
+            imageUrl: '/custom-branded-pouch-packaging.jpg',
+            images: ['/custom-branded-pouch-packaging.jpg'],
+            title: 'Design and Print custom branded pouch Packaging in Lagos',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['pkg-woven-labels'] || parsed['pkg-woven-labels'].imageUrl?.includes('photo-1503342217')) {
+          parsed['pkg-woven-labels'] = {
+            id: 'pkg-woven-labels',
+            imageUrl: '/custom-woven-labels.jpg',
+            images: ['/custom-woven-labels.jpg'],
+            title: 'Custom Woven Labels',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['pkg-ice-cream-cups'] || parsed['pkg-ice-cream-cups'].imageUrl?.includes('photo-1544816155')) {
+          parsed['pkg-ice-cream-cups'] = {
+            id: 'pkg-ice-cream-cups',
+            imageUrl: '/ice-cream-cups.jpg',
+            images: ['/ice-cream-cups.jpg'],
+            title: 'Ice Cream Cups',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['pkg-paper-bags-a3'] || parsed['pkg-paper-bags-a3'].imageUrl?.includes('photo-1544816155')) {
+          parsed['pkg-paper-bags-a3'] = {
+            id: 'pkg-paper-bags-a3',
+            imageUrl: '/custom-paper-bags-a3.jpg',
+            images: ['/custom-paper-bags-a3.jpg'],
+            title: 'Custom Paper Bags (A3 size)',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['wedding-bag-work-3']) {
+          parsed['wedding-bag-work-3'] = {
+            id: 'wedding-bag-work-3',
+            imageUrl: '/wedding-bag-work-3.jpg',
+            images: ['/wedding-bag-work-3.jpg'],
+            title: 'Wedding Bag - Work #3',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['wedding-bag-work-2']) {
+          parsed['wedding-bag-work-2'] = {
+            id: 'wedding-bag-work-2',
+            imageUrl: '/wedding-bag-work-2.jpg',
+            images: ['/wedding-bag-work-2.jpg'],
+            title: 'Wedding Bag - Work #2',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['wedding-bag-work-1']) {
+          parsed['wedding-bag-work-1'] = {
+            id: 'wedding-bag-work-1',
+            imageUrl: '/wedding-bag-work-1.jpg',
+            images: ['/wedding-bag-work-1.jpg'],
+            title: 'Wedding Bag - Work #1',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['test-product']) {
+          parsed['test-product'] = {
+            id: 'test-product',
+            imageUrl: '/test-product-sample.jpg',
+            images: ['/test-product-sample.jpg'],
+            title: 'Test Product',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
         inMemoryLockRegistry = parsed;
         return inMemoryLockRegistry!;
       }
@@ -802,6 +982,150 @@ export function getLockedImagesMap(): Record<string, LockedImageEntry> {
       imageUrl: '/giant-pole-feather-flag-banner.jpg',
       images: ['/giant-pole-feather-flag-banner.jpg'],
       title: 'Giant Pole Feather Flag Banner 5.5m',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'award-wooden-plaque': {
+      id: 'award-wooden-plaque',
+      imageUrl: '/wooden-award-plaque.jpg',
+      images: ['/wooden-award-plaque.jpg'],
+      title: 'Wooden Award Plaque',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'award-star-trophy': {
+      id: 'award-star-trophy',
+      imageUrl: '/star-award-trophy-medals.jpg',
+      images: ['/star-award-trophy-medals.jpg'],
+      title: 'Custom Engraved Star Award Trophy & Medals',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'event-a3-poster': {
+      id: 'event-a3-poster',
+      imageUrl: '/promo-special-a3-poster.jpg',
+      images: ['/promo-special-a3-poster.jpg'],
+      title: 'A3 Poster',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'event-pos-banners': {
+      id: 'event-pos-banners',
+      imageUrl: '/retail-pos-banners.jpg',
+      images: ['/retail-pos-banners.jpg'],
+      title: 'POS Banners',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'event-wall-frames': {
+      id: 'event-wall-frames',
+      imageUrl: '/wall-pictures-photo-frames.jpg',
+      images: ['/wall-pictures-photo-frames.jpg'],
+      title: 'Wall Pictures & Photo Frames',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'event-spin-wheel': {
+      id: 'event-spin-wheel',
+      imageUrl: '/spin-to-win-wheel.jpg',
+      images: ['/spin-to-win-wheel.jpg'],
+      title: 'Spin To Win Wheel',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'gift-drawstring-bag': {
+      id: 'gift-drawstring-bag',
+      imageUrl: '/drawstring-bag-printing.jpg',
+      images: ['/drawstring-bag-printing.jpg'],
+      title: 'Drawstring Bag Printing',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'gift-pop-socket': {
+      id: 'gift-pop-socket',
+      imageUrl: '/custom-pop-socket-phone-holder.jpg',
+      images: ['/custom-pop-socket-phone-holder.jpg'],
+      title: 'Custom Pop Socket Phone Holder',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'gift-jute-bag': {
+      id: 'gift-jute-bag',
+      imageUrl: '/custom-jute-bag-printing.jpg',
+      images: ['/custom-jute-bag-printing.jpg'],
+      title: 'Custom Jute Bag Printing in Nigeria',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'gift-wristband': {
+      id: 'gift-wristband',
+      imageUrl: '/custom-wristband-printing.jpg',
+      images: ['/custom-wristband-printing.jpg'],
+      title: 'Custom Wristband Printing in Lagos, Nigeria – Silicone, Fabric & Rubber Bands',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'pkg-pouch-packaging': {
+      id: 'pkg-pouch-packaging',
+      imageUrl: '/custom-branded-pouch-packaging.jpg',
+      images: ['/custom-branded-pouch-packaging.jpg'],
+      title: 'Design and Print custom branded pouch Packaging in Lagos',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'pkg-woven-labels': {
+      id: 'pkg-woven-labels',
+      imageUrl: '/custom-woven-labels.jpg',
+      images: ['/custom-woven-labels.jpg'],
+      title: 'Custom Woven Labels',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'pkg-ice-cream-cups': {
+      id: 'pkg-ice-cream-cups',
+      imageUrl: '/ice-cream-cups.jpg',
+      images: ['/ice-cream-cups.jpg'],
+      title: 'Ice Cream Cups',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'pkg-paper-bags-a3': {
+      id: 'pkg-paper-bags-a3',
+      imageUrl: '/custom-paper-bags-a3.jpg',
+      images: ['/custom-paper-bags-a3.jpg'],
+      title: 'Custom Paper Bags (A3 size)',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'wedding-bag-work-3': {
+      id: 'wedding-bag-work-3',
+      imageUrl: '/wedding-bag-work-3.jpg',
+      images: ['/wedding-bag-work-3.jpg'],
+      title: 'Wedding Bag - Work #3',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'wedding-bag-work-2': {
+      id: 'wedding-bag-work-2',
+      imageUrl: '/wedding-bag-work-2.jpg',
+      images: ['/wedding-bag-work-2.jpg'],
+      title: 'Wedding Bag - Work #2',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'wedding-bag-work-1': {
+      id: 'wedding-bag-work-1',
+      imageUrl: '/wedding-bag-work-1.jpg',
+      images: ['/wedding-bag-work-1.jpg'],
+      title: 'Wedding Bag - Work #1',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'test-product': {
+      id: 'test-product',
+      imageUrl: '/test-product-sample.jpg',
+      images: ['/test-product-sample.jpg'],
+      title: 'Test Product',
       lockedAt: new Date().toISOString(),
       isUserCustomized: true,
     }
