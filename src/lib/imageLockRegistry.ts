@@ -316,6 +316,166 @@ export function getLockedImagesMap(): Record<string, LockedImageEntry> {
             isUserCustomized: true,
           };
         }
+        if (!parsed['signage-3d-signs'] || parsed['signage-3d-signs'].imageUrl?.includes('cdn.hstockplus.org') || parsed['signage-3d-signs'].imageUrl?.includes('photo-1542744094')) {
+          parsed['signage-3d-signs'] = {
+            id: 'signage-3d-signs',
+            imageUrl: '/3d-signs-lagos.jpg',
+            images: ['/3d-signs-lagos.jpg'],
+            title: '3D Signs in Lagos Nigeria | Custom 3D Signage for Businesses',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['signage-logo-signs'] || parsed['signage-logo-signs'].imageUrl?.includes('photo-1542744173') || parsed['signage-logo-signs'].imageUrl?.includes('photo-1542744094')) {
+          parsed['signage-logo-signs'] = {
+            id: 'signage-logo-signs',
+            imageUrl: '/logo-signage-lagos.jpg',
+            images: ['/logo-signage-lagos.jpg'],
+            title: 'Logo Signage in Lagos Nigeria | Custom Business Logo Signs',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['signage-directional'] || parsed['signage-directional'].imageUrl?.includes('photo-1513542789') || parsed['signage-directional'].imageUrl?.includes('photo-1542744094')) {
+          parsed['signage-directional'] = {
+            id: 'signage-directional',
+            imageUrl: '/directional-signage-lagos.jpg',
+            images: ['/directional-signage-lagos.jpg'],
+            title: 'Directional Signage in Lagos Nigeria | Custom Wayfinding Signs',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['signage-digital-display'] || parsed['signage-digital-display'].imageUrl?.includes('photo-1542744094')) {
+          parsed['signage-digital-display'] = {
+            id: 'signage-digital-display',
+            imageUrl: '/electronic-digital-signage.jpg',
+            images: ['/electronic-digital-signage.jpg'],
+            title: 'Electronic Digital Signage in Lagos Nigeria | Digital Display Signs',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['gift-water-bottle'] || parsed['gift-water-bottle'].imageUrl?.includes('photo-1602143407')) {
+          parsed['gift-water-bottle'] = {
+            id: 'gift-water-bottle',
+            imageUrl: '/custom-branded-water-bottle.jpg',
+            images: ['/custom-branded-water-bottle.jpg'],
+            title: 'Custom Branded Water Bottle Printing in Lagos, Nigeria – Custom & Personalized Bottles',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['prod-water-bottle'] || parsed['prod-water-bottle'].imageUrl?.includes('photo-1602143407')) {
+          parsed['prod-water-bottle'] = {
+            id: 'prod-water-bottle',
+            imageUrl: '/custom-branded-water-bottle.jpg',
+            images: ['/custom-branded-water-bottle.jpg'],
+            title: 'Custom Branded Water Bottle Printing in Lagos, Nigeria – Custom & Personalized Bottles',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['sidebar-prod-4'] || parsed['sidebar-prod-4'].imageUrl?.includes('photo-1602143407')) {
+          parsed['sidebar-prod-4'] = {
+            id: 'sidebar-prod-4',
+            imageUrl: '/custom-branded-water-bottle.jpg',
+            images: ['/custom-branded-water-bottle.jpg'],
+            title: 'Custom Branded Water Bottle Printing in Lagos, Nigeria – Custom & Personalized Bottles',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['gift-keychain'] || parsed['gift-keychain'].imageUrl?.includes('photo-1584917865')) {
+          parsed['gift-keychain'] = {
+            id: 'gift-keychain',
+            imageUrl: '/keychain-keyholder-printing.jpg',
+            images: ['/keychain-keyholder-printing.jpg'],
+            title: 'Key Holder & Keychain Printing in Lagos, Nigeria – Custom Branded Keyholders',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['prod-keychain'] || parsed['prod-keychain'].imageUrl?.includes('photo-1584917865')) {
+          parsed['prod-keychain'] = {
+            id: 'prod-keychain',
+            imageUrl: '/keychain-keyholder-printing.jpg',
+            images: ['/keychain-keyholder-printing.jpg'],
+            title: 'Key Holder & Keychain Printing in Lagos, Nigeria – Custom Branded Keyholders',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['sidebar-prod-3'] || parsed['sidebar-prod-3'].imageUrl?.includes('photo-1584917865')) {
+          parsed['sidebar-prod-3'] = {
+            id: 'sidebar-prod-3',
+            imageUrl: '/keychain-keyholder-printing.jpg',
+            images: ['/keychain-keyholder-printing.jpg'],
+            title: 'Key Holder & Keychain Printing in Lagos, Nigeria – Custom Branded Keyholders',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['event-center-rug'] || parsed['event-center-rug'].imageUrl?.includes('photo-1513542789') || parsed['event-center-rug'].imageUrl?.includes('photo-1600585154')) {
+          parsed['event-center-rug'] = {
+            id: 'event-center-rug',
+            imageUrl: '/custom-branded-center-rug.jpg',
+            images: ['/custom-branded-center-rug.jpg'],
+            title: 'Custom Branded Center Rug Printing',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['prod-center-rug'] || parsed['prod-center-rug'].imageUrl?.includes('photo-1600585154')) {
+          parsed['prod-center-rug'] = {
+            id: 'prod-center-rug',
+            imageUrl: '/custom-branded-center-rug.jpg',
+            images: ['/custom-branded-center-rug.jpg'],
+            title: 'Custom Branded Center Rug Printing',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['sidebar-prod-2'] || parsed['sidebar-prod-2'].imageUrl?.includes('photo-1600585154')) {
+          parsed['sidebar-prod-2'] = {
+            id: 'sidebar-prod-2',
+            imageUrl: '/custom-branded-center-rug.jpg',
+            images: ['/custom-branded-center-rug.jpg'],
+            title: 'Custom Branded Center Rug Printing',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['display-waterbase-poster'] || parsed['display-waterbase-poster'].imageUrl?.includes('photo-1517245386')) {
+          parsed['display-waterbase-poster'] = {
+            id: 'display-waterbase-poster',
+            imageUrl: '/windproof-waterbase-poster-signs.jpg',
+            images: ['/windproof-waterbase-poster-signs.jpg'],
+            title: 'Waterbase Poster Signs',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['display-instagram-frame'] || parsed['display-instagram-frame'].imageUrl?.includes('photo-1511578314')) {
+          parsed['display-instagram-frame'] = {
+            id: 'display-instagram-frame',
+            imageUrl: '/instagram-frame-cutout.jpg',
+            images: ['/instagram-frame-cutout.jpg'],
+            title: 'Instagram Frame',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['display-giant-pole-flag'] || parsed['display-giant-pole-flag'].imageUrl?.includes('photo-1505373877')) {
+          parsed['display-giant-pole-flag'] = {
+            id: 'display-giant-pole-flag',
+            imageUrl: '/giant-pole-feather-flag-banner.jpg',
+            images: ['/giant-pole-feather-flag-banner.jpg'],
+            title: 'Giant Pole Feather Flag Banner 5.5m',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
         inMemoryLockRegistry = parsed;
         return inMemoryLockRegistry!;
       }
@@ -538,6 +698,110 @@ export function getLockedImagesMap(): Record<string, LockedImageEntry> {
       imageUrl: '/flyers-work-1.jpg',
       images: ['/flyers-work-1.jpg'],
       title: 'Flyers - Work #1',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'signage-3d-signs': {
+      id: 'signage-3d-signs',
+      imageUrl: '/3d-signs-lagos.jpg',
+      images: ['/3d-signs-lagos.jpg'],
+      title: '3D Signs in Lagos Nigeria | Custom 3D Signage for Businesses',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'signage-logo-signs': {
+      id: 'signage-logo-signs',
+      imageUrl: '/logo-signage-lagos.jpg',
+      images: ['/logo-signage-lagos.jpg'],
+      title: 'Logo Signage in Lagos Nigeria | Custom Business Logo Signs',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'signage-directional': {
+      id: 'signage-directional',
+      imageUrl: '/directional-signage-lagos.jpg',
+      images: ['/directional-signage-lagos.jpg'],
+      title: 'Directional Signage in Lagos Nigeria | Custom Wayfinding Signs',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'signage-digital-display': {
+      id: 'signage-digital-display',
+      imageUrl: '/electronic-digital-signage.jpg',
+      images: ['/electronic-digital-signage.jpg'],
+      title: 'Electronic Digital Signage in Lagos Nigeria | Digital Display Signs',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'gift-water-bottle': {
+      id: 'gift-water-bottle',
+      imageUrl: '/custom-branded-water-bottle.jpg',
+      images: ['/custom-branded-water-bottle.jpg'],
+      title: 'Custom Branded Water Bottle Printing in Lagos, Nigeria – Custom & Personalized Bottles',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'prod-water-bottle': {
+      id: 'prod-water-bottle',
+      imageUrl: '/custom-branded-water-bottle.jpg',
+      images: ['/custom-branded-water-bottle.jpg'],
+      title: 'Custom Branded Water Bottle Printing in Lagos, Nigeria – Custom & Personalized Bottles',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'gift-keychain': {
+      id: 'gift-keychain',
+      imageUrl: '/keychain-keyholder-printing.jpg',
+      images: ['/keychain-keyholder-printing.jpg'],
+      title: 'Key Holder & Keychain Printing in Lagos, Nigeria – Custom Branded Keyholders',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'prod-keychain': {
+      id: 'prod-keychain',
+      imageUrl: '/keychain-keyholder-printing.jpg',
+      images: ['/keychain-keyholder-printing.jpg'],
+      title: 'Key Holder & Keychain Printing in Lagos, Nigeria – Custom Branded Keyholders',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'event-center-rug': {
+      id: 'event-center-rug',
+      imageUrl: '/custom-branded-center-rug.jpg',
+      images: ['/custom-branded-center-rug.jpg'],
+      title: 'Custom Branded Center Rug Printing',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'prod-center-rug': {
+      id: 'prod-center-rug',
+      imageUrl: '/custom-branded-center-rug.jpg',
+      images: ['/custom-branded-center-rug.jpg'],
+      title: 'Custom Branded Center Rug Printing',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'display-waterbase-poster': {
+      id: 'display-waterbase-poster',
+      imageUrl: '/windproof-waterbase-poster-signs.jpg',
+      images: ['/windproof-waterbase-poster-signs.jpg'],
+      title: 'Waterbase Poster Signs',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'display-instagram-frame': {
+      id: 'display-instagram-frame',
+      imageUrl: '/instagram-frame-cutout.jpg',
+      images: ['/instagram-frame-cutout.jpg'],
+      title: 'Instagram Frame',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'display-giant-pole-flag': {
+      id: 'display-giant-pole-flag',
+      imageUrl: '/giant-pole-feather-flag-banner.jpg',
+      images: ['/giant-pole-feather-flag-banner.jpg'],
+      title: 'Giant Pole Feather Flag Banner 5.5m',
       lockedAt: new Date().toISOString(),
       isUserCustomized: true,
     }

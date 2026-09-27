@@ -35,9 +35,9 @@ const DEFAULT_EVENT_ITEMS: EventItem[] = [
     id: 'event-center-rug',
     badge: 'Luxury',
     title: 'Custom Branded Center Rug Printing',
-    price: '₦100,000',
-    numericPrice: 100000,
-    imageUrl: 'https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=700&q=80',
+    price: 'Price on Request',
+    numericPrice: 0,
+    imageUrl: '/custom-branded-center-rug.jpg',
     category: 'events_exhibitions',
   },
   {
