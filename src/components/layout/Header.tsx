@@ -117,28 +117,28 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header className="sticky top-0 z-40 bg-[#000000] border-b border-white/10 shadow-lg">
-      {/* Top Utility Bar: Liquid Silver & Chrome Shimmer */}
-      <div className="gold-silver-shimmer text-stone-950 text-xs py-1.5 px-4 sm:px-6 lg:px-8 border-b border-white/20 shadow-xs relative overflow-hidden">
+      {/* Top Utility Bar: Liquid Silver & Gold Shimmer */}
+      <div className="gold-silver-shimmer text-stone-950 text-xs py-1.5 px-4 sm:px-6 lg:px-8 border-b border-black/20 shadow-xs relative overflow-hidden">
         {/* Subtle luminous metallic gloss sheen */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/35 via-transparent to-white/10" />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-[-25deg] animate-connecting-light" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/40 via-transparent to-black/10" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent skew-x-[-25deg] animate-connecting-light" />
 
         <div className="relative max-w-7xl mx-auto flex items-center justify-between gap-2 z-10">
           {/* Left Text: Fast Delivery with Truck Icon */}
-          <div className="font-black text-[11px] sm:text-xs md:text-sm tracking-wide text-neutral-950 flex items-center gap-1.5 drop-shadow-[0_1px_1px_rgba(255,255,255,0.85)] shrink-0">
+          <div className="font-black text-[11px] sm:text-xs md:text-sm tracking-wide text-neutral-950 flex items-center gap-1.5 drop-shadow-[0_1px_1px_rgba(255,255,255,0.7)] shrink-0">
             <span className="w-2 h-2 rounded-full bg-black shadow-[0_0_8px_rgba(0,0,0,0.6)] animate-pulse" />
-            <Truck className="w-3.5 h-3.5 text-neutral-900 shrink-0" />
-            <span className="hidden xs:inline">Fast Nationwide Delivery</span>
-            <span className="xs:hidden">Fast Delivery</span>
+            <Truck className="w-3.5 h-3.5 text-neutral-950 shrink-0" />
+            <span className="hidden xs:inline font-black">Fast Nationwide Delivery</span>
+            <span className="xs:hidden font-black">Fast Delivery</span>
           </div>
 
           {/* Right Section: Call Button + Social Icons */}
           <div className="flex items-center gap-2 sm:gap-4 shrink-0">
             <a
               href="tel:+2347030372539"
-              className="bg-white hover:bg-stone-200 text-neutral-950 hover:text-black font-black text-[10px] sm:text-xs px-2.5 sm:px-3 py-1 rounded-full transition-all shadow-xs border border-white/60 flex items-center gap-1.5 shrink-0 backdrop-blur-xs"
+              className="bg-black/90 hover:bg-black text-white hover:text-[#f5be38] font-black text-[10px] sm:text-xs px-2.5 sm:px-3 py-1 rounded-full transition-all shadow-sm border border-white/30 flex items-center gap-1.5 shrink-0 backdrop-blur-xs"
             >
-              <Phone className="w-3 h-3 text-neutral-900 shrink-0" />
+              <Phone className="w-3 h-3 text-[#f5be38] shrink-0" />
               <span>+234 703 037 2539</span>
             </a>
 
@@ -1024,6 +1024,8 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         </div>
       )}
+      {/* Liquid Gold & Silver Hairline Accent under the whole header */}
+      <div className="h-[1.5px] w-full bg-gradient-to-r from-transparent via-[#f5be38] via-white to-transparent opacity-80" />
     </header>
   );
 };

@@ -109,24 +109,24 @@ export const PrintingCategoriesQuickNav: React.FC<PrintingCategoriesQuickNavProp
   onExploreCatalog,
 }) => {
   return (
-    <section className="bg-[#09090d] text-white py-14 sm:py-20 border-b border-white/10 relative overflow-hidden z-10">
+    <section className="bg-black text-white py-14 sm:py-20 border-b border-white/10 relative overflow-hidden z-10">
       
       {/* Dynamic ambient silver/white reflective glow behind cards */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] max-w-full h-[400px] bg-gradient-to-r from-white/[0.04] via-white/[0.08] to-white/[0.04] rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] max-w-full h-[400px] bg-gradient-to-r from-[#f5be38]/[0.03] via-white/[0.06] to-[#f5be38]/[0.03] rounded-full blur-3xl pointer-events-none -z-10" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         
         {/* Section Header */}
         <motion.div 
-          initial={{ opacity: 0, x: -60 }}
+          initial={{ opacity: 0, x: -80 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="flex flex-col sm:flex-row sm:items-end justify-between gap-5 mb-10 sm:mb-12"
         >
           <div>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 text-white text-xs font-black tracking-widest uppercase mb-3 shadow-xs">
-              <span className="w-2.5 h-2.5 rounded-full bg-white ring-4 ring-white/20 animate-pulse" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-[#f5be38]/30 text-white text-xs font-black tracking-widest uppercase mb-3 shadow-xs">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#f5be38] ring-4 ring-[#f5be38]/20 animate-pulse" />
               <span>Full-Service Commercial Printing Press</span>
             </div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight leading-tight">
@@ -147,7 +147,7 @@ export const PrintingCategoriesQuickNav: React.FC<PrintingCategoriesQuickNavProp
           </button>
         </motion.div>
 
-        {/* Reflective Conduit Light Line Connecting Categories (Pure Silver / Monochrome) */}
+        {/* Reflective Conduit Light Line Connecting Categories (Pure Silver & Gold) */}
         <motion.div 
           initial={{ opacity: 0, scaleX: 0 }}
           whileInView={{ opacity: 1, scaleX: 1 }}
@@ -159,37 +159,37 @@ export const PrintingCategoriesQuickNav: React.FC<PrintingCategoriesQuickNavProp
           {/* Base connector line */}
           <div className="w-full h-1 rounded-full bg-white/10 overflow-hidden relative shadow-inner">
             {/* Animated flowing reflective light beam */}
-            <div className="absolute inset-0 w-1/3 bg-gradient-to-r from-transparent via-white via-stone-200 to-transparent blur-[1px] animate-connecting-light" />
+            <div className="absolute inset-0 w-1/3 bg-gradient-to-r from-transparent via-[#f5be38] via-white to-transparent blur-[1px] animate-connecting-light" />
           </div>
 
-          {/* Micro reflective node indicators in pure silver/white */}
+          {/* Micro reflective node indicators */}
           <div className="hidden sm:flex justify-between items-center -mt-1.5 px-6 pointer-events-none">
             {[...Array(8)].map((_, i) => (
-              <span key={i} className="w-2 h-2 rounded-full bg-white ring-2 ring-[#09090d] shadow-[0_0_6px_rgba(255,255,255,0.6)]" />
+              <span key={i} className="w-2 h-2 rounded-full bg-white ring-2 ring-black shadow-[0_0_6px_rgba(255,255,255,0.6)]" />
             ))}
           </div>
         </motion.div>
 
-        {/* 8 Luxury Monochrome Black & White Category Boxes with Scroll Entrance from Left to Right */}
+        {/* 8 Luxury Category Boxes with Smooth Scroll Entrance From Left to Right */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
           {PRINT_CATEGORIES.map((cat, idx) => {
             const Icon = cat.icon;
-            // Cascade delay so each box comes out progressively from left to right as scrolled towards
-            const staggerDelay = (idx % 4) * 0.12 + Math.floor(idx / 4) * 0.08;
+            // Progressive delay so each box comes out smoothly from left to right as you scroll towards that area
+            const staggerDelay = (idx % 4) * 0.14;
 
             return (
               <motion.div
                 key={cat.id}
-                initial={{ opacity: 0, x: -85 }}
+                initial={{ opacity: 0, x: -110 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, amount: 0.15, margin: "0px 0px -40px 0px" }}
+                viewport={{ once: true, amount: 0.18, margin: "0px 0px -50px 0px" }}
                 transition={{ 
-                  duration: 0.7, 
+                  duration: 0.72, 
                   delay: staggerDelay, 
                   ease: [0.22, 1, 0.36, 1] 
                 }}
                 onClick={() => onSelectCategory(cat.id)}
-                className="group relative bg-[#121217] hover:bg-[#181822] border border-white/15 hover:border-white/50 rounded-2xl sm:rounded-3xl p-6 sm:p-7 min-h-[300px] flex flex-col justify-between overflow-hidden cursor-pointer shadow-md hover:shadow-[0_20px_45px_rgba(255,255,255,0.06)] transform-gpu transition-all duration-500 ease-out hover:scale-105 hover:-translate-y-2 active:scale-95 will-change-transform"
+                className="group relative bg-[#09090d] hover:bg-[#121218] border border-white/15 hover:border-[#f5be38]/50 rounded-2xl sm:rounded-3xl p-6 sm:p-7 min-h-[300px] flex flex-col justify-between overflow-hidden cursor-pointer shadow-md hover:shadow-[0_20px_45px_rgba(245,190,56,0.08)] transform-gpu transition-all duration-500 ease-out hover:scale-105 hover:-translate-y-2 active:scale-95 will-change-transform"
               >
                 {/* 1. Underlying Realistic Product Background (Subtle Grayscale Watermark) */}
                 <div 
@@ -198,9 +198,9 @@ export const PrintingCategoriesQuickNav: React.FC<PrintingCategoriesQuickNavProp
                 />
 
                 {/* 2. Soft Ambient Dark Vignette for Deep Contrast */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-transparent pointer-events-none" />
 
-                {/* 3. Subtle Ambient Idle Light Shimmer (Silver / White) */}
+                {/* 3. Subtle Ambient Idle Light Shimmer (Silver / White / Gold) */}
                 <div className="absolute inset-0 pointer-events-none overflow-hidden">
                   <div className={`w-1/2 h-full bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-[-25deg] animate-reflective-shine ${cat.shineClass}`} />
                 </div>
@@ -211,7 +211,7 @@ export const PrintingCategoriesQuickNav: React.FC<PrintingCategoriesQuickNavProp
                 </div>
 
                 {/* 5. Soft Specular Ambient Glow on Hover */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-white/15 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-10" />
+                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-[#f5be38]/5 to-white/15 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-10" />
 
                 {/* 6. Top Row: Minimalist Crisp Icon + Category Tag Badge */}
                 <div className="relative z-10 flex items-center justify-between mb-6">
@@ -219,7 +219,7 @@ export const PrintingCategoriesQuickNav: React.FC<PrintingCategoriesQuickNavProp
                     <Icon className="w-6 h-6 sm:w-7 sm:h-7 text-white group-hover:text-black transition-colors" />
                   </div>
 
-                  <span className="text-[11px] sm:text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full border border-white/20 bg-white/10 text-white shadow-2xs group-hover:border-white/40">
+                  <span className="text-[11px] sm:text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full border border-white/20 bg-white/10 text-white shadow-2xs group-hover:border-[#f5be38]/50 group-hover:text-[#f5be38] transition-colors">
                     {cat.tag}
                   </span>
                 </div>
@@ -236,11 +236,11 @@ export const PrintingCategoriesQuickNav: React.FC<PrintingCategoriesQuickNavProp
                 </div>
 
                 {/* 8. Bottom Action: High-Contrast "Order Now" Button with Animated Arrow */}
-                <div className="relative z-10 mt-6 pt-4 border-t border-white/15 group-hover:border-white/30 transition-colors">
+                <div className="relative z-10 mt-6 pt-4 border-t border-white/15 group-hover:border-[#f5be38]/30 transition-colors">
                   <div className="w-full inline-flex items-center justify-between px-4 py-3 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-black transition-all duration-300 bg-white text-black hover:bg-stone-200 shadow-xs group-hover:shadow-lg group-hover:scale-[1.02]">
                     <span className="tracking-wide uppercase">Order Now</span>
                     <div className="flex items-center gap-1">
-                      <Sparkles className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-black" />
+                      <Sparkles className="w-3.5 h-3.5 text-[#f5be38] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                       <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1.5 text-black" />
                     </div>
                   </div>

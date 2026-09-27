@@ -4,15 +4,10 @@ import {
   ArrowRight, 
   Sparkles,
   CheckCircle2,
-  Printer,
-  ShieldCheck,
   Truck,
   Clock,
-  Layers,
-  FileCheck,
   Star
 } from 'lucide-react';
-import { HeroVideoPlayer } from './HeroVideoPlayer';
 import { HeroSlideItem } from '../../types/websiteContent';
 
 interface HeroSectionProps {
@@ -276,46 +271,25 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
           </div>
 
-          {/* Right Column: Sleek Industrial Video Showcase Monitor (Proportionate & Compact) */}
+          {/* Right Column: Clean Professional Image Frame */}
           <div className="lg:col-span-5 xl:col-span-5 flex flex-col items-center lg:items-end">
             <div className="w-full max-w-md lg:max-w-[430px]">
               
-              {/* Executive Production Studio Frame */}
-              <div className="relative rounded-2xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.8)] bg-[#0d0d12] border border-white/20 ring-1 ring-white/20">
+              {/* Executive Image Frame */}
+              <div className="relative rounded-3xl overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.9),0_0_35px_rgba(245,190,56,0.15)] bg-black border border-white/20 hover:border-[#f5be38]/50 ring-1 ring-[#f5be38]/20 transition-all duration-500 group">
                 
-                {/* Monitor Top Status Bar */}
-                <div className="px-4 py-2.5 bg-[#14141a] border-b border-white/10 flex items-center justify-between text-xs">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-white animate-pulse shadow-[0_0_6px_#ffffff]" />
-                    <span className="font-extrabold tracking-wider uppercase text-[11px] text-white">
-                      SILVER &amp; GOLD INKSHINE
-                    </span>
-                  </div>
-                  <span className="text-[10px] font-semibold tracking-wider uppercase text-stone-400">
-                    FACTORY &amp; PRODUCTION TOUR
-                  </span>
-                </div>
-
-                {/* Video Player */}
-                <div className="p-1 sm:p-1.5 bg-black">
-                  <HeroVideoPlayer 
-                    initialVideoUrl="https://www.kapwing.com/w/JxRjisdMGT"
+                {/* Image Stage */}
+                <div className="relative aspect-[1145/1374] overflow-hidden bg-black flex items-center justify-center">
+                  <img
+                    src="/inkshine-brand-portrait.png"
+                    alt="Silver & Gold Inkshine"
+                    className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
+                    loading="eager"
                   />
-                </div>
 
-                {/* Monitor Bottom Footer: Capability Pillars */}
-                <div className="px-3.5 py-2.5 bg-[#121217] border-t border-white/10 grid grid-cols-3 gap-2 text-center text-[10px] font-medium text-stone-300">
-                  <div className="flex items-center justify-center gap-1.5">
-                    <Printer className="w-3 h-3 text-white shrink-0" />
-                    <span>2400 DPI Offset</span>
-                  </div>
-                  <div className="flex items-center justify-center gap-1.5 border-x border-white/10">
-                    <Layers className="w-3 h-3 text-white shrink-0" />
-                    <span>Precision Die-Cut</span>
-                  </div>
-                  <div className="flex items-center justify-center gap-1.5">
-                    <ShieldCheck className="w-3 h-3 text-white shrink-0" />
-                    <span>100% Quality QA</span>
+                  {/* Subtle specular light sweep effect on hover */}
+                  <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                    <div className="absolute inset-0 -translate-x-[150%] skew-x-[-25deg] bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-1000 ease-out group-hover:translate-x-[150%]" />
                   </div>
                 </div>
 

@@ -637,10 +637,17 @@ export default function App() {
               onExploreCatalog={() => handleOpenCategories('all')}
             />
 
-            {/* 3. Brand Introduction & Promotions Overview (100% Quality, 12% Bulk Discounts, Fast Delivery) */}
+            {/* 3. Business Stationery & Office Printing (Top Pitch: Silver & Gold on Black) */}
+            <BusinessStationerySection
+              products={products}
+              onViewProducts={() => handleOpenCategories('cards_invitations')}
+              onSelectItem={handleSectionItemSelect}
+            />
+
+            {/* 4. Brand Introduction & Promotions Overview (100% Quality, 12% Bulk Discounts, Fast Delivery) */}
             <BrandIntroSection onExploreProducts={scrollToCatalog} />
 
-            {/* 4. Top-Quality Printing Services Showcase Carousel */}
+            {/* 5. Top-Quality Printing Services Showcase Carousel */}
             <ServicesShowcaseSection
               title={websiteContent.showcaseTitle}
               description={websiteContent.showcaseDescription}
@@ -651,13 +658,6 @@ export default function App() {
               onSelectItem={(item) => {
                 handleOpenCategories(item.category || 'all', item.id);
               }}
-            />
-
-            {/* 5. Business Stationery & Office Printing Carousel */}
-            <BusinessStationerySection
-              products={products}
-              onViewProducts={() => handleOpenCategories('cards_invitations')}
-              onSelectItem={handleSectionItemSelect}
             />
 
             {/* 6. Banners, Display Stands & Advertising Materials Carousel */}

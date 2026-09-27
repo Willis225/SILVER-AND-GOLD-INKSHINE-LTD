@@ -434,7 +434,7 @@ export const RequestQuoteModal: React.FC<RequestQuoteModalProps> = ({
           {/* ========================================================= */}
           {/* Interactive Google Map Section                            */}
           {/* ========================================================= */}
-          <div className="space-y-2">
+          <div>
             <div className="rounded-xl overflow-hidden border border-white/10 shadow-xs relative bg-[#181824]">
               <iframe
                 title="Silver & Gold Printing House Location"
@@ -446,27 +446,6 @@ export const RequestQuoteModal: React.FC<RequestQuoteModalProps> = ({
                 referrerPolicy="no-referrer-when-downgrade"
                 className="w-full block"
               />
-              <div className="absolute top-2 left-2 bg-[#121217]/90 backdrop-blur-md px-3 py-1.5 rounded-lg shadow-md border border-white/10 text-[11px] leading-tight text-white">
-                <p className="font-bold text-white">Silver &amp; Gold Printing House</p>
-                <p className="text-stone-400">Commercial Press &amp; Production Facility</p>
-              </div>
-            </div>
-
-            {/* Direct Google Maps Action Bar */}
-            <div className="p-2.5 rounded-xl bg-[#14151e] border border-white/10 flex flex-wrap items-center justify-between gap-2 text-xs">
-              <div className="flex items-center gap-1.5 text-stone-400 font-mono text-[11px] truncate max-w-full sm:max-w-xs">
-                <MapPin className="w-3.5 h-3.5 text-[#f5be38] shrink-0" />
-                <span className="truncate">https://maps.app.goo.gl/FHkoQGNuL8p13jnG6</span>
-              </div>
-              <a
-                href="https://maps.app.goo.gl/FHkoQGNuL8p13jnG6"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#f5be38] hover:bg-[#ffd15c] text-black text-xs font-bold transition-colors shrink-0 ml-auto cursor-pointer"
-              >
-                <span>Open in Google Maps</span>
-                <ExternalLink className="w-3 h-3 text-black" />
-              </a>
             </div>
           </div>
 

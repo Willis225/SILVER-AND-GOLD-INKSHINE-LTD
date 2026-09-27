@@ -746,7 +746,7 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
                     </div>
                   </div>
 
-                  {/* Google Maps Location Embed & Link */}
+                  {/* Google Maps Location Embed */}
                   <div className="rounded-2xl overflow-hidden border border-white/10 bg-[#14151e] shadow-2xs">
                     <iframe
                       title="Google Maps Location - Silver & Gold Printing House"
@@ -758,31 +758,6 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
                       referrerPolicy="no-referrer-when-downgrade"
                       className="w-full block"
                     />
-                    <div className="p-3 bg-[#101117] border-t border-white/10 space-y-1.5">
-                      <div className="text-[11px] font-bold text-white flex items-center justify-between gap-1.5">
-                        <span className="flex items-center gap-1.5 text-stone-200">
-                          <MapPin className="w-3.5 h-3.5 text-[#f5be38]" />
-                          <span>Silver &amp; Gold Printing House</span>
-                        </span>
-                        <a
-                          href="https://maps.app.goo.gl/FHkoQGNuL8p13jnG6"
-                          target="_blank"
-                          rel="noreferrer"
-                          className="inline-flex items-center gap-1 text-[11px] font-bold text-[#f5be38] hover:underline"
-                        >
-                          <span>Open Map</span>
-                          <ExternalLink className="w-3 h-3" />
-                        </a>
-                      </div>
-                      <a
-                        href="https://maps.app.goo.gl/FHkoQGNuL8p13jnG6"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-[11px] font-mono text-stone-400 hover:text-[#f5be38] break-all block p-1.5 rounded-lg bg-[#181824] border border-white/10"
-                      >
-                        https://maps.app.goo.gl/FHkoQGNuL8p13jnG6
-                      </a>
-                    </div>
                   </div>
 
                   {/* WhatsApp Direct Chat Button */}
