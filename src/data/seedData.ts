@@ -145,7 +145,8 @@ export const SAMPLE_PRODUCTS: Product[] = [
     minQuantity: 1,
     turnaroundDays: 1,
     badge: 'Express 24H',
-    image: 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=800&q=80',
+    image: '/a1-poster-printing.jpg',
+    images: ['/a1-poster-printing.jpg'],
     optionGroups: [
       {
         id: 'opt-paper-finish',
@@ -334,7 +335,8 @@ export const SAMPLE_PRODUCTS: Product[] = [
     minQuantity: 1,
     turnaroundDays: 1,
     badge: 'Popular',
-    image: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=800&q=80',
+    image: '/standard-rollup-banner-slim-footed.jpg',
+    images: ['/standard-rollup-banner-slim-footed.jpg'],
     optionGroups: [
       {
         id: 'opt-size',
@@ -482,7 +484,8 @@ export const SAMPLE_PRODUCTS: Product[] = [
     minQuantity: 1,
     turnaroundDays: 2,
     badge: 'Outdoor King',
-    image: 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80',
+    image: '/teardrop-flying-feather-banner.jpg',
+    images: ['/teardrop-flying-feather-banner.jpg'],
     optionGroups: [
       {
         id: 'opt-flag-height',
@@ -927,7 +930,8 @@ export const SAMPLE_PRODUCTS: Product[] = [
     minQuantity: 1,
     turnaroundDays: 1,
     badge: 'Popular',
-    image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80',
+    image: '/executive-rollup-x-frame-display.jpg',
+    images: ['/executive-rollup-x-frame-display.jpg'],
     optionGroups: [
       {
         id: 'opt-stand-type',
@@ -967,7 +971,8 @@ export const SAMPLE_PRODUCTS: Product[] = [
     minQuantity: 1,
     turnaroundDays: 2,
     badge: 'Heavy Duty',
-    image: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=800&q=80',
+    image: '/teardrop-feather-flying-banner.jpg',
+    images: ['/teardrop-feather-flying-banner.jpg'],
     optionGroups: [
       {
         id: 'opt-flag-shape',
@@ -1055,7 +1060,8 @@ export const SAMPLE_PRODUCTS: Product[] = [
     minQuantity: 1,
     turnaroundDays: 3,
     badge: 'Exhibition Grade',
-    image: 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80',
+    image: '/magnetic-curved-popup-backdrop.jpg',
+    images: ['/magnetic-curved-popup-backdrop.jpg'],
     optionGroups: [
       {
         id: 'opt-wall-size',
@@ -1192,7 +1198,8 @@ export const SAMPLE_PRODUCTS: Product[] = [
     minQuantity: 1,
     turnaroundDays: 5,
     badge: 'Equipment',
-    image: 'https://images.unsplash.com/photo-1612815154858-60aa4c59eaa6?auto=format&fit=crop&w=800&q=80',
+    image: '/industrial-large-format-printer.jpg',
+    images: ['/industrial-large-format-printer.jpg'],
     optionGroups: [
       {
         id: 'opt-printhead-config',

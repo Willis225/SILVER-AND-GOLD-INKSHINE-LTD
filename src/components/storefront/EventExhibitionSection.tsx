@@ -46,7 +46,7 @@ const DEFAULT_EVENT_ITEMS: EventItem[] = [
     title: 'Magnetic Curved Pop-Up Exhibition Media Backdrop Wall (3x3m)',
     price: 'Price on Request',
     numericPrice: 0,
-    imageUrl: 'https://cdn.hstockplus.org/uploads/public/img-1789638023483-0654f1a516c4673a.webp',
+    imageUrl: '/magnetic-curved-popup-backdrop.jpg',
     category: 'events_exhibitions',
   },
 ];

@@ -656,6 +656,86 @@ export function getLockedImagesMap(): Record<string, LockedImageEntry> {
             isUserCustomized: true,
           };
         }
+        if (!parsed['event-popup-backdrop'] || parsed['event-popup-backdrop'].imageUrl?.includes('cdn.hstockplus.org') || parsed['event-popup-backdrop'].imageUrl?.includes('photo-1511578314')) {
+          parsed['event-popup-backdrop'] = {
+            id: 'event-popup-backdrop',
+            imageUrl: '/magnetic-curved-popup-backdrop.jpg',
+            images: ['/magnetic-curved-popup-backdrop.jpg'],
+            title: 'Magnetic Curved Pop-Up Exhibition Media Backdrop Wall (3x3m)',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['prod-events-popup-wall'] || parsed['prod-events-popup-wall'].imageUrl?.includes('photo-1511578314')) {
+          parsed['prod-events-popup-wall'] = {
+            id: 'prod-events-popup-wall',
+            imageUrl: '/magnetic-curved-popup-backdrop.jpg',
+            images: ['/magnetic-curved-popup-backdrop.jpg'],
+            title: 'Magnetic Curved Pop-Up Exhibition Media Backdrop Wall (3x3m)',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['prod-banners-stands-combo'] || parsed['prod-banners-stands-combo'].imageUrl?.includes('photo-1540575467')) {
+          parsed['prod-banners-stands-combo'] = {
+            id: 'prod-banners-stands-combo',
+            imageUrl: '/executive-rollup-x-frame-display.jpg',
+            images: ['/executive-rollup-x-frame-display.jpg'],
+            title: 'Executive Roll-up Banner Stand & Aluminum X-Frame Display',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['prod-a1-poster'] || parsed['prod-a1-poster'].imageUrl?.includes('photo-1579783900')) {
+          parsed['prod-a1-poster'] = {
+            id: 'prod-a1-poster',
+            imageUrl: '/a1-poster-printing.jpg',
+            images: ['/a1-poster-printing.jpg'],
+            title: 'A1 Poster',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['prod-machines-ecosolvent-printer'] || parsed['prod-machines-ecosolvent-printer'].imageUrl?.includes('photo-1612815154')) {
+          parsed['prod-machines-ecosolvent-printer'] = {
+            id: 'prod-machines-ecosolvent-printer',
+            imageUrl: '/industrial-large-format-printer.jpg',
+            images: ['/industrial-large-format-printer.jpg'],
+            title: 'Industrial Large Format Eco-Solvent Digital Banner & Vinyl Printer (1.8m)',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['prod-outdoor-teardrop-flag'] || parsed['prod-outdoor-teardrop-flag'].imageUrl?.includes('photo-1557804506')) {
+          parsed['prod-outdoor-teardrop-flag'] = {
+            id: 'prod-outdoor-teardrop-flag',
+            imageUrl: '/teardrop-feather-flying-banner.jpg',
+            images: ['/teardrop-feather-flying-banner.jpg'],
+            title: 'Teardrop & Feather Flying Banner (Outdoor Wind Flag)',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['prod-standard-rollup'] || parsed['prod-standard-rollup'].imageUrl?.includes('photo-1557804506')) {
+          parsed['prod-standard-rollup'] = {
+            id: 'prod-standard-rollup',
+            imageUrl: '/standard-rollup-banner-slim-footed.jpg',
+            images: ['/standard-rollup-banner-slim-footed.jpg'],
+            title: 'Standard Rollup Banner (Slim Footed)',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['prod-teardrop-flying-banner'] || parsed['prod-teardrop-flying-banner'].imageUrl?.includes('photo-1511578314')) {
+          parsed['prod-teardrop-flying-banner'] = {
+            id: 'prod-teardrop-flying-banner',
+            imageUrl: '/teardrop-flying-feather-banner.jpg',
+            images: ['/teardrop-flying-feather-banner.jpg'],
+            title: 'Teardrop Flying Feather Banner (Outdoor Flag)',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
         inMemoryLockRegistry = parsed;
         return inMemoryLockRegistry!;
       }
@@ -1126,6 +1206,70 @@ export function getLockedImagesMap(): Record<string, LockedImageEntry> {
       imageUrl: '/test-product-sample.jpg',
       images: ['/test-product-sample.jpg'],
       title: 'Test Product',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'event-popup-backdrop': {
+      id: 'event-popup-backdrop',
+      imageUrl: '/magnetic-curved-popup-backdrop.jpg',
+      images: ['/magnetic-curved-popup-backdrop.jpg'],
+      title: 'Magnetic Curved Pop-Up Exhibition Media Backdrop Wall (3x3m)',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'prod-events-popup-wall': {
+      id: 'prod-events-popup-wall',
+      imageUrl: '/magnetic-curved-popup-backdrop.jpg',
+      images: ['/magnetic-curved-popup-backdrop.jpg'],
+      title: 'Magnetic Curved Pop-Up Exhibition Media Backdrop Wall (3x3m)',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'prod-banners-stands-combo': {
+      id: 'prod-banners-stands-combo',
+      imageUrl: '/executive-rollup-x-frame-display.jpg',
+      images: ['/executive-rollup-x-frame-display.jpg'],
+      title: 'Executive Roll-up Banner Stand & Aluminum X-Frame Display',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'prod-a1-poster': {
+      id: 'prod-a1-poster',
+      imageUrl: '/a1-poster-printing.jpg',
+      images: ['/a1-poster-printing.jpg'],
+      title: 'A1 Poster',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'prod-machines-ecosolvent-printer': {
+      id: 'prod-machines-ecosolvent-printer',
+      imageUrl: '/industrial-large-format-printer.jpg',
+      images: ['/industrial-large-format-printer.jpg'],
+      title: 'Industrial Large Format Eco-Solvent Digital Banner & Vinyl Printer (1.8m)',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'prod-outdoor-teardrop-flag': {
+      id: 'prod-outdoor-teardrop-flag',
+      imageUrl: '/teardrop-feather-flying-banner.jpg',
+      images: ['/teardrop-feather-flying-banner.jpg'],
+      title: 'Teardrop & Feather Flying Banner (Outdoor Wind Flag)',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'prod-standard-rollup': {
+      id: 'prod-standard-rollup',
+      imageUrl: '/standard-rollup-banner-slim-footed.jpg',
+      images: ['/standard-rollup-banner-slim-footed.jpg'],
+      title: 'Standard Rollup Banner (Slim Footed)',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'prod-teardrop-flying-banner': {
+      id: 'prod-teardrop-flying-banner',
+      imageUrl: '/teardrop-flying-feather-banner.jpg',
+      images: ['/teardrop-flying-feather-banner.jpg'],
+      title: 'Teardrop Flying Feather Banner (Outdoor Flag)',
       lockedAt: new Date().toISOString(),
       isUserCustomized: true,
     }
