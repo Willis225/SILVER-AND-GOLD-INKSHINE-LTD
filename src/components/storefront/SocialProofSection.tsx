@@ -11,17 +11,12 @@ import {
   ExternalLink,
   PlusCircle,
   Check,
-  Building2,
-  Layers,
-  Printer,
-  CheckCheck,
-  ArrowUpRight,
-  ShieldCheck,
-  Truck
+  ArrowUpRight
 } from 'lucide-react';
-import { CLIENT_LOGOS, COMPLETED_JOBS } from '../../data/seedData';
+import { CLIENT_LOGOS } from '../../data/seedData';
 import { ENTERPRISE_BRANDS } from './TrustedLogosStrip';
 import { CompanyLogoMark } from '../common/CompanyLogo';
+import { RecentJobsMediaBox } from './RecentJobsMediaBox';
 
 interface GoogleReviewItem {
   id: string;
@@ -502,148 +497,9 @@ export const SocialProofSection: React.FC = () => {
           </motion.div>
         </div>
 
-        {/* 3. Completed Jobs & Press Showcase */}
-        <div className="space-y-8 pt-4">
-          <motion.div 
-            initial={{ opacity: 0, y: 22 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col md:flex-row md:items-end justify-between gap-4 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-[#14141c]/90 via-[#0f0f15]/90 to-[#14141c]/90 border border-white/10 shadow-2xl relative overflow-hidden"
-          >
-            {/* Ambient accent top bar */}
-            <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#f5be38] to-transparent opacity-80" />
-
-            <div className="space-y-2">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#f5be38]/10 border border-[#f5be38]/30 text-[#f5be38] text-[11px] font-black uppercase tracking-wider shadow-[0_0_15px_rgba(245,190,56,0.15)]">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span>RECENT COMMERCIAL PROJECTS</span>
-              </div>
-              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight leading-tight">
-                Completed Jobs Fresh Off Our Production Press
-              </h3>
-            </div>
-            
-            <div className="flex items-center gap-2 text-xs sm:text-sm text-stone-300 font-medium bg-black/40 px-4 py-2 rounded-xl border border-white/10 shrink-0">
-              <MapPin className="w-4 h-4 text-[#f5be38]" />
-              <span>Printed in Swali &amp; Yenagoa, delivered nationwide</span>
-            </div>
-          </motion.div>
-
-          {/* 4-Card Modern Showcase Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {COMPLETED_JOBS.map((job, idx) => {
-              const specItems = job.specs ? job.specs.split(' | ') : [];
-              const whatsappOrderUrl = `https://wa.me/2347030372539?text=Hello%20SILVER%20%26%20GOLD%20INKSHINE%20LTD%2C%20I%20saw%20your%20completed%20project%20"${encodeURIComponent(job.title)}"%20(${encodeURIComponent(job.client)})%20and%20I%20would%20like%20to%20place%20a%20similar%20order.`;
-
-              return (
-                <motion.div
-                  key={job.id}
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-30px" }}
-                  transition={{ duration: 0.55, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                  whileHover={{ y: -7 }}
-                  className="group relative rounded-3xl bg-gradient-to-b from-[#13131a] to-[#0c0c10] border border-white/10 hover:border-[#f5be38]/60 overflow-hidden shadow-xl hover:shadow-[0_20px_45px_rgba(245,190,56,0.18)] transition-all duration-500 flex flex-col justify-between"
-                >
-                  {/* Subtle top sheen highlight */}
-                  <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-[#f5be38]/0 group-hover:via-[#f5be38]/80 to-transparent transition-all duration-500 z-20 pointer-events-none" />
-
-                  <div>
-                    {/* Image Stage */}
-                    <div className="relative aspect-[16/11] overflow-hidden bg-[#181822]">
-                      <img
-                        src={job.imageUrl}
-                        alt={job.title}
-                        className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
-                        loading="lazy"
-                      />
-                      {/* Gradient Scrim */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent pointer-events-none" />
-
-                      {/* Floating Category Pill */}
-                      <div className="absolute top-3 left-3 z-10">
-                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-black bg-black/80 text-[#f5be38] border border-[#f5be38]/50 backdrop-blur-md shadow-md">
-                          <Layers className="w-3 h-3 text-[#f5be38]" />
-                          {job.category}
-                        </span>
-                      </div>
-
-                      {/* Verified Delivered Pill */}
-                      <div className="absolute top-3 right-3 z-10">
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-950/80 text-emerald-300 border border-emerald-500/40 backdrop-blur-md shadow-md">
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                          Delivered
-                        </span>
-                      </div>
-
-                      {/* Quick Action Overlay on Hover */}
-                      <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4 z-10 pointer-events-none group-hover:pointer-events-auto">
-                        <a
-                          href={whatsappOrderUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#f5be38] hover:bg-[#ffd15c] text-black font-extrabold text-xs rounded-xl shadow-[0_0_20px_rgba(245,190,56,0.5)] transition-transform hover:scale-105"
-                        >
-                          <span>Request Similar Spec</span>
-                          <ArrowUpRight className="w-3.5 h-3.5 stroke-[2.5]" />
-                        </a>
-                      </div>
-                    </div>
-
-                    {/* Card Content */}
-                    <div className="p-5 space-y-3.5">
-                      
-                      {/* Client Tag */}
-                      <div className="flex items-center gap-2">
-                        <Building2 className="w-3.5 h-3.5 text-[#f5be38]" />
-                        <span className="text-xs font-bold text-[#f5be38] tracking-wide">
-                          {job.client}
-                        </span>
-                      </div>
-
-                      {/* Title */}
-                      <h4 className="font-extrabold text-white text-[15px] group-hover:text-[#f5be38] transition-colors leading-snug">
-                        {job.title}
-                      </h4>
-
-                      {/* Structured Spec Badges */}
-                      <div className="flex flex-wrap gap-1.5 pt-1">
-                        {specItems.map((spec, sIdx) => (
-                          <span 
-                            key={sIdx}
-                            className="inline-block px-2.5 py-1 rounded-md text-[10.5px] font-medium bg-white/5 border border-white/10 text-stone-300 group-hover:border-[#f5be38]/20 transition-colors"
-                          >
-                            {spec}
-                          </span>
-                        ))}
-                      </div>
-
-                    </div>
-                  </div>
-
-                  {/* Card Footer */}
-                  <div className="p-5 pt-3 border-t border-white/10 bg-black/20 flex items-center justify-between text-xs text-stone-400">
-                    <span className="flex items-center gap-1.5 font-medium text-stone-300">
-                      <MapPin className="w-3.5 h-3.5 text-[#f5be38]" />
-                      {job.location}
-                    </span>
-                    
-                    <a
-                      href={whatsappOrderUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="text-[#f5be38] font-bold inline-flex items-center gap-1 hover:underline text-[11px]"
-                    >
-                      <span>Inquire</span>
-                      <ArrowUpRight className="w-3 h-3" />
-                    </a>
-                  </div>
-
-                </motion.div>
-              );
-            })}
-          </div>
+        {/* 3. Recent Jobs & Production Video Box */}
+        <div className="pt-6">
+          <RecentJobsMediaBox />
         </div>
       </div>
 
