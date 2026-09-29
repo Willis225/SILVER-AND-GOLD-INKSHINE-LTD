@@ -35,7 +35,7 @@ const SHOWCASE_ITEMS: ShowcaseItem[] = [
     title: 'Nylon Printing Machine in Nigeria | Buy Packaging Printer',
     price: 'Price on Request',
     numericPrice: 0,
-    imageUrl: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80',
+    imageUrl: '/nylon-printing-machine.jpg',
     category: 'printing_machines',
   },
   {
@@ -43,7 +43,7 @@ const SHOWCASE_ITEMS: ShowcaseItem[] = [
     title: 'Teardrop Banners',
     price: 'Price on Request',
     numericPrice: 0,
-    imageUrl: 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=600&q=80',
+    imageUrl: '/teardrop-banners-showcase.jpg',
     category: 'banners_stands',
   },
   {
@@ -51,7 +51,7 @@ const SHOWCASE_ITEMS: ShowcaseItem[] = [
     title: 'Souvenirs Bags',
     price: 'Price on Request',
     numericPrice: 0,
-    imageUrl: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80',
+    imageUrl: '/souvenirs-bags-showcase.jpg',
     category: 'paper_bags_tags',
   },
   {

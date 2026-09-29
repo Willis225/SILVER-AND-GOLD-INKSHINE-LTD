@@ -185,7 +185,8 @@ export const SAMPLE_PRODUCTS: Product[] = [
     minQuantity: 1,
     turnaroundDays: 3,
     badge: 'Popular',
-    image: 'https://images.unsplash.com/photo-1582738411706-bfc8e691d1c2?auto=format&fit=crop&w=800&q=80',
+    image: '/custom-branded-foot-mat.jpg',
+    images: ['/custom-branded-foot-mat.jpg'],
     optionGroups: [],
     bulkPricingTiers: [],
     artworkRequirements: { recommendedDpi: 300, supportedFormats: ['PDF', 'AI'], bleedMarginMm: 5, maxFileSizeMb: 50 },
@@ -436,7 +437,8 @@ export const SAMPLE_PRODUCTS: Product[] = [
     minQuantity: 1, // 1 pack = 50 pcs
     turnaroundDays: 5,
     badge: 'Branding Hit',
-    image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=800&q=80',
+    image: '/kraft-art-paper-gift-bags.jpg',
+    images: ['/kraft-art-paper-gift-bags.jpg'],
     optionGroups: [
       {
         id: 'opt-bag-size',
@@ -533,7 +535,8 @@ export const SAMPLE_PRODUCTS: Product[] = [
     minQuantity: 1, // 1 pack = 10 pcs
     turnaroundDays: 4,
     badge: 'Staff Favorite',
-    image: 'https://images.unsplash.com/photo-1581655353564-df123a1eb820?auto=format&fit=crop&w=800&q=80',
+    image: '/executive-embroidered-polo-shirts.jpg',
+    images: ['/executive-embroidered-polo-shirts.jpg'],
     optionGroups: [
       {
         id: 'opt-apparel-fabric',
@@ -1022,7 +1025,8 @@ export const SAMPLE_PRODUCTS: Product[] = [
     minQuantity: 1,
     turnaroundDays: 5,
     badge: 'Premium Sign',
-    image: 'https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=800&q=80',
+    image: '/3d-illuminated-led-channel-letters.jpg',
+    images: ['/3d-illuminated-led-channel-letters.jpg'],
     optionGroups: [
       {
         id: 'opt-illumination-style',
@@ -1323,7 +1327,8 @@ export const SAMPLE_PRODUCTS: Product[] = [
     minQuantity: 1,
     turnaroundDays: 3,
     badge: 'Top Seller',
-    image: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80',
+    image: '/polo-shirts-baseball-caps-bundle.jpg',
+    images: ['/polo-shirts-baseball-caps-bundle.jpg'],
     optionGroups: [
       {
         id: 'opt-polo-fabric',
@@ -1372,7 +1377,8 @@ export const SAMPLE_PRODUCTS: Product[] = [
     minQuantity: 1,
     turnaroundDays: 4,
     badge: 'Workplace Pro',
-    image: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=800&q=80',
+    image: '/staff-uniform-shirts-workwear.jpg',
+    images: ['/staff-uniform-shirts-workwear.jpg'],
     optionGroups: [
       {
         id: 'opt-uniform-type',
@@ -1488,7 +1494,8 @@ export const SAMPLE_PRODUCTS: Product[] = [
     minQuantity: 1,
     turnaroundDays: 3,
     badge: 'High Strength',
-    image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80',
+    image: '/corrugated-shipping-cartons-mailer-boxes.jpg',
+    images: ['/corrugated-shipping-cartons-mailer-boxes.jpg'],
     optionGroups: [
       {
         id: 'opt-carton-size',
@@ -1527,7 +1534,8 @@ export const SAMPLE_PRODUCTS: Product[] = [
     minQuantity: 1,
     turnaroundDays: 3,
     badge: 'Boutique Grade',
-    image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=800&q=80',
+    image: '/luxury-kraft-shopping-carrier-bags.jpg',
+    images: ['/luxury-kraft-shopping-carrier-bags.jpg'],
     optionGroups: [
       {
         id: 'opt-bag-finish',
@@ -1565,7 +1573,8 @@ export const SAMPLE_PRODUCTS: Product[] = [
     minQuantity: 1,
     turnaroundDays: 2,
     badge: 'High Visibility',
-    image: 'https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&w=800&q=80',
+    image: '/commercial-fleet-vehicle-branding.jpg',
+    images: ['/commercial-fleet-vehicle-branding.jpg'],
     optionGroups: [
       {
         id: 'opt-wrap-coverage',
@@ -1604,7 +1613,8 @@ export const SAMPLE_PRODUCTS: Product[] = [
     minQuantity: 1,
     turnaroundDays: 4,
     badge: 'Complete Suite (35% Off)',
-    image: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=800&q=80',
+    image: '/startup-corporate-identity-bundle.jpg',
+    images: ['/startup-corporate-identity-bundle.jpg'],
     optionGroups: [
       {
         id: 'opt-bundle-tier',

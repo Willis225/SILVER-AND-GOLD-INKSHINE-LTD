@@ -37,7 +37,7 @@ const DEFAULT_GIFT_ITEMS: GiftItem[] = [
     title: 'Executive Embroidered Corporate Polo Shirts (10 pcs)',
     price: 'Price on Request',
     numericPrice: 0,
-    imageUrl: 'https://images.unsplash.com/photo-1581655353564-df123a1eb820?auto=format&fit=crop&w=700&q=80',
+    imageUrl: '/executive-embroidered-polo-shirts.jpg',
     category: 'custom_apparels_caps',
   },
   {
@@ -46,7 +46,7 @@ const DEFAULT_GIFT_ITEMS: GiftItem[] = [
     title: 'Custom Branded Polo Shirts & Structured Baseball Caps (Pack of 20 Sets)',
     price: 'Price on Request',
     numericPrice: 0,
-    imageUrl: 'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=700&q=80',
+    imageUrl: '/polo-shirts-baseball-caps-bundle.jpg',
     category: 'custom_apparels_caps',
   },
 ];

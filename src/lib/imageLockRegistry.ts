@@ -746,6 +746,186 @@ export function getLockedImagesMap(): Record<string, LockedImageEntry> {
             isUserCustomized: true,
           };
         }
+        if (!parsed['showcase-nylon-printer'] || parsed['showcase-nylon-printer'].imageUrl?.includes('photo-1581092160')) {
+          parsed['showcase-nylon-printer'] = {
+            id: 'showcase-nylon-printer',
+            imageUrl: '/nylon-printing-machine.jpg',
+            images: ['/nylon-printing-machine.jpg'],
+            title: 'Nylon Printing Machine in Nigeria | Buy Packaging Printer',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['showcase-souvenir-bags'] || parsed['showcase-souvenir-bags'].imageUrl?.includes('photo-1544816155')) {
+          parsed['showcase-souvenir-bags'] = {
+            id: 'showcase-souvenir-bags',
+            imageUrl: '/souvenirs-bags-showcase.jpg',
+            images: ['/souvenirs-bags-showcase.jpg'],
+            title: 'Souvenirs Bags',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['showcase-teardrop-banners'] || parsed['showcase-teardrop-banners'].imageUrl?.includes('photo-1511578314')) {
+          parsed['showcase-teardrop-banners'] = {
+            id: 'showcase-teardrop-banners',
+            imageUrl: '/teardrop-banners-showcase.jpg',
+            images: ['/teardrop-banners-showcase.jpg'],
+            title: 'Teardrop Banners',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['prod-foot-mat'] || parsed['prod-foot-mat'].imageUrl?.includes('photo-1582738411')) {
+          parsed['prod-foot-mat'] = {
+            id: 'prod-foot-mat',
+            imageUrl: '/custom-branded-foot-mat.jpg',
+            images: ['/custom-branded-foot-mat.jpg'],
+            title: 'Foot Mat in Lagos, Nigeria – Custom Branded Door & Entrance Mats',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['sidebar-prod-1'] || parsed['sidebar-prod-1'].imageUrl?.includes('photo-1582738411')) {
+          parsed['sidebar-prod-1'] = {
+            id: 'sidebar-prod-1',
+            imageUrl: '/custom-branded-foot-mat.jpg',
+            images: ['/custom-branded-foot-mat.jpg'],
+            title: 'Foot Mat in Lagos, Nigeria – Custom Branded Door & Entrance Mats',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['prod-signage-3d-led-letters'] || parsed['prod-signage-3d-led-letters'].imageUrl?.includes('photo-1513542789')) {
+          parsed['prod-signage-3d-led-letters'] = {
+            id: 'prod-signage-3d-led-letters',
+            imageUrl: '/3d-illuminated-led-channel-letters.jpg',
+            images: ['/3d-illuminated-led-channel-letters.jpg'],
+            title: '3D Illuminated LED Channel Letter Signboard (Exterior & Reception)',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['prod-vehicle-branding'] || parsed['prod-vehicle-branding'].imageUrl?.includes('photo-1619642751')) {
+          parsed['prod-vehicle-branding'] = {
+            id: 'prod-vehicle-branding',
+            imageUrl: '/commercial-fleet-vehicle-branding.jpg',
+            images: ['/commercial-fleet-vehicle-branding.jpg'],
+            title: 'Commercial Fleet Vehicle Branding & One-Way Vision Perforated Window Vinyl',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['prod-packages'] || parsed['prod-packages'].imageUrl?.includes('photo-1507679799')) {
+          parsed['prod-packages'] = {
+            id: 'prod-packages',
+            imageUrl: '/startup-corporate-identity-bundle.jpg',
+            images: ['/startup-corporate-identity-bundle.jpg'],
+            title: 'Complete Startup Corporate Identity Launch Bundle & Branding Package',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['pkg-corrugated-boxes'] || parsed['pkg-corrugated-boxes'].imageUrl?.includes('cdn.hstockplus.org') || parsed['pkg-corrugated-boxes'].imageUrl?.includes('photo-1586528116')) {
+          parsed['pkg-corrugated-boxes'] = {
+            id: 'pkg-corrugated-boxes',
+            imageUrl: '/corrugated-shipping-cartons-mailer-boxes.jpg',
+            images: ['/corrugated-shipping-cartons-mailer-boxes.jpg'],
+            title: 'Heavy-Duty Corrugated Shipping Cartons & E-Commerce Mailer Boxes (Pack of 100)',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['prod-packaging-shipping-cartons'] || parsed['prod-packaging-shipping-cartons'].imageUrl?.includes('photo-1586528116')) {
+          parsed['prod-packaging-shipping-cartons'] = {
+            id: 'prod-packaging-shipping-cartons',
+            imageUrl: '/corrugated-shipping-cartons-mailer-boxes.jpg',
+            images: ['/corrugated-shipping-cartons-mailer-boxes.jpg'],
+            title: 'Heavy-Duty Corrugated Shipping Cartons & E-Commerce Mailer Boxes (Pack of 100)',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['pkg-kraft-bags'] || parsed['pkg-kraft-bags'].imageUrl?.includes('photo-1544816155')) {
+          parsed['pkg-kraft-bags'] = {
+            id: 'pkg-kraft-bags',
+            imageUrl: '/kraft-art-paper-gift-bags.jpg',
+            images: ['/kraft-art-paper-gift-bags.jpg'],
+            title: 'Custom Branded Kraft & Art Paper Gift Bags (50 pcs)',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['prod-paper-bags'] || parsed['prod-paper-bags'].imageUrl?.includes('photo-1544816155')) {
+          parsed['prod-paper-bags'] = {
+            id: 'prod-paper-bags',
+            imageUrl: '/kraft-art-paper-gift-bags.jpg',
+            images: ['/kraft-art-paper-gift-bags.jpg'],
+            title: 'Custom Branded Kraft & Art Paper Gift Bags (50 pcs)',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['prod-paper-bags-tags'] || parsed['prod-paper-bags-tags'].imageUrl?.includes('photo-1544816155')) {
+          parsed['prod-paper-bags-tags'] = {
+            id: 'prod-paper-bags-tags',
+            imageUrl: '/luxury-kraft-shopping-carrier-bags.jpg',
+            images: ['/luxury-kraft-shopping-carrier-bags.jpg'],
+            title: 'Luxury Kraft Shopping Carrier Bags & Embossed Clothing Swing Tags (Pack of 250)',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['gift-polo-caps-bundle'] || parsed['gift-polo-caps-bundle'].imageUrl?.includes('photo-1588850561') || parsed['gift-polo-caps-bundle'].imageUrl?.includes('photo-1521572267')) {
+          parsed['gift-polo-caps-bundle'] = {
+            id: 'gift-polo-caps-bundle',
+            imageUrl: '/polo-shirts-baseball-caps-bundle.jpg',
+            images: ['/polo-shirts-baseball-caps-bundle.jpg'],
+            title: 'Custom Branded Polo Shirts & Structured Baseball Caps (Pack of 20 Sets)',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['prod-custom-apparels-caps'] || parsed['prod-custom-apparels-caps'].imageUrl?.includes('photo-1521572267')) {
+          parsed['prod-custom-apparels-caps'] = {
+            id: 'prod-custom-apparels-caps',
+            imageUrl: '/polo-shirts-baseball-caps-bundle.jpg',
+            images: ['/polo-shirts-baseball-caps-bundle.jpg'],
+            title: 'Custom Branded Polo Shirts & Structured Baseball Caps (Pack of 20 Sets)',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['gift-polo-shirts-10'] || parsed['gift-polo-shirts-10'].imageUrl?.includes('photo-1581655353')) {
+          parsed['gift-polo-shirts-10'] = {
+            id: 'gift-polo-shirts-10',
+            imageUrl: '/executive-embroidered-polo-shirts.jpg',
+            images: ['/executive-embroidered-polo-shirts.jpg'],
+            title: 'Executive Embroidered Corporate Polo Shirts (10 pcs)',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['prod-corporate-polo'] || parsed['prod-corporate-polo'].imageUrl?.includes('photo-1581655353')) {
+          parsed['prod-corporate-polo'] = {
+            id: 'prod-corporate-polo',
+            imageUrl: '/executive-embroidered-polo-shirts.jpg',
+            images: ['/executive-embroidered-polo-shirts.jpg'],
+            title: 'Executive Embroidered Corporate Polo Shirts (10 pcs)',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['prod-company-uniforms'] || parsed['prod-company-uniforms'].imageUrl?.includes('photo-1507679799')) {
+          parsed['prod-company-uniforms'] = {
+            id: 'prod-company-uniforms',
+            imageUrl: '/staff-uniform-shirts-workwear.jpg',
+            images: ['/staff-uniform-shirts-workwear.jpg'],
+            title: 'Executive Corporate Staff Uniform Shirts & Industrial Workwear (Pack of 10)',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
         inMemoryLockRegistry = parsed;
         return inMemoryLockRegistry!;
       }
@@ -1288,6 +1468,150 @@ export function getLockedImagesMap(): Record<string, LockedImageEntry> {
       imageUrl: '/carport-tensile-canopy.jpg',
       images: ['/carport-tensile-canopy.jpg'],
       title: 'Heavy-Duty Galvanized Steel Tensile Fabric Carport & Entrance Canopy',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'showcase-nylon-printer': {
+      id: 'showcase-nylon-printer',
+      imageUrl: '/nylon-printing-machine.jpg',
+      images: ['/nylon-printing-machine.jpg'],
+      title: 'Nylon Printing Machine in Nigeria | Buy Packaging Printer',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'showcase-souvenir-bags': {
+      id: 'showcase-souvenir-bags',
+      imageUrl: '/souvenirs-bags-showcase.jpg',
+      images: ['/souvenirs-bags-showcase.jpg'],
+      title: 'Souvenirs Bags',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'showcase-teardrop-banners': {
+      id: 'showcase-teardrop-banners',
+      imageUrl: '/teardrop-banners-showcase.jpg',
+      images: ['/teardrop-banners-showcase.jpg'],
+      title: 'Teardrop Banners',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'prod-foot-mat': {
+      id: 'prod-foot-mat',
+      imageUrl: '/custom-branded-foot-mat.jpg',
+      images: ['/custom-branded-foot-mat.jpg'],
+      title: 'Foot Mat in Lagos, Nigeria – Custom Branded Door & Entrance Mats',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'sidebar-prod-1': {
+      id: 'sidebar-prod-1',
+      imageUrl: '/custom-branded-foot-mat.jpg',
+      images: ['/custom-branded-foot-mat.jpg'],
+      title: 'Foot Mat in Lagos, Nigeria – Custom Branded Door & Entrance Mats',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'prod-signage-3d-led-letters': {
+      id: 'prod-signage-3d-led-letters',
+      imageUrl: '/3d-illuminated-led-channel-letters.jpg',
+      images: ['/3d-illuminated-led-channel-letters.jpg'],
+      title: '3D Illuminated LED Channel Letter Signboard (Exterior & Reception)',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'prod-vehicle-branding': {
+      id: 'prod-vehicle-branding',
+      imageUrl: '/commercial-fleet-vehicle-branding.jpg',
+      images: ['/commercial-fleet-vehicle-branding.jpg'],
+      title: 'Commercial Fleet Vehicle Branding & One-Way Vision Perforated Window Vinyl',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'prod-packages': {
+      id: 'prod-packages',
+      imageUrl: '/startup-corporate-identity-bundle.jpg',
+      images: ['/startup-corporate-identity-bundle.jpg'],
+      title: 'Complete Startup Corporate Identity Launch Bundle & Branding Package',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'pkg-corrugated-boxes': {
+      id: 'pkg-corrugated-boxes',
+      imageUrl: '/corrugated-shipping-cartons-mailer-boxes.jpg',
+      images: ['/corrugated-shipping-cartons-mailer-boxes.jpg'],
+      title: 'Heavy-Duty Corrugated Shipping Cartons & E-Commerce Mailer Boxes (Pack of 100)',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'prod-packaging-shipping-cartons': {
+      id: 'prod-packaging-shipping-cartons',
+      imageUrl: '/corrugated-shipping-cartons-mailer-boxes.jpg',
+      images: ['/corrugated-shipping-cartons-mailer-boxes.jpg'],
+      title: 'Heavy-Duty Corrugated Shipping Cartons & E-Commerce Mailer Boxes (Pack of 100)',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'pkg-kraft-bags': {
+      id: 'pkg-kraft-bags',
+      imageUrl: '/kraft-art-paper-gift-bags.jpg',
+      images: ['/kraft-art-paper-gift-bags.jpg'],
+      title: 'Custom Branded Kraft & Art Paper Gift Bags (50 pcs)',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'prod-paper-bags': {
+      id: 'prod-paper-bags',
+      imageUrl: '/kraft-art-paper-gift-bags.jpg',
+      images: ['/kraft-art-paper-gift-bags.jpg'],
+      title: 'Custom Branded Kraft & Art Paper Gift Bags (50 pcs)',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'prod-paper-bags-tags': {
+      id: 'prod-paper-bags-tags',
+      imageUrl: '/luxury-kraft-shopping-carrier-bags.jpg',
+      images: ['/luxury-kraft-shopping-carrier-bags.jpg'],
+      title: 'Luxury Kraft Shopping Carrier Bags & Embossed Clothing Swing Tags (Pack of 250)',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'gift-polo-caps-bundle': {
+      id: 'gift-polo-caps-bundle',
+      imageUrl: '/polo-shirts-baseball-caps-bundle.jpg',
+      images: ['/polo-shirts-baseball-caps-bundle.jpg'],
+      title: 'Custom Branded Polo Shirts & Structured Baseball Caps (Pack of 20 Sets)',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'prod-custom-apparels-caps': {
+      id: 'prod-custom-apparels-caps',
+      imageUrl: '/polo-shirts-baseball-caps-bundle.jpg',
+      images: ['/polo-shirts-baseball-caps-bundle.jpg'],
+      title: 'Custom Branded Polo Shirts & Structured Baseball Caps (Pack of 20 Sets)',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'gift-polo-shirts-10': {
+      id: 'gift-polo-shirts-10',
+      imageUrl: '/executive-embroidered-polo-shirts.jpg',
+      images: ['/executive-embroidered-polo-shirts.jpg'],
+      title: 'Executive Embroidered Corporate Polo Shirts (10 pcs)',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'prod-corporate-polo': {
+      id: 'prod-corporate-polo',
+      imageUrl: '/executive-embroidered-polo-shirts.jpg',
+      images: ['/executive-embroidered-polo-shirts.jpg'],
+      title: 'Executive Embroidered Corporate Polo Shirts (10 pcs)',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'prod-company-uniforms': {
+      id: 'prod-company-uniforms',
+      imageUrl: '/staff-uniform-shirts-workwear.jpg',
+      images: ['/staff-uniform-shirts-workwear.jpg'],
+      title: 'Executive Corporate Staff Uniform Shirts & Industrial Workwear (Pack of 10)',
       lockedAt: new Date().toISOString(),
       isUserCustomized: true,
     }
