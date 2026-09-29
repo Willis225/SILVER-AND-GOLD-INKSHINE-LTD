@@ -604,6 +604,7 @@ export default function App() {
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
             onAddToCart={handleAddToCart}
+            onOpenCustomQuote={() => setIsQuoteModalOpen(true)}
           />
         )}
 

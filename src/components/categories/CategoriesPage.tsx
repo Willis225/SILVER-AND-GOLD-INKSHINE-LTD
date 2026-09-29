@@ -93,32 +93,32 @@ export const SIDEBAR_WIDGET_PRODUCTS = [
   {
     id: 'sidebar-prod-1',
     name: 'Foot Mat in Nigeria – Custom Branded Door & Entrance Mats',
-    price: '₦10,000.00',
-    priceNum: 10000,
+    price: 'Price on Request',
+    priceNum: 0,
     image: 'https://images.unsplash.com/photo-1582738411706-bfc8e691d1c2?auto=format&fit=crop&w=400&q=80',
     category: 'gift_items_souvenirs',
   },
   {
     id: 'sidebar-prod-2',
     name: 'Custom Branded Center Rug Printing',
-    price: '₦100,000.00',
-    priceNum: 100000,
+    price: 'Price on Request',
+    priceNum: 0,
     image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=400&q=80',
     category: 'frames_wallarts',
   },
   {
     id: 'sidebar-prod-3',
     name: 'Key Holder & Keychain Printing in Nigeria – Custom Branded Keyholders',
-    price: '₦1,000.00',
-    priceNum: 1000,
+    price: 'Price on Request',
+    priceNum: 0,
     image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=400&q=80',
     category: 'gift_items_souvenirs',
   },
   {
     id: 'sidebar-prod-4',
     name: 'Custom Branded Water Bottle Printing in Nigeria – Custom & Personalized Bottles',
-    price: '₦3,500.00',
-    priceNum: 3500,
+    price: 'Price on Request',
+    priceNum: 0,
     image: 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=400&q=80',
     category: 'gift_items_souvenirs',
   },
@@ -357,8 +357,8 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const formatPrice = (val: number) => {
-    return new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN' }).format(val);
+  const formatPrice = (_val?: number) => {
+    return 'Price on Request';
   };
 
   return (
@@ -844,9 +844,12 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
                             {product.name}
                           </h3>
 
-                          {/* Price */}
-                          <div className="text-sm font-bold text-stone-400">
-                            <span className="text-[#f5be38] text-base sm:text-lg font-black">{formattedPrice}</span>
+                          {/* Price Tag - Standardized Exact Design */}
+                          <div className="pt-0.5">
+                            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#f5be38]/15 border border-[#f5be38]/30 text-[#f5be38] text-sm font-black tracking-tight">
+                              <span className="w-1.5 h-1.5 rounded-full bg-[#f5be38] animate-pulse" />
+                              <span>Price on Request</span>
+                            </span>
                           </div>
 
                           {/* Description Text */}
@@ -864,7 +867,7 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
                             ))}
                           </div>
 
-                          {/* Action Buttons: Confirm Price (Gold Button) + View Details */}
+                          {/* Uniform Action Buttons */}
                           <div className="pt-2 flex flex-wrap items-center gap-3">
                             <button
                               type="button"
@@ -880,7 +883,7 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
                               onClick={() => onSelectProduct(product)}
                               className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-white font-bold text-xs sm:text-sm border border-white/15 shadow-sm transition-colors cursor-pointer"
                             >
-                              <span>View Product Details</span>
+                              <span>Configure &amp; Book</span>
                             </button>
                           </div>
                         </div>
@@ -911,7 +914,6 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
                   const isHighlighted = Boolean(
                     activeHighlightedId && (product.id === activeHighlightedId || product.slug === activeHighlightedId)
                   );
-                  const formattedPrice = formatPrice(product.basePriceNgn);
                   return (
                     <div 
                       key={product.id}
@@ -953,22 +955,33 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
                           >
                             {product.name}
                           </h3>
-                          <div className="text-sm font-extrabold text-[#f5be38] mt-1">
-                            {formattedPrice}
+                          <div className="pt-1.5">
+                            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-[#f5be38]/15 border border-[#f5be38]/30 text-[#f5be38] text-xs font-black tracking-tight">
+                              <span className="w-1.5 h-1.5 rounded-full bg-[#f5be38] animate-pulse" />
+                              <span>Price on Request</span>
+                            </span>
                           </div>
-                          <p className="text-xs text-stone-400 line-clamp-2 mt-1">
+                          <p className="text-xs text-stone-400 line-clamp-2 mt-2">
                             {product.shortDescription || product.description}
                           </p>
                         </div>
 
-                        <div className="pt-2 flex flex-col gap-2">
+                        <div className="pt-2 grid grid-cols-2 gap-2">
                           <button
                             type="button"
                             onClick={() => setConfirmPriceProduct(product)}
-                            className="w-full flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-[#f5be38] hover:bg-[#ffd15c] text-black font-black text-xs shadow-md transition-all cursor-pointer"
+                            className="flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-xl bg-[#f5be38] hover:bg-[#ffd15c] text-black font-black text-xs shadow-md transition-all cursor-pointer"
                           >
-                            <MessageCircle className="w-3.5 h-3.5 fill-black stroke-none" />
-                            <span>Confirm Price</span>
+                            <MessageCircle className="w-3.5 h-3.5 fill-black stroke-none shrink-0" />
+                            <span className="truncate">Confirm Price</span>
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={() => onSelectProduct(product)}
+                            className="flex items-center justify-center gap-1 py-2 px-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-white font-bold text-xs border border-white/15 transition-colors cursor-pointer"
+                          >
+                            <span className="truncate">Configure</span>
                           </button>
                         </div>
                       </div>

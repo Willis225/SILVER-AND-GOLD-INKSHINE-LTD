@@ -625,7 +625,7 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
                   </div>
                   <h4 className="font-bold text-xs text-white">Upload or Hire</h4>
                   <p className="text-[11px] text-stone-400">
-                    Upload your ready-to-print design or hire our certified press graphic artist for ₦5,000.
+                    Upload your ready-to-print design or hire our certified press graphic artist upon request.
                   </p>
                 </div>
 

@@ -6,6 +6,7 @@ import {
   Menu, 
   X, 
   ChevronDown,
+  ChevronRight,
   Instagram,
   Facebook,
   Youtube,
@@ -243,7 +244,7 @@ export const Header: React.FC<HeaderProps> = ({
               >
                 <button 
                   onClick={() => handleCategoryNav('advertising_materials')}
-                  className="flex items-center gap-1 hover:text-[#d4af37] text-stone-200 transition-colors"
+                  className="flex items-center gap-1 hover:text-[#d4af37] text-stone-200 transition-colors cursor-pointer"
                 >
                   <span>Prints</span>
                   <ChevronDown className="w-3.5 h-3.5 text-stone-400 group-hover:rotate-180 transition-transform" />
@@ -252,12 +253,8 @@ export const Header: React.FC<HeaderProps> = ({
                 {activeDropdown === 'prints' && (
                   <div className="absolute top-full left-0 w-80 bg-[#0c0d12] border border-white/15 rounded-2xl shadow-2xl py-2 z-50 animate-in fade-in-50 duration-150 backdrop-blur-xl">
                     <button
-                      onClick={() => {
-                        onSelectCategory('advertising_materials');
-                        setActiveDropdown(null);
-                        onNavigateHome();
-                      }}
-                      className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item"
+                      onClick={() => handleCategoryNav('advertising_materials')}
+                      className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item cursor-pointer"
                     >
                       <div className="w-7 h-7 rounded-lg bg-white/10 text-stone-300 flex items-center justify-center shrink-0 group-hover/item:bg-[#b8860b] group-hover/item:text-white transition-colors">
                         <Megaphone className="w-3.5 h-3.5" />
@@ -269,12 +266,8 @@ export const Header: React.FC<HeaderProps> = ({
                     </button>
 
                     <button
-                      onClick={() => {
-                        onSelectCategory('stickers_labels');
-                        setActiveDropdown(null);
-                        onNavigateHome();
-                      }}
-                      className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item"
+                      onClick={() => handleCategoryNav('stickers_labels')}
+                      className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item cursor-pointer"
                     >
                       <div className="w-7 h-7 rounded-lg bg-white/10 text-stone-300 flex items-center justify-center shrink-0 group-hover/item:bg-[#b8860b] group-hover/item:text-white transition-colors">
                         <Tag className="w-3.5 h-3.5" />
@@ -286,12 +279,8 @@ export const Header: React.FC<HeaderProps> = ({
                     </button>
 
                     <button
-                      onClick={() => {
-                        onSelectCategory('flyers_handbills');
-                        setActiveDropdown(null);
-                        onNavigateHome();
-                      }}
-                      className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item"
+                      onClick={() => handleCategoryNav('flyers_handbills')}
+                      className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item cursor-pointer"
                     >
                       <div className="w-7 h-7 rounded-lg bg-white/10 text-stone-300 flex items-center justify-center shrink-0 group-hover/item:bg-[#b8860b] group-hover/item:text-white transition-colors">
                         <FileText className="w-3.5 h-3.5" />
@@ -303,12 +292,8 @@ export const Header: React.FC<HeaderProps> = ({
                     </button>
 
                     <button
-                      onClick={() => {
-                        onSelectCategory('cards_invitations');
-                        setActiveDropdown(null);
-                        onNavigateHome();
-                      }}
-                      className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item"
+                      onClick={() => handleCategoryNav('cards_invitations')}
+                      className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item cursor-pointer"
                     >
                       <div className="w-7 h-7 rounded-lg bg-white/10 text-stone-300 flex items-center justify-center shrink-0 group-hover/item:bg-[#b8860b] group-hover/item:text-white transition-colors">
                         <Mail className="w-3.5 h-3.5" />
@@ -320,12 +305,8 @@ export const Header: React.FC<HeaderProps> = ({
                     </button>
 
                     <button
-                      onClick={() => {
-                        onSelectCategory('office_stationery');
-                        setActiveDropdown(null);
-                        onNavigateHome();
-                      }}
-                      className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item"
+                      onClick={() => handleCategoryNav('office_stationery')}
+                      className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item cursor-pointer"
                     >
                       <div className="w-7 h-7 rounded-lg bg-white/10 text-stone-300 flex items-center justify-center shrink-0 group-hover/item:bg-[#b8860b] group-hover/item:text-white transition-colors">
                         <Briefcase className="w-3.5 h-3.5" />
@@ -337,12 +318,8 @@ export const Header: React.FC<HeaderProps> = ({
                     </button>
 
                     <button
-                      onClick={() => {
-                        onSelectCategory('books_magazines');
-                        setActiveDropdown(null);
-                        onNavigateHome();
-                      }}
-                      className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item"
+                      onClick={() => handleCategoryNav('books_magazines')}
+                      className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item cursor-pointer"
                     >
                       <div className="w-7 h-7 rounded-lg bg-white/10 text-stone-300 flex items-center justify-center shrink-0 group-hover/item:bg-[#b8860b] group-hover/item:text-white transition-colors">
                         <BookOpen className="w-3.5 h-3.5" />
@@ -363,11 +340,8 @@ export const Header: React.FC<HeaderProps> = ({
               onMouseLeave={() => setActiveDropdown(null)}
             >
               <button 
-                onClick={() => {
-                  onSelectCategory('custom_apparels_caps');
-                  onNavigateHome();
-                }}
-                className="flex items-center gap-1 hover:text-[#d4af37] text-stone-200 transition-colors"
+                onClick={() => handleCategoryNav('custom_apparels_caps')}
+                className="flex items-center gap-1 hover:text-[#d4af37] text-stone-200 transition-colors cursor-pointer"
               >
                 <span>Branding</span>
                 <ChevronDown className="w-3.5 h-3.5 text-stone-400 group-hover:rotate-180 transition-transform" />
@@ -376,12 +350,8 @@ export const Header: React.FC<HeaderProps> = ({
               {activeDropdown === 'branding' && (
                 <div className="absolute top-full left-0 w-80 bg-[#0c0d12] border border-white/15 rounded-2xl shadow-2xl py-2 z-50 animate-in fade-in-50 duration-150 backdrop-blur-xl">
                   <button
-                    onClick={() => {
-                      onSelectCategory('custom_apparels_caps');
-                      setActiveDropdown(null);
-                      onNavigateHome();
-                    }}
-                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item"
+                    onClick={() => handleCategoryNav('custom_apparels_caps')}
+                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item cursor-pointer"
                   >
                     <div className="w-7 h-7 rounded-lg bg-white/10 text-stone-300 flex items-center justify-center shrink-0 group-hover/item:bg-[#b8860b] group-hover/item:text-white transition-colors">
                       <Shirt className="w-3.5 h-3.5" />
@@ -393,12 +363,8 @@ export const Header: React.FC<HeaderProps> = ({
                   </button>
 
                   <button
-                    onClick={() => {
-                      onSelectCategory('gift_items_souvenirs');
-                      setActiveDropdown(null);
-                      onNavigateHome();
-                    }}
-                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item"
+                    onClick={() => handleCategoryNav('gift_items_souvenirs')}
+                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item cursor-pointer"
                   >
                     <div className="w-7 h-7 rounded-lg bg-white/10 text-stone-300 flex items-center justify-center shrink-0 group-hover/item:bg-[#b8860b] group-hover/item:text-white transition-colors">
                       <Gift className="w-3.5 h-3.5" />
@@ -410,12 +376,8 @@ export const Header: React.FC<HeaderProps> = ({
                   </button>
 
                   <button
-                    onClick={() => {
-                      onSelectCategory('food_packaging');
-                      setActiveDropdown(null);
-                      onNavigateHome();
-                    }}
-                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item"
+                    onClick={() => handleCategoryNav('food_packaging')}
+                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item cursor-pointer"
                   >
                     <div className="w-7 h-7 rounded-lg bg-white/10 text-stone-300 flex items-center justify-center shrink-0 group-hover/item:bg-[#b8860b] group-hover/item:text-white transition-colors">
                       <Utensils className="w-3.5 h-3.5" />
@@ -427,12 +389,8 @@ export const Header: React.FC<HeaderProps> = ({
                   </button>
 
                   <button
-                    onClick={() => {
-                      onSelectCategory('packaging_shipping_cartons');
-                      setActiveDropdown(null);
-                      onNavigateHome();
-                    }}
-                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item"
+                    onClick={() => handleCategoryNav('packaging_shipping_cartons')}
+                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item cursor-pointer"
                   >
                     <div className="w-7 h-7 rounded-lg bg-white/10 text-stone-300 flex items-center justify-center shrink-0 group-hover/item:bg-[#b8860b] group-hover/item:text-white transition-colors">
                       <Package className="w-3.5 h-3.5" />
@@ -444,12 +402,8 @@ export const Header: React.FC<HeaderProps> = ({
                   </button>
 
                   <button
-                    onClick={() => {
-                      onSelectCategory('paper_bags_tags');
-                      setActiveDropdown(null);
-                      onNavigateHome();
-                    }}
-                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item"
+                    onClick={() => handleCategoryNav('paper_bags_tags')}
+                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item cursor-pointer"
                   >
                     <div className="w-7 h-7 rounded-lg bg-white/10 text-stone-300 flex items-center justify-center shrink-0 group-hover/item:bg-[#b8860b] group-hover/item:text-white transition-colors">
                       <Tag className="w-3.5 h-3.5" />
@@ -461,12 +415,8 @@ export const Header: React.FC<HeaderProps> = ({
                   </button>
 
                   <button
-                    onClick={() => {
-                      onSelectCategory('vehicle_branding');
-                      setActiveDropdown(null);
-                      onNavigateHome();
-                    }}
-                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item"
+                    onClick={() => handleCategoryNav('vehicle_branding')}
+                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item cursor-pointer"
                   >
                     <div className="w-7 h-7 rounded-lg bg-white/10 text-stone-300 flex items-center justify-center shrink-0 group-hover/item:bg-[#b8860b] group-hover/item:text-white transition-colors">
                       <Car className="w-3.5 h-3.5" />
@@ -478,12 +428,8 @@ export const Header: React.FC<HeaderProps> = ({
                   </button>
 
                   <button
-                    onClick={() => {
-                      onSelectCategory('packages');
-                      setActiveDropdown(null);
-                      onNavigateHome();
-                    }}
-                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item"
+                    onClick={() => handleCategoryNav('packages')}
+                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item cursor-pointer"
                   >
                     <div className="w-7 h-7 rounded-lg bg-white/10 text-stone-300 flex items-center justify-center shrink-0 group-hover/item:bg-[#b8860b] group-hover/item:text-white transition-colors">
                       <Layers className="w-3.5 h-3.5" />
@@ -504,11 +450,8 @@ export const Header: React.FC<HeaderProps> = ({
               onMouseLeave={() => setActiveDropdown(null)}
             >
               <button 
-                onClick={() => {
-                  onSelectCategory('banners_stands');
-                  onNavigateHome();
-                }}
-                className="flex items-center gap-1 hover:text-[#d4af37] text-stone-200 transition-colors"
+                onClick={() => handleCategoryNav('banners_stands')}
+                className="flex items-center gap-1 hover:text-[#d4af37] text-stone-200 transition-colors cursor-pointer"
               >
                 <span>Displays</span>
                 <ChevronDown className="w-3.5 h-3.5 text-stone-400 group-hover:rotate-180 transition-transform" />
@@ -517,12 +460,8 @@ export const Header: React.FC<HeaderProps> = ({
               {activeDropdown === 'displays' && (
                 <div className="absolute top-full left-0 w-80 bg-[#0c0d12] border border-white/15 rounded-2xl shadow-2xl py-2 z-50 animate-in fade-in-50 duration-150 backdrop-blur-xl">
                   <button
-                    onClick={() => {
-                      onSelectCategory('banners_stands');
-                      setActiveDropdown(null);
-                      onNavigateHome();
-                    }}
-                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item"
+                    onClick={() => handleCategoryNav('banners_stands')}
+                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item cursor-pointer"
                   >
                     <div className="w-7 h-7 rounded-lg bg-white/10 text-stone-300 flex items-center justify-center shrink-0 group-hover/item:bg-[#b8860b] group-hover/item:text-white transition-colors">
                       <Flag className="w-3.5 h-3.5" />
@@ -534,12 +473,8 @@ export const Header: React.FC<HeaderProps> = ({
                   </button>
 
                   <button
-                    onClick={() => {
-                      onSelectCategory('outdoor_displays');
-                      setActiveDropdown(null);
-                      onNavigateHome();
-                    }}
-                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item"
+                    onClick={() => handleCategoryNav('outdoor_displays')}
+                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item cursor-pointer"
                   >
                     <div className="w-7 h-7 rounded-lg bg-white/10 text-stone-300 flex items-center justify-center shrink-0 group-hover/item:bg-[#b8860b] group-hover/item:text-white transition-colors">
                       <Sun className="w-3.5 h-3.5" />
@@ -551,12 +486,8 @@ export const Header: React.FC<HeaderProps> = ({
                   </button>
 
                   <button
-                    onClick={() => {
-                      onSelectCategory('signages');
-                      setActiveDropdown(null);
-                      onNavigateHome();
-                    }}
-                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item"
+                    onClick={() => handleCategoryNav('signages')}
+                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item cursor-pointer"
                   >
                     <div className="w-7 h-7 rounded-lg bg-white/10 text-stone-300 flex items-center justify-center shrink-0 group-hover/item:bg-[#b8860b] group-hover/item:text-white transition-colors">
                       <Signpost className="w-3.5 h-3.5" />
@@ -568,12 +499,8 @@ export const Header: React.FC<HeaderProps> = ({
                   </button>
 
                   <button
-                    onClick={() => {
-                      onSelectCategory('events_exhibitions');
-                      setActiveDropdown(null);
-                      onNavigateHome();
-                    }}
-                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item"
+                    onClick={() => handleCategoryNav('events_exhibitions')}
+                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item cursor-pointer"
                   >
                     <div className="w-7 h-7 rounded-lg bg-white/10 text-stone-300 flex items-center justify-center shrink-0 group-hover/item:bg-[#b8860b] group-hover/item:text-white transition-colors">
                       <Calendar className="w-3.5 h-3.5" />
@@ -585,12 +512,8 @@ export const Header: React.FC<HeaderProps> = ({
                   </button>
 
                   <button
-                    onClick={() => {
-                      onSelectCategory('frames_wallarts');
-                      setActiveDropdown(null);
-                      onNavigateHome();
-                    }}
-                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item"
+                    onClick={() => handleCategoryNav('frames_wallarts')}
+                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item cursor-pointer"
                   >
                     <div className="w-7 h-7 rounded-lg bg-white/10 text-stone-300 flex items-center justify-center shrink-0 group-hover/item:bg-[#b8860b] group-hover/item:text-white transition-colors">
                       <ImageIcon className="w-3.5 h-3.5" />
@@ -602,12 +525,8 @@ export const Header: React.FC<HeaderProps> = ({
                   </button>
 
                   <button
-                    onClick={() => {
-                      onSelectCategory('awards');
-                      setActiveDropdown(null);
-                      onNavigateHome();
-                    }}
-                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item"
+                    onClick={() => handleCategoryNav('awards')}
+                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item cursor-pointer"
                   >
                     <div className="w-7 h-7 rounded-lg bg-white/10 text-stone-300 flex items-center justify-center shrink-0 group-hover/item:bg-[#b8860b] group-hover/item:text-white transition-colors">
                       <Award className="w-3.5 h-3.5" />
@@ -619,12 +538,8 @@ export const Header: React.FC<HeaderProps> = ({
                   </button>
 
                   <button
-                    onClick={() => {
-                      onSelectCategory('printing_machines');
-                      setActiveDropdown(null);
-                      onNavigateHome();
-                    }}
-                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item"
+                    onClick={() => handleCategoryNav('printing_machines')}
+                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item cursor-pointer"
                   >
                     <div className="w-7 h-7 rounded-lg bg-white/10 text-stone-300 flex items-center justify-center shrink-0 group-hover/item:bg-[#b8860b] group-hover/item:text-white transition-colors">
                       <Printer className="w-3.5 h-3.5" />
@@ -636,12 +551,8 @@ export const Header: React.FC<HeaderProps> = ({
                   </button>
 
                   <button
-                    onClick={() => {
-                      onSelectCategory('wedding');
-                      setActiveDropdown(null);
-                      onNavigateHome();
-                    }}
-                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item"
+                    onClick={() => handleCategoryNav('wedding')}
+                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item cursor-pointer"
                   >
                     <div className="w-7 h-7 rounded-lg bg-white/10 text-stone-300 flex items-center justify-center shrink-0 group-hover/item:bg-[#b8860b] group-hover/item:text-white transition-colors">
                       <Heart className="w-3.5 h-3.5" />
@@ -653,12 +564,8 @@ export const Header: React.FC<HeaderProps> = ({
                   </button>
 
                   <button
-                    onClick={() => {
-                      onSelectCategory('carports');
-                      setActiveDropdown(null);
-                      onNavigateHome();
-                    }}
-                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item"
+                    onClick={() => handleCategoryNav('carports')}
+                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item cursor-pointer"
                   >
                     <div className="w-7 h-7 rounded-lg bg-white/10 text-stone-300 flex items-center justify-center shrink-0 group-hover/item:bg-[#b8860b] group-hover/item:text-white transition-colors">
                       <Car className="w-3.5 h-3.5" />
@@ -797,30 +704,30 @@ export const Header: React.FC<HeaderProps> = ({
               )}
             </div>
 
-            {/* Book Online Action Button */}
+            {/* Unified Single Primary Action Button: Order Online / Booking */}
             <button
               id="desktop-header-book-online-btn"
               type="button"
               onClick={onOpenBookOnline}
-              className="relative px-3.5 py-1.5 rounded-full bg-gradient-to-r from-[#d4af37] via-[#e5c158] to-[#b8860b] hover:from-[#e5c158] hover:to-[#d4af37] text-black font-extrabold text-xs tracking-tight shadow-md shadow-[#d4af37]/25 flex items-center gap-1.5 active:scale-95 transition-all cursor-pointer group"
-              title="Book your print and design order online"
+              className="relative px-4 py-1.5 rounded-full bg-gradient-to-r from-[#d4af37] via-[#e5c158] to-[#b8860b] hover:from-[#e5c158] hover:to-[#d4af37] text-black font-extrabold text-xs tracking-tight shadow-md shadow-[#d4af37]/25 flex items-center gap-1.5 active:scale-95 transition-all cursor-pointer group"
+              title="Configure, calculate live quote and book online"
             >
               <Calendar className="w-3.5 h-3.5 stroke-[2.4]" />
-              <span className="whitespace-nowrap">Book Online</span>
+              <span className="whitespace-nowrap">Order Online</span>
               <span className="w-1.5 h-1.5 rounded-full bg-black/70 animate-pulse" />
             </button>
 
-            {/* Request a Quote Button */}
+            {/* Subtle Custom Quote Link for non-standard/enterprise jobs */}
             {onOpenQuoteModal && (
               <button
-                id="desktop-header-quote-btn"
+                id="desktop-header-custom-quote-link"
                 type="button"
                 onClick={onOpenQuoteModal}
-                className="relative px-3.5 py-1.5 rounded-full bg-gradient-to-r from-[#d4af37] via-[#f5be38] to-[#b8860b] hover:from-[#e5c158] hover:via-[#fed766] hover:to-[#c69214] text-stone-950 font-extrabold text-xs tracking-tight flex items-center gap-1.5 shadow-[0_2px_12px_rgba(212,175,55,0.45)] border border-amber-300/70 active:scale-95 transition-all cursor-pointer"
-                title="Request a customized corporate print quote"
+                className="text-stone-300 hover:text-[#f5be38] text-xs font-semibold px-2.5 py-1.5 rounded-lg hover:bg-white/5 transition-colors flex items-center gap-1 cursor-pointer"
+                title="Need custom die-cuts, foil stamping, or enterprise bulk specifications?"
               >
-                <FileText className="w-3.5 h-3.5 stroke-[2.4]" />
-                <span className="whitespace-nowrap">Get a Quote</span>
+                <FileText className="w-3.5 h-3.5 text-[#f5be38]" />
+                <span className="whitespace-nowrap">Custom Quote?</span>
               </button>
             )}
           </nav>
@@ -898,24 +805,16 @@ export const Header: React.FC<HeaderProps> = ({
       {mobileMenuOpen && (
         <div className="md:hidden bg-[#0a0b0e] border-b border-white/15 px-4 py-3 space-y-3">
           {/* Mobile Direct Action Buttons */}
-          <div className="grid grid-cols-3 gap-1.5 pt-1">
+          <div className="grid grid-cols-2 gap-2 pt-1">
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
                 onOpenBookOnline?.();
               }}
-              className="py-2.5 px-2 rounded-xl bg-gradient-to-r from-[#d4af37] via-[#e5c158] to-[#b8860b] text-black font-extrabold text-[11px] flex items-center justify-center gap-1 shadow-md shadow-[#d4af37]/20 active:scale-95 transition-all"
+              className="py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#d4af37] via-[#e5c158] to-[#b8860b] text-black font-extrabold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-[#d4af37]/20 active:scale-95 transition-all cursor-pointer"
             >
-              <span>📅 Book Slot</span>
-            </button>
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onOpenQuoteModal?.();
-              }}
-              className="py-2.5 px-2 rounded-xl bg-gradient-to-r from-[#d4af37] via-[#f5be38] to-[#b8860b] text-stone-950 font-extrabold text-[11px] flex items-center justify-center gap-1 active:scale-95 transition-all shadow-xs border border-amber-300/60"
-            >
-              <span>📝 Get Quote</span>
+              <Calendar className="w-3.5 h-3.5" />
+              <span>Order Online</span>
             </button>
             <button
               onClick={() => {
@@ -926,11 +825,29 @@ export const Header: React.FC<HeaderProps> = ({
                   onOpenCatalog?.();
                 }
               }}
-              className="py-2.5 px-2 rounded-xl bg-white/10 hover:bg-white/15 text-[#ebd07f] border border-[#dfbc5e]/30 font-bold text-[11px] flex items-center justify-center gap-1 active:scale-95 transition-all"
+              className="py-2.5 px-3 rounded-xl bg-white/10 hover:bg-white/15 text-[#ebd07f] border border-[#dfbc5e]/30 font-bold text-xs flex items-center justify-center gap-1.5 active:scale-95 transition-all cursor-pointer"
             >
-              <span>✨ Catalog</span>
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Catalog</span>
             </button>
           </div>
+
+          {/* Subtle Custom Quote Row in Mobile Drawer */}
+          {onOpenQuoteModal && (
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                onOpenQuoteModal();
+              }}
+              className="w-full py-2 px-3 rounded-xl bg-[#14141c] hover:bg-white/5 border border-white/10 text-stone-300 hover:text-white text-xs font-semibold flex items-center justify-between transition-colors cursor-pointer"
+            >
+              <span className="flex items-center gap-2">
+                <FileText className="w-3.5 h-3.5 text-[#f5be38]" />
+                <span>Need a Custom Enterprise Quote?</span>
+              </span>
+              <ChevronRight className="w-3.5 h-3.5 text-stone-500" />
+            </button>
+          )}
 
           <div className="text-xs font-bold text-stone-400 uppercase tracking-wider">
             Explore Categories

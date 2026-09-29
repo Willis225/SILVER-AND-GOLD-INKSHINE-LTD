@@ -162,7 +162,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                     </span>
                     <span className="font-medium text-stone-200">
                       {item.artworkType === 'direct_upload' && (item.uploadedFileName || 'Uploaded Design File')}
-                      {item.artworkType === 'hire_designer' && 'Design Service (+₦7,500)'}
+                      {item.artworkType === 'hire_designer' && 'Design Assistance Requested'}
                       {item.artworkType === 'send_later' && 'Send file via WhatsApp / Email'}
                     </span>
                   </div>

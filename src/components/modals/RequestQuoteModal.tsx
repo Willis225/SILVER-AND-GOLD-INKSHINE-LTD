@@ -273,7 +273,7 @@ export const RequestQuoteModal: React.FC<RequestQuoteModalProps> = ({
                   rows={4}
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  placeholder="e.g. 5 units Luxury Rollup Banners (85x200cm), 1000 pcs Branded Courier Bags, delivery to Ikeja before Friday..."
+                  placeholder="e.g. 5 units Luxury Rollup Banners (85x200cm), 1000 pcs Branded Courier Bags, delivery to Yenagoa before Friday..."
                   className="w-full px-3.5 py-2.5 rounded-lg border border-white/10 focus:outline-hidden focus:border-[#f5be38] focus:ring-1 focus:ring-[#f5be38] text-white text-xs sm:text-sm placeholder:text-stone-500 bg-[#181824] resize-y"
                 />
               </div>

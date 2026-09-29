@@ -317,8 +317,8 @@ export const PressFloorQueue: React.FC<PressFloorQueueProps> = ({
           </div>
 
           <button
-            onClick={() => alert('New batch of 50 Luxury Teardrop Cassettes received from Ikeja warehouse.')}
-            className="px-3.5 py-1.5 bg-stone-900 hover:bg-stone-800 text-white text-xs font-semibold rounded-lg flex items-center gap-1.5 shadow-xs transition-colors"
+            onClick={() => {}}
+            className="px-3.5 py-1.5 bg-stone-900 hover:bg-stone-800 text-white text-xs font-semibold rounded-lg flex items-center gap-1.5 shadow-xs transition-colors cursor-pointer"
           >
             <Plus className="w-3.5 h-3.5" />
             <span>Restock Inventory</span>

@@ -21,19 +21,13 @@ export const ConfirmPriceModal: React.FC<ConfirmPriceModalProps> = ({
 
   if (!isOpen || !product) return null;
 
-  const unitPrice = product.basePriceNgn;
-  const estimatedTotal = unitPrice * quantity;
-  const formattedUnitPrice = new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN' }).format(unitPrice);
-  const formattedTotal = new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN' }).format(estimatedTotal);
-
-  const whatsappMessage = `Hello Silver & Gold Inkshine Ltd, I would like to confirm price and place an order for:
+  const whatsappMessage = `Hello Silver & Gold Inkshine Ltd, I would like to request an instant price quote and place an order for:
 *${product.name}*
 SKU: ${product.sku || 'INK-NG'}
 Quantity: ${quantity} unit(s)
-Price Estimate: ${formattedTotal} (${formattedUnitPrice} each)
 Delivery Destination: ${deliveryLocation}
 
-Please confirm availability, production turnaround and artwork preflight check. Thank you!`;
+Please confirm current price quote, production turnaround and artwork preflight check. Thank you!`;
 
   const whatsappUrl = `https://wa.me/2347030372539?text=${encodeURIComponent(whatsappMessage)}`;
 
@@ -81,8 +75,7 @@ Please confirm availability, production turnaround and artwork preflight check. 
               </h4>
               <p className="text-xs text-stone-400 mt-0.5">{product.categoryLabel || 'Commercial Print'}</p>
               <div className="text-base font-extrabold text-[#f5be38] mt-1.5">
-                {formattedUnitPrice}
-                <span className="text-xs font-normal text-stone-400 ml-1">/ base unit</span>
+                Price on Request
               </div>
             </div>
           </div>
@@ -142,11 +135,11 @@ Please confirm availability, production turnaround and artwork preflight check. 
           {/* Total Cost Estimate Box */}
           <div className="p-3.5 bg-[#f5be38]/10 rounded-xl border border-[#f5be38]/30 flex items-center justify-between">
             <div>
-              <span className="text-xs font-bold text-[#f5be38] block">Total Price Estimate ({quantity} unit{quantity > 1 ? 's' : ''})</span>
-              <span className="text-[11px] text-stone-300">Official VAT-inclusive estimate with location delivery</span>
+              <span className="text-xs font-bold text-[#f5be38] block">Price Quote ({quantity} unit{quantity > 1 ? 's' : ''})</span>
+              <span className="text-[11px] text-stone-300">Instant direct quote confirmation via WhatsApp</span>
             </div>
-            <div className="text-lg font-black text-[#f5be38]">
-              {formattedTotal}
+            <div className="text-base font-black text-[#f5be38]">
+              Price on Request
             </div>
           </div>
 

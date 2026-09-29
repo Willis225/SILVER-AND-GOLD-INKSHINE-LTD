@@ -285,7 +285,7 @@ export const PageImageStudio: React.FC<PageImageStudioProps> = ({
       const newService: ShowcaseServiceItem = {
         id: newId,
         title: newTitle.trim(),
-        price: newBadge.trim() || '₦25,000 / unit',
+        price: newBadge.trim() || 'Price on Request',
         description: newDescription.trim() || 'High definition full-color commercial printing.',
         imageUrl: newImageUrl,
         category: 'banners_stands'
@@ -557,7 +557,7 @@ export const PageImageStudio: React.FC<PageImageStudioProps> = ({
                   type="text"
                   value={newBadge}
                   onChange={(e) => setNewBadge(e.target.value)}
-                  placeholder="e.g. ₦34,500 each or Best Seller"
+                  placeholder="e.g. Price on Request or Best Seller"
                   className="w-full px-3 py-2 rounded-xl border border-stone-300"
                 />
               </div>

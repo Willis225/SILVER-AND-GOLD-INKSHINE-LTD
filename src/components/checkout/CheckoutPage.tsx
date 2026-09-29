@@ -85,14 +85,14 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
   const handleApplyCoupon = (e: React.FormEvent) => {
     e.preventDefault();
     const clean = couponCode.trim().toUpperCase();
-    if (clean === 'LAGOSPRINT10' || clean === 'ROLLUP10') {
+    if (clean === 'SILVERGOLD10' || clean === 'ROLLUP10') {
       setAppliedDiscountPercent(10);
       setCouponError(null);
     } else if (clean === 'ENTERPRISE15') {
       setAppliedDiscountPercent(15);
       setCouponError(null);
     } else {
-      setCouponError('Invalid promo code. Try "LAGOSPRINT10" for 10% off.');
+      setCouponError('Invalid promo code. Try "SILVERGOLD10" for 10% off.');
     }
   };
 
@@ -683,7 +683,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
                             type="text"
                             value={customer.city}
                             onChange={(e) => handleCustomerChange('city', e.target.value)}
-                            placeholder="e.g. Ikeja, Nigeria"
+                            placeholder="e.g. Yenagoa, Nigeria"
                             className="w-full bg-[#121217] border border-white/15 rounded-xl p-2.5 text-xs text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-white transition-all"
                           />
                         </div>
@@ -824,7 +824,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
                       type="text"
                       value={couponCode}
                       onChange={(e) => setCouponCode(e.target.value)}
-                      placeholder="Coupon (e.g. LAGOSPRINT10)"
+                      placeholder="Coupon (e.g. SILVERGOLD10)"
                       className="w-full pl-8 pr-2.5 py-2 bg-[#181824] border border-white/15 rounded-xl text-xs uppercase font-mono font-bold text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-white transition-all"
                     />
                   </div>

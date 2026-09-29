@@ -40,12 +40,14 @@ interface ProductDetailPageProps {
     designerFeeNgn?: number;
     designerBrief?: DesignerBrief;
   }) => void;
+  onOpenCustomQuote?: () => void;
 }
 
 export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
   product,
   onBackToCatalog,
   onAddToCart,
+  onOpenCustomQuote,
 }) => {
   // Initialize default options
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>(() => {
@@ -320,10 +322,8 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                               {isSelected && <Check className="w-4 h-4 text-[#f5be38] shrink-0 ml-1" />}
                             </div>
                             {opt.priceModifierValue !== 0 && (
-                              <span className={`text-[10px] mt-1 font-mono font-semibold ${
-                                opt.priceModifierValue > 0 ? 'text-[#f5be38]' : 'text-stone-400'
-                              }`}>
-                                {opt.priceModifierValue > 0 ? `+${formatNaira(opt.priceModifierValue)}` : formatNaira(opt.priceModifierValue)}
+                              <span className="text-[10px] mt-1 font-mono font-semibold text-[#f5be38]">
+                                Custom Spec
                               </span>
                             )}
                           </button>
@@ -475,131 +475,123 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
             {/* Live Pricing Summary & Add to Cart Sticky Box */}
             <div className="bg-[#121217] text-white rounded-3xl p-6 sm:p-7 shadow-2xl space-y-5 border border-white/10">
               <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                <span className="text-xs font-bold uppercase tracking-wider text-[#f5be38]">
-                  {product.hidePrice ? 'Pricing on Request' : 'Dynamic Order Subtotal'}
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#f5be38] animate-pulse" />
+                  <span className="text-xs font-bold uppercase tracking-wider text-[#f5be38]">
+                    Live Order Summary &amp; Configuration
+                  </span>
+                </div>
                 <span className="text-xs text-stone-400 font-mono">
                   {quantity} unit{quantity > 1 ? 's' : ''} configured
                 </span>
               </div>
 
-              {product.hidePrice ? (
-                <div className="p-4 rounded-2xl bg-[#181822] border border-white/10 space-y-3 text-xs">
-                  <div className="flex items-center gap-2">
-                    <span className="px-2.5 py-0.5 rounded-full bg-[#f5be38]/20 text-[#f5be38] font-bold text-[10px] uppercase tracking-wider border border-[#f5be38]/30">
-                      Fluctuating Market Rate
-                    </span>
-                  </div>
-                  <div>
-                    <span className="text-xs uppercase font-bold text-stone-400 block mb-1">
-                      Storefront Rate:
-                    </span>
-                    <span className="text-2xl sm:text-3xl font-black text-[#f5be38] tracking-tight">
-                      {product.priceCustomLabel || 'Price on Request'}
-                    </span>
-                  </div>
-                  <p className="text-stone-300 text-xs leading-relaxed">
-                    Due to variable material, paper stock, and finishing costs, our print desk confirms quotes directly via WhatsApp or phone within minutes.
-                  </p>
+              {/* Dynamic Real-Time Configuration Spec Tags */}
+              <div className="p-4 rounded-2xl bg-[#181822] border border-white/10 space-y-3 text-xs">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs uppercase font-bold text-stone-400">
+                    Calculated Configuration:
+                  </span>
+                  <span className="px-2 py-0.5 rounded-full bg-[#f5be38]/20 text-[#f5be38] font-bold text-[10px] uppercase tracking-wider border border-[#f5be38]/30">
+                    Live Verified
+                  </span>
                 </div>
-              ) : (
-                <div className="space-y-2 text-xs">
-                  <div className="flex justify-between text-stone-300">
-                    <span>Unit Price Before Discount:</span>
-                    <span className="font-mono text-stone-200">
-                      {formatNaira(pricing.unitPriceBeforeDiscount)}
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] pt-1">
+                  <div className="bg-black/40 p-2 rounded-lg border border-white/5">
+                    <span className="text-stone-400 block text-[10px]">Order Volume:</span>
+                    <span className="font-bold text-white font-mono">{quantity} {quantity === 1 ? 'Unit' : 'Units'}</span>
+                  </div>
+                  <div className="bg-black/40 p-2 rounded-lg border border-white/5">
+                    <span className="text-stone-400 block text-[10px]">Turnaround:</span>
+                    <span className="font-bold text-white">{product.turnaroundDays} Business Days</span>
+                  </div>
+                  <div className="bg-black/40 p-2 rounded-lg border border-white/5 sm:col-span-2">
+                    <span className="text-stone-400 block text-[10px]">Selected Options:</span>
+                    <span className="font-bold text-stone-200 truncate block">
+                      {Object.entries(selectedOptions).map(([k, v]) => `${String(k).replace('opt-', '')}: ${String(v).replace('opt-', '')}`).join(' • ') || 'Standard Press Specs'}
                     </span>
                   </div>
-
-                  {pricing.bulkDiscountPercentage > 0 && (
-                    <div className="flex justify-between text-[#f5be38] font-bold">
-                      <span>Bulk Tier Savings ({pricing.bulkDiscountPercentage}% Off):</span>
-                      <span className="font-mono">-{formatNaira(pricing.savingsNgn)}</span>
-                    </div>
-                  )}
-
-                  <div className="flex justify-between text-stone-300">
-                    <span>Effective Unit Rate:</span>
-                    <span className="font-mono font-bold text-white">
-                      {formatNaira(pricing.unitPriceAfterDiscount)} / unit
-                    </span>
-                  </div>
-
-                  {designerFeeNgn > 0 && (
-                    <div className="flex justify-between text-[#f5be38] font-bold">
-                      <span>In-House Pre-Press Creative Desk:</span>
-                      <span className="font-mono">+{formatNaira(designerFeeNgn)}</span>
-                    </div>
-                  )}
-
-                  <div className="pt-3 border-t border-white/10 flex items-baseline justify-between">
+                  <div className="bg-black/40 p-2 rounded-lg border border-white/5 sm:col-span-2 flex items-center justify-between">
                     <div>
-                      <span className="text-xs uppercase font-bold text-stone-400 block">
-                        Total Print Amount:
-                      </span>
-                      <span className="text-2xl sm:text-3xl font-black text-[#f5be38] font-mono tracking-tight">
-                        {formatNaira(grandTotalWithDesign)}
+                      <span className="text-stone-400 block text-[10px]">Artwork Status:</span>
+                      <span className="font-bold text-[#f5be38]">
+                        {submissionMode === 'upload_ready' ? (preflightResult ? `Ready (${preflightResult.fileName})` : 'File Upload Ready') : submissionMode === 'hire_designer' ? 'Hire Certified Press Artist' : 'Submit Later via WhatsApp'}
                       </span>
                     </div>
-
-                    <span className="text-[11px] text-stone-400 text-right">
-                      Excludes shipping fee<br />(Calculated in Cart)
+                    <span className="text-[10px] text-stone-400">
+                      Destination: <strong className="text-white">{currentZone.name}</strong>
                     </span>
                   </div>
                 </div>
-              )}
 
-              {/* Action Buttons: WhatsApp Instant Quote + Add to Cart */}
-              {product.hidePrice ? (
-                <div className="space-y-2.5">
-                  <a
-                    href={`https://wa.me/2347030372539?text=${encodeURIComponent(`Hello Silver & Gold Inkshine Ltd, I would like to request an instant price quote for: "${product.name}" (${quantity} units, specs: ${Object.entries(selectedOptions).map(([k, v]) => `${k}: ${v}`).join(', ')}).`)}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="w-full py-4 px-6 rounded-2xl bg-[#f5be38] hover:bg-[#ffd25d] active:scale-98 text-black font-black text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-lg shadow-[#f5be38]/20 transition-all cursor-pointer"
-                  >
-                    <MessageSquare className="w-5 h-5 text-black" />
-                    <span>Request Instant Quote on WhatsApp</span>
-                  </a>
-
-                  <button
-                    type="button"
-                    onClick={handleAddToCartClick}
-                    className="w-full py-2.5 px-4 rounded-xl bg-[#181822] hover:bg-white/10 active:scale-98 text-stone-200 hover:text-white font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer border border-white/15"
-                  >
-                    <ShoppingBag className="w-4 h-4" />
-                    <span>Save Order Specs to Cart</span>
-                  </button>
+                <div className="pt-2 border-t border-white/10 flex items-baseline justify-between">
+                  <span className="text-xs uppercase font-bold text-stone-400">
+                    Storefront Rate:
+                  </span>
+                  <span className="text-xl sm:text-2xl font-black text-[#f5be38] tracking-tight">
+                    {product.priceCustomLabel || 'Price on Request'}
+                  </span>
                 </div>
-              ) : (
+              </div>
+
+              {/* The Single Primary Action Button */}
+              <div className="space-y-3">
                 <button
-                  id="pdp-add-to-cart-btn"
                   type="button"
+                  id="pdp-primary-order-btn"
                   onClick={handleAddToCartClick}
-                  className="w-full py-4 px-6 rounded-2xl bg-[#f5be38] hover:bg-[#ffd25d] active:scale-98 text-black font-black text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-lg shadow-[#f5be38]/25 transition-all cursor-pointer"
+                  className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-[#f5be38] via-[#ffd25d] to-[#e5c158] hover:from-[#ffd25d] hover:to-[#f5be38] active:scale-98 text-black font-black text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-xl shadow-[#f5be38]/25 transition-all cursor-pointer group"
                 >
-                  <ShoppingBag className="w-5 h-5 text-black" />
-                  <span>Add to Cart • {formatNaira(grandTotalWithDesign)}</span>
+                  <ShoppingBag className="w-5 h-5 text-black group-hover:scale-110 transition-transform" />
+                  <span>Add to Cart &amp; Proceed to Checkout</span>
                 </button>
-              )}
 
-              {addedToast && (
-                <div className="text-center text-xs text-[#f5be38] font-bold flex items-center justify-center gap-1.5 animate-in fade-in">
-                  <Check className="w-4 h-4" />
-                  <span>Item added to your order cart!</span>
-                </div>
-              )}
-
-              <div className="text-center pt-1">
+                {/* Direct WhatsApp Instant Consultation */}
                 <a
-                  href="https://wa.me/2347030372539?text=Hello%20Silver%20%26%20Gold%20Inkshine%2C%20I%20need%20a%20bulk%20corporate%20quote%20for%20100%2B%20units"
+                  href={`https://wa.me/2347030372539?text=${encodeURIComponent(`Hello Silver & Gold Inkshine Ltd, I am configuring: "${product.name}" (${quantity} units, Specs: ${Object.entries(selectedOptions).map(([k, v]) => `${k}: ${v}`).join(', ')}). Please confirm the live quote and production schedule.`)}`}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-xs text-stone-400 hover:text-[#f5be38] inline-flex items-center gap-1 font-medium transition-colors"
+                  className="w-full py-2.5 px-4 rounded-xl bg-[#181822] hover:bg-white/10 active:scale-98 text-stone-300 hover:text-white font-semibold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer border border-white/15"
                 >
-                  <span>Ordering over 50 units? Contact Corporate Procurement Desk</span>
-                  <ChevronRight className="w-3.5 h-3.5" />
+                  <MessageSquare className="w-4 h-4 text-[#25D366]" />
+                  <span>Quick WhatsApp Inquiries &amp; Instant Verification</span>
                 </a>
+              </div>
+
+              {addedToast && (
+                <div className="text-center text-xs text-[#f5be38] font-bold flex items-center justify-center gap-1.5 animate-in fade-in py-1 bg-[#f5be38]/10 rounded-lg border border-[#f5be38]/20">
+                  <Check className="w-4 h-4" />
+                  <span>Configured item saved to your cart &amp; ready for checkout!</span>
+                </div>
+              )}
+
+              {/* Exception Handling: Subtle "Need a Custom Quote?" Trigger */}
+              <div className="pt-2 border-t border-white/10">
+                <div className="bg-[#181822]/60 rounded-xl p-3 border border-white/5 flex items-center justify-between gap-3">
+                  <div className="space-y-0.5">
+                    <span className="text-[11px] font-bold text-white block">
+                      Complex or non-standard print job?
+                    </span>
+                    <p className="text-[10px] text-stone-400">
+                      Custom die-cuts, specialty foil stamping, embossing, or 500+ bulk runs.
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (onOpenCustomQuote) {
+                        onOpenCustomQuote();
+                      } else {
+                        window.open(`https://wa.me/2347030372539?text=${encodeURIComponent(`Hello Silver & Gold Inkshine Ltd, I need a custom quote for complex/enterprise print specifications for: ${product.name}`)}`, '_blank');
+                      }
+                    }}
+                    className="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-[#f5be38] hover:text-white text-xs font-bold whitespace-nowrap transition-colors flex items-center gap-1 cursor-pointer shrink-0"
+                  >
+                    <span>Need a Custom Quote?</span>
+                    <ChevronRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -650,6 +642,17 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
               }`}
             >
               Nationwide Logistics Schedule
+            </button>
+
+            <button
+              onClick={() => setActiveTab('custom_quote')}
+              className={`px-6 py-4 text-xs font-bold whitespace-nowrap transition-colors border-b-2 cursor-pointer ${
+                activeTab === 'custom_quote'
+                  ? 'border-[#f5be38] text-[#f5be38] bg-[#f5be38]/10'
+                  : 'border-transparent text-stone-400 hover:text-white'
+              }`}
+            >
+              Need a Custom Quote?
             </button>
           </div>
 
@@ -724,7 +727,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
               <div className="space-y-4 max-w-3xl">
                 <h3 className="text-base font-bold text-white">Nationwide Delivery Schedules</h3>
                 <p>
-                  Orders dispatched directly from our Yenagoa &amp; Ikeja Graphic Production Hub. Packaged in custom corrugated cartons to ensure zero denting of aluminum cassettes during road and air transit.
+                  Orders dispatched directly from our Yenagoa Central Graphic Production Hub. Packaged in custom corrugated cartons to ensure zero denting of aluminum cassettes during road and air transit.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                   <div className="bg-[#181822] p-3.5 rounded-xl border border-white/10">
@@ -734,6 +737,51 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                   <div className="bg-[#181822] p-3.5 rounded-xl border border-white/10">
                     <strong className="text-white block mb-1">Abuja, PH &amp; Interstate:</strong>
                     <span className="text-stone-400">Direct delivery to your address or office location upon completion.</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'custom_quote' && (
+              <div className="space-y-4 max-w-3xl">
+                <div className="flex items-center gap-2">
+                  <Sparkles className="w-5 h-5 text-[#f5be38]" />
+                  <h3 className="text-base font-bold text-white">Custom Engineering &amp; Bespoke Enterprise Quotes</h3>
+                </div>
+                <p>
+                  Have custom dimensions, special foil stamping (Gold/Silver/Holographic), spot UV lamination, bespoke die-cut shapes, or high-volume corporate runs over 500 units? Our technical pre-press engineers prepare custom quotes within 15 minutes.
+                </p>
+                <div className="p-4 rounded-2xl bg-[#181822] border border-white/10 space-y-3">
+                  <div className="font-bold text-white text-xs">How Custom Quotes Work:</div>
+                  <ul className="space-y-1.5 list-disc pl-4 text-stone-300 text-[11px]">
+                    <li>Upload your technical architectural drawings, brand guidelines, or custom size requirements.</li>
+                    <li>Choose your preferred substrate thickness, metallic foil type, or edge-gilding finishes.</li>
+                    <li>Receive an instant itemized invoice with direct press schedule reservation.</li>
+                  </ul>
+                  <div className="pt-2 flex flex-wrap gap-3">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (onOpenCustomQuote) {
+                          onOpenCustomQuote();
+                        } else {
+                          window.open(`https://wa.me/2347030372539?text=${encodeURIComponent(`Hello Silver & Gold Inkshine Ltd, I need a custom quote for: ${product.name}`)}`, '_blank');
+                        }
+                      }}
+                      className="px-5 py-2.5 rounded-xl bg-[#f5be38] hover:bg-[#ffd25d] text-black font-extrabold text-xs flex items-center gap-2 shadow-md transition-all cursor-pointer"
+                    >
+                      <Sparkles className="w-4 h-4" />
+                      <span>Open Dedicated Custom Quote Desk</span>
+                    </button>
+                    <a
+                      href={`https://wa.me/2347030372539?text=${encodeURIComponent(`Hello Silver & Gold Inkshine Ltd, I would like to consult directly with your senior press engineer for a custom job on "${product.name}".`)}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs flex items-center gap-1.5 border border-white/10 transition-colors"
+                    >
+                      <MessageSquare className="w-4 h-4 text-[#25D366]" />
+                      <span>Chat with Press Engineer</span>
+                    </a>
                   </div>
                 </div>
               </div>

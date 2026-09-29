@@ -305,7 +305,7 @@ export const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
                       : 'bg-white text-stone-700 border-stone-200 hover:bg-stone-50'
                   }`}
                 >
-                  Hire Designer (+₦7,500)
+                  Hire Designer (Pre-Press Desk)
                 </button>
                 <button
                   type="button"
@@ -347,7 +347,7 @@ export const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
                 <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 text-xs text-amber-900 flex items-start gap-2">
                   <Sparkles className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
                   <div>
-                    <strong>Pre-Press Creative Desk:</strong> Our graphic team in Somolu will contact you via WhatsApp / email within 2 hours to gather your corporate logos and copy.
+                    <strong>Pre-Press Creative Desk:</strong> Our graphic team in Yenagoa will contact you via WhatsApp / email within 2 hours to gather your corporate logos and copy.
                   </div>
                 </div>
               )}
@@ -357,7 +357,7 @@ export const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
                 <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 text-xs text-amber-900 flex items-start gap-2">
                   <ShieldCheck className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
                   <div>
-                    <strong>Checkout First:</strong> You can forward large print files to <code>artwork@inkshine.ng</code> or WhatsApp after placing your order.
+                    <strong>Quote Request First:</strong> You can forward large print files to <code>orders@silverandgold.ng</code> or WhatsApp after submitting your quote request.
                   </div>
                 </div>
               )}
@@ -366,87 +366,51 @@ export const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
 
           {/* Pricing & Add to Cart Action */}
           <div className="pt-4 border-t border-stone-200 space-y-3">
-            {product.hidePrice ? (
-              <div className="p-3 bg-amber-50/80 rounded-xl border border-amber-200 space-y-1">
-                <span className="text-[10px] text-amber-800 uppercase tracking-wider block font-bold">
-                  Pricing Policy
-                </span>
-                <div className="text-xl font-black text-amber-900">
-                  {product.priceCustomLabel || 'Price on Request'}
-                </div>
-                <p className="text-[11px] text-stone-600 leading-relaxed">
-                  Due to fluctuating market costs for substrates &amp; materials, please request a live quote. We respond within minutes!
-                </p>
+            <div className="p-3 bg-amber-50/80 rounded-xl border border-amber-200 space-y-1">
+              <span className="text-[10px] text-amber-800 uppercase tracking-wider block font-bold">
+                Live Pricing Policy &amp; Status
+              </span>
+              <div className="text-xl font-black text-amber-900">
+                {product.priceCustomLabel || 'Price on Request'}
               </div>
-            ) : (
-              <div className="flex items-baseline justify-between">
-                <div>
-                  <span className="text-[10px] text-stone-400 uppercase tracking-wider block font-bold">
-                    Dynamic Price Breakdown
-                  </span>
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-2xl font-black text-stone-900 font-mono tracking-tight">
-                      {formatNaira(pricing.grandTotalNgn)}
-                    </span>
-                    <span className="text-xs text-stone-500 font-mono">
-                      ({formatNaira(pricing.unitPriceNgn)} / unit)
-                    </span>
-                  </div>
-                </div>
+              <p className="text-[11px] text-stone-600 leading-relaxed">
+                Configured with real-time specs ({quantity} units, {artworkType === 'direct_upload' ? 'Upload Ready' : artworkType === 'hire_designer' ? 'Hire Designer' : 'Send Later'}). Live confirmation within minutes.
+              </p>
+            </div>
 
-                {pricing.bulkDiscountPercentage > 0 && (
-                  <div className="text-right">
-                    <span className="inline-flex items-center gap-1 text-xs font-bold text-amber-800 bg-amber-100 px-2.5 py-1 rounded-lg">
-                      <Percent className="w-3 h-3" />
-                      Saved {formatNaira(pricing.savingsNgn)} ({pricing.bulkDiscountPercentage}% off)
-                    </span>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {product.hidePrice ? (
-              <div className="space-y-2">
-                <a
-                  href={`https://wa.me/2347030372539?text=${encodeURIComponent(`Hello Silver & Gold Inkshine Ltd, I would like to request an instant price quote for: "${product.name}" (Configured Quantity: ${quantity} units, Specs: ${Object.entries(selectedOptions).map(([k, v]) => `${k}: ${v}`).join(', ')}).`)}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="w-full py-3.5 px-6 rounded-2xl bg-emerald-600 hover:bg-emerald-700 active:scale-98 text-white font-bold text-sm sm:text-base flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/20 transition-all cursor-pointer"
-                >
-                  <MessageSquare className="w-5 h-5 text-white" />
-                  <span>Request Instant Quote on WhatsApp</span>
-                </a>
-                <button
-                  type="button"
-                  onClick={handleAdd}
-                  disabled={addedNotice}
-                  className="w-full py-2.5 px-4 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
-                >
-                  <ShoppingBag className="w-4 h-4" />
-                  <span>{addedNotice ? 'Added to Cart / Inquiry Desk' : 'Save Configuration to Cart for Quote'}</span>
-                </button>
-              </div>
-            ) : (
+            <div className="space-y-2">
               <button
-                id="add-to-cart-modal-btn"
                 type="button"
                 onClick={handleAdd}
                 disabled={addedNotice}
-                className="w-full py-3.5 px-6 rounded-2xl bg-[#b8860b] hover:bg-[#996515] active:scale-98 text-white font-bold text-sm sm:text-base flex items-center justify-center gap-2 shadow-lg shadow-[#b8860b]/20 transition-all cursor-pointer"
+                className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 active:scale-98 text-white font-black text-sm flex items-center justify-center gap-2 shadow-lg shadow-amber-600/20 transition-all cursor-pointer"
               >
-                {addedNotice ? (
-                  <>
-                    <Check className="w-5 h-5 text-white" />
-                    <span>Added to Cart!</span>
-                  </>
-                ) : (
-                  <>
-                    <ShoppingBag className="w-5 h-5 text-white" />
-                    <span>Add to Cart • {formatNaira(pricing.grandTotalNgn)}</span>
-                  </>
-                )}
+                <ShoppingBag className="w-4.5 h-4.5 text-white" />
+                <span>{addedNotice ? 'Added to Cart & Booking Desk!' : 'Add to Cart & Proceed to Checkout'}</span>
               </button>
-            )}
+
+              <a
+                href={`https://wa.me/2347030372539?text=${encodeURIComponent(`Hello Silver & Gold Inkshine Ltd, I would like to request an instant price quote for: "${product.name}" (Configured Quantity: ${quantity} units, Specs: ${Object.entries(selectedOptions).map(([k, v]) => `${k}: ${v}`).join(', ')}).`)}`}
+                target="_blank"
+                rel="noreferrer"
+                className="w-full py-2.5 px-4 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-bold flex items-center justify-center gap-2 transition-colors cursor-pointer"
+              >
+                <MessageSquare className="w-4 h-4 text-emerald-600" />
+                <span>Instant Quote on WhatsApp</span>
+              </a>
+            </div>
+
+            {/* Subtle Custom Quote Link for non-standard jobs */}
+            <div className="text-center pt-1">
+              <a
+                href={`https://wa.me/2347030372539?text=${encodeURIComponent(`Hello Silver & Gold Inkshine Ltd, I have complex custom specifications (die-cut, specialty foil, or bulk enterprise run) for: ${product.name}`)}`}
+                target="_blank"
+                rel="noreferrer"
+                className="text-[11px] text-stone-500 hover:text-amber-700 font-medium inline-flex items-center gap-1 transition-colors"
+              >
+                <span>Need custom die-cuts, specialty foil or 500+ bulk units? Request Custom Quote</span>
+              </a>
+            </div>
           </div>
         </div>
       </div>
