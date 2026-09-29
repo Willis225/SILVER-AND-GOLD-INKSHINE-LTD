@@ -212,7 +212,7 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
                   </div>
                   <h4 className="font-bold text-sm text-white">Direct Location Delivery</h4>
                   <p className="text-xs text-stone-400 leading-relaxed">
-                    When you want your finished work delivered, we deliver directly to your specific office or location across Yenagoa, Bayelsa, Port Harcourt, Lagos, Abuja, and other states upon your request.
+                    When you want your finished work delivered, we deliver directly to your specific office or location across Yenagoa, Bayelsa, Port Harcourt, Nigeria, Abuja, and other states upon your request.
                   </p>
                 </div>
 
@@ -704,7 +704,7 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
                       <div>
                         <strong className="block text-white text-sm font-bold">Physical Factory &amp; Press Hub:</strong>
                         <span className="text-stone-400 leading-relaxed">
-                          Mbiama-Yenagoa Road, Graphic Arts Industrial Complex, Yenagoa, Bayelsa State, Nigeria.
+                          No. 875 Medford Okilo Road (Mbiama-Yenagoa Road), Opolo-Epie, directly opposite Pepperoni, Yenagoa, Bayelsa State, Nigeria.
                         </span>
                       </div>
                     </div>

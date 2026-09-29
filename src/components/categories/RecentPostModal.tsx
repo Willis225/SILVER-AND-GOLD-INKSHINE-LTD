@@ -68,7 +68,7 @@ export const RecentPostModal: React.FC<RecentPostModalProps> = ({
             </p>
 
             <p>
-              In Nigeria’s fast-moving commercial markets across Lagos, Abuja, Port Harcourt, and regional commerce centers, high-impact printing requires the right balance of material selection, substrate durability, and crisp visual prepress work.
+              In Nigeria’s fast-moving commercial markets across Nigeria, Abuja, Port Harcourt, and regional commerce centers, high-impact printing requires the right balance of material selection, substrate durability, and crisp visual prepress work.
             </p>
 
             <h3 className="text-base font-bold text-white mt-4">Key Considerations &amp; Technical Standards:</h3>
@@ -80,7 +80,7 @@ export const RecentPostModal: React.FC<RecentPostModalProps> = ({
             </ul>
 
             <p>
-              Our press facilities in Lagos and Bayelsa operate high-speed industrial presses, 360 activation booths, eco-solvent large format machines, and automated finishing lines ready to fulfill orders for SMBs and enterprise clients.
+              Our press facilities in Nigeria and Bayelsa operate high-speed industrial presses, 360 activation booths, eco-solvent large format machines, and automated finishing lines ready to fulfill orders for SMBs and enterprise clients.
             </p>
           </div>
 

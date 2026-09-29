@@ -715,7 +715,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                   <li><strong className="text-white">1x Weighted Solid Base Cassette:</strong> Chrome teardrop end-caps and precision retraction spring mechanism.</li>
                   <li><strong className="text-white">1x Heavy-Duty Telescopic / 3-Stage Support Pole:</strong> With secure locking top hook.</li>
                   <li><strong className="text-white">1x Padded Oxford Nylon Travel Bag:</strong> Full zipper with reinforced dual carry handles and shoulder strap.</li>
-                  <li><strong className="text-white">1x Quality Control Pass Certificate:</strong> Signed by pre-press pressmaster in Lagos.</li>
+                  <li><strong className="text-white">1x Quality Control Pass Certificate:</strong> Signed by pre-press pressmaster in Nigeria.</li>
                 </ul>
               </div>
             )}
@@ -724,11 +724,11 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
               <div className="space-y-4 max-w-3xl">
                 <h3 className="text-base font-bold text-white">Nationwide Delivery Schedules</h3>
                 <p>
-                  Orders dispatched directly from our Somolu &amp; Ikeja Graphic Production Hub. Packaged in custom corrugated cartons to ensure zero denting of aluminum cassettes during road and air transit.
+                  Orders dispatched directly from our Yenagoa &amp; Ikeja Graphic Production Hub. Packaged in custom corrugated cartons to ensure zero denting of aluminum cassettes during road and air transit.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                   <div className="bg-[#181822] p-3.5 rounded-xl border border-white/10">
-                    <strong className="text-white block mb-1">Lagos State Express:</strong>
+                    <strong className="text-white block mb-1">State & Regional Express:</strong>
                     <span className="text-stone-400">Same-day or next-day dispatch via dedicated dispatch riders and vans.</span>
                   </div>
                   <div className="bg-[#181822] p-3.5 rounded-xl border border-white/10">

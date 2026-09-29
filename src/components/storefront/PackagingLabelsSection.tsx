@@ -43,7 +43,7 @@ const DEFAULT_PACKAGING_ITEMS: PackagingItem[] = [
   {
     id: 'pkg-pouch-packaging',
     badge: 'Custom Pouch',
-    title: 'Design and Print custom branded pouch Packaging in Lagos',
+    title: 'Design and Print custom branded pouch Packaging in Nigeria',
     price: 'Price on Request',
     numericPrice: 0,
     imageUrl: '/custom-branded-pouch-packaging.jpg',

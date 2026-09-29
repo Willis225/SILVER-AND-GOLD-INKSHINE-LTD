@@ -4,13 +4,13 @@ export const SAMPLE_PRODUCTS: Product[] = [
   {
     id: 'prod-360-photo-booth',
     sku: 'EVT-360-BOOTH-01',
-    name: '360 Photo Booth Hire in Lagos, Nigeria',
+    name: '360 Photo Booth Hire in Nigeria',
     slug: '360-photo-booth-hire-in-lagos-nigeria',
     category: 'events_exhibitions',
     categoryLabel: 'Events & Exhibitions',
     categoryPlacement: 'events',
-    shortDescription: 'Book a 360 Photo Booth for weddings, birthdays, corporate events, parties and brand activations in Lagos.',
-    description: 'Book a 360 Photo Booth for weddings, birthdays, corporate events, parties and brand activations in Lagos. Create entertaining 360° slow-motion videos with personalized event names, logos, hashtags and custom video overlays. Includes full technical event setup, attendant crew, LED ring lighting, and instant guest download kiosk.',
+    shortDescription: 'Book a 360 Photo Booth for weddings, birthdays, corporate events, parties and brand activations in Nigeria.',
+    description: 'Book a 360 Photo Booth for weddings, birthdays, corporate events, parties and brand activations in Nigeria. Create entertaining 360° slow-motion videos with personalized event names, logos, hashtags and custom video overlays. Includes full technical event setup, attendant crew, LED ring lighting, and instant guest download kiosk.',
     basePriceNgn: 1000,
     minQuantity: 1,
     turnaroundDays: 1,
@@ -44,7 +44,7 @@ export const SAMPLE_PRODUCTS: Product[] = [
   {
     id: 'prod-3d-signs-lagos',
     sku: 'SGN-3D-EXT-01',
-    name: '3D Signs in Lagos Nigeria | Custom 3D Signage for Businesses',
+    name: '3D Signs in Nigeria | Custom 3D Signage for Businesses',
     slug: '3d-signs-in-lagos-nigeria-custom-signage',
     category: 'signages',
     categoryLabel: 'Signages',
@@ -175,7 +175,7 @@ export const SAMPLE_PRODUCTS: Product[] = [
   {
     id: 'prod-foot-mat',
     sku: 'GFT-MAT-01',
-    name: 'Foot Mat in Lagos, Nigeria – Custom Branded Door & Entrance Mats',
+    name: 'Foot Mat in Nigeria – Custom Branded Door & Entrance Mats',
     slug: 'custom-branded-foot-mat-nigeria',
     category: 'gift_items_souvenirs',
     categoryLabel: 'Gift Items & Souvenirs',
@@ -215,7 +215,7 @@ export const SAMPLE_PRODUCTS: Product[] = [
   {
     id: 'prod-keychain',
     sku: 'GFT-KEY-01',
-    name: 'Key Holder & Keychain Printing in Lagos, Nigeria – Custom Branded Keyholders',
+    name: 'Key Holder & Keychain Printing in Nigeria – Custom Branded Keyholders',
     slug: 'key-holder-keychain-printing-lagos',
     category: 'gift_items_souvenirs',
     categoryLabel: 'Gift Items & Souvenirs',
@@ -235,7 +235,7 @@ export const SAMPLE_PRODUCTS: Product[] = [
   {
     id: 'prod-water-bottle',
     sku: 'GFT-BOT-01',
-    name: 'Custom Branded Water Bottle Printing in Lagos, Nigeria – Custom & Personalized Bottles',
+    name: 'Custom Branded Water Bottle Printing in Nigeria – Custom & Personalized Bottles',
     slug: 'custom-branded-water-bottle-printing',
     category: 'gift_items_souvenirs',
     categoryLabel: 'Gift Items & Souvenirs',
@@ -382,7 +382,7 @@ export const SAMPLE_PRODUCTS: Product[] = [
     category: 'cards_invitations',
     categoryLabel: 'Cards & Invitations',
     shortDescription: '400gsm artboard with velvety double-sided matte lamination and optional spot UV gloss.',
-    description: 'Make an unforgettable first impression in corporate boardrooms and business network meetings across Lagos and Abuja. Ultra-thick card stock precision trimmed with square or rounded edges.',
+    description: 'Make an unforgettable first impression in corporate boardrooms and business network meetings across Nigeria and Abuja. Ultra-thick card stock precision trimmed with square or rounded edges.',
     basePriceNgn: 18500,
     minQuantity: 1, // 1 pack = 100 cards
     turnaroundDays: 3,
@@ -1659,8 +1659,8 @@ export const NIGERIAN_SHIPPING_ZONES: ShippingZone[] = [
   },
   {
     id: 'zone-lagos-mainland',
-    name: 'Lagos Mainland',
-    region: 'Lagos State',
+    name: 'Bayelsa & Regional Hub',
+    region: 'Nigeria State',
     states: ['Ikeja', 'Yaba', 'Surulere', 'Maryland', 'Gbagada', 'Oshodi', 'Magodo'],
     baseFeeNgn: 3000,
     estimatedDays: '1–2 Business Days',
@@ -1669,8 +1669,8 @@ export const NIGERIAN_SHIPPING_ZONES: ShippingZone[] = [
   },
   {
     id: 'zone-lagos-island',
-    name: 'Lagos Island & Coastal Corridor',
-    region: 'Lagos State',
+    name: 'Coastal & Interstate Corridor',
+    region: 'Nigeria State',
     states: ['Victoria Island', 'Ikoyi', 'Lekki Phase 1', 'Chevron', 'Ajah', 'Sangotedo'],
     baseFeeNgn: 4000,
     estimatedDays: '1–2 Business Days',
@@ -1892,7 +1892,7 @@ export const CLIENT_LOGOS: ClientLogo[] = [
   { name: 'Flutterwave', category: 'Fintech & Payments', badge: 'Tech Unicorn' },
   { name: 'Dangote Industries', category: 'Conglomerate & Manufacturing', badge: 'Corporate' },
   { name: 'MTN Nigeria', category: 'Telecommunications', badge: 'Telco' },
-  { name: 'University of Lagos', category: 'Higher Education & Research', badge: 'Academic' },
+  { name: 'Niger Delta University', category: 'Higher Education & Research', badge: 'Academic' },
   { name: 'Oando Clean Energy', category: 'Energy & Infrastructure', badge: 'Energy' },
   { name: 'Leadway Assurance', category: 'Insurance & Pension', badge: 'Finance' },
   { name: 'Redeemed Christian Church (RCCG)', category: 'Faith-Based Conventions', badge: 'Annual Events' },
@@ -1949,9 +1949,9 @@ export const GOOGLE_REVIEWS: GoogleReview[] = [
     avatar: 'https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?auto=format&fit=crop&w=100&q=80',
     rating: 5,
     date: '3 years ago',
-    review: '"I had a wonderful experience got my Promotional/promo table in time and I would highly recommend this business to anyone looking for reliable branding in Lagos."',
+    review: '"I had a wonderful experience got my Promotional/promo table in time and I would highly recommend this business to anyone looking for reliable branding in Nigeria."',
     verifiedOrder: 'Promotional / Promo Table',
-    city: 'Lagos, Nigeria',
+    city: 'Nigeria',
   },
   {
     id: 'rev-5',
@@ -1984,7 +1984,7 @@ export const COMPLETED_JOBS: CompletedJob[] = [
     client: 'Fintech Week Africa',
     specs: 'Broad Base Teardrop Aluminum | Solite Anti-Glare Film | 85x205cm',
     imageUrl: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=700&q=80',
-    location: 'Victoria Island, Lagos',
+    location: 'Yenagoa Commercial Hub',
   },
   {
     id: 'job-2',
@@ -1993,7 +1993,7 @@ export const COMPLETED_JOBS: CompletedJob[] = [
     client: 'Venture Capital Partners',
     specs: '10mm Beveled Acrylic | Mirror Gold Face | Warm LED Halo',
     imageUrl: 'https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=700&q=80',
-    location: 'Ikoyi, Lagos',
+    location: 'Bayelsa',
   },
   {
     id: 'job-3',
@@ -2023,8 +2023,8 @@ export interface FaqItem {
 
 export const PRINT_FAQS: FaqItem[] = [
   {
-    question: 'How fast can I receive my roll-up banners in Lagos or Abuja?',
-    answer: 'Standard roll-up banner production takes 1–2 business days. For urgent corporate events in Lagos, we offer Same-Day / Next-Day Express Dispatch. For Abuja, Port Harcourt, and other states, direct location delivery to your address takes 2–3 business days upon your request.',
+    question: 'How fast can I receive my roll-up banners in Nigeria or Abuja?',
+    answer: 'Standard roll-up banner production takes 1–2 business days. For urgent corporate events in Nigeria, we offer Same-Day / Next-Day Express Dispatch. For Abuja, Port Harcourt, and other states, direct location delivery to your address takes 2–3 business days upon your request.',
     category: 'Turnaround & Delivery',
   },
   {
@@ -2049,7 +2049,7 @@ export const PRINT_FAQS: FaqItem[] = [
   },
   {
     question: 'Do you deliver nationwide across all 36 Nigerian states?',
-    answer: 'Yes! We ship nationwide from our central production press in Somolu & Ikeja, Lagos. Parcels are safely packaged in heavy-duty padded travel sleeves and cartons to guarantee zero damage during interstate transit.',
+    answer: 'Yes! We ship nationwide from our central production press in Bayelsa. Parcels are safely packaged in heavy-duty padded travel sleeves and cartons to guarantee zero damage during interstate transit.',
     category: 'Turnaround & Delivery',
   },
 ];

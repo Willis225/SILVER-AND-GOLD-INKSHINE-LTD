@@ -328,26 +328,18 @@ export const Footer: React.FC<FooterProps> = ({
               <div>
                 <div className="flex items-center gap-1.5 text-white font-black text-[11px] uppercase tracking-wider mb-0.5">
                   <Building2 className="w-3.5 h-3.5 text-white" />
-                  <span>Main Press &amp; Production Plant</span>
+                  <span>Head Office &amp; Main Production Press</span>
                 </div>
-                <span className="text-white font-medium">Yenagoa Industrial Zone, Bayelsa State, Nigeria.</span>
-              </div>
-
-              <div className="pt-2 border-t border-white/10">
-                <div className="flex items-center gap-1.5 text-white font-black text-[11px] uppercase tracking-wider mb-0.5">
-                  <MapPin className="w-3.5 h-3.5 text-white" />
-                  <span>Lagos Workshop &amp; Office</span>
-                </div>
-                <span className="text-white font-medium">7 George St, off Apata Street, Somolu, Lagos 100231.</span>
+                <span className="text-white font-medium">No. 875 Medford Okilo Road (Mbiama-Yenagoa Road), Opolo-Epie, directly opposite Pepperoni, Yenagoa, Bayelsa State, Nigeria.</span>
               </div>
 
               <div className="pt-2 border-t border-white/10">
                 <div className="flex items-center gap-1.5 text-white font-bold text-[11px] uppercase tracking-wider mb-0.5">
                   <Truck className="w-3.5 h-3.5 text-white" />
-                  <span>Location Delivery Upon Request</span>
+                  <span>Doorstep &amp; Nationwide Delivery Upon Request</span>
                 </div>
                 <p className="text-stone-300 text-[11px] leading-relaxed">
-                  When you want your finished work delivered, we can deliver directly to your specific location or office address upon your request.
+                  When your job is ready, we deliver directly to your specific office, home or event address in Bayelsa and across Nigeria.
                 </p>
               </div>
             </div>

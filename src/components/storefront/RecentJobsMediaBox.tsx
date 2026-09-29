@@ -5,16 +5,13 @@ import {
   Pause, 
   Volume2, 
   VolumeX, 
-  Maximize2, 
-  Plus, 
   Upload, 
   Video, 
   Image as ImageIcon, 
   Trash2, 
-  ExternalLink, 
+  Plus, 
   Check, 
   X, 
-  Sparkles,
   Film
 } from 'lucide-react';
 import { openDB } from 'idb';
@@ -79,7 +76,11 @@ async function getIndexedDb() {
   });
 }
 
-export const RecentJobsMediaBox: React.FC = () => {
+interface RecentJobsMediaBoxProps {
+  allowUpload?: boolean;
+}
+
+export const RecentJobsMediaBox: React.FC<RecentJobsMediaBoxProps> = ({ allowUpload = false }) => {
   const [items, setItems] = useState<RecentJobMediaItem[]>(() => {
     if (typeof window !== 'undefined') {
       try {
@@ -120,8 +121,6 @@ export const RecentJobsMediaBox: React.FC = () => {
           setItems(prevItems => {
             return prevItems.map(item => {
               if (item.mediaUrl.startsWith('idb://')) {
-                const key = item.mediaUrl.replace('idb://', '');
-                // Will be resolved on request or stored as base64 / blob URL
                 return item;
               }
               return item;
@@ -236,9 +235,7 @@ export const RecentJobsMediaBox: React.FC = () => {
 
     try {
       if (selectedFile) {
-        // Read file as Data URL or save in IndexedDB
         if (selectedFile.size < 8 * 1024 * 1024) {
-          // Under 8MB: Convert to Data URL for instant fast playback & permanence
           const reader = new FileReader();
           finalUrl = await new Promise((resolve, reject) => {
             reader.onload = () => resolve(reader.result as string);
@@ -246,7 +243,6 @@ export const RecentJobsMediaBox: React.FC = () => {
             reader.readAsDataURL(selectedFile);
           });
         } else {
-          // Store larger files as Blobs in IndexedDB
           const db = await getIndexedDb();
           const fileId = `job-media-${Date.now()}`;
           await db.put(DB_STORE, selectedFile, fileId);
@@ -269,7 +265,6 @@ export const RecentJobsMediaBox: React.FC = () => {
       setActiveItemId(newItem.id);
       setIsUploadModalOpen(false);
 
-      // Reset fields
       setUploadTitle('');
       setUploadBadge('');
       setUploadUrl('');
@@ -297,41 +292,43 @@ export const RecentJobsMediaBox: React.FC = () => {
   };
 
   return (
-    <div className="w-full space-y-6">
-      {/* Top Header Bar: Clean & Minimal - NO address & NO clutter */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 sm:p-6 rounded-3xl bg-black/40 border border-white/10 backdrop-blur-md">
+    <div className="w-full space-y-5 bg-black rounded-3xl p-5 sm:p-7 border border-white/10 shadow-2xl">
+      {/* Top Header Bar: Clean & Minimal - Pure Luxury Black */}
+      <div className="flex items-center justify-between gap-4 pb-2 border-b border-white/10">
         <div className="space-y-1">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#f5be38]/10 border border-[#f5be38]/30 text-[#f5be38] text-[11px] font-black uppercase tracking-wider">
-            <Film className="w-3 h-3 text-[#f5be38]" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-white text-[10px] sm:text-[11px] font-black uppercase tracking-widest">
+            <Film className="w-3 h-3 text-white" />
             <span>RECENT JOBS</span>
           </div>
-          <h3 className="text-xl sm:text-2xl lg:text-3xl font-black text-white tracking-tight">
+          <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight">
             Recent Jobs &amp; Production Videos
           </h3>
         </div>
 
-        {/* Upload Button right on the box */}
-        <button
-          type="button"
-          onClick={() => setIsUploadModalOpen(true)}
-          className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-2xl bg-[#f5be38] hover:bg-[#ffd15c] text-black font-extrabold text-xs sm:text-sm shadow-[0_0_20px_rgba(245,190,56,0.35)] transition-all hover:scale-105 active:scale-95 cursor-pointer shrink-0"
-        >
-          <Upload className="w-4 h-4 stroke-[2.5]" />
-          <span>Upload Video / Photo</span>
-        </button>
+        {/* Upload Button: Rendered only when allowUpload is true (for admin) */}
+        {allowUpload && (
+          <button
+            type="button"
+            onClick={() => setIsUploadModalOpen(true)}
+            className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-white hover:bg-stone-200 text-black font-extrabold text-xs shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer shrink-0"
+          >
+            <Upload className="w-3.5 h-3.5 stroke-[2.5]" />
+            <span>Upload Video / Photo</span>
+          </button>
+        )}
       </div>
 
-      {/* Main Video & Media Stage Box */}
-      <div className="relative w-full rounded-3xl overflow-hidden bg-[#0a0a0f] border border-white/15 shadow-[0_20px_60px_rgba(0,0,0,0.9)] group">
+      {/* Main Video & Media Stage Box - Pure Black Styling */}
+      <div className="relative w-full rounded-2xl overflow-hidden bg-black border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.95)] group">
         
-        {/* Aspect Ratio Box */}
+        {/* Aspect Ratio Stage */}
         <div className="relative aspect-[16/9] sm:aspect-[21/9] lg:aspect-[24/10] w-full overflow-hidden flex items-center justify-center bg-black">
           
           {mediaSourceInfo?.type === 'kapwing' ? (
             <iframe
               src={mediaSourceInfo.embedUrl}
               title={activeItem?.title || "Recent Job Video"}
-              className="w-full h-full border-0"
+              className="w-full h-full border-0 bg-black"
               allow="autoplay; fullscreen"
               allowFullScreen
             />
@@ -339,7 +336,7 @@ export const RecentJobsMediaBox: React.FC = () => {
             <iframe
               src={mediaSourceInfo.embedUrl}
               title={activeItem?.title || "Recent Job Video"}
-              className="w-full h-full border-0"
+              className="w-full h-full border-0 bg-black"
               allow="autoplay; fullscreen"
               allowFullScreen
             />
@@ -348,7 +345,7 @@ export const RecentJobsMediaBox: React.FC = () => {
               <video
                 ref={videoRef}
                 src={mediaSourceInfo.src}
-                className="w-full h-full object-contain"
+                className="w-full h-full object-contain bg-black"
                 autoPlay
                 loop
                 muted={isMuted}
@@ -358,12 +355,12 @@ export const RecentJobsMediaBox: React.FC = () => {
               />
 
               {/* Video Play/Pause & Mute Overlay Controls */}
-              <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between p-3 rounded-2xl bg-black/70 backdrop-blur-md border border-white/10 z-20">
-                <div className="flex items-center gap-3">
+              <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between p-2.5 sm:p-3 rounded-xl bg-black/85 backdrop-blur-md border border-white/15 z-20">
+                <div className="flex items-center gap-2.5">
                   <button
                     type="button"
                     onClick={handleTogglePlay}
-                    className="p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
+                    className="p-1.5 sm:p-2 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
                     title={isPlaying ? 'Pause' : 'Play'}
                   >
                     {isPlaying ? <Pause className="w-4 h-4 fill-white" /> : <Play className="w-4 h-4 fill-white" />}
@@ -371,14 +368,14 @@ export const RecentJobsMediaBox: React.FC = () => {
                   <button
                     type="button"
                     onClick={handleToggleMute}
-                    className="p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
+                    className="p-1.5 sm:p-2 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
                     title={isMuted ? 'Unmute' : 'Mute'}
                   >
                     {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
                   </button>
                 </div>
 
-                <div className="text-xs font-bold text-white px-3 py-1 rounded-lg bg-white/10">
+                <div className="text-xs font-bold text-white px-3 py-1 rounded-md bg-white/10 truncate max-w-[200px] sm:max-w-none">
                   {activeItem?.title}
                 </div>
               </div>
@@ -393,10 +390,10 @@ export const RecentJobsMediaBox: React.FC = () => {
             </div>
           )}
 
-          {/* Active Item Pill Tag */}
-          <div className="absolute top-4 left-4 z-20 flex items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-black bg-black/80 text-[#f5be38] border border-[#f5be38]/40 backdrop-blur-md shadow-lg">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+          {/* Active Item Badge */}
+          <div className="absolute top-3.5 left-3.5 z-20 flex items-center gap-2">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-black bg-black/90 text-white border border-white/30 backdrop-blur-md shadow-lg">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
               {activeItem?.badge || 'Recent Job'}
             </span>
           </div>
@@ -405,8 +402,8 @@ export const RecentJobsMediaBox: React.FC = () => {
 
       </div>
 
-      {/* Thumbnails Row: Instant Switcher */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 pt-1">
+      {/* Thumbnails Row: Pure Black Switcher */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {items.map(item => {
           const isActive = item.id === activeItemId;
           const isItemVideo = item.type === 'video' || item.mediaUrl.includes('kapwing') || item.mediaUrl.includes('youtube') || item.mediaUrl.match(/\.(mp4|webm|mov)$/i);
@@ -415,13 +412,13 @@ export const RecentJobsMediaBox: React.FC = () => {
             <div
               key={item.id}
               onClick={() => setActiveItemId(item.id)}
-              className={`group relative rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 border ${
+              className={`group relative rounded-xl overflow-hidden cursor-pointer transition-all duration-300 border ${
                 isActive 
-                  ? 'border-[#f5be38] ring-2 ring-[#f5be38]/50 shadow-[0_0_20px_rgba(245,190,56,0.3)] scale-[1.02]' 
-                  : 'border-white/10 hover:border-white/40 bg-[#121218] opacity-80 hover:opacity-100'
+                  ? 'border-white ring-2 ring-white/40 shadow-[0_0_15px_rgba(255,255,255,0.2)] bg-black' 
+                  : 'border-white/10 hover:border-white/30 bg-[#07070a] opacity-80 hover:opacity-100'
               }`}
             >
-              <div className="relative aspect-[16/10] bg-[#1a1a24] overflow-hidden">
+              <div className="relative aspect-[16/10] bg-black overflow-hidden">
                 <img
                   src={item.thumbnailUrl || (isItemVideo ? '/magnetic-curved-popup-backdrop.jpg' : item.mediaUrl)}
                   alt={item.title}
@@ -432,31 +429,31 @@ export const RecentJobsMediaBox: React.FC = () => {
                 {/* Video Play Icon Indicator */}
                 {isItemVideo && (
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-8 h-8 rounded-full bg-black/70 backdrop-blur-sm border border-white/30 flex items-center justify-center text-white group-hover:scale-110 transition-transform">
-                      <Play className="w-3.5 h-3.5 fill-white ml-0.5" />
+                    <div className="w-7 h-7 rounded-full bg-black/80 backdrop-blur-sm border border-white/40 flex items-center justify-center text-white group-hover:scale-110 transition-transform">
+                      <Play className="w-3 h-3 fill-white ml-0.5" />
                     </div>
                   </div>
                 )}
 
-                {/* Delete button if custom */}
-                {item.isCustom && (
+                {/* Delete button if custom & allowUpload is true */}
+                {allowUpload && item.isCustom && (
                   <button
                     type="button"
                     onClick={(e) => handleDeleteItem(item.id, e)}
                     className="absolute top-2 right-2 p-1.5 rounded-lg bg-black/80 hover:bg-rose-600 text-stone-300 hover:text-white transition-colors z-10 cursor-pointer"
                     title="Remove item"
                   >
-                    <Trash2 className="w-3.5 h-3.5" />
+                    <Trash2 className="w-3 h-3" />
                   </button>
                 )}
               </div>
 
               {/* Minimal Title Banner */}
-              <div className="p-2.5 bg-[#0f0f14] flex items-center justify-between gap-2">
-                <span className="text-xs font-bold text-white truncate">
+              <div className="p-2 bg-black border-t border-white/5 flex items-center justify-between gap-1.5">
+                <span className="text-[11px] font-bold text-white truncate">
                   {item.title}
                 </span>
-                <span className="text-[10px] font-bold text-[#f5be38] uppercase shrink-0">
+                <span className="text-[9.5px] font-bold text-stone-400 uppercase shrink-0">
                   {item.badge || (isItemVideo ? 'Video' : 'Photo')}
                 </span>
               </div>
@@ -465,15 +462,15 @@ export const RecentJobsMediaBox: React.FC = () => {
         })}
       </div>
 
-      {/* Upload Modal */}
+      {/* Upload Modal (for Admin use) */}
       <AnimatePresence>
         {isUploadModalOpen && (
           <div 
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-in fade-in"
             onClick={() => setIsUploadModalOpen(false)}
           >
             <div 
-              className="relative w-full max-w-lg rounded-3xl bg-[#121218] border border-white/15 p-6 sm:p-8 text-white shadow-2xl space-y-6"
+              className="relative w-full max-w-lg rounded-3xl bg-[#0a0a0f] border border-white/20 p-6 sm:p-8 text-white shadow-2xl space-y-6"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Close Button */}
@@ -487,9 +484,9 @@ export const RecentJobsMediaBox: React.FC = () => {
 
               {/* Modal Header */}
               <div className="space-y-1">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#f5be38]/10 text-[#f5be38] text-xs font-black">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-white text-xs font-black">
                   <Upload className="w-3.5 h-3.5" />
-                  <span>UPLOAD RECENT JOB</span>
+                  <span>ADMIN MEDIA UPLOAD</span>
                 </div>
                 <h3 className="text-xl font-black text-white tracking-tight">
                   Add Video or Photo to Recent Jobs Box
@@ -501,9 +498,9 @@ export const RecentJobsMediaBox: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setUploadType('video')}
-                  className={`p-3 rounded-2xl border flex items-center justify-center gap-2 text-xs font-bold transition-all cursor-pointer ${
+                  className={`p-3 rounded-xl border flex items-center justify-center gap-2 text-xs font-bold transition-all cursor-pointer ${
                     uploadType === 'video'
-                      ? 'bg-[#f5be38] text-black border-[#f5be38] shadow-md'
+                      ? 'bg-white text-black border-white shadow-md'
                       : 'bg-white/5 border-white/10 text-stone-300 hover:bg-white/10'
                   }`}
                 >
@@ -513,9 +510,9 @@ export const RecentJobsMediaBox: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setUploadType('image')}
-                  className={`p-3 rounded-2xl border flex items-center justify-center gap-2 text-xs font-bold transition-all cursor-pointer ${
+                  className={`p-3 rounded-xl border flex items-center justify-center gap-2 text-xs font-bold transition-all cursor-pointer ${
                     uploadType === 'image'
-                      ? 'bg-[#f5be38] text-black border-[#f5be38] shadow-md'
+                      ? 'bg-white text-black border-white shadow-md'
                       : 'bg-white/5 border-white/10 text-stone-300 hover:bg-white/10'
                   }`}
                 >
@@ -527,7 +524,7 @@ export const RecentJobsMediaBox: React.FC = () => {
               {/* Drag & Drop / File Input Box */}
               <div 
                 onClick={() => fileInputRef.current?.click()}
-                className="relative border-2 border-dashed border-white/20 hover:border-[#f5be38] rounded-2xl p-6 flex flex-col items-center justify-center gap-2 cursor-pointer bg-white/[0.02] hover:bg-white/[0.05] transition-all group"
+                className="relative border-2 border-dashed border-white/20 hover:border-white rounded-2xl p-6 flex flex-col items-center justify-center gap-2 cursor-pointer bg-white/[0.02] hover:bg-white/[0.05] transition-all group"
               >
                 <input
                   ref={fileInputRef}
@@ -547,7 +544,7 @@ export const RecentJobsMediaBox: React.FC = () => {
                   </div>
                 ) : (
                   <>
-                    <div className="w-10 h-10 rounded-2xl bg-white/5 group-hover:bg-[#f5be38]/20 flex items-center justify-center text-stone-300 group-hover:text-[#f5be38] transition-colors">
+                    <div className="w-10 h-10 rounded-2xl bg-white/5 group-hover:bg-white/20 flex items-center justify-center text-stone-300 group-hover:text-white transition-colors">
                       <Upload className="w-5 h-5" />
                     </div>
                     <p className="text-xs font-bold text-white">
@@ -561,7 +558,7 @@ export const RecentJobsMediaBox: React.FC = () => {
               </div>
 
               {/* Or Paste Video Link */}
-              <div className="space-y-3">
+              <div className="space-y-2">
                 <div className="text-[11px] font-bold text-stone-400 uppercase tracking-wider">
                   Or Paste Video URL (Kapwing, YouTube, Vimeo, MP4)
                 </div>
@@ -570,11 +567,11 @@ export const RecentJobsMediaBox: React.FC = () => {
                   placeholder="https://www.kapwing.com/w/... or https://youtube.com/..."
                   value={uploadUrl}
                   onChange={(e) => setUploadUrl(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-stone-500 text-xs focus:outline-none focus:border-[#f5be38] transition-colors"
+                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-stone-500 text-xs focus:outline-none focus:border-white transition-colors"
                 />
               </div>
 
-              {/* Optional Short Label */}
+              {/* Short Labels */}
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1.5">
                   <label className="text-[11px] font-bold text-stone-300">Job Title</label>
@@ -583,7 +580,7 @@ export const RecentJobsMediaBox: React.FC = () => {
                     placeholder="e.g. Rollup Banner Production"
                     value={uploadTitle}
                     onChange={(e) => setUploadTitle(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-stone-500 text-xs focus:outline-none focus:border-[#f5be38]"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-stone-500 text-xs focus:outline-none focus:border-white"
                   />
                 </div>
                 <div className="space-y-1.5">
@@ -593,7 +590,7 @@ export const RecentJobsMediaBox: React.FC = () => {
                     placeholder="e.g. Video / Recent Job"
                     value={uploadBadge}
                     onChange={(e) => setUploadBadge(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-stone-500 text-xs focus:outline-none focus:border-[#f5be38]"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-stone-500 text-xs focus:outline-none focus:border-white"
                   />
                 </div>
               </div>
@@ -611,7 +608,7 @@ export const RecentJobsMediaBox: React.FC = () => {
                   type="button"
                   disabled={(!selectedFile && !uploadUrl.trim()) || isProcessingUpload}
                   onClick={handleAddMedia}
-                  className="px-6 py-2.5 rounded-xl bg-[#f5be38] hover:bg-[#ffd15c] disabled:opacity-50 text-black font-extrabold text-xs shadow-lg transition-all hover:scale-105 active:scale-95 cursor-pointer disabled:cursor-not-allowed flex items-center gap-2"
+                  className="px-6 py-2.5 rounded-xl bg-white hover:bg-stone-200 disabled:opacity-50 text-black font-extrabold text-xs shadow-lg transition-all hover:scale-105 active:scale-95 cursor-pointer disabled:cursor-not-allowed flex items-center gap-2"
                 >
                   {isProcessingUpload ? (
                     <>
@@ -621,7 +618,7 @@ export const RecentJobsMediaBox: React.FC = () => {
                   ) : (
                     <>
                       <Plus className="w-4 h-4 stroke-[3]" />
-                      <span>Add to Recent Jobs Box</span>
+                      <span>Add to Media Box</span>
                     </>
                   )}
                 </button>

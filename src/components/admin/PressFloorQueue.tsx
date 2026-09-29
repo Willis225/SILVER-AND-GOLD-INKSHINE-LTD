@@ -50,7 +50,7 @@ export const PressFloorQueue: React.FC<PressFloorQueueProps> = ({
   const [machines, setMachines] = useState<MachineStatus[]>([
     {
       id: 'mach-roland-01',
-      name: 'Press Unit 1 (Somolu Main)',
+      name: 'Press Unit 1 (Yenagoa Main)',
       model: 'Roland TrueVIS VG3-640 (64-inch)',
       technology: 'Wide-Gamut Eco-Solvent (1440 DPI)',
       currentSubstrate: 'Solite Satin Matte (Greyback Anti-Curl)',
@@ -125,7 +125,7 @@ export const PressFloorQueue: React.FC<PressFloorQueueProps> = ({
             <span className="px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30 text-xs font-bold uppercase tracking-wider">
               Factory Floor Operations
             </span>
-            <span className="text-xs text-stone-400 font-mono">Central Press: Somolu & Ikeja Industrial Works</span>
+            <span className="text-xs text-stone-400 font-mono">Central Press: Yenagoa Industrial Works</span>
           </div>
           <h2 className="text-xl font-bold text-white mt-1.5">
             Wide-Format Print Production & Assembly Monitoring
@@ -309,7 +309,7 @@ export const PressFloorQueue: React.FC<PressFloorQueueProps> = ({
           <div>
             <h3 className="text-base font-bold text-stone-900 flex items-center gap-2">
               <Package className="w-5 h-5 text-amber-600" />
-              Hardware Cassette & Substrate Warehouse Stock (Lagos Depot)
+              Hardware Cassette & Substrate Warehouse Stock (Regional Press Depot)
             </h3>
             <p className="text-xs text-stone-500 mt-0.5">
               Real-time counts for luxury aluminum teardrop cassettes, double-footed frames, and padded travel sleeves.

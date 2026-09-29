@@ -48,8 +48,8 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
     companyName: '',
     deliveryAddress: '',
     landmark: '',
-    city: 'Lagos',
-    state: 'Lagos State',
+    city: 'Nigeria',
+    state: 'Nigeria State',
   });
 
   // Wants location delivery toggle
@@ -622,7 +622,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
                           <span>No, I will collect directly from your press office</span>
                         </div>
                         <p className="text-[11px] text-stone-300 leading-relaxed">
-                          Collect directly from our press complex (Yenagoa or Lagos Somolu office). No delivery fee added.
+                          Collect directly from our press complex (Yenagoa Press Complex). No delivery fee added.
                         </p>
                       </div>
                     </label>
@@ -683,7 +683,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
                             type="text"
                             value={customer.city}
                             onChange={(e) => handleCustomerChange('city', e.target.value)}
-                            placeholder="e.g. Ikeja, Lagos"
+                            placeholder="e.g. Ikeja, Nigeria"
                             className="w-full bg-[#121217] border border-white/15 rounded-xl p-2.5 text-xs text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-white transition-all"
                           />
                         </div>

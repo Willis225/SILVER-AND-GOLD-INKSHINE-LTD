@@ -61,17 +61,17 @@ export const HOMEPAGE_SHOWCASE_PRODUCTS: Product[] = [
     },
   },
 
-  // 2. Business Cards Printing in Lagos (Cards & Invitations)
+  // 2. Business Cards Printing in Nigeria (Cards & Invitations)
   {
     id: 'stationery-business-cards',
     sku: 'STN-BC-LAG-01',
-    name: 'Business Cards Printing in Lagos – Custom & Premium Cards',
+    name: 'Business Cards Printing in Nigeria – Custom & Premium Cards',
     slug: 'business-cards-printing-in-lagos-custom-premium-cards',
     category: 'cards_invitations',
     categoryLabel: 'Cards & Invitations',
     categoryPlacement: 'stationery',
     shortDescription: 'Premium 400gsm artboard business cards with velvety matte lamination, spot UV, or metallic foil stamping.',
-    description: 'Leave an unforgettable impression across Lagos and Nigeria with executive business cards. Precision trimmed with crisp sharp corners or elegant rounded corners, printed on ultra-heavy 400gsm artboard with double-sided protective matte lamination.',
+    description: 'Leave an unforgettable impression across Nigeria and Nigeria with executive business cards. Precision trimmed with crisp sharp corners or elegant rounded corners, printed on ultra-heavy 400gsm artboard with double-sided protective matte lamination.',
     basePriceNgn: 20000,
     minQuantity: 100,
     turnaroundDays: 2,
@@ -156,11 +156,11 @@ export const HOMEPAGE_SHOWCASE_PRODUCTS: Product[] = [
     },
   },
 
-  // 4. Certificate Printing in Lagos
+  // 4. Certificate Printing in Nigeria
   {
     id: 'stationery-certificates',
     sku: 'STN-CERT-01',
-    name: 'Certificate Printing in Lagos – Professional Award & Academic Certificates',
+    name: 'Certificate Printing in Nigeria – Professional Award & Academic Certificates',
     slug: 'certificate-printing-in-lagos-professional-award-academic',
     category: 'office_stationery',
     categoryLabel: 'Office Stationery & Corporate Branding',
@@ -198,17 +198,17 @@ export const HOMEPAGE_SHOWCASE_PRODUCTS: Product[] = [
     },
   },
 
-  // 5. Book Printing in Lagos Nigeria
+  // 5. Book Printing in Nigeria
   {
     id: 'stationery-book-printing',
     sku: 'BOK-PRINT-LAG-01',
-    name: 'Book Printing in Lagos Nigeria',
+    name: 'Book Printing in Nigeria',
     slug: 'book-printing-in-lagos-nigeria',
     category: 'books_magazines',
     categoryLabel: 'Books & Magazines',
     categoryPlacement: 'stationery',
     shortDescription: 'Paperback and hardcover book publishing, novel printing, educational textbooks, and manuals with thermal PUR perfect binding.',
-    description: 'Commercial book printing in Lagos for authors, publishers, educational institutions, and corporate bodies. Premium gloss or matte laminated full-color covers, 80gsm bond or 100gsm cream book paper, with durable spine binding.',
+    description: 'Commercial book printing in Nigeria for authors, publishers, educational institutions, and corporate bodies. Premium gloss or matte laminated full-color covers, 80gsm bond or 100gsm cream book paper, with durable spine binding.',
     basePriceNgn: 2400,
     minQuantity: 50,
     turnaroundDays: 5,
@@ -511,11 +511,11 @@ export const HOMEPAGE_SHOWCASE_PRODUCTS: Product[] = [
     artworkRequirements: { recommendedDpi: 300, supportedFormats: ['PDF', 'AI'], bleedMarginMm: 3, maxFileSizeMb: 40 },
   },
 
-  // 17. Custom Wristband Printing in Lagos
+  // 17. Custom Wristband Printing in Nigeria
   {
     id: 'gift-wristband',
     sku: 'GFT-WRS-01',
-    name: 'Custom Wristband Printing in Lagos, Nigeria – Silicone, Fabric & Rubber Bands',
+    name: 'Custom Wristband Printing in Nigeria – Silicone, Fabric & Rubber Bands',
     slug: 'custom-wristband-printing-in-lagos-nigeria-silicone-fabric',
     category: 'gift_items_souvenirs',
     categoryLabel: 'Gift Items & Souvenirs',
@@ -533,11 +533,11 @@ export const HOMEPAGE_SHOWCASE_PRODUCTS: Product[] = [
     artworkRequirements: { recommendedDpi: 300, supportedFormats: ['PDF', 'AI'], bleedMarginMm: 2, maxFileSizeMb: 30 },
   },
 
-  // 18. Design and Print custom branded pouch Packaging in Lagos
+  // 18. Design and Print custom branded pouch Packaging in Nigeria
   {
     id: 'pkg-pouch-packaging',
     sku: 'PKG-PCH-01',
-    name: 'Design and Print custom branded pouch Packaging in Lagos',
+    name: 'Design and Print custom branded pouch Packaging in Nigeria',
     slug: 'design-and-print-custom-branded-pouch-packaging-in-lagos',
     category: 'packaging_shipping_cartons',
     categoryLabel: 'Packaging and Shipping Cartons',
@@ -709,11 +709,11 @@ export const HOMEPAGE_SHOWCASE_PRODUCTS: Product[] = [
     artworkRequirements: { recommendedDpi: 200, supportedFormats: ['PDF', 'AI'], bleedMarginMm: 5, maxFileSizeMb: 50 },
   },
 
-  // 26. 3D Signs in Lagos Nigeria
+  // 26. 3D Signs in Nigeria
   {
     id: 'signage-3d-signs',
     sku: 'SGN-3D-EXT-01',
-    name: '3D Signs in Lagos Nigeria | Custom 3D Signage for Businesses',
+    name: '3D Signs in Nigeria | Custom 3D Signage for Businesses',
     slug: '3d-signs-in-lagos-nigeria-custom-signage',
     category: 'signages',
     categoryLabel: 'Signages',
@@ -731,11 +731,11 @@ export const HOMEPAGE_SHOWCASE_PRODUCTS: Product[] = [
     artworkRequirements: { recommendedDpi: 300, supportedFormats: ['PDF', 'AI', 'CDR', 'DWG'], bleedMarginMm: 0, maxFileSizeMb: 70 },
   },
 
-  // 27. Logo Signage in Lagos Nigeria
+  // 27. Logo Signage in Nigeria
   {
     id: 'signage-logo-signs',
     sku: 'SGN-LGO-01',
-    name: 'Logo Signage in Lagos Nigeria | Custom Business Logo Signs',
+    name: 'Logo Signage in Nigeria | Custom Business Logo Signs',
     slug: 'logo-signage-in-lagos-nigeria-custom-business-logo-signs',
     category: 'signages',
     categoryLabel: 'Signages',
@@ -753,11 +753,11 @@ export const HOMEPAGE_SHOWCASE_PRODUCTS: Product[] = [
     artworkRequirements: { recommendedDpi: 300, supportedFormats: ['PDF', 'AI', 'CDR'], bleedMarginMm: 0, maxFileSizeMb: 50 },
   },
 
-  // 28. Directional Signage in Lagos Nigeria
+  // 28. Directional Signage in Nigeria
   {
     id: 'signage-directional',
     sku: 'SGN-DIR-01',
-    name: 'Directional Signage in Lagos Nigeria | Custom Wayfinding Signs',
+    name: 'Directional Signage in Nigeria | Custom Wayfinding Signs',
     slug: 'directional-signage-in-lagos-nigeria-custom-wayfinding-signs',
     category: 'signages',
     categoryLabel: 'Signages',
@@ -775,11 +775,11 @@ export const HOMEPAGE_SHOWCASE_PRODUCTS: Product[] = [
     artworkRequirements: { recommendedDpi: 300, supportedFormats: ['PDF', 'AI'], bleedMarginMm: 0, maxFileSizeMb: 50 },
   },
 
-  // 29. Electronic Digital Signage in Lagos Nigeria
+  // 29. Electronic Digital Signage in Nigeria
   {
     id: 'signage-digital-display',
     sku: 'SGN-DGT-01',
-    name: 'Electronic Digital Signage in Lagos Nigeria | Digital Display Signs',
+    name: 'Electronic Digital Signage in Nigeria | Digital Display Signs',
     slug: 'electronic-digital-signage-in-lagos-nigeria-digital-display-signs',
     category: 'signages',
     categoryLabel: 'Signages',
@@ -801,7 +801,7 @@ export const HOMEPAGE_SHOWCASE_PRODUCTS: Product[] = [
   {
     id: 'award-crystal-plaque',
     sku: 'AWD-CRY-01',
-    name: 'Customized Branded Crystal Glass Award Plaque Printing in Lagos | Custom Award Plaques',
+    name: 'Customized Branded Crystal Glass Award Plaque Printing in Nigeria | Custom Award Plaques',
     slug: 'customized-branded-crystal-glass-award-plaque-printing-in-lagos',
     category: 'awards',
     categoryLabel: 'Awards',
@@ -845,7 +845,7 @@ export const HOMEPAGE_SHOWCASE_PRODUCTS: Product[] = [
   {
     id: 'award-acrylic-plaque',
     sku: 'AWD-ACR-01',
-    name: 'Custom Branded Acrylic Award Plaque Printing in Lagos',
+    name: 'Custom Branded Acrylic Award Plaque Printing in Nigeria',
     slug: 'custom-branded-acrylic-award-plaque-printing-in-lagos',
     category: 'awards',
     categoryLabel: 'Awards',
@@ -907,11 +907,11 @@ export const HOMEPAGE_SHOWCASE_PRODUCTS: Product[] = [
     artworkRequirements: { recommendedDpi: 200, supportedFormats: ['PDF', 'JPEG', 'TIFF'], bleedMarginMm: 5, maxFileSizeMb: 80 },
   },
 
-  // 35. Foot Mat in Lagos, Nigeria
+  // 35. Foot Mat in Nigeria
   {
     id: 'sidebar-prod-1',
     sku: 'GFT-MAT-01',
-    name: 'Foot Mat in Lagos, Nigeria – Custom Branded Door & Entrance Mats',
+    name: 'Foot Mat in Nigeria – Custom Branded Door & Entrance Mats',
     slug: 'foot-mat-in-lagos-nigeria-custom-branded-door-entrance-mats',
     category: 'gift_items_souvenirs',
     categoryLabel: 'Gift Items & Souvenirs',
@@ -933,7 +933,7 @@ export const HOMEPAGE_SHOWCASE_PRODUCTS: Product[] = [
   {
     id: 'sidebar-prod-3',
     sku: 'GFT-KEY-01',
-    name: 'Key Holder & Keychain Printing in Lagos, Nigeria – Custom Branded Keyholders',
+    name: 'Key Holder & Keychain Printing in Nigeria – Custom Branded Keyholders',
     slug: 'key-holder-keychain-printing-in-lagos-nigeria',
     category: 'gift_items_souvenirs',
     categoryLabel: 'Gift Items & Souvenirs',
@@ -955,7 +955,7 @@ export const HOMEPAGE_SHOWCASE_PRODUCTS: Product[] = [
   {
     id: 'sidebar-prod-4',
     sku: 'GFT-BOT-01',
-    name: 'Custom Branded Water Bottle Printing in Lagos, Nigeria – Custom & Personalized Bottles',
+    name: 'Custom Branded Water Bottle Printing in Nigeria – Custom & Personalized Bottles',
     slug: 'custom-branded-water-bottle-printing-in-lagos-nigeria',
     category: 'gift_items_souvenirs',
     categoryLabel: 'Gift Items & Souvenirs',

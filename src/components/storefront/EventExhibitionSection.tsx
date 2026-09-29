@@ -16,7 +16,7 @@ const DEFAULT_EVENT_ITEMS: EventItem[] = [
   {
     id: 'event-photo-booth',
     badge: 'Trending',
-    title: '360 Photo Booth Hire in Lagos, Nigeria',
+    title: '360 Photo Booth Hire in Nigeria',
     price: 'Price on Request',
     numericPrice: 0,
     imageUrl: '/photo-booth-360-hire.jpg',

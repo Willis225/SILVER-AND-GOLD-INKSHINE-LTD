@@ -16,7 +16,7 @@ const DEFAULT_AWARD_ITEMS: AwardItem[] = [
   {
     id: 'award-acrylic-plaque',
     badge: 'Modern',
-    title: 'Custom Branded Acrylic Award Plaque Printing in Lagos',
+    title: 'Custom Branded Acrylic Award Plaque Printing in Nigeria',
     price: '₦24,000',
     numericPrice: 24000,
     imageUrl: '/acrylic-award-plaque.jpg',
@@ -25,7 +25,7 @@ const DEFAULT_AWARD_ITEMS: AwardItem[] = [
   {
     id: 'award-crystal-plaque',
     badge: 'Excellence',
-    title: 'Customized Branded Crystal Glass Award Plaque Printing in Lagos | Custom Award Plaques',
+    title: 'Customized Branded Crystal Glass Award Plaque Printing in Nigeria | Custom Award Plaques',
     price: '₦34,000',
     numericPrice: 34000,
     imageUrl: '/crystal-glass-award-plaque.jpg',

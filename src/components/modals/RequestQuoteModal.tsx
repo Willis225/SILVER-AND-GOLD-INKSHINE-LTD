@@ -396,7 +396,7 @@ export const RequestQuoteModal: React.FC<RequestQuoteModalProps> = ({
                 </div>
                 <div className="leading-snug">
                   <strong className="text-white font-bold">Head Office:</strong>{' '}
-                  <span className="text-stone-300">7 George St, off Apata Street, Somolu, Lagos 100231, Lagos.</span>
+                  <span className="text-stone-300">No. 875 Medford Okilo Road (Mbiama-Yenagoa Road), Opolo-Epie, directly opposite Pepperoni, Yenagoa, Bayelsa State, Nigeria.</span>
                 </div>
               </div>
 

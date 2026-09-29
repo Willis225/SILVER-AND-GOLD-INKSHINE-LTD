@@ -16,7 +16,7 @@ const DEFAULT_SIGNAGE_ITEMS: SignageItem[] = [
   {
     id: 'signage-3d-signs',
     badge: '3D Lettering',
-    title: '3D Signs in Lagos Nigeria | Custom 3D Signage for Businesses',
+    title: '3D Signs in Nigeria | Custom 3D Signage for Businesses',
     price: 'Price on Request',
     numericPrice: 0,
     imageUrl: '/3d-signs-lagos.jpg',
@@ -25,7 +25,7 @@ const DEFAULT_SIGNAGE_ITEMS: SignageItem[] = [
   {
     id: 'signage-logo-signs',
     badge: 'Reception Wall',
-    title: 'Logo Signage in Lagos Nigeria | Custom Business Logo Signs',
+    title: 'Logo Signage in Nigeria | Custom Business Logo Signs',
     price: 'Price on Request',
     numericPrice: 0,
     imageUrl: '/logo-signage-lagos.jpg',
@@ -34,7 +34,7 @@ const DEFAULT_SIGNAGE_ITEMS: SignageItem[] = [
   {
     id: 'signage-directional',
     badge: 'Wayfinding',
-    title: 'Directional Signage in Lagos Nigeria | Custom Wayfinding Signs',
+    title: 'Directional Signage in Nigeria | Custom Wayfinding Signs',
     price: 'Price on Request',
     numericPrice: 0,
     imageUrl: '/directional-signage-lagos.jpg',
@@ -83,7 +83,7 @@ export const SignageCompanySection: React.FC<SignageCompanySectionProps> = ({
           <div className="absolute inset-0 z-0">
             <img
               src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1600&q=80"
-              alt="Signage Making Company in Lagos, Nigeria Background"
+              alt="Signage Making Company in Nigeria Background"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
               referrerPolicy="no-referrer"
             />
@@ -101,11 +101,11 @@ export const SignageCompanySection: React.FC<SignageCompanySectionProps> = ({
             </div>
 
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight leading-tight">
-              Signage Making Company in Lagos, Nigeria
+              Signage Making Company in Nigeria
             </h2>
 
             <p className="text-stone-300 text-sm sm:text-base leading-relaxed font-normal">
-              Boost your business visibility with a trusted signage making company in Lagos, Nigeria. We design, produce, and install high-quality <strong className="text-white">shop signs, 3D letter signs, lightbox signs, LED signs, acrylic signs, directional signs, wall signs, pylon signs, Caution, Safety, Danger and Warning Signage, indoor signs, and outdoor signage</strong> that attract attention and strengthen your brand.
+              Boost your business visibility with a trusted signage making company in Nigeria. We design, produce, and install high-quality <strong className="text-white">shop signs, 3D letter signs, lightbox signs, LED signs, acrylic signs, directional signs, wall signs, pylon signs, Caution, Safety, Danger and Warning Signage, indoor signs, and outdoor signage</strong> that attract attention and strengthen your brand.
             </p>
           </div>
 

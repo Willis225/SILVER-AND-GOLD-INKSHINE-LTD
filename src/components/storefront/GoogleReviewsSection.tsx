@@ -46,7 +46,7 @@ const GOOGLE_REVIEWS: GoogleReview[] = [
     avatar: 'https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?auto=format&fit=crop&w=100&q=80',
     timeAgo: '3 years ago',
     rating: 5,
-    comment: '"I had a wonderful experience got my Promotional/promo table in time and I would highly recommend this business to anyone looking for reliable branding in Lagos."',
+    comment: '"I had a wonderful experience got my Promotional/promo table in time and I would highly recommend this business to anyone looking for reliable branding in Nigeria."',
   },
   {
     id: 'rev-5',

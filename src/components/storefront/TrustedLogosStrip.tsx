@@ -155,7 +155,7 @@ export const ENTERPRISE_BRANDS: EnterpriseBrand[] = [
   },
   {
     id: 'unilag',
-    name: 'University of Lagos',
+    name: 'Niger Delta University',
     category: 'Higher Education',
     badge: 'Academic Institution',
     renderLogo: () => (
@@ -171,7 +171,7 @@ export const ENTERPRISE_BRANDS: EnterpriseBrand[] = [
           UNILAG
         </text>
         <text x="44" y="32" fontFamily="system-ui, -apple-system, sans-serif" fontSize="8" fontWeight="600" fill="#6B7280">
-          Univ. of Lagos
+          Univ. of Nigeria
         </text>
       </svg>
     ),
@@ -299,7 +299,7 @@ export const TrustedLogosStrip: React.FC<TrustedLogosStripProps> = ({
           </div>
           <span className="hidden sm:inline text-amber-900/30">•</span>
           <div className="flex items-center gap-2 text-stone-800 font-semibold">
-            <span>Guaranteed Next-Day Dispatch to Lagos, Abuja, PH &amp; All 36 States</span>
+            <span>Guaranteed Next-Day Dispatch to Nigeria, Abuja, PH &amp; All 36 States</span>
           </div>
         </div>
       </div>

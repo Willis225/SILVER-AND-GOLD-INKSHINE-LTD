@@ -95,11 +95,11 @@ const ORDER_STATUS_CONFIG: Record<OrderStatus, { label: string; color: string; b
 };
 
 const COURIER_OPTIONS = [
-  'Lagos Express Bike Dispatch (Mainland/Island)',
+  'Express Dispatch',
   'GIG Logistics Air Cargo (Abuja/PH/Enugu)',
   'DHL Express Priority Nigeria',
   'Red Star Express / FedEx',
-  'Customer Pickup at Somolu Press Works',
+  'Customer Pickup at Yenagoa Press Complex',
 ];
 
 export const OrderDetailDrawer: React.FC<OrderDetailDrawerProps> = ({

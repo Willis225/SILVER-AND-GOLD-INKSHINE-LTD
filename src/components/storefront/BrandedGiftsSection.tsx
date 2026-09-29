@@ -16,7 +16,7 @@ const DEFAULT_GIFT_ITEMS: GiftItem[] = [
   {
     id: 'gift-water-bottle',
     badge: 'Corporate Gift',
-    title: 'Custom Branded Water Bottle Printing in Lagos, Nigeria – Custom & Personalized Bottles',
+    title: 'Custom Branded Water Bottle Printing in Nigeria – Custom & Personalized Bottles',
     price: 'Price on Request',
     numericPrice: 0,
     imageUrl: '/custom-branded-water-bottle.jpg',
@@ -25,7 +25,7 @@ const DEFAULT_GIFT_ITEMS: GiftItem[] = [
   {
     id: 'gift-keychain',
     badge: 'Souvenir Favorite',
-    title: 'Key Holder & Keychain Printing in Lagos, Nigeria – Custom Branded Keyholders',
+    title: 'Key Holder & Keychain Printing in Nigeria – Custom Branded Keyholders',
     price: 'Price on Request',
     numericPrice: 0,
     imageUrl: '/keychain-keyholder-printing.jpg',

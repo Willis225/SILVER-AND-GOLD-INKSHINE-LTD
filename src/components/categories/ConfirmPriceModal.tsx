@@ -16,7 +16,7 @@ export const ConfirmPriceModal: React.FC<ConfirmPriceModalProps> = ({
   onOrderOnline,
 }) => {
   const [quantity, setQuantity] = useState<number>(1);
-  const [deliveryLocation, setDeliveryLocation] = useState<string>('Lagos, Nigeria');
+  const [deliveryLocation, setDeliveryLocation] = useState<string>('Nigeria');
   const [copied, setCopied] = useState(false);
 
   if (!isOpen || !product) return null;
@@ -127,7 +127,7 @@ Please confirm availability, production turnaround and artwork preflight check. 
                 onChange={(e) => setDeliveryLocation(e.target.value)}
                 className="w-full py-2 px-3 border border-white/15 rounded-lg text-xs font-semibold text-white bg-[#181824] focus:outline-hidden focus:border-[#f5be38]"
               >
-                <option value="Lagos, Nigeria (Doorstep)">Lagos (Doorstep Delivery)</option>
+                <option value="Nigeria (Doorstep)">Nigeria (Doorstep Delivery)</option>
                 <option value="Abuja FCT (Doorstep / Express)">Abuja FCT</option>
                 <option value="Port Harcourt, Rivers State">Port Harcourt</option>
                 <option value="Bayelsa State (Yenagoa Office)">Bayelsa (Yenagoa Office)</option>

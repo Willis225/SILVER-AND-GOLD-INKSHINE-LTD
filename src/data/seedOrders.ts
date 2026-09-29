@@ -12,7 +12,7 @@ export const INITIAL_ORDERS: Order[] = [
       phone: '+234 803 291 8492',
       deliveryAddress: 'Access Towers, Plot 999c Danmole St, Off Idejo St',
       city: 'Victoria Island',
-      state: 'Lagos',
+      state: 'Nigeria',
       landmark: 'Opposite Eko Hotel & Suites, Victoria Island',
     },
     items: [
@@ -66,7 +66,7 @@ export const INITIAL_ORDERS: Order[] = [
       phone: '+234 812 774 9102',
       deliveryAddress: 'Fintech Hub, Admiralty Way, Lekki Phase 1',
       city: 'Lekki',
-      state: 'Lagos',
+      state: 'Nigeria',
       landmark: 'Near The Palms Mall, Lekki',
     },
     items: [
@@ -244,7 +244,7 @@ export const INITIAL_ORDERS: Order[] = [
       phone: '+234 818 903 4410',
       deliveryAddress: 'Paystack Building, 126 Joel Ogunnaike St',
       city: 'Ikeja GRA',
-      state: 'Lagos',
+      state: 'Nigeria',
       landmark: 'Opposite Yellow Chilli Restaurant',
     },
     items: [
@@ -295,7 +295,7 @@ export const INITIAL_ORDERS: Order[] = [
       phone: '+234 805 771 9024',
       deliveryAddress: 'The Wings Office Complex, 17A Ozumba Mbadiwe Ave',
       city: 'Victoria Island',
-      state: 'Lagos',
+      state: 'Nigeria',
       landmark: 'Beside Civic Centre, Ozumba Mbadiwe',
     },
     items: [

@@ -72,7 +72,7 @@ export const LocationMapSection: React.FC<LocationMapSectionProps> = ({
               <div className="bg-[#0e1017] p-3 sm:px-4 border-t border-white/10 flex items-center justify-between gap-3 text-xs">
                 <div className="flex items-center gap-2 text-stone-300 text-xs">
                   <MapPin className="w-4 h-4 text-white shrink-0" />
-                  <span className="text-stone-300 font-medium">Commercial Press Complex • Bayelsa State &amp; Lagos, Nigeria</span>
+                  <span className="text-stone-300 font-medium">Commercial Press Complex • Bayelsa State &amp; Nigeria</span>
                 </div>
 
                 <motion.a

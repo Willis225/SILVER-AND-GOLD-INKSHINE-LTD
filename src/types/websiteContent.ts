@@ -167,7 +167,7 @@ export const DEFAULT_WEBSITE_CONTENT: WebsiteContent = {
   companyName: 'Silver & Gold Inkshine Ltd',
   contactEmail: 'orders@silverandgold.ng',
   contactPhone: '+234 703 037 2539',
-  address: 'Plot 14 Commercial District, Yenagoa, Bayelsa State / Lagos Hub, Nigeria',
+  address: 'No. 875 Medford Okilo Road (Mbiama-Yenagoa Road), Opolo-Epie, directly opposite Pepperoni, Yenagoa, Bayelsa State, Nigeria',
   googlePreferredSourceUrl: 'https://share.google/5obB8jqnby72M5IDG',
   googleMapsUrl: 'https://maps.app.goo.gl/FHkoQGNuL8p13jnG6',
   googleMapsEmbedUrl: 'https://maps.google.com/maps?q=9.081999,8.675277&hl=en&z=16&output=embed'

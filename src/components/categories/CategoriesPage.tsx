@@ -67,7 +67,7 @@ export const RECENT_POSTS_DATA: PostItem[] = [
   },
   {
     id: 'post-3',
-    title: 'Flyer Design in Nigeria | Professional Flyer Printing Lagos',
+    title: 'Flyer Design in Nigeria | Professional Flyer Printing Nigeria',
     date: 'Print Guide',
     readTime: '3 min read',
     excerpt: 'Essential prepress specifications: 150gsm vs 300gsm art card, CMYK color profiles, and bleed setups for mass marketing distribution.',
@@ -92,7 +92,7 @@ export const RECENT_POSTS_DATA: PostItem[] = [
 export const SIDEBAR_WIDGET_PRODUCTS = [
   {
     id: 'sidebar-prod-1',
-    name: 'Foot Mat in Lagos, Nigeria – Custom Branded Door & Entrance Mats',
+    name: 'Foot Mat in Nigeria – Custom Branded Door & Entrance Mats',
     price: '₦10,000.00',
     priceNum: 10000,
     image: 'https://images.unsplash.com/photo-1582738411706-bfc8e691d1c2?auto=format&fit=crop&w=400&q=80',
@@ -108,7 +108,7 @@ export const SIDEBAR_WIDGET_PRODUCTS = [
   },
   {
     id: 'sidebar-prod-3',
-    name: 'Key Holder & Keychain Printing in Lagos, Nigeria – Custom Branded Keyholders',
+    name: 'Key Holder & Keychain Printing in Nigeria – Custom Branded Keyholders',
     price: '₦1,000.00',
     priceNum: 1000,
     image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=400&q=80',
@@ -116,7 +116,7 @@ export const SIDEBAR_WIDGET_PRODUCTS = [
   },
   {
     id: 'sidebar-prod-4',
-    name: 'Custom Branded Water Bottle Printing in Lagos, Nigeria – Custom & Personalized Bottles',
+    name: 'Custom Branded Water Bottle Printing in Nigeria – Custom & Personalized Bottles',
     price: '₦3,500.00',
     priceNum: 3500,
     image: 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=400&q=80',
@@ -769,7 +769,7 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
                       'Corporate & Brand Activations',
                       'Custom Video Branding',
                       'Social Media-Friendly Videos',
-                      'Lagos Event Setup',
+                      'Event Setup',
                     ];
                   } else if (isSignage) {
                     dynamicSpecs = [

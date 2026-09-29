@@ -65,7 +65,7 @@ export const WhyChooseUsSection: React.FC<WhyChooseUsSectionProps> = ({
       icon: Truck,
       tag: 'Nationwide Reach',
       description:
-        'SILVER & GOLD INKSHINE LTD makes it easy to get your printed materials delivered quickly anywhere in Nigeria. From Bayelsa and Lagos to Abuja, Port Harcourt and beyond, our fast nationwide delivery service ensures your banners, business cards, souvenirs, packaging and promotional items reach you safely and on time.',
+        'SILVER & GOLD INKSHINE LTD makes it easy to get your printed materials delivered quickly anywhere in Nigeria. From Bayelsa and Nigeria to Abuja, Port Harcourt and beyond, our fast nationwide delivery service ensures your banners, business cards, souvenirs, packaging and promotional items reach you safely and on time.',
       features: ['Direct Location Delivery Upon Request', 'Protective Moisture Packaging', 'Real-Time WhatsApp Updates'],
       accentGradient: 'from-yellow-400/20 via-[#f5be38]/10 to-transparent',
     },
@@ -183,7 +183,7 @@ export const WhyChooseUsSection: React.FC<WhyChooseUsSectionProps> = ({
                   className="flex items-center gap-1.5 text-stone-100 bg-black/40 px-3 py-1 rounded-lg border border-white/10 transition-colors hover:border-[#f5be38]/40 backdrop-blur-sm shadow-sm"
                 >
                   <MapPin className="w-4 h-4 text-white" />
-                  <span>Bayelsa, Lagos &amp; All 36 States</span>
+                  <span>Bayelsa, Nigeria &amp; All 36 States</span>
                 </motion.div>
               </div>
             </div>

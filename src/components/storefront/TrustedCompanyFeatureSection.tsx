@@ -36,7 +36,7 @@ export const TrustedCompanyFeatureSection: React.FC<TrustedCompanyFeatureSection
             </h2>
 
             <p className="text-sm sm:text-[15px] text-stone-300 leading-relaxed font-normal">
-              SILVER &amp; GOLD INKSHINE LTD is a professional online printing company in Bayelsa &amp; Lagos, Nigeria. We serve businesses, schools, churches, event planners, product owners and corporate organisations who need fast, affordable and reliable printing solutions. Our goal is simple — help Nigerian brands look professional, advertise better and print with confidence. Whether you need one urgent item or bulk printing for a nationwide campaign, we are ready to support you with fast response, clean production and fair pricing.
+              SILVER &amp; GOLD INKSHINE LTD is a professional online printing company in Bayelsa &amp; Nigeria. We serve businesses, schools, churches, event planners, product owners and corporate organisations who need fast, affordable and reliable printing solutions. Our goal is simple — help Nigerian brands look professional, advertise better and print with confidence. Whether you need one urgent item or bulk printing for a nationwide campaign, we are ready to support you with fast response, clean production and fair pricing.
             </p>
 
             <div className="pt-2 flex flex-wrap items-center gap-4 text-xs sm:text-sm font-bold text-stone-200">
@@ -94,7 +94,7 @@ export const TrustedCompanyFeatureSection: React.FC<TrustedCompanyFeatureSection
               <div className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 bg-black/85 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-white/20 shadow-lg flex items-center gap-2 text-stone-200 z-10">
                 <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
                 <span className="text-[10px] sm:text-xs font-bold text-white">
-                  Industrial UV &amp; Large-Format Press Floor, Lagos
+                  Industrial UV &amp; Large-Format Press Floor, Nigeria
                 </span>
               </div>
             </div>

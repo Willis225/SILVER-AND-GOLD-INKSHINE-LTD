@@ -24,7 +24,7 @@ interface ServicesShowcaseSectionProps {
 const SHOWCASE_ITEMS: ShowcaseItem[] = [
   {
     id: 'showcase-annual-reports',
-    title: 'Annual Reports & Financial Statements Printing in Lagos, Nigeria',
+    title: 'Annual Reports & Financial Statements Printing in Nigeria',
     price: 'Price on Request',
     numericPrice: 0,
     imageUrl: '/annual-reports-handbooks-catalogues.jpg',
