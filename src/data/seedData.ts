@@ -15,7 +15,8 @@ export const SAMPLE_PRODUCTS: Product[] = [
     minQuantity: 1,
     turnaroundDays: 1,
     badge: 'Trending',
-    image: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=80',
+    image: '/photo-booth-360-hire.jpg',
+    images: ['/photo-booth-360-hire.jpg'],
     optionGroups: [
       {
         id: 'opt-duration',
@@ -584,7 +585,8 @@ export const SAMPLE_PRODUCTS: Product[] = [
     minQuantity: 1,
     turnaroundDays: 5,
     badge: 'Executive',
-    image: 'https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=800&q=80',
+    image: '/3d-cast-acrylic-reception-signage.jpg',
+    images: ['/3d-cast-acrylic-reception-signage.jpg'],
     optionGroups: [
       {
         id: 'opt-sign-width',
@@ -633,7 +635,8 @@ export const SAMPLE_PRODUCTS: Product[] = [
     minQuantity: 1, // 1 pack = 25 units
     turnaroundDays: 4,
     badge: 'AGM Hit',
-    image: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80',
+    image: '/executive-leatherette-journal-pen-set.jpg',
+    images: ['/executive-leatherette-journal-pen-set.jpg'],
     optionGroups: [
       {
         id: 'opt-cover-color',
@@ -1112,7 +1115,8 @@ export const SAMPLE_PRODUCTS: Product[] = [
     minQuantity: 1,
     turnaroundDays: 2,
     badge: 'Artisan Finish',
-    image: 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=800&q=80',
+    image: '/floating-canvas-acrylic-wall-art.jpg',
+    images: ['/floating-canvas-acrylic-wall-art.jpg'],
     optionGroups: [
       {
         id: 'opt-frame-size',
@@ -1417,7 +1421,8 @@ export const SAMPLE_PRODUCTS: Product[] = [
     minQuantity: 1,
     turnaroundDays: 3,
     badge: 'Client Favorite',
-    image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80',
+    image: '/vacuum-flask-coffee-mug-set.jpg',
+    images: ['/vacuum-flask-coffee-mug-set.jpg'],
     optionGroups: [
       {
         id: 'opt-gift-packaging',
@@ -1455,7 +1460,8 @@ export const SAMPLE_PRODUCTS: Product[] = [
     minQuantity: 1,
     turnaroundDays: 3,
     badge: 'Food Grade',
-    image: 'https://images.unsplash.com/photo-1541544741938-0af808871cc0?auto=format&fit=crop&w=800&q=80',
+    image: '/custom-printed-food-boxes.jpg',
+    images: ['/custom-printed-food-boxes.jpg'],
     optionGroups: [
       {
         id: 'opt-food-container',

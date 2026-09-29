@@ -926,6 +926,76 @@ export function getLockedImagesMap(): Record<string, LockedImageEntry> {
             isUserCustomized: true,
           };
         }
+        if (!parsed['event-photo-booth'] || parsed['event-photo-booth'].imageUrl?.includes('photo-1511578314') || parsed['event-photo-booth'].imageUrl?.includes('photo-1511795409')) {
+          parsed['event-photo-booth'] = {
+            id: 'event-photo-booth',
+            imageUrl: '/photo-booth-360-hire.jpg',
+            images: ['/photo-booth-360-hire.jpg'],
+            title: '360 Photo Booth Hire in Lagos, Nigeria',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['prod-360-photo-booth'] || parsed['prod-360-photo-booth'].imageUrl?.includes('photo-1511795409')) {
+          parsed['prod-360-photo-booth'] = {
+            id: 'prod-360-photo-booth',
+            imageUrl: '/photo-booth-360-hire.jpg',
+            images: ['/photo-booth-360-hire.jpg'],
+            title: '360 Photo Booth Hire in Lagos, Nigeria',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['prod-acrylic-3d-sign'] || parsed['prod-acrylic-3d-sign'].imageUrl?.includes('photo-1513542789')) {
+          parsed['prod-acrylic-3d-sign'] = {
+            id: 'prod-acrylic-3d-sign',
+            imageUrl: '/3d-cast-acrylic-reception-signage.jpg',
+            images: ['/3d-cast-acrylic-reception-signage.jpg'],
+            title: '3D Cast Acrylic Corporate Reception Signage',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['prod-executive-leather-notebook'] || parsed['prod-executive-leather-notebook'].imageUrl?.includes('photo-1544716278')) {
+          parsed['prod-executive-leather-notebook'] = {
+            id: 'prod-executive-leather-notebook',
+            imageUrl: '/executive-leatherette-journal-pen-set.jpg',
+            images: ['/executive-leatherette-journal-pen-set.jpg'],
+            title: 'Hardcover Executive Leatherette Journal & Pen Set (25 pcs)',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['prod-frames-floating-canvas'] || parsed['prod-frames-floating-canvas'].imageUrl?.includes('photo-1579783900')) {
+          parsed['prod-frames-floating-canvas'] = {
+            id: 'prod-frames-floating-canvas',
+            imageUrl: '/floating-canvas-acrylic-wall-art.jpg',
+            images: ['/floating-canvas-acrylic-wall-art.jpg'],
+            title: 'Executive Floating Canvas & Beveled Acrylic Gallery Wall Art',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['prod-gift-items-souvenirs'] || parsed['prod-gift-items-souvenirs'].imageUrl?.includes('photo-1514432324')) {
+          parsed['prod-gift-items-souvenirs'] = {
+            id: 'prod-gift-items-souvenirs',
+            imageUrl: '/vacuum-flask-coffee-mug-set.jpg',
+            images: ['/vacuum-flask-coffee-mug-set.jpg'],
+            title: 'Branded Stainless Steel Vacuum Flask & Ceramic Coffee Mug Gift Set (Pack of 25)',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
+        if (!parsed['prod-food-packaging'] || parsed['prod-food-packaging'].imageUrl?.includes('photo-1541544741')) {
+          parsed['prod-food-packaging'] = {
+            id: 'prod-food-packaging',
+            imageUrl: '/custom-printed-food-boxes.jpg',
+            images: ['/custom-printed-food-boxes.jpg'],
+            title: 'Custom Printed Food Boxes, Takeout Bowls & Greaseproof Paper (Pack of 500)',
+            lockedAt: new Date().toISOString(),
+            isUserCustomized: true,
+          };
+        }
         inMemoryLockRegistry = parsed;
         return inMemoryLockRegistry!;
       }
@@ -1612,6 +1682,62 @@ export function getLockedImagesMap(): Record<string, LockedImageEntry> {
       imageUrl: '/staff-uniform-shirts-workwear.jpg',
       images: ['/staff-uniform-shirts-workwear.jpg'],
       title: 'Executive Corporate Staff Uniform Shirts & Industrial Workwear (Pack of 10)',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'event-photo-booth': {
+      id: 'event-photo-booth',
+      imageUrl: '/photo-booth-360-hire.jpg',
+      images: ['/photo-booth-360-hire.jpg'],
+      title: '360 Photo Booth Hire in Lagos, Nigeria',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'prod-360-photo-booth': {
+      id: 'prod-360-photo-booth',
+      imageUrl: '/photo-booth-360-hire.jpg',
+      images: ['/photo-booth-360-hire.jpg'],
+      title: '360 Photo Booth Hire in Lagos, Nigeria',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'prod-acrylic-3d-sign': {
+      id: 'prod-acrylic-3d-sign',
+      imageUrl: '/3d-cast-acrylic-reception-signage.jpg',
+      images: ['/3d-cast-acrylic-reception-signage.jpg'],
+      title: '3D Cast Acrylic Corporate Reception Signage',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'prod-executive-leather-notebook': {
+      id: 'prod-executive-leather-notebook',
+      imageUrl: '/executive-leatherette-journal-pen-set.jpg',
+      images: ['/executive-leatherette-journal-pen-set.jpg'],
+      title: 'Hardcover Executive Leatherette Journal & Pen Set (25 pcs)',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'prod-frames-floating-canvas': {
+      id: 'prod-frames-floating-canvas',
+      imageUrl: '/floating-canvas-acrylic-wall-art.jpg',
+      images: ['/floating-canvas-acrylic-wall-art.jpg'],
+      title: 'Executive Floating Canvas & Beveled Acrylic Gallery Wall Art',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'prod-gift-items-souvenirs': {
+      id: 'prod-gift-items-souvenirs',
+      imageUrl: '/vacuum-flask-coffee-mug-set.jpg',
+      images: ['/vacuum-flask-coffee-mug-set.jpg'],
+      title: 'Branded Stainless Steel Vacuum Flask & Ceramic Coffee Mug Gift Set (Pack of 25)',
+      lockedAt: new Date().toISOString(),
+      isUserCustomized: true,
+    },
+    'prod-food-packaging': {
+      id: 'prod-food-packaging',
+      imageUrl: '/custom-printed-food-boxes.jpg',
+      images: ['/custom-printed-food-boxes.jpg'],
+      title: 'Custom Printed Food Boxes, Takeout Bowls & Greaseproof Paper (Pack of 500)',
       lockedAt: new Date().toISOString(),
       isUserCustomized: true,
     }

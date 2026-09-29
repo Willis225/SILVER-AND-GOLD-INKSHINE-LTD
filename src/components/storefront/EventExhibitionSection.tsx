@@ -17,9 +17,9 @@ const DEFAULT_EVENT_ITEMS: EventItem[] = [
     id: 'event-photo-booth',
     badge: 'Trending',
     title: '360 Photo Booth Hire in Lagos, Nigeria',
-    price: '₦1,000',
-    numericPrice: 1000,
-    imageUrl: 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=700&q=80',
+    price: 'Price on Request',
+    numericPrice: 0,
+    imageUrl: '/photo-booth-360-hire.jpg',
     category: 'events_exhibitions',
   },
   {
