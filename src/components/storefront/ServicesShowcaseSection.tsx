@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { motion } from 'motion/react';
 import { ChevronRight, ChevronLeft, ArrowRight } from 'lucide-react';
 import { ShowcaseServiceItem } from '../../types/websiteContent';
+import { PriceOnRequestBadge } from '../common/PriceOnRequestBadge';
 
 export interface ShowcaseItem {
   id: string;
@@ -332,10 +333,8 @@ export const ServicesShowcaseSection: React.FC<ServicesShowcaseSectionProps> = (
                     </h3>
                     
                     {/* Price on Request Tag */}
-                    <div className="mt-2">
-                      <span className="inline-block px-2.5 py-0.5 rounded-full bg-amber-400/10 border border-amber-400/30 text-[11px] sm:text-xs font-bold text-[#f5be38] tracking-wide">
-                        Price on Request
-                      </span>
+                    <div className="mt-2 flex justify-center">
+                      <PriceOnRequestBadge theme="dark" size="xs" />
                     </div>
                   </div>
                 </motion.div>

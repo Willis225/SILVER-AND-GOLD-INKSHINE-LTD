@@ -239,7 +239,7 @@ export const ArtworkPreflightChecker: React.FC<ArtworkPreflightCheckerProps> = (
             <Sparkles className="w-4 h-4" />
           </div>
           <span className={`text-[10px] mt-1 ${submissionMode === 'hire_designer' ? 'text-black/80 font-bold' : 'text-[#f5be38] font-bold'}`}>
-            +₦{designerFeeNgn.toLocaleString('en-NG')} (In-House Graphic Team)
+            Design Assistance Upon Request
           </span>
         </button>
 
@@ -432,7 +432,7 @@ export const ArtworkPreflightChecker: React.FC<ArtworkPreflightCheckerProps> = (
 
           <div className="text-[11px] text-[#f5be38] bg-[#f5be38]/10 border border-[#f5be38]/30 rounded-xl p-3 flex items-center justify-between font-bold">
             <span>Design Proof turnaround: <strong className="text-white">Under 4 hours</strong> via WhatsApp / Email</span>
-            <span className="font-mono text-base font-black">+₦{designerFeeNgn.toLocaleString('en-NG')}</span>
+            <span className="text-xs font-black text-white uppercase tracking-wider">Price on Request</span>
           </div>
         </div>
       )}

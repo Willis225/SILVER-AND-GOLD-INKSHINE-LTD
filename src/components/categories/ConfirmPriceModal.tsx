@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { MessageCircle, Phone, CheckCircle2, ShieldCheck, Truck, X, Sparkles, Copy, Check } from 'lucide-react';
 import { Product } from '../../types/schema';
+import { PriceOnRequestBadge } from '../common/PriceOnRequestBadge';
 
 interface ConfirmPriceModalProps {
   product: Product | null;
@@ -74,8 +75,8 @@ Please confirm current price quote, production turnaround and artwork preflight 
                 {product.name}
               </h4>
               <p className="text-xs text-stone-400 mt-0.5">{product.categoryLabel || 'Commercial Print'}</p>
-              <div className="text-base font-extrabold text-[#f5be38] mt-1.5">
-                Price on Request
+              <div className="mt-1.5">
+                <PriceOnRequestBadge theme="dark" size="sm" />
               </div>
             </div>
           </div>

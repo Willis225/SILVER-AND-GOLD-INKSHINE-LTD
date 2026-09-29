@@ -463,13 +463,13 @@ export function getSectionDisplayItems(
     return {
       id: p.id,
       title: p.name,
-      price: p.hidePrice ? 'Price on Request' : `₦${priceNum.toLocaleString('en-NG')}`,
+      price: 'Price on Request',
       numericPrice: priceNum,
       imageUrl: p.image || (p.images && p.images[0]) || '',
       category: getProductCategoryTag(p),
       badge: p.badge || (isUserUploaded(p) ? 'Latest Job' : undefined),
       isUploaded: isUserUploaded(p),
-      hidePrice: Boolean(p.hidePrice),
+      hidePrice: true,
     };
   });
 

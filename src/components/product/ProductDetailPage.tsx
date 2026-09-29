@@ -27,6 +27,7 @@ import {
   PreflightResult, 
   DesignerBrief 
 } from './ArtworkPreflightChecker';
+import { PriceOnRequestBadge } from '../common/PriceOnRequestBadge';
 
 interface ProductDetailPageProps {
   product: Product;
@@ -233,9 +234,9 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                     <strong className="text-white font-bold">{currentZone.estimatedDays}</strong>
                   </div>
                   <div className="text-right">
-                    <span className="text-stone-400 block text-[11px]">Location Delivery Rate:</span>
-                    <strong className="font-mono text-[#f5be38] font-bold">
-                      {formatNaira(currentZone.baseFeeNgn)}
+                    <span className="text-stone-400 block text-[11px]">Dispatch Status:</span>
+                    <strong className="text-[#f5be38] font-bold">
+                      Flat Regional Rate
                     </strong>
                   </div>
                 </div>
@@ -243,7 +244,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                 {currentZone.expressAvailable && (
                   <div className="text-[11px] text-[#f5be38] bg-[#f5be38]/10 border border-[#f5be38]/30 p-2.5 rounded-xl flex items-center justify-between">
                     <span>⚡ Priority Rush Delivery available for {currentZone.name}</span>
-                    <span className="font-mono font-bold text-white">{formatNaira(currentZone.expressFeeNgn!)}</span>
+                    <span className="font-bold text-white">Direct Courier</span>
                   </div>
                 )}
               </div>
@@ -437,11 +438,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                               {tier.discountPercentage > 0 ? `${tier.discountPercentage}% OFF` : 'Base Price'}
                             </td>
                             <td className="p-2.5 text-right font-mono">
-                              {product.hidePrice ? (
-                                <span className="text-[#f5be38] text-[11px] font-sans font-semibold">Quote on Request</span>
-                              ) : (
-                                formatNaira(tierPrice)
-                              )}
+                              <span className="text-[#f5be38] text-[11px] font-sans font-bold">Quote on Request</span>
                             </td>
                             <td className="p-2.5 text-right">
                               {isTierActive ? (
@@ -525,13 +522,11 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                   </div>
                 </div>
 
-                <div className="pt-2 border-t border-white/10 flex items-baseline justify-between">
+                <div className="pt-2.5 border-t border-white/10 flex items-center justify-between">
                   <span className="text-xs uppercase font-bold text-stone-400">
                     Storefront Rate:
                   </span>
-                  <span className="text-xl sm:text-2xl font-black text-[#f5be38] tracking-tight">
-                    {product.priceCustomLabel || 'Price on Request'}
-                  </span>
+                  <PriceOnRequestBadge theme="dark" size="sm" />
                 </div>
               </div>
 

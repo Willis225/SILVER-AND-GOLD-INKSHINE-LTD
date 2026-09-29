@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { ArrowRight, Sparkles, ShoppingBag, CheckCircle2 } from 'lucide-react';
 import { Product } from '../../types/schema';
 import { getSectionDisplayItems, SectionDisplayItem } from '../../utils/categoryUtils';
+import { PriceOnRequestBadge } from '../common/PriceOnRequestBadge';
 
 export interface StationeryItem extends SectionDisplayItem {}
 
@@ -196,9 +197,7 @@ export const BusinessStationerySection: React.FC<BusinessStationerySectionProps>
 
               {/* Card Price & Action Footer */}
               <div className="p-5 pt-3 border-t border-white/10 bg-[#050508] flex items-center justify-between">
-                <span className="text-sm sm:text-base font-black text-[#f5be38] font-mono">
-                  {item.price}
-                </span>
+                <PriceOnRequestBadge theme="dark" size="sm" />
 
                 <span className="text-xs font-bold text-stone-300 group-hover:text-[#f5be38] inline-flex items-center gap-1 transition-colors">
                   <span>View Details</span>

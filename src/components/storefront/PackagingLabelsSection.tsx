@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { ArrowRight, Sparkles, ShoppingBag } from 'lucide-react';
 import { Product } from '../../types/schema';
 import { getSectionDisplayItems, SectionDisplayItem } from '../../utils/categoryUtils';
+import { PriceOnRequestBadge } from '../common/PriceOnRequestBadge';
 
 export interface PackagingItem extends SectionDisplayItem {}
 
@@ -185,9 +186,7 @@ export const PackagingLabelsSection: React.FC<PackagingLabelsSectionProps> = ({
 
               {/* Card Price & Action Footer */}
               <div className="p-5 pt-3 border-t border-stone-100 bg-stone-50/80 flex items-center justify-between">
-                <span className="text-sm sm:text-base font-black text-stone-950 font-sans">
-                  {item.price}
-                </span>
+                <PriceOnRequestBadge theme="light" size="sm" />
 
                 <span className="text-xs font-bold text-stone-500 group-hover:text-stone-950 inline-flex items-center gap-1 transition-colors">
                   <span>View Details</span>

@@ -22,6 +22,7 @@ import { Product, ProductCategory } from '../../types/schema';
 import { ConfirmPriceModal } from './ConfirmPriceModal';
 import { RecentPostModal, PostItem } from './RecentPostModal';
 import { normalizeCategoryKey } from '../../data/homepageCatalogProducts';
+import { PriceOnRequestBadge } from '../common/PriceOnRequestBadge';
 
 // Categories matching exact list from screenshot
 export const SCREENSHOT_CATEGORIES: { key: string; label: string }[] = [
@@ -846,10 +847,7 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
 
                           {/* Price Tag - Standardized Exact Design */}
                           <div className="pt-0.5">
-                            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#f5be38]/15 border border-[#f5be38]/30 text-[#f5be38] text-sm font-black tracking-tight">
-                              <span className="w-1.5 h-1.5 rounded-full bg-[#f5be38] animate-pulse" />
-                              <span>Price on Request</span>
-                            </span>
+                            <PriceOnRequestBadge theme="dark" size="sm" />
                           </div>
 
                           {/* Description Text */}
@@ -956,10 +954,7 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
                             {product.name}
                           </h3>
                           <div className="pt-1.5">
-                            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-[#f5be38]/15 border border-[#f5be38]/30 text-[#f5be38] text-xs font-black tracking-tight">
-                              <span className="w-1.5 h-1.5 rounded-full bg-[#f5be38] animate-pulse" />
-                              <span>Price on Request</span>
-                            </span>
+                            <PriceOnRequestBadge theme="dark" size="xs" />
                           </div>
                           <p className="text-xs text-stone-400 line-clamp-2 mt-2">
                             {product.shortDescription || product.description}

@@ -15,6 +15,7 @@ import {
   MessageSquare
 } from 'lucide-react';
 import { Product, calculateDynamicPrice } from '../../types/schema';
+import { PriceOnRequestBadge } from '../common/PriceOnRequestBadge';
 
 interface ProductQuickViewModalProps {
   product: Product;
@@ -366,12 +367,12 @@ export const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
 
           {/* Pricing & Add to Cart Action */}
           <div className="pt-4 border-t border-stone-200 space-y-3">
-            <div className="p-3 bg-amber-50/80 rounded-xl border border-amber-200 space-y-1">
-              <span className="text-[10px] text-amber-800 uppercase tracking-wider block font-bold">
-                Live Pricing Policy &amp; Status
-              </span>
-              <div className="text-xl font-black text-amber-900">
-                {product.priceCustomLabel || 'Price on Request'}
+            <div className="p-3 bg-amber-50/80 rounded-xl border border-amber-200 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] text-amber-800 uppercase tracking-wider block font-bold">
+                  Live Pricing Status
+                </span>
+                <PriceOnRequestBadge theme="light" size="sm" />
               </div>
               <p className="text-[11px] text-stone-600 leading-relaxed">
                 Configured with real-time specs ({quantity} units, {artworkType === 'direct_upload' ? 'Upload Ready' : artworkType === 'hire_designer' ? 'Hire Designer' : 'Send Later'}). Live confirmation within minutes.

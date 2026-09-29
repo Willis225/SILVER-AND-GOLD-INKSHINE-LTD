@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { Product, calculateDynamicPrice } from '../../types/schema';
 import { NIGERIAN_SHIPPING_ZONES } from '../../data/seedData';
+import { PriceOnRequestBadge } from '../common/PriceOnRequestBadge';
 
 export interface CartItem {
   id: string;
@@ -189,9 +190,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                     </div>
 
                     <div className="text-right">
-                      <span className="text-sm font-black text-[#f5be38] font-mono">
-                        {formatNaira(item.totalPriceNgn)}
-                      </span>
+                      <PriceOnRequestBadge theme="dark" size="xs" />
                     </div>
                   </div>
                 </div>
@@ -218,7 +217,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 >
                   {NIGERIAN_SHIPPING_ZONES.map((zone) => (
                     <option key={zone.id} value={zone.id} className="bg-[#181820] text-white">
-                      {zone.name} ({zone.estimatedDays}) — {formatNaira(zone.baseFeeNgn)}
+                      {zone.name} ({zone.estimatedDays}) — Regional Courier
                     </option>
                   ))}
                 </select>
@@ -235,8 +234,8 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                       />
                       <span>Priority Rush Production &amp; Delivery</span>
                     </div>
-                    <span className="font-bold text-white font-mono">
-                      +{formatNaira(currentZone.expressFeeNgn! - currentZone.baseFeeNgn)}
+                    <span className="font-bold text-[#f5be38] text-xs">
+                      Express Route
                     </span>
                   </label>
                 )}
@@ -249,33 +248,31 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
         {items.length > 0 && (
           <div className="p-4 sm:p-5 border-t border-white/10 bg-[#121217] space-y-3 pb-8 sm:pb-5 shrink-0">
             <div className="space-y-1.5 text-xs">
-              <div className="flex justify-between text-stone-400">
-                <span>Items Subtotal:</span>
-                <span className="font-mono font-medium text-stone-200">{formatNaira(itemsSubtotalNgn)}</span>
+              <div className="flex justify-between items-center text-stone-400">
+                <span>Items Pricing:</span>
+                <PriceOnRequestBadge theme="dark" size="xs" />
               </div>
               <div className="flex justify-between text-stone-400">
                 <span>Location Delivery ({currentZone.name}):</span>
-                <span className="font-mono font-medium text-stone-200">{formatNaira(shippingFeeNgn)}</span>
+                <span className="font-medium text-stone-200">Regional Courier Dispatch</span>
               </div>
-              <div className="flex justify-between text-white font-bold text-sm pt-2 border-t border-white/10">
-                <span>Estimated Total:</span>
-                <span className="text-base font-black font-mono text-white">
-                  {formatNaira(grandTotalNgn)}
-                </span>
+              <div className="flex justify-between items-center text-white font-bold text-sm pt-2 border-t border-white/10">
+                <span>Order Total:</span>
+                <PriceOnRequestBadge theme="gold" size="sm" />
               </div>
             </div>
 
             <button
               onClick={handleTriggerCheckout}
               disabled={checkoutCompleteNotice}
-              className="w-full py-3.5 px-4 rounded-full bg-white hover:bg-stone-200 active:scale-98 text-black font-black text-sm flex items-center justify-center gap-2 shadow-lg transition-all cursor-pointer"
+              className="w-full py-3.5 px-4 rounded-full bg-gradient-to-r from-[#f5be38] to-[#ffd15c] hover:from-[#ffd15c] hover:to-[#f5be38] active:scale-98 text-black font-black text-sm flex items-center justify-center gap-2 shadow-lg transition-all cursor-pointer"
             >
               {checkoutCompleteNotice ? (
-                <span>Opening WhatsApp Checkout...</span>
+                <span>Opening WhatsApp Booking Desk...</span>
               ) : (
                 <>
                   <MessageSquare className="w-4.5 h-4.5 text-black" />
-                  <span>Proceed to WhatsApp Checkout • {formatNaira(grandTotalNgn)}</span>
+                  <span>Proceed to WhatsApp Booking &amp; Quote</span>
                   <ArrowRight className="w-4 h-4 text-black" />
                 </>
               )}

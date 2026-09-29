@@ -107,14 +107,14 @@ export const CategoryAdmin: React.FC<CategoryAdminProps> = ({
   const [singleGalleryTitle, setSingleGalleryTitle] = useState<string>('');
   const [singleGalleryDescription, setSingleGalleryDescription] = useState<string>('');
   const [singleGalleryPrice, setSingleGalleryPrice] = useState<number>(25000);
-  const [singleGalleryHidePrice, setSingleGalleryHidePrice] = useState<boolean>(false);
+  const [singleGalleryHidePrice, setSingleGalleryHidePrice] = useState<boolean>(true);
   const [singleGalleryTurnaround, setSingleGalleryTurnaround] = useState<number>(2);
   const [singleGalleryMinQty, setSingleGalleryMinQty] = useState<number>(1);
   const [singleGalleryBadge, setSingleGalleryBadge] = useState<string>('Featured Job');
 
   // Common batch configuration state
   const [batchBasePrice, setBatchBasePrice] = useState<number>(20000);
-  const [batchHidePrice, setBatchHidePrice] = useState<boolean>(false);
+  const [batchHidePrice, setBatchHidePrice] = useState<boolean>(true);
   const [batchNamingPrefix, setBatchNamingPrefix] = useState<string>('');
   const [batchTurnaroundDays, setBatchTurnaroundDays] = useState<number>(2);
   const [batchMinQty, setBatchMinQty] = useState<number>(1);

@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { Product, ProductCategory } from '../../types/schema';
 import { CATEGORIES } from '../layout/Header';
+import { PriceOnRequestBadge } from '../common/PriceOnRequestBadge';
 
 interface ProductGridProps {
   products: Product[];
@@ -256,14 +257,12 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
 
                   {/* Card Footer: Pricing & CTAs */}
                   <div className="p-3.5 sm:p-5 pt-0 border-t border-stone-100 mt-2">
-                    <div className="flex items-baseline justify-between py-2">
+                    <div className="flex items-center justify-between py-2.5">
                       <div>
-                        <span className="text-[10px] text-stone-400 uppercase font-medium block">
-                          Pricing
+                        <span className="text-[10px] text-stone-400 uppercase font-medium block mb-1">
+                          Pricing Status
                         </span>
-                        <div className="font-black tracking-tight text-sm text-amber-800">
-                          {product.priceCustomLabel || 'Price on Request'}
-                        </div>
+                        <PriceOnRequestBadge theme="light" size="xs" />
                       </div>
 
                       <div className="text-right">

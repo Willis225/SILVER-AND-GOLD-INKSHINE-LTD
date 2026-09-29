@@ -466,13 +466,14 @@ export const CatalogModal: React.FC<CatalogModalProps> = ({
 
                   {/* Card Pricing & Instant Order Footer */}
                   <div className="p-4 pt-2 border-t border-white/10 bg-white/[0.01]">
-                    <div className="flex items-baseline justify-between py-1 mb-2.5">
+                    <div className="flex items-center justify-between py-1 mb-2.5">
                       <div>
-                        <span className="text-[10px] text-stone-400 uppercase tracking-wider block font-medium">
-                          Base Price
+                        <span className="text-[10px] text-stone-400 uppercase tracking-wider block font-medium mb-1">
+                          Pricing Status
                         </span>
-                        <span className="font-black text-[#dfbc5e] text-base sm:text-lg font-mono">
-                          ₦{(item.startingPriceNgn ?? 0).toLocaleString('en-NG')}
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#f5be38]/15 border border-[#f5be38]/35 text-[#f5be38] text-xs font-black tracking-tight shadow-[0_0_10px_rgba(245,190,56,0.12)]">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#f5be38] animate-pulse" />
+                          <span className="uppercase tracking-wider font-extrabold text-[10.5px]">Price on Request</span>
                         </span>
                       </div>
 

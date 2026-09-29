@@ -21,6 +21,7 @@ import { CartItem } from '../storefront/CartDrawer';
 import { NIGERIAN_SHIPPING_ZONES } from '../../data/seedData';
 import { CustomerDetails, Order } from '../../types/schema';
 import { CompanyLogoMark } from '../common/CompanyLogo';
+import { PriceOnRequestBadge } from '../common/PriceOnRequestBadge';
 
 interface CheckoutPageProps {
   cartItems: CartItem[];
@@ -802,14 +803,14 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
                         {item.product.name}
                       </div>
                       <div className="text-[11px] text-stone-400">
-                        Qty: {item.quantity} • {formatNaira(item.unitPriceNgn)}/unit
+                        Qty: {item.quantity} • Configured Specs
                       </div>
                       <div className="text-[10px] text-stone-500 mt-0.5 truncate">
                         Artwork: {item.artworkType.replace('_', ' ').toUpperCase()}
                       </div>
                     </div>
-                    <div className="text-right font-mono font-bold text-white">
-                      {formatNaira(item.totalPriceNgn)}
+                    <div className="text-right">
+                      <PriceOnRequestBadge theme="dark" size="xs" />
                     </div>
                   </div>
                 ))}
@@ -853,42 +854,28 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
 
               {/* Price Breakdown */}
               <div className="pt-3 border-t border-white/10 space-y-2 text-xs">
-                <div className="flex justify-between text-stone-300">
-                  <span>Print Items Subtotal:</span>
-                  <span className="font-mono text-white">{formatNaira(itemsSubtotalNgn)}</span>
+                <div className="flex justify-between items-center text-stone-300">
+                  <span>Print Items Pricing:</span>
+                  <PriceOnRequestBadge theme="dark" size="xs" />
                 </div>
-
-                {discountNgn > 0 && (
-                  <div className="flex justify-between text-stone-300 font-bold">
-                    <span>Promo Discount:</span>
-                    <span className="font-mono text-white">-{formatNaira(discountNgn)}</span>
-                  </div>
-                )}
 
                 {wantsLocationDelivery ? (
                   <div className="flex justify-between text-stone-300">
                     <span>
                       Location Delivery ({selectedZone.name}):
                     </span>
-                    <span className="font-mono text-white">{formatNaira(deliveryFeeNgn)}</span>
+                    <span className="font-medium text-white">Regional Courier</span>
                   </div>
                 ) : (
                   <div className="flex justify-between text-stone-300">
                     <span>Direct Collection at Press:</span>
-                    <span className="font-mono text-white">₦0</span>
+                    <span className="font-medium text-[#f5be38]">Complimentary Pickup</span>
                   </div>
                 )}
 
-                <div className="flex justify-between text-stone-300">
-                  <span>VAT (7.5% Nigerian Statutory):</span>
-                  <span className="font-mono text-white">{formatNaira(vatNgn)}</span>
-                </div>
-
-                <div className="pt-3 border-t border-white/10 flex justify-between text-base font-black text-white">
+                <div className="pt-3 border-t border-white/10 flex justify-between items-center text-base font-black text-white">
                   <span>Total Due:</span>
-                  <span className="font-mono text-white text-lg">
-                    {formatNaira(grandTotalNgn)}
-                  </span>
+                  <PriceOnRequestBadge theme="gold" size="sm" />
                 </div>
               </div>
 
