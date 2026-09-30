@@ -205,23 +205,24 @@ export function calculateDynamicPrice(
   // Check if first argument is a Product object
   if (typeof productOrBasePrice === 'object' && productOrBasePrice !== null) {
     const product = productOrBasePrice as Product;
-    basePrice = product.basePriceNgn;
-    quantity = typeof optionsOrQuantity === 'number' ? optionsOrQuantity : 1;
-    const optionMap = (typeof quantityOrOptionMap === 'object' ? quantityOrOptionMap : {}) as Record<string, string>;
+    basePrice = typeof product.basePriceNgn === 'number' && !isNaN(product.basePriceNgn) ? product.basePriceNgn : 0;
+    quantity = typeof optionsOrQuantity === 'number' && !isNaN(optionsOrQuantity) && optionsOrQuantity > 0 ? optionsOrQuantity : 1;
+    const optionMap = (typeof quantityOrOptionMap === 'object' && quantityOrOptionMap !== null ? quantityOrOptionMap : {}) as Record<string, string>;
 
-    product.optionGroups.forEach((group) => {
+    (product.optionGroups || []).forEach((group) => {
+      if (!group || !Array.isArray(group.options) || group.options.length === 0) return;
       const optId = optionMap[group.id];
-      const opt = group.options.find((o) => o.id === optId) || group.options.find((o) => o.isDefault) || group.options[0];
+      const opt = group.options.find((o) => o && o.id === optId) || group.options.find((o) => o && o.isDefault) || group.options[0];
       if (opt) activeOptions.push(opt);
     });
 
-    bulkTiers = product.bulkPricingTiers;
+    bulkTiers = Array.isArray(product.bulkPricingTiers) ? product.bulkPricingTiers : [];
   } else {
     // Legacy positional arguments: basePrice, selectedOptions, quantity, bulkTiers
-    basePrice = productOrBasePrice as number;
-    activeOptions = (optionsOrQuantity as PrintOption[]) || [];
-    quantity = (quantityOrOptionMap as number) || 1;
-    bulkTiers = bulkTiersArg || [];
+    basePrice = typeof productOrBasePrice === 'number' && !isNaN(productOrBasePrice) ? productOrBasePrice : 0;
+    activeOptions = Array.isArray(optionsOrQuantity) ? optionsOrQuantity : [];
+    quantity = typeof quantityOrOptionMap === 'number' && !isNaN(quantityOrOptionMap) && quantityOrOptionMap > 0 ? quantityOrOptionMap : 1;
+    bulkTiers = Array.isArray(bulkTiersArg) ? bulkTiersArg : [];
   }
 
   // 1. Calculate unit price with option modifiers
@@ -229,12 +230,14 @@ export function calculateDynamicPrice(
   let percentageModifier = 0;
 
   for (const opt of activeOptions) {
+    if (!opt) continue;
+    const modVal = typeof opt.priceModifierValue === 'number' && !isNaN(opt.priceModifierValue) ? opt.priceModifierValue : 0;
     if (opt.priceModifierType === 'fixed') {
-      unitPrice += opt.priceModifierValue;
+      unitPrice += modVal;
     } else if (opt.priceModifierType === 'percentage') {
-      percentageModifier += opt.priceModifierValue;
+      percentageModifier += modVal;
     } else if (opt.priceModifierType === 'multiplier') {
-      unitPrice *= opt.priceModifierValue;
+      unitPrice *= (modVal || 1);
     }
   }
 
@@ -244,10 +247,12 @@ export function calculateDynamicPrice(
 
   // 2. Find matching bulk volume discount tier
   let discountPercentage = 0;
-  for (const tier of bulkTiers) {
-    if (quantity >= tier.minQuantity) {
-      if (tier.maxQuantity === null || quantity <= tier.maxQuantity) {
-        discountPercentage = tier.discountPercentage;
+  for (const tier of (bulkTiers || [])) {
+    if (!tier) continue;
+    const minQ = typeof tier.minQuantity === 'number' ? tier.minQuantity : 1;
+    if (quantity >= minQ) {
+      if (tier.maxQuantity === null || tier.maxQuantity === undefined || quantity <= tier.maxQuantity) {
+        discountPercentage = typeof tier.discountPercentage === 'number' ? tier.discountPercentage : 0;
         break;
       }
     }

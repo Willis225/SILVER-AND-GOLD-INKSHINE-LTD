@@ -24,7 +24,6 @@ import { ProductDetailPage } from './components/product/ProductDetailPage';
 import { CheckoutPage } from './components/checkout/CheckoutPage';
 import { AdminDashboard } from './components/admin/AdminDashboard';
 import { CompanyInfoModal, InfoModalTab } from './components/common/CompanyInfoModal';
-import { GlassBottomDock } from './components/navigation/GlassBottomDock';
 import { BookOnlineModal } from './components/modals/BookOnlineModal';
 import { CatalogModal } from './components/modals/CatalogModal';
 import { RequestQuoteModal } from './components/modals/RequestQuoteModal';
@@ -210,6 +209,9 @@ export default function App() {
   const handleOpenCategoriesPage = (categoryTag: string = 'all', productId: string | null = null) => {
     const safeTag = typeof categoryTag === 'string' && categoryTag.trim().length > 0 ? categoryTag : 'all';
     const safeProductId = typeof productId === 'string' ? productId : null;
+    if (safeTag !== 'all') {
+      setSearchQuery('');
+    }
     setCategoryPageInitialCategory(safeTag);
     setCategoryPageHighlightedProductId(safeProductId);
     setViewMode('categories');
@@ -625,7 +627,7 @@ export default function App() {
       )}
 
       {/* Main View Router */}
-      <main className="flex-1 pb-24 md:pb-0">
+      <main className="flex-1">
         {viewMode === 'categories' && (
           <CategoriesPage
             products={products}
@@ -923,14 +925,6 @@ export default function App() {
         }}
       />
 
-      {/* iPhone 17-Style Frosted Glass Floating Bottom Dock (Mobile + Desktop) */}
-      <GlassBottomDock
-        onOpenBookOnline={() => handleOpenBookOnline()}
-        onOpenInfo={() => handleOpenInfoModal('info')}
-        onOpenCatalog={() => handleOpenCategoriesPage('all')}
-        activeModal={viewMode === 'categories' ? 'catalog' : isBookOnlineOpen ? 'book' : isCompanyInfoOpen ? 'info' : isCatalogOpen ? 'catalog' : null}
-      />
-
       {/* Book Online Modal */}
       <BookOnlineModal
         isOpen={isBookOnlineOpen}
@@ -1006,10 +1000,16 @@ export default function App() {
             setLegalInitialDoc(docKey || 'terms');
             setViewMode('policies');
             window.scrollTo({ top: 0, behavior: 'smooth' });
+          } else if (page === 'contact' || page === 'faq' || page === 'portfolios') {
+            handleOpenInfoModal(page);
           } else {
             setViewMode('storefront');
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }
+        }}
+        onOpenInfoModal={(tab) => {
+          setIsSearchModalOpen(false);
+          handleOpenInfoModal(tab);
         }}
         products={products}
       />

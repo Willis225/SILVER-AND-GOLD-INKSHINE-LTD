@@ -171,6 +171,10 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
   useEffect(() => {
     if (initialCategory) {
       setSelectedCategoryKey(normalizeCategoryKey(initialCategory));
+      if (initialCategory !== 'all') {
+        setSearchKeyword('');
+        setSearchInput('');
+      }
     }
   }, [initialCategory]);
 

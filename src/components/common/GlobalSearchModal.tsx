@@ -25,7 +25,11 @@ interface GlobalSearchModalProps {
   onSearchChange: (query: string) => void;
   onSelectCategory: (categoryKey: string) => void;
   onSelectProduct?: (productId: string) => void;
-  onNavigateToPage?: (page: 'storefront' | 'categories' | 'about' | 'services' | 'order' | 'quote' | 'policies', docKey?: 'terms' | 'privacy' | 'returns') => void;
+  onNavigateToPage?: (
+    page: 'storefront' | 'categories' | 'about' | 'services' | 'order' | 'quote' | 'policies' | 'contact' | 'faq' | 'portfolios',
+    docKey?: 'terms' | 'privacy' | 'returns'
+  ) => void;
+  onOpenInfoModal?: (tab: 'info' | 'faq' | 'contact' | 'services' | 'portfolios') => void;
   products?: Product[];
 }
 
@@ -37,6 +41,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
   onSelectCategory,
   onSelectProduct,
   onNavigateToPage,
+  onOpenInfoModal,
   products = []
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -80,7 +85,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
     prod.category.toLowerCase().includes(query)
   ).slice(0, 6);
 
-  // Search in Main Topics / Pages
+  // Search in Main Topics / Pages / Categories
   const TOPIC_PAGES = [
     {
       id: 'flyers',
@@ -109,7 +114,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
     {
       id: 'stationery',
       title: 'Office Stationery & Corporate Branding',
-      keywords: ['stationery', 'office', 'letterhead', 'envelope', 'folder', 'receipt', 'invoice', 'cac', 'seal', 'stamp', 'docket', 'id card', 'lanyard'],
+      keywords: ['stationery', 'office', 'letterhead', 'envelope', 'folder', 'receipt', 'invoice', 'cac', 'seal', 'stamp', 'docket', 'id card', 'lanyard', 'corporate'],
       type: 'category' as const,
       categoryKey: 'office_stationery',
       desc: 'Custom corporate letterheads, presentation folders, stamps & branded envelopes'
@@ -117,7 +122,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
     {
       id: 'signage',
       title: 'Signage & 3D Letters',
-      keywords: ['sign', 'signage', '3d', 'led', 'letters', 'acrylic', 'illuminated', 'channel', 'billboard', 'outdoor', 'fascia', 'reception', 'directional'],
+      keywords: ['sign', 'signage', '3d', 'led', 'letters', 'acrylic', 'illuminated', 'channel', 'billboard', 'outdoor', 'fascia', 'reception', 'directional', 'neon', 'metal'],
       type: 'category' as const,
       categoryKey: 'signages',
       desc: '3D illuminated channel letters, acrylic reception signs & outdoor fascias'
@@ -133,7 +138,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
     {
       id: 'paper_bags',
       title: 'Paper Bags & Retail Tags',
-      keywords: ['bag', 'bags', 'paper bag', 'carrier bag', 'shopping bag', 'tote', 'kraft bag', 'tag', 'tags', 'label tag'],
+      keywords: ['bag', 'bags', 'paper bag', 'carrier bag', 'shopping bag', 'tote', 'kraft bag', 'tag', 'tags', 'label tag', 'hang tag', 'boutique bag'],
       type: 'category' as const,
       categoryKey: 'paper_bags_tags',
       desc: 'Luxury kraft shopping carrier bags, boutique paper bags & clothing tags'
@@ -141,7 +146,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
     {
       id: 'stickers',
       title: 'Stickers & Product Labels',
-      keywords: ['sticker', 'stickers', 'label', 'labels', 'diecut', 'vinyl', 'waterproof', 'bottle', 'roll label', 'packaging label'],
+      keywords: ['sticker', 'stickers', 'label', 'labels', 'diecut', 'vinyl', 'waterproof', 'bottle', 'roll label', 'packaging label', 'decal'],
       type: 'category' as const,
       categoryKey: 'stickers_labels',
       desc: 'Waterproof vinyl die-cut stickers and high-speed product roll labels'
@@ -149,7 +154,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
     {
       id: 'apparel',
       title: 'Branded Clothing & Merchandise',
-      keywords: ['apparel', 'shirt', 'shirts', 't-shirt', 'tshirt', 'polo', 'cap', 'caps', 'jersey', 'dtf', 'screenprint', 'uniform', 'workwear', 'hoodie'],
+      keywords: ['apparel', 'shirt', 'shirts', 't-shirt', 'tshirt', 'polo', 'cap', 'caps', 'jersey', 'dtf', 'screenprint', 'uniform', 'workwear', 'hoodie', 'hat'],
       type: 'category' as const,
       categoryKey: 'custom_apparels_caps',
       desc: 'Direct-to-Film (DTF) shirts, corporate embroidered polos & event caps'
@@ -173,10 +178,90 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
     {
       id: 'books',
       title: 'Books, Magazines & Catalogues',
-      keywords: ['book', 'books', 'magazine', 'magazines', 'catalogue', 'catalog', 'program', 'programme', 'annual report', 'handbook', 'manual', 'exercise book'],
+      keywords: ['book', 'books', 'magazine', 'magazines', 'catalogue', 'catalog', 'program', 'programme', 'annual report', 'handbook', 'manual', 'exercise book', 'brochure'],
       type: 'category' as const,
       categoryKey: 'books_magazines',
       desc: 'Annual reports, event programmes, company profiles & perfect-bound magazines'
+    },
+    {
+      id: 'advertising',
+      title: 'Advertising Materials',
+      keywords: ['advertising', 'advert', 'marketing', 'poster', 'danglers', 'promotional', 'display', 'branding'],
+      type: 'category' as const,
+      categoryKey: 'advertising_materials',
+      desc: 'High-impact retail promotional materials, advertising posters & collaterals'
+    },
+    {
+      id: 'food_packaging',
+      title: 'Food Packaging & Delivery Boxes',
+      keywords: ['food', 'food packaging', 'pizza', 'shawarma', 'takeaway', 'snack box', 'burger box', 'greaseproof', 'meal pack', 'carton'],
+      type: 'category' as const,
+      categoryKey: 'food_packaging',
+      desc: 'Food-grade packaging, takeaway cartons, pizza boxes & branded wrapping'
+    },
+    {
+      id: 'outdoor_displays',
+      title: 'Outdoor Displays & Pylons',
+      keywords: ['outdoor', 'outdoor display', 'pylon', 'gantry', 'unipole', 'billboard', 'lamppost', 'street sign', 'highway'],
+      type: 'category' as const,
+      categoryKey: 'outdoor_displays',
+      desc: 'Heavy-duty outdoor billboard structures, pylons, gantries & directional displays'
+    },
+    {
+      id: 'events_exhibitions',
+      title: 'Events & Exhibition Displays',
+      keywords: ['event', 'events', 'exhibition', 'booth', 'popup', 'pop-up', 'podium', 'trade show', 'summit', 'media wall'],
+      type: 'category' as const,
+      categoryKey: 'events_exhibitions',
+      desc: 'Media backdrops, exhibition booth setups, trade show counters & popups'
+    },
+    {
+      id: 'frames_wallarts',
+      title: 'Frames & Wall Arts',
+      keywords: ['frame', 'frames', 'wall art', 'canvas', 'canvas wrap', 'acrylic print', 'photo frame', 'floating frame', 'interior decor'],
+      type: 'category' as const,
+      categoryKey: 'frames_wallarts',
+      desc: 'Museum-grade canvas wraps, floating acrylic prints & luxury framed art'
+    },
+    {
+      id: 'printing_machines',
+      title: 'Printing Machines & Equipment',
+      keywords: ['machine', 'machines', 'printing machine', 'printer', 'large format machine', 'dtf machine', 'sublimation', 'heat press', 'laminator', 'cutter'],
+      type: 'category' as const,
+      categoryKey: 'printing_machines',
+      desc: 'Commercial print machinery, DTF production systems & finishing equipment'
+    },
+    {
+      id: 'wedding',
+      title: 'Wedding Stationery & Decor',
+      keywords: ['wedding', 'bridal', 'wedding card', 'wedding invitation', 'welcome board', 'wedding program', 'ceremonial', 'couple'],
+      type: 'category' as const,
+      categoryKey: 'wedding',
+      desc: 'Bespoke wedding stationery, luxury welcome easels & ceremony programs'
+    },
+    {
+      id: 'carports',
+      title: 'Carports & Tensile Canopies',
+      keywords: ['carport', 'carports', 'canopy', 'tent', 'shade', 'tensile', 'parking shade', 'car shelter', 'awning'],
+      type: 'category' as const,
+      categoryKey: 'carports',
+      desc: 'Heavy-gauge commercial carports, tensile membrane canopies & shade structures'
+    },
+    {
+      id: 'vehicle_branding',
+      title: 'Vehicle Branding & Fleet Wraps',
+      keywords: ['vehicle', 'car', 'car wrap', 'bus', 'van', 'fleet', 'truck', 'auto branding', 'delivery vehicle'],
+      type: 'category' as const,
+      categoryKey: 'vehicle_branding',
+      desc: 'Full and partial vehicle vinyl wraps, fleet graphics & commercial van branding'
+    },
+    {
+      id: 'packages',
+      title: 'Full Branding Packages & Bundles',
+      keywords: ['package', 'packages', 'bundle', 'branding package', 'starter pack', 'corporate combo', 'event package'],
+      type: 'category' as const,
+      categoryKey: 'packages',
+      desc: 'Complete all-in-one corporate stationery, marketing & event branding bundles'
     },
     {
       id: 'quote',
@@ -209,6 +294,33 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
       type: 'page' as const,
       pageKey: 'about' as const,
       desc: '1,200 sqm commercial production plant in Opolo-Epie, Yenagoa, Bayelsa'
+    },
+    {
+      id: 'contact',
+      title: 'Contact Us & Yenagoa Press Complex',
+      keywords: ['contact', 'contact us', 'phone', 'telephone', 'call', 'whatsapp', 'email', 'address', 'visit', 'opolo-epie', 'reach us', 'map'],
+      type: 'modal' as const,
+      modalTab: 'contact' as const,
+      pageKey: 'contact' as const,
+      desc: 'Press hotline, WhatsApp direct desk & factory location in Yenagoa'
+    },
+    {
+      id: 'faq',
+      title: 'How It Works & Frequently Asked Questions',
+      keywords: ['faq', 'faqs', 'how it works', 'guide', 'turnaround', 'delivery time', 'questions', 'help', 'proof', 'process'],
+      type: 'modal' as const,
+      modalTab: 'faq' as const,
+      pageKey: 'faq' as const,
+      desc: 'Artwork guidelines, turnaround timelines, proofing approvals & payment guidance'
+    },
+    {
+      id: 'portfolios',
+      title: 'Portfolios & Completed Client Works',
+      keywords: ['portfolio', 'portfolios', 'gallery', 'samples', 'projects', 'clients', 'completed work', 'showcase'],
+      type: 'modal' as const,
+      modalTab: 'portfolios' as const,
+      pageKey: 'portfolios' as const,
+      desc: 'Browse executed summits, corporate rebrands & high-volume production portfolios'
     },
     {
       id: 'refund',
@@ -246,35 +358,51 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
   ) : [];
 
   const POPULAR_PILLS = [
-    { label: 'Flyers & Handbills', query: 'flyer' },
-    { label: 'Banners & Roll-Ups', query: 'banner' },
-    { label: 'Business Cards', query: 'business card' },
-    { label: '3D Signage', query: 'signage' },
-    { label: 'Packaging Boxes', query: 'packaging' },
-    { label: 'Stickers & Labels', query: 'sticker' },
-    { label: 'Branded Apparel', query: 'apparel' },
-    { label: 'Custom Quote', query: 'quote' },
-    { label: 'Book Online', query: 'book' },
+    { label: 'Flyers & Handbills', topicId: 'flyers', query: 'flyer' },
+    { label: 'Banners & Roll-Ups', topicId: 'banners', query: 'banner' },
+    { label: 'Business Cards', topicId: 'cards', query: 'business card' },
+    { label: '3D Signage', topicId: 'signage', query: 'signage' },
+    { label: 'Packaging Boxes', topicId: 'packaging', query: 'packaging' },
+    { label: 'Stickers & Labels', topicId: 'stickers', query: 'sticker' },
+    { label: 'Branded Apparel', topicId: 'apparel', query: 'apparel' },
+    { label: 'Custom Quote', topicId: 'quote', query: 'quote' },
+    { label: 'Book Online', topicId: 'book', query: 'book' },
   ];
 
   const handleSelectTopic = (topic: typeof TOPIC_PAGES[0]) => {
     onClose();
-    if (topic.type === 'category' && topic.categoryKey) {
-      onSelectCategory(topic.categoryKey);
-    } else if (topic.type === 'page' && topic.pageKey && onNavigateToPage) {
-      onNavigateToPage(topic.pageKey, topic.docKey);
+    try {
+      if (topic.type === 'category' && topic.categoryKey) {
+        onSelectCategory(topic.categoryKey);
+      } else if (topic.type === 'modal' && topic.modalTab && onOpenInfoModal) {
+        onOpenInfoModal(topic.modalTab);
+      } else if (topic.type === 'page' && topic.pageKey && onNavigateToPage) {
+        onNavigateToPage(topic.pageKey, (topic as any).docKey);
+      } else if (onNavigateToPage) {
+        onNavigateToPage('storefront');
+      }
+    } catch (err) {
+      console.error('Error navigating to topic:', err);
     }
   };
 
   const handleSelectCategoryItem = (catId: string) => {
     onClose();
-    onSelectCategory(catId);
+    try {
+      onSelectCategory(catId);
+    } catch (err) {
+      console.error('Error navigating to category:', err);
+    }
   };
 
   const handleSelectProductItem = (prodId: string) => {
     onClose();
-    if (onSelectProduct) {
-      onSelectProduct(prodId);
+    try {
+      if (onSelectProduct) {
+        onSelectProduct(prodId);
+      }
+    } catch (err) {
+      console.error('Error navigating to product:', err);
     }
   };
 
@@ -359,15 +487,18 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
               key={idx}
               type="button"
               onClick={() => {
-                onSearchChange(pill.query);
+                const targetTopic = TOPIC_PAGES.find(t => t.id === pill.topicId);
+                if (targetTopic) {
+                  handleSelectTopic(targetTopic);
+                } else {
+                  onSearchChange(pill.query);
+                }
               }}
-              className={`px-3 py-1 rounded-full text-xs font-semibold shrink-0 transition-all cursor-pointer border ${
-                query === pill.query.toLowerCase()
-                  ? 'bg-[#D4AF37] text-black border-[#D4AF37] font-black'
-                  : 'bg-white/5 hover:bg-white/15 text-stone-200 hover:text-white border-white/10'
-              }`}
+              className="px-3 py-1 rounded-full text-xs font-semibold shrink-0 transition-all cursor-pointer border bg-white/5 hover:bg-[#D4AF37] hover:text-black hover:border-[#D4AF37] text-stone-200 border-white/10 active:scale-95 flex items-center gap-1 group"
+              title={`Jump directly to ${pill.label}`}
             >
-              {pill.label}
+              <span>{pill.label}</span>
+              <ArrowRight className="w-3 h-3 opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" />
             </button>
           ))}
         </div>

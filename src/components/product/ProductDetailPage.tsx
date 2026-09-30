@@ -53,36 +53,45 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
   // Initialize default options
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>(() => {
     const defaults: Record<string, string> = {};
-    product.optionGroups.forEach((grp) => {
-      const def = grp.options.find((o) => o.isDefault) || grp.options[0];
+    (product?.optionGroups || []).forEach((grp) => {
+      if (!grp || !Array.isArray(grp.options)) return;
+      const def = grp.options.find((o) => o?.isDefault) || grp.options[0];
       if (def) defaults[grp.id] = def.id;
     });
     return defaults;
   });
 
-  const [quantity, setQuantity] = useState<number>(product.minQuantity);
+  const minQty = typeof product?.minQuantity === 'number' && product.minQuantity > 0 ? product.minQuantity : 1;
+  const [quantity, setQuantity] = useState<number>(minQty);
   const [submissionMode, setSubmissionMode] = useState<SubmissionMode>('direct_upload');
   const [preflightResult, setPreflightResult] = useState<PreflightResult | null>(null);
   const [designerBrief, setDesignerBrief] = useState<DesignerBrief | undefined>();
-  const [selectedDestinationZone, setSelectedDestinationZone] = useState<string>(NIGERIAN_SHIPPING_ZONES[0].id);
+  const [selectedDestinationZone, setSelectedDestinationZone] = useState<string>(() => NIGERIAN_SHIPPING_ZONES[0]?.id || 'default');
   const [activeTab, setActiveTab] = useState<'overview' | 'specs' | 'box_contents' | 'delivery'>('overview');
   const [activeImageIdx, setActiveImageIdx] = useState<number>(0);
   const [addedToast, setAddedToast] = useState(false);
 
   // Gallery angles - prioritize uploaded multi-image photos of finished work
-  const galleryImages = (product.images && product.images.length > 0)
+  const galleryImages = (product?.images && product.images.length > 0)
     ? product.images
     : [
-        product.image,
+        product?.image || '',
         'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=900&q=80',
         'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=900&q=80',
-      ];
+      ].filter(Boolean);
 
   const designerFeeNgn = submissionMode === 'hire_designer' ? 7500 : 0;
   const pricing = calculateDynamicPrice(product, quantity, selectedOptions);
-  const grandTotalWithDesign = pricing.grandTotalNgn + designerFeeNgn;
+  const grandTotalWithDesign = (pricing?.grandTotalNgn || 0) + designerFeeNgn;
 
-  const currentZone = NIGERIAN_SHIPPING_ZONES.find((z) => z.id === selectedDestinationZone) || NIGERIAN_SHIPPING_ZONES[0];
+  const currentZone = NIGERIAN_SHIPPING_ZONES.find((z) => z.id === selectedDestinationZone) || NIGERIAN_SHIPPING_ZONES[0] || {
+    id: 'default',
+    name: 'Bayelsa State',
+    region: 'South-South',
+    baseFeeNgn: 2500,
+    estimatedDays: '1-2 Days',
+    expressAvailable: true
+  };
 
   const handleOptionSelect = (groupId: string, optionId: string) => {
     setSelectedOptions((prev) => ({
@@ -92,15 +101,16 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
   };
 
   const handleQuantityAdjust = (delta: number) => {
-    setQuantity((prev) => Math.max(product.minQuantity, prev + delta));
+    setQuantity((prev) => Math.max(minQty, prev + delta));
   };
 
   const handleSetQuickQuantity = (qty: number) => {
-    setQuantity(Math.max(product.minQuantity, qty));
+    setQuantity(Math.max(minQty, qty));
   };
 
-  const formatNaira = (amount: number) => {
-    return '₦' + Math.round(amount).toLocaleString('en-NG');
+  const formatNaira = (amount: number | undefined | null) => {
+    const val = typeof amount === 'number' && !isNaN(amount) ? amount : 0;
+    return '₦' + Math.round(val).toLocaleString('en-NG');
   };
 
   const handleAddToCartClick = () => {
