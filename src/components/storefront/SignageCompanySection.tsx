@@ -74,10 +74,10 @@ export const SignageCompanySection: React.FC<SignageCompanySectionProps> = ({
         
         {/* Wide Header Row: Headline, Description & Call to Action with Custom Background Image */}
         <motion.div 
-          initial={{ opacity: 0, y: 22 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-40px" }}
-          transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="relative flex flex-col lg:flex-row lg:items-end justify-between gap-6 p-6 sm:p-10 rounded-3xl border border-white/15 shadow-2xl overflow-hidden group transition-all duration-300 bg-[#121217]"
         >
           {/* Background Image Layer */}
@@ -124,15 +124,15 @@ export const SignageCompanySection: React.FC<SignageCompanySectionProps> = ({
           </div>
         </motion.div>
 
-        {/* Wide Full-Grid Showcase: All Items Visible Simultaneously */}
+        {/* Wide Full-Grid Showcase: All Items Visible with Staggered Scroll Reveal */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {displayItems.map((item, idx) => (
             <motion.div
               key={item.id}
-              initial={{ opacity: 0, y: 24 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-30px" }}
-              transition={{ duration: 0.55, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.6, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
               whileHover={{ y: -6 }}
               onClick={() => onSelectItem?.(item)}
               className="group relative rounded-3xl bg-[#121217] border border-white/10 hover:border-white/40 overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col justify-between cursor-pointer"

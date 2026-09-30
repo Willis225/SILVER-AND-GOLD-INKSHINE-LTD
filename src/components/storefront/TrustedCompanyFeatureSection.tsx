@@ -20,10 +20,10 @@ export const TrustedCompanyFeatureSection: React.FC<TrustedCompanyFeatureSection
           
           {/* Left Column: Heading and Brand Story */}
           <motion.div 
-            initial={{ opacity: 0, x: -25 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-6 space-y-4 sm:space-y-6"
           >
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 text-white text-xs font-black tracking-wide shadow-sm">
@@ -57,10 +57,10 @@ export const TrustedCompanyFeatureSection: React.FC<TrustedCompanyFeatureSection
 
           {/* Right Column: High Quality Press Room Production Photo on Dark Frame */}
           <motion.div 
-            initial={{ opacity: 0, scale: 0.96, x: 25 }}
-            whileInView={{ opacity: 1, scale: 1, x: 0 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.6, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-6 relative flex justify-center items-center"
           >
             <div className="relative w-full max-w-lg aspect-[4/5] sm:aspect-[5/6] overflow-hidden rounded-3xl border border-white/15 shadow-2xl bg-[#121217] group">

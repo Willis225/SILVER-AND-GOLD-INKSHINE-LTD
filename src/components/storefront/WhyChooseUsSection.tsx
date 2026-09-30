@@ -116,11 +116,11 @@ export const WhyChooseUsSection: React.FC<WhyChooseUsSectionProps> = ({
         
         {/* Top Header Card: Transparent Frosted Glass letting overlay show through */}
         <motion.div 
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-40px" }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="rounded-3xl bg-[#09090e]/40 hover:bg-[#09090e]/55 border border-white/20 p-6 sm:p-10 lg:p-12 backdrop-blur-md mb-12 shadow-[0_20px_50px_rgba(0,0,0,0.5)] relative overflow-hidden group hover:border-[#f5be38]/50 transition-all duration-500"
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="rounded-3xl bg-[#09090e]/40 hover:bg-[#09090e]/55 border border-white/20 p-6 sm:p-10 lg:p-12 backdrop-blur-md mb-12 shadow-[0_20px_50px_rgba(0,0,0,0.5)] relative overflow-hidden group hover:border-[#ffd25d]/50 transition-all duration-500"
         >
           {/* Classic Animated Gold Border Beam along the top */}
           <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-transparent via-[#f5be38] to-transparent opacity-90" />

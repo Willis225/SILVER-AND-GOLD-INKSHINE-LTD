@@ -283,5 +283,41 @@ canvas {
 .shine-delay-7 { animation-delay: 4.2s; }
 .shine-delay-8 { animation-delay: 4.9s; }
 
+/* =========================================================
+   🏆 #1 — Staggered Scroll Reveal Foundation
+   - Timing: 600ms, Easing: cubic-bezier(0.16, 1, 0.3, 1)
+   - Stagger: 80ms delay between siblings
+   - GPU-Accelerated: Animates ONLY transform + opacity
+   ========================================================= */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.scroll-reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stagger-1 { transition-delay: 0.08s; }
+.stagger-2 { transition-delay: 0.16s; }
+.stagger-3 { transition-delay: 0.24s; }
+.stagger-4 { transition-delay: 0.32s; }
+.stagger-5 { transition-delay: 0.40s; }
+.stagger-6 { transition-delay: 0.48s; }
+.stagger-7 { transition-delay: 0.56s; }
+.stagger-8 { transition-delay: 0.64s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+
 
 

@@ -97,7 +97,7 @@ export const ServicesShowcaseSection: React.FC<ServicesShowcaseSectionProps> = (
           
           {/* Left Column: Heading, Paragraph & Call to Action with entrance animation */}
           <motion.div 
-            initial={{ opacity: 0, y: 22 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
@@ -134,10 +134,10 @@ export const ServicesShowcaseSection: React.FC<ServicesShowcaseSectionProps> = (
 
           {/* Right Column: Carousel of Products */}
           <motion.div 
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.6, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-9 relative group/carousel"
           >
             
@@ -174,10 +174,10 @@ export const ServicesShowcaseSection: React.FC<ServicesShowcaseSectionProps> = (
                 return (
                   <motion.div
                     key={item.id}
-                    initial={{ opacity: 0, y: 16 }}
+                    initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: idx * 0.06 }}
+                    viewport={{ once: true, margin: "-40px" }}
+                    transition={{ duration: 0.6, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
                     whileHover={{ y: -6, scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => onSelectItem?.(item as any)}

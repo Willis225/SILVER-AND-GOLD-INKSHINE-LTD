@@ -19,12 +19,12 @@ export const BrandIntroSection: React.FC<BrandIntroSectionProps> = ({ onExploreP
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
           
-          {/* Left Column: Descriptive Text & Bullet Points with Entrance Animation */}
+          {/* Left Column: Descriptive Text & Bullet Points with Staggered Scroll Reveal */}
           <motion.div 
-            initial={{ opacity: 0, y: 22 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-5 space-y-6"
           >
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-stone-100 border border-stone-300 text-stone-900 text-xs font-black tracking-widest uppercase shadow-2xs">

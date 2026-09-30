@@ -94,11 +94,16 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
-          {/* Left Column: Natural, Authoritative Printing Press Typography (NO ARTIFICIAL FLOATING BOX) */}
+          {/* Left Column: Natural, Authoritative Printing Press Typography */}
           <div className="lg:col-span-7 xl:col-span-7 space-y-6 sm:space-y-7">
             
-            {/* Eyebrow & Brand Kicker: Refined Editorial Hallmark (Monochrome) */}
-            <div className="flex flex-wrap items-center gap-3">
+            {/* 1. Eyebrow & Brand Kicker */}
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.0, ease: [0.16, 1, 0.3, 1] }}
+              className="flex flex-wrap items-center gap-3"
+            >
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 shadow-sm">
                 <span className="w-2 h-2 rounded-full bg-white shadow-[0_0_8px_#ffffff]" />
                 <span className="text-[11px] sm:text-xs font-black tracking-wider uppercase text-white">
@@ -106,10 +111,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 </span>
                 <Sparkles className="w-3.5 h-3.5 text-white" />
               </div>
-            </div>
+            </motion.div>
 
-            {/* Headline and Subheadline: Bold, Balanced, Dominant */}
-            <div className="space-y-3">
+            {/* 2. Headline and Subheadline */}
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+              className="space-y-3"
+            >
               <h1 className="text-3xl xs:text-4xl sm:text-5xl lg:text-[46px] xl:text-[52px] font-black tracking-tight text-white leading-[1.08] text-balance">
                 {headline}
               </h1>
@@ -121,7 +131,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 </span>
               </div>
 
-              {/* Monochromatic Registration Rule (Honoring authentic printing press craft) */}
+              {/* Monochromatic Registration Rule */}
               <div className="flex items-center gap-2.5 pt-1 max-w-xl">
                 <div className="flex items-center gap-1 shrink-0">
                   <span className="w-2.5 h-2.5 rounded-sm bg-white" title="Process 100%" />
@@ -135,14 +145,19 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 </span>
               </div>
 
-              {/* Subtitle Description Write-up (Preserving exact wording) */}
+              {/* Subtitle Description Write-up */}
               <p className="text-stone-300 text-sm sm:text-base leading-relaxed max-w-2xl font-normal pt-1">
                 {description}
               </p>
-            </div>
+            </motion.div>
 
-            {/* Realtime Client Trust Proof - Simplified & Clean (Stars + 168K+ Clients • 5K+ Businesses Served) */}
-            <div className="pt-2">
+            {/* 3. Realtime Client Trust Proof */}
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.16, ease: [0.16, 1, 0.3, 1] }}
+              className="pt-2"
+            >
               <div className="inline-flex items-center gap-3 px-4 py-2.5 rounded-full bg-white/[0.06] hover:bg-white/[0.09] border border-white/15 backdrop-blur-md shadow-lg transition-all duration-300">
                 <div className="flex items-center text-[#ffd25d]">
                   {[...Array(5)].map((_, i) => (
@@ -154,11 +169,16 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   168K+ Clients • 5K+ Businesses Served
                 </span>
               </div>
-            </div>
+            </motion.div>
 
-            {/* Primary Action Buttons */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-1">
-              {/* WhatsApp Button: Solid High-Contrast White */}
+            {/* 4. Primary Action Buttons */}
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.24, ease: [0.16, 1, 0.3, 1] }}
+              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-1"
+            >
+              {/* WhatsApp Button */}
               <a
                 href="https://wa.me/2347030372539?text=Hello%20Silver%20%26%20Gold%20Inkshine%20Ltd%2C%20I%20would%20like%20to%20inquire%20about%20printing%20services"
                 target="_blank"
@@ -185,10 +205,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 <span>Explore Print Catalog</span>
                 <ArrowRight className="w-4 h-4 text-white transition-transform group-hover:translate-x-1" />
               </button>
-            </div>
+            </motion.div>
 
-            {/* Quick Guarantees: 3 Clean Inline Items */}
-            <div className="pt-2 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-stone-300">
+            {/* 5. Quick Guarantees: 3 Clean Inline Items */}
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.32, ease: [0.16, 1, 0.3, 1] }}
+              className="pt-2 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-stone-300"
+            >
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-white shrink-0" />
                 <span className="font-medium text-stone-200">Same-Day &amp; 24hr Turnaround</span>
@@ -201,12 +226,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 <CheckCircle2 className="w-4 h-4 text-white shrink-0" />
                 <span className="font-medium text-stone-200">Bayelsa &amp; Nationwide Delivery</span>
               </div>
-            </div>
+            </motion.div>
 
           </div>
 
           {/* Right Column: Clean Professional Image Frame */}
-          <div className="lg:col-span-5 xl:col-span-5 flex flex-col items-center lg:items-end">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.16, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-5 xl:col-span-5 flex flex-col items-center lg:items-end"
+          >
             <div className="w-full max-w-md lg:max-w-[430px]">
               
               {/* Executive Image Frame with soft rounded corners and seamless dark background blending */}
@@ -237,7 +267,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               </div>
 
             </div>
-          </div>
+          </motion.div>
 
         </div>
       </div>

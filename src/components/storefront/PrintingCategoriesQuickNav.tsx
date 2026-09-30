@@ -117,16 +117,17 @@ export const PrintingCategoriesQuickNav: React.FC<PrintingCategoriesQuickNavProp
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         
         {/* Section Header */}
+        {/* Header Intro with Staggered Scroll Reveal */}
         <motion.div 
-          initial={{ opacity: 0, x: -80 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="flex flex-col sm:flex-row sm:items-end justify-between gap-5 mb-10 sm:mb-12"
         >
           <div>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-[#f5be38]/30 text-white text-xs font-black tracking-widest uppercase mb-3 shadow-xs">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#f5be38] ring-4 ring-[#f5be38]/20 animate-pulse" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-[#ffd25d]/30 text-white text-xs font-black tracking-widest uppercase mb-3 shadow-xs">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#ffd25d] ring-4 ring-[#ffd25d]/20 animate-pulse" />
               <span>Full-Service Commercial Printing Press</span>
             </div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight leading-tight">
@@ -149,17 +150,16 @@ export const PrintingCategoriesQuickNav: React.FC<PrintingCategoriesQuickNavProp
 
         {/* Reflective Conduit Light Line Connecting Categories (Pure Silver & Gold) */}
         <motion.div 
-          initial={{ opacity: 0, scaleX: 0 }}
-          whileInView={{ opacity: 1, scaleX: 1 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          style={{ originX: 0 }}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 0.6, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
           className="relative mb-6 sm:mb-8"
         >
           {/* Base connector line */}
           <div className="w-full h-1 rounded-full bg-white/10 overflow-hidden relative shadow-inner">
             {/* Animated flowing reflective light beam */}
-            <div className="absolute inset-0 w-1/3 bg-gradient-to-r from-transparent via-[#f5be38] via-white to-transparent blur-[1px] animate-connecting-light" />
+            <div className="absolute inset-0 w-1/3 bg-gradient-to-r from-transparent via-[#ffd25d] via-white to-transparent blur-[1px] animate-connecting-light" />
           </div>
 
           {/* Micro reflective node indicators */}
@@ -170,26 +170,26 @@ export const PrintingCategoriesQuickNav: React.FC<PrintingCategoriesQuickNavProp
           </div>
         </motion.div>
 
-        {/* 8 Luxury Category Boxes with Smooth Scroll Entrance From Left to Right */}
+        {/* 8 Luxury Category Boxes with Staggered Scroll Entrance (80ms ripple) */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
           {PRINT_CATEGORIES.map((cat, idx) => {
             const Icon = cat.icon;
-            // Progressive delay so each box comes out smoothly from left to right as you scroll towards that area
-            const staggerDelay = (idx % 4) * 0.14;
+            // 80ms stagger delay between sibling cards
+            const staggerDelay = idx * 0.08;
 
             return (
               <motion.div
                 key={cat.id}
-                initial={{ opacity: 0, x: -110 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, amount: 0.18, margin: "0px 0px -50px 0px" }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
                 transition={{ 
-                  duration: 0.72, 
+                  duration: 0.6, 
                   delay: staggerDelay, 
-                  ease: [0.22, 1, 0.36, 1] 
+                  ease: [0.16, 1, 0.3, 1] 
                 }}
                 onClick={() => onSelectCategory(cat.id)}
-                className="group relative bg-[#09090d] hover:bg-[#121218] border border-white/15 hover:border-[#f5be38]/50 rounded-2xl sm:rounded-3xl p-6 sm:p-7 min-h-[300px] flex flex-col justify-between overflow-hidden cursor-pointer shadow-md hover:shadow-[0_20px_45px_rgba(245,190,56,0.08)] transform-gpu transition-all duration-500 ease-out hover:scale-105 hover:-translate-y-2 active:scale-95 will-change-transform"
+                className="group relative bg-[#09090d] hover:bg-[#121218] border border-white/15 hover:border-[#ffd25d]/50 rounded-2xl sm:rounded-3xl p-6 sm:p-7 min-h-[300px] flex flex-col justify-between overflow-hidden cursor-pointer shadow-md hover:shadow-[0_20px_45px_rgba(255,210,93,0.1)] transform-gpu transition-all duration-500 ease-out hover:scale-105 hover:-translate-y-2 active:scale-95 will-change-transform"
               >
                 {/* 1. Underlying Realistic Product Background (Subtle Grayscale Watermark) */}
                 <div 

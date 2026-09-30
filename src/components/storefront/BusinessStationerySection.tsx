@@ -76,10 +76,10 @@ export const BusinessStationerySection: React.FC<BusinessStationerySectionProps>
         
         {/* Wide Header Row: Headline, Description & Call to Action in Silver & Gold on Pure Black */}
         <motion.div 
-          initial={{ opacity: 0, x: -70 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-40px" }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="relative flex flex-col lg:flex-row lg:items-end justify-between gap-6 p-6 sm:p-10 rounded-3xl border border-white/15 shadow-2xl overflow-hidden group transition-all duration-300 bg-[#050508]"
         >
           {/* Background Image Layer */}
@@ -135,18 +135,18 @@ export const BusinessStationerySection: React.FC<BusinessStationerySectionProps>
           </div>
         </motion.div>
 
-        {/* Wide Full-Grid Showcase: 4 Product Cards Coming Out From Left to Right */}
+        {/* Wide Full-Grid Showcase: Product Cards with Staggered Scroll Reveal */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {displayItems.map((item, idx) => (
             <motion.div
               key={item.id}
-              initial={{ opacity: 0, x: -70 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-30px" }}
-              transition={{ duration: 0.6, delay: idx * 0.12, ease: [0.22, 1, 0.36, 1] }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.6, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
               whileHover={{ y: -6 }}
               onClick={() => onSelectItem?.(item)}
-              className="group relative rounded-3xl bg-[#09090d] hover:bg-[#111116] border border-white/15 hover:border-[#f5be38]/50 overflow-hidden shadow-xl hover:shadow-[0_15px_35px_rgba(245,190,56,0.12)] transition-all duration-300 flex flex-col justify-between cursor-pointer"
+              className="group relative rounded-3xl bg-[#09090d] hover:bg-[#111116] border border-white/15 hover:border-[#ffd25d]/50 overflow-hidden shadow-xl hover:shadow-[0_15px_35px_rgba(255,210,93,0.12)] transition-all duration-300 flex flex-col justify-between cursor-pointer"
             >
               {/* Top hover accent in Gold */}
               <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#f5be38] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20" />
