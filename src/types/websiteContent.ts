@@ -155,8 +155,8 @@ export const DEFAULT_SHOWCASE_SERVICES: ShowcaseServiceItem[] = [
 export const DEFAULT_WEBSITE_CONTENT: WebsiteContent = {
   heroHeadline: '#1 Online Printing Company in Bayelsa',
   heroSubheadline: 'Banners • Branding • Digital Printing',
-  heroEyebrow: 'Bring your business to the best scale',
-  heroDescription: 'Select from top print collections, guaranteeing precision color matching and pre-press audit. Need custom specs or large volume? Fast turnaround and nationwide doorstep delivery across Nigeria!',
+  heroEyebrow: 'Grow Your Brand with Premium, Fast Printing',
+  heroDescription: 'Every order includes precision color matching + a free pre-press audit — perfect prints, every time',
   heroBackgroundImage: 'https://cdn.hstockplus.org/uploads/public/img-1790066633477-1b16a758309b0fff.webp',
   heroSlides: DEFAULT_HERO_SLIDES,
   showcaseTitle: 'Top-Quality Printing Services',
@@ -191,8 +191,10 @@ export function loadSavedWebsiteContent(): WebsiteContent {
 
       const heroHeadline = parsed.heroHeadline || DEFAULT_WEBSITE_CONTENT.heroHeadline;
       const heroSubheadline = parsed.heroSubheadline || DEFAULT_WEBSITE_CONTENT.heroSubheadline;
-      const heroEyebrow = parsed.heroEyebrow || DEFAULT_WEBSITE_CONTENT.heroEyebrow;
-      const heroDescription = parsed.heroDescription || DEFAULT_WEBSITE_CONTENT.heroDescription;
+      const isOldEyebrow = !parsed.heroEyebrow || parsed.heroEyebrow === 'Bring your business to the best scale';
+      const heroEyebrow = isOldEyebrow ? DEFAULT_WEBSITE_CONTENT.heroEyebrow : parsed.heroEyebrow;
+      const isOldDesc = !parsed.heroDescription || parsed.heroDescription.includes('Select from top print collections');
+      const heroDescription = isOldDesc ? DEFAULT_WEBSITE_CONTENT.heroDescription : parsed.heroDescription;
 
       const hasOldMapUrl = parsed.googleMapsUrl === 'https://maps.app.goo.gl/LSvreepfyxDCE4246';
       const resolvedMapUrl = (!parsed.googleMapsUrl || hasOldMapUrl)

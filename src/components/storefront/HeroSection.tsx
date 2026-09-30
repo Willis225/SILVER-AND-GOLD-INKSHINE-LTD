@@ -31,8 +31,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   slides,
   headline = '#1 Online Printing Company in Bayelsa',
   subheadline = 'Banners • Branding • Digital Printing',
-  eyebrow = 'Bring your business to the best scale',
-  description = 'Select from top print collections, guaranteeing precision color matching and pre-press audit. Need custom specs or large volume? Fast turnaround and nationwide doorstep delivery across Nigeria!',
+  eyebrow = 'Grow Your Brand with Premium, Fast Printing',
+  description = 'Every order includes precision color matching + a free pre-press audit — perfect prints, every time',
   backgroundImageUrl = 'https://cdn.hstockplus.org/uploads/public/img-1790066633477-1b16a758309b0fff.webp',
 }) => {
   const resolveHeroBg = (url?: string) => {
@@ -106,10 +106,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 </span>
                 <Sparkles className="w-3.5 h-3.5 text-white" />
               </div>
-              <span className="text-xs font-semibold text-stone-400 hidden sm:inline-flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-stone-500" />
-                Yenagoa &amp; Nationwide Hub
-              </span>
             </div>
 
             {/* Headline and Subheadline: Bold, Balanced, Dominant */}
@@ -145,80 +141,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               </p>
             </div>
 
-            {/* Realtime Client Trust Proof - Premium Glassmorphic Badge */}
+            {/* Realtime Client Trust Proof - Simplified & Clean (Stars + 168K+ Clients • 5K+ Businesses Served) */}
             <div className="pt-2">
-              <div className="inline-flex flex-wrap sm:flex-nowrap items-center gap-3.5 sm:gap-4 p-2 sm:px-3.5 sm:py-2.5 rounded-2xl bg-white/[0.06] hover:bg-white/[0.09] border border-white/15 hover:border-white/40 backdrop-blur-md transition-all duration-300 shadow-[0_8px_24px_rgba(0,0,0,0.35)] group">
-                
-                {/* Avatars Stack with Glowing White Counter (Authentic Black African Corporate Clients & Event Planners) */}
-                <div className="flex items-center -space-x-2.5 overflow-visible shrink-0 pl-1">
-                  <div className="relative">
-                    <img
-                      className="inline-block h-9 w-9 sm:h-10 sm:w-10 rounded-full ring-2 ring-[#09090d] object-cover shadow-sm transition-transform duration-200 group-hover:scale-105"
-                      src="https://images.unsplash.com/photo-1531384441138-2736e62e0919?auto=format&fit=crop&w=140&q=80"
-                      alt="Verified African Enterprise Client"
-                      referrerPolicy="no-referrer"
-                    />
-                  </div>
-                  <div className="relative">
-                    <img
-                      className="inline-block h-9 w-9 sm:h-10 sm:w-10 rounded-full ring-2 ring-[#09090d] object-cover shadow-sm transition-transform duration-200 group-hover:scale-105"
-                      src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=140&q=80"
-                      alt="Verified African Corporate Brand Manager"
-                      referrerPolicy="no-referrer"
-                    />
-                  </div>
-                  <div className="relative">
-                    <img
-                      className="inline-block h-9 w-9 sm:h-10 sm:w-10 rounded-full ring-2 ring-[#09090d] object-cover shadow-sm transition-transform duration-200 group-hover:scale-105"
-                      src="https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?auto=format&fit=crop&w=140&q=80"
-                      alt="Verified African SME Executive"
-                      referrerPolicy="no-referrer"
-                    />
-                  </div>
-                  <div className="relative">
-                    <img
-                      className="inline-block h-9 w-9 sm:h-10 sm:w-10 rounded-full ring-2 ring-[#09090d] object-cover shadow-sm transition-transform duration-200 group-hover:scale-105"
-                      src="https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?auto=format&fit=crop&w=140&q=80"
-                      alt="Verified African Event Director"
-                      referrerPolicy="no-referrer"
-                    />
-                  </div>
-
-                  {/* High-visibility Counter Badge */}
-                  <div className="relative z-10 inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-white text-black font-black text-xs ring-2 ring-[#09090d] shadow-md transition-transform duration-200 group-hover:scale-110">
-                    +5k
-                  </div>
+              <div className="inline-flex items-center gap-3 px-4 py-2.5 rounded-full bg-white/[0.06] hover:bg-white/[0.09] border border-white/15 backdrop-blur-md shadow-lg transition-all duration-300">
+                <div className="flex items-center text-[#ffd25d]">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-3.5 h-3.5 fill-[#ffd25d] text-[#ffd25d]" />
+                  ))}
                 </div>
-
-                {/* Divider Line on Desktop */}
-                <div className="hidden sm:block w-[1px] h-8 bg-white/15" />
-
-                {/* Text & Social Proof Metrics */}
-                <div className="text-left space-y-0.5">
-                  <div className="flex items-center gap-2">
-                    <span className="font-black text-white text-sm sm:text-[15px] tracking-tight">
-                      168K+ Realtime Clients
-                    </span>
-                    {/* Live Pulsing Dot */}
-                    <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-white/10 border border-white/20 text-[10px] font-bold text-white">
-                      <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-                      Live
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-1.5 text-xs">
-                    {/* 5 Rating Stars */}
-                    <div className="flex items-center text-white">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-3 h-3 fill-white" />
-                      ))}
-                    </div>
-                    <span className="text-stone-300 font-medium text-[11px] sm:text-xs">
-                      Corporate brands, SMEs &amp; event planners served
-                    </span>
-                  </div>
-                </div>
-
+                <div className="h-3.5 w-[1px] bg-white/20" />
+                <span className="font-extrabold text-white text-xs sm:text-sm tracking-tight">
+                  168K+ Clients • 5K+ Businesses Served
+                </span>
               </div>
             </div>
 
@@ -275,17 +209,24 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           <div className="lg:col-span-5 xl:col-span-5 flex flex-col items-center lg:items-end">
             <div className="w-full max-w-md lg:max-w-[430px]">
               
-              {/* Executive Image Frame */}
-              <div className="relative rounded-3xl overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.9),0_0_35px_rgba(245,190,56,0.15)] bg-black border border-white/20 hover:border-[#f5be38]/50 ring-1 ring-[#f5be38]/20 transition-all duration-500 group">
+              {/* Executive Image Frame with soft rounded corners and seamless dark background blending */}
+              <div className="relative rounded-[28px] overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.9),0_0_30px_rgba(255,210,93,0.12)] bg-[#0d0d12] border border-white/15 hover:border-[#ffd25d]/40 ring-1 ring-white/10 transition-all duration-500 group">
                 
                 {/* Image Stage */}
-                <div className="relative aspect-[1145/1374] overflow-hidden bg-black flex items-center justify-center">
+                <div className="relative aspect-[1145/1374] overflow-hidden bg-[#0d0d12] flex items-center justify-center">
                   <img
                     src="/inkshine-brand-portrait.png"
                     alt="Silver & Gold Inkshine"
                     className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
                     loading="eager"
                   />
+
+                  {/* Soft bottom edge gradient to blend seamlessly with the dark background and avoid cutout edges */}
+                  <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#08080a] via-[#08080a]/40 to-transparent pointer-events-none" />
+                  <div className="absolute inset-x-0 top-0 h-12 bg-gradient-to-b from-[#08080a]/30 to-transparent pointer-events-none" />
+
+                  {/* Soft inner rounded vignette border */}
+                  <div className="absolute inset-0 rounded-[28px] ring-1 ring-inset ring-white/15 pointer-events-none" />
 
                   {/* Subtle specular light sweep effect on hover */}
                   <div className="absolute inset-0 pointer-events-none overflow-hidden">

@@ -165,21 +165,7 @@ export default function App() {
   // Storefront navigation & state
   const [selectedCategory, setSelectedCategory] = useState<ProductCategory | 'all'>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [cartItems, setCartItems] = useState<CartItem[]>([
-    {
-      id: 'cart-item-demo-1',
-      product: SAMPLE_PRODUCTS[0], // Luxury Rollup Banner
-      selectedOptions: {
-        'opt-cassette-base': 'b-teardrop',
-        'opt-media-substrate': 'm-solite',
-      },
-      quantity: 2,
-      artworkType: 'direct_upload',
-      uploadedFileName: 'AIT_Summit_Banner_Artwork_Final.pdf',
-      unitPriceNgn: 34500,
-      totalPriceNgn: 69000,
-    }
-  ]);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
   

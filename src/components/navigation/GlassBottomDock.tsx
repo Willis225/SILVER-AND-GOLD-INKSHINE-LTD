@@ -26,7 +26,7 @@ export const GlassBottomDock: React.FC<GlassBottomDockProps> = ({
         className="pointer-events-auto relative flex items-center justify-between p-1 xs:p-1.5 sm:p-2 rounded-full bg-black/85 backdrop-blur-2xl border border-white/20 shadow-[0_16px_40px_rgba(0,0,0,0.75)] ring-1 ring-white/10 transition-all duration-300 hover:border-white/35"
       >
         {/* Subtle Ambient Refraction Sheen */}
-        <div className="absolute inset-0 rounded-full bg-gradient-to-r from-[#d4af37]/10 via-white/5 to-[#d4af37]/10 pointer-events-none" />
+        <div className="absolute inset-0 rounded-full bg-gradient-to-r from-[#ffd25d]/10 via-white/5 to-[#ffd25d]/10 pointer-events-none" />
 
         {/* 1. Book Online Button (Dynamic Gold Glass Focus) */}
         <button
@@ -35,7 +35,7 @@ export const GlassBottomDock: React.FC<GlassBottomDockProps> = ({
           onClick={onOpenBookOnline}
           className={`relative flex-1 flex items-center justify-center gap-1 xs:gap-1.5 sm:gap-2 py-2 xs:py-2.5 sm:py-3 px-2 xs:px-2.5 sm:px-3 rounded-full font-bold text-[10px] xs:text-xs sm:text-sm transition-all duration-200 active:scale-95 cursor-pointer ${
             activeModal === 'book'
-              ? 'bg-gradient-to-r from-[#d4af37] via-[#e5c158] to-[#b8860b] text-black shadow-lg shadow-[#d4af37]/30'
+              ? 'bg-gradient-to-r from-[#ffd25d] via-[#e5c158] to-[#b8860b] text-black shadow-lg shadow-[#ffd25d]/30'
               : 'bg-gradient-to-r from-[#dfbc5e]/20 via-[#dfbc5e]/30 to-[#dfbc5e]/20 text-[#ebd07f] hover:bg-[#dfbc5e]/40 hover:text-white border border-[#dfbc5e]/40'
           }`}
           title="Book your print and design order online"
@@ -69,7 +69,7 @@ export const GlassBottomDock: React.FC<GlassBottomDockProps> = ({
         {/* Vertical Frosted Glass Divider */}
         <div className="h-5 sm:h-6 w-[1px] bg-white/15 mx-0.5 shrink-0" />
 
-        {/* 3. Info Button */}
+        {/* 3. About / FAQs Button */}
         <button
           type="button"
           id="dock-info-btn"
@@ -79,10 +79,10 @@ export const GlassBottomDock: React.FC<GlassBottomDockProps> = ({
               ? 'bg-white/25 text-white shadow-inner'
               : 'text-stone-200 hover:text-white hover:bg-white/10'
           }`}
-          title="Company Info, RC Verification & Services"
+          title="About Us, FAQs, RC Verification & Services"
         >
           <Info className="w-3.5 h-3.5 text-stone-300 shrink-0" />
-          <span className="tracking-tight whitespace-nowrap">Info</span>
+          <span className="tracking-tight whitespace-nowrap">About / FAQs</span>
         </button>
       </nav>
     </aside>

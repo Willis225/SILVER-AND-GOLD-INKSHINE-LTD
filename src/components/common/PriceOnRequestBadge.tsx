@@ -22,9 +22,9 @@ export const PriceOnRequestBadge: React.FC<PriceOnRequestBadgeProps> = ({
   }[size];
 
   const themeClasses = {
-    light: 'bg-amber-50/90 border border-amber-300 text-amber-950 shadow-2xs',
-    dark: 'bg-[#f5be38]/15 border border-[#f5be38]/35 text-[#f5be38] shadow-2xs',
-    gold: 'bg-gradient-to-r from-[#f5be38] to-[#e5ab20] text-black font-black shadow-md border border-[#ffd56b]',
+    light: 'bg-amber-50/95 border border-amber-300 text-amber-950 shadow-2xs',
+    dark: 'bg-[#ffd25d]/15 border border-[#ffd25d]/40 text-[#ffd25d] shadow-2xs',
+    gold: 'bg-gradient-to-r from-[#ffd25d] via-[#f5be38] to-[#e5ab20] text-black font-black shadow-md border border-[#ffe082]',
     glass: 'bg-white/10 backdrop-blur-md border border-white/20 text-white shadow-xs',
   }[theme];
 
@@ -35,7 +35,7 @@ export const PriceOnRequestBadge: React.FC<PriceOnRequestBadgeProps> = ({
       {showIcon ? (
         <Tag className="w-3 h-3 shrink-0 text-current opacity-80" />
       ) : (
-        <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${theme === 'gold' ? 'bg-black' : theme === 'dark' ? 'bg-[#f5be38]' : 'bg-amber-600'} animate-pulse`} />
+        <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${theme === 'gold' ? 'bg-black' : theme === 'dark' ? 'bg-[#ffd25d]' : 'bg-amber-600'} animate-pulse`} />
       )}
       <span>Price on Request</span>
     </span>

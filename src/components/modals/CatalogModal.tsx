@@ -352,7 +352,7 @@ export const CatalogModal: React.FC<CatalogModalProps> = ({
                   }}
                   className={`px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1.5 cursor-pointer ${
                     isActive
-                      ? 'bg-gradient-to-r from-[#d4af37] via-[#e5c158] to-[#b8860b] text-black shadow-md shadow-[#d4af37]/30 font-extrabold scale-102'
+                      ? 'bg-gradient-to-r from-[#ffd25d] via-[#e5c158] to-[#b8860b] text-black shadow-md shadow-[#ffd25d]/30 font-extrabold scale-102'
                       : 'bg-white/5 text-stone-300 hover:bg-white/15 border border-white/10 hover:text-white'
                   }`}
                 >
@@ -492,7 +492,7 @@ export const CatalogModal: React.FC<CatalogModalProps> = ({
                           onClose();
                           onSelectProduct(item.product);
                         }}
-                        className="py-2 px-2.5 rounded-xl bg-gradient-to-r from-[#d4af37] to-[#b8860b] hover:from-[#e5c158] hover:to-[#d4af37] active:scale-95 text-black font-extrabold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-[#d4af37]/25 transition-all cursor-pointer"
+                        className="py-2 px-2.5 rounded-xl bg-gradient-to-r from-[#ffd25d] to-[#b8860b] hover:from-[#e5c158] hover:to-[#ffd25d] active:scale-95 text-black font-extrabold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-[#ffd25d]/25 transition-all cursor-pointer"
                         title="Configure and order this product"
                       >
                         <ShoppingBag className="w-3.5 h-3.5 shrink-0" />

@@ -70,7 +70,7 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
   if (!isOpen) return null;
 
   const tabs: { id: InfoModalTab; label: string; icon: React.FC<{ className?: string }> }[] = [
-    { id: 'info', label: 'Info', icon: Info },
+    { id: 'info', label: 'About / FAQs', icon: Info },
     { id: 'about', label: 'About Us', icon: Building2 },
     { id: 'services', label: 'Our Services', icon: Printer },
     { id: 'portfolios', label: 'Our Portfolios', icon: ImageIcon },

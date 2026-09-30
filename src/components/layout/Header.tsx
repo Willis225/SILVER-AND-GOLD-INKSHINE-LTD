@@ -244,7 +244,7 @@ export const Header: React.FC<HeaderProps> = ({
               >
                 <button 
                   onClick={() => handleCategoryNav('advertising_materials')}
-                  className="flex items-center gap-1 hover:text-[#d4af37] text-stone-200 transition-colors cursor-pointer"
+                  className="flex items-center gap-1 hover:text-[#ffd25d] text-stone-200 transition-colors cursor-pointer"
                 >
                   <span>Prints</span>
                   <ChevronDown className="w-3.5 h-3.5 text-stone-400 group-hover:rotate-180 transition-transform" />
@@ -260,7 +260,7 @@ export const Header: React.FC<HeaderProps> = ({
                         <Megaphone className="w-3.5 h-3.5" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="font-bold text-white group-hover/item:text-[#d4af37]">Advertising Materials</div>
+                        <div className="font-bold text-white group-hover/item:text-[#ffd25d]">Advertising Materials</div>
                         <div className="text-[11px] text-stone-400 truncate">Rollup banners, flags, posters &amp; backdrops</div>
                       </div>
                     </button>
@@ -273,7 +273,7 @@ export const Header: React.FC<HeaderProps> = ({
                         <Tag className="w-3.5 h-3.5" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="font-bold text-white group-hover/item:text-[#d4af37]">Stickers &amp; Labels</div>
+                        <div className="font-bold text-white group-hover/item:text-[#ffd25d]">Stickers &amp; Labels</div>
                         <div className="text-[11px] text-stone-400 truncate">Product packaging, bottle &amp; die-cut vinyl stickers</div>
                       </div>
                     </button>
@@ -286,7 +286,7 @@ export const Header: React.FC<HeaderProps> = ({
                         <FileText className="w-3.5 h-3.5" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="font-bold text-white group-hover/item:text-[#d4af37]">Flyer &amp; Handbill Printing</div>
+                        <div className="font-bold text-white group-hover/item:text-[#ffd25d]">Flyer &amp; Handbill Printing</div>
                         <div className="text-[11px] text-stone-400 truncate">A5, A6 marketing leaflets on gloss &amp; matte art paper</div>
                       </div>
                     </button>
@@ -299,7 +299,7 @@ export const Header: React.FC<HeaderProps> = ({
                         <Mail className="w-3.5 h-3.5" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="font-bold text-white group-hover/item:text-[#d4af37]">Cards &amp; Invitations</div>
+                        <div className="font-bold text-white group-hover/item:text-[#ffd25d]">Cards &amp; Invitations</div>
                         <div className="text-[11px] text-stone-400 truncate">Matte business cards, VIP invitations &amp; greeting cards</div>
                       </div>
                     </button>
@@ -312,7 +312,7 @@ export const Header: React.FC<HeaderProps> = ({
                         <Briefcase className="w-3.5 h-3.5" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="font-bold text-white group-hover/item:text-[#d4af37]">Office Stationery &amp; Corporate Branding</div>
+                        <div className="font-bold text-white group-hover/item:text-[#ffd25d]">Office Stationery &amp; Corporate Branding</div>
                         <div className="text-[11px] text-stone-400 truncate">Letterheads, envelopes, presentation folders &amp; notepads</div>
                       </div>
                     </button>
@@ -325,7 +325,7 @@ export const Header: React.FC<HeaderProps> = ({
                         <BookOpen className="w-3.5 h-3.5" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="font-bold text-white group-hover/item:text-[#d4af37]">Books &amp; Magazines</div>
+                        <div className="font-bold text-white group-hover/item:text-[#ffd25d]">Books &amp; Magazines</div>
                         <div className="text-[11px] text-stone-400 truncate">Annual reports, catalogs, profile booklets &amp; magazines</div>
                       </div>
                     </button>
@@ -341,7 +341,7 @@ export const Header: React.FC<HeaderProps> = ({
             >
               <button 
                 onClick={() => handleCategoryNav('custom_apparels_caps')}
-                className="flex items-center gap-1 hover:text-[#d4af37] text-stone-200 transition-colors cursor-pointer"
+                className="flex items-center gap-1 hover:text-[#ffd25d] text-stone-200 transition-colors cursor-pointer"
               >
                 <span>Branding</span>
                 <ChevronDown className="w-3.5 h-3.5 text-stone-400 group-hover:rotate-180 transition-transform" />
@@ -357,7 +357,7 @@ export const Header: React.FC<HeaderProps> = ({
                       <Shirt className="w-3.5 h-3.5" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="font-bold text-white group-hover/item:text-[#d4af37]">Custom Apparels &amp; Caps</div>
+                      <div className="font-bold text-white group-hover/item:text-[#ffd25d]">Custom Apparels &amp; Caps</div>
                       <div className="text-[11px] text-stone-400 truncate">Polo shirts, round neck tees, branded face caps &amp; hoodies</div>
                     </div>
                   </button>
@@ -370,7 +370,7 @@ export const Header: React.FC<HeaderProps> = ({
                       <Gift className="w-3.5 h-3.5" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="font-bold text-white group-hover/item:text-[#d4af37]">Gift Items &amp; Souvenirs</div>
+                      <div className="font-bold text-white group-hover/item:text-[#ffd25d]">Gift Items &amp; Souvenirs</div>
                       <div className="text-[11px] text-stone-400 truncate">Ceramic mugs, vacuum flasks, executive pens &amp; event umbrellas</div>
                     </div>
                   </button>
@@ -383,7 +383,7 @@ export const Header: React.FC<HeaderProps> = ({
                       <Utensils className="w-3.5 h-3.5" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="font-bold text-white group-hover/item:text-[#d4af37]">Food Packaging</div>
+                      <div className="font-bold text-white group-hover/item:text-[#ffd25d]">Food Packaging</div>
                       <div className="text-[11px] text-stone-400 truncate">Burger boxes, pastry packs, takeout bowls &amp; greaseproof wrap</div>
                     </div>
                   </button>
@@ -396,7 +396,7 @@ export const Header: React.FC<HeaderProps> = ({
                       <Package className="w-3.5 h-3.5" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="font-bold text-white group-hover/item:text-[#d4af37]">Packaging and Shipping Cartons</div>
+                      <div className="font-bold text-white group-hover/item:text-[#ffd25d]">Packaging and Shipping Cartons</div>
                       <div className="text-[11px] text-stone-400 truncate">Corrugated brown boxes, mailer cartons &amp; cargo packaging</div>
                     </div>
                   </button>
@@ -409,7 +409,7 @@ export const Header: React.FC<HeaderProps> = ({
                       <Tag className="w-3.5 h-3.5" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="font-bold text-white group-hover/item:text-[#d4af37]">Paper Bags &amp; Tags</div>
+                      <div className="font-bold text-white group-hover/item:text-[#ffd25d]">Paper Bags &amp; Tags</div>
                       <div className="text-[11px] text-stone-400 truncate">Kraft shopping carrier bags, boutique rope shoppers &amp; clothing tags</div>
                     </div>
                   </button>
@@ -422,7 +422,7 @@ export const Header: React.FC<HeaderProps> = ({
                       <Car className="w-3.5 h-3.5" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="font-bold text-white group-hover/item:text-[#d4af37]">Vehicle Branding</div>
+                      <div className="font-bold text-white group-hover/item:text-[#ffd25d]">Vehicle Branding</div>
                       <div className="text-[11px] text-stone-400 truncate">Commercial fleet wraps, delivery bus graphics &amp; one-way vision</div>
                     </div>
                   </button>
@@ -435,7 +435,7 @@ export const Header: React.FC<HeaderProps> = ({
                       <Layers className="w-3.5 h-3.5" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="font-bold text-white group-hover/item:text-[#d4af37]">Packages</div>
+                      <div className="font-bold text-white group-hover/item:text-[#ffd25d]">Packages</div>
                       <div className="text-[11px] text-stone-400 truncate">Startup branding bundles, corporate kits &amp; campaign suites</div>
                     </div>
                   </button>
@@ -451,7 +451,7 @@ export const Header: React.FC<HeaderProps> = ({
             >
               <button 
                 onClick={() => handleCategoryNav('banners_stands')}
-                className="flex items-center gap-1 hover:text-[#d4af37] text-stone-200 transition-colors cursor-pointer"
+                className="flex items-center gap-1 hover:text-[#ffd25d] text-stone-200 transition-colors cursor-pointer"
               >
                 <span>Displays</span>
                 <ChevronDown className="w-3.5 h-3.5 text-stone-400 group-hover:rotate-180 transition-transform" />
@@ -467,7 +467,7 @@ export const Header: React.FC<HeaderProps> = ({
                       <Flag className="w-3.5 h-3.5" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="font-bold text-white group-hover/item:text-[#d4af37]">Banners &amp; Stands</div>
+                      <div className="font-bold text-white group-hover/item:text-[#ffd25d]">Banners &amp; Stands</div>
                       <div className="text-[11px] text-stone-400 truncate">Rollup teardrop base, standard pull-ups &amp; X-banners</div>
                     </div>
                   </button>
@@ -480,7 +480,7 @@ export const Header: React.FC<HeaderProps> = ({
                       <Sun className="w-3.5 h-3.5" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="font-bold text-white group-hover/item:text-[#d4af37]">Outdoor Displays</div>
+                      <div className="font-bold text-white group-hover/item:text-[#ffd25d]">Outdoor Displays</div>
                       <div className="text-[11px] text-stone-400 truncate">Teardrop flying flags, feather banners &amp; event gazebos</div>
                     </div>
                   </button>
@@ -493,7 +493,7 @@ export const Header: React.FC<HeaderProps> = ({
                       <Signpost className="w-3.5 h-3.5" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="font-bold text-white group-hover/item:text-[#d4af37]">Signages</div>
+                      <div className="font-bold text-white group-hover/item:text-[#ffd25d]">Signages</div>
                       <div className="text-[11px] text-stone-400 truncate">3D illuminated acrylic letters, aluminum fascia boards</div>
                     </div>
                   </button>
@@ -506,7 +506,7 @@ export const Header: React.FC<HeaderProps> = ({
                       <Calendar className="w-3.5 h-3.5" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="font-bold text-white group-hover/item:text-[#d4af37]">Events &amp; Exhibitions</div>
+                      <div className="font-bold text-white group-hover/item:text-[#ffd25d]">Events &amp; Exhibitions</div>
                       <div className="text-[11px] text-stone-400 truncate">Media backdrops, exhibition booth popups &amp; podiums</div>
                     </div>
                   </button>
@@ -519,7 +519,7 @@ export const Header: React.FC<HeaderProps> = ({
                       <ImageIcon className="w-3.5 h-3.5" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="font-bold text-white group-hover/item:text-[#d4af37]">Frames &amp; Wall Arts</div>
+                      <div className="font-bold text-white group-hover/item:text-[#ffd25d]">Frames &amp; Wall Arts</div>
                       <div className="text-[11px] text-stone-400 truncate">Canvas gallery wraps, acrylic floating prints &amp; wood frames</div>
                     </div>
                   </button>
@@ -532,7 +532,7 @@ export const Header: React.FC<HeaderProps> = ({
                       <Award className="w-3.5 h-3.5" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="font-bold text-white group-hover/item:text-[#d4af37]">Awards</div>
+                      <div className="font-bold text-white group-hover/item:text-[#ffd25d]">Awards</div>
                       <div className="text-[11px] text-stone-400 truncate">Crystal engraved trophies, wooden plaques &amp; medals</div>
                     </div>
                   </button>
@@ -545,7 +545,7 @@ export const Header: React.FC<HeaderProps> = ({
                       <Printer className="w-3.5 h-3.5" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="font-bold text-white group-hover/item:text-[#d4af37]">Printing Machines</div>
+                      <div className="font-bold text-white group-hover/item:text-[#ffd25d]">Printing Machines</div>
                       <div className="text-[11px] text-stone-400 truncate">Large format eco-solvent printers, DTF &amp; laminators</div>
                     </div>
                   </button>
@@ -558,7 +558,7 @@ export const Header: React.FC<HeaderProps> = ({
                       <Heart className="w-3.5 h-3.5" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="font-bold text-white group-hover/item:text-[#d4af37]">Wedding</div>
+                      <div className="font-bold text-white group-hover/item:text-[#ffd25d]">Wedding</div>
                       <div className="text-[11px] text-stone-400 truncate">Event welcome boards, ceremonial backdrop &amp; guest books</div>
                     </div>
                   </button>
@@ -571,7 +571,7 @@ export const Header: React.FC<HeaderProps> = ({
                       <Car className="w-3.5 h-3.5" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="font-bold text-white group-hover/item:text-[#d4af37]">Carports</div>
+                      <div className="font-bold text-white group-hover/item:text-[#ffd25d]">Carports</div>
                       <div className="text-[11px] text-stone-400 truncate">Custom commercial tensile carports &amp; fabric shade structures</div>
                     </div>
                   </button>
@@ -590,9 +590,9 @@ export const Header: React.FC<HeaderProps> = ({
                   onOpenInfoModal?.('info');
                   setActiveDropdown(null);
                 }}
-                className="flex items-center gap-1 hover:text-[#d4af37] text-stone-200 transition-colors"
+                className="flex items-center gap-1 hover:text-[#ffd25d] text-stone-200 transition-colors"
               >
-                <span>Info</span>
+                <span>About / FAQs</span>
                 <ChevronDown className="w-3.5 h-3.5 text-stone-400 group-hover:rotate-180 transition-transform" />
               </button>
 
@@ -610,7 +610,7 @@ export const Header: React.FC<HeaderProps> = ({
                       <Info className="w-3.5 h-3.5" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="font-bold text-white group-hover/item:text-[#d4af37]">Info</div>
+                      <div className="font-bold text-white group-hover/item:text-[#ffd25d]">About / FAQs</div>
                       <div className="text-[11px] text-stone-400 truncate">Corporate credentials, RC 1892044 &amp; factory capacity</div>
                     </div>
                   </button>
@@ -627,7 +627,7 @@ export const Header: React.FC<HeaderProps> = ({
                       <Building2 className="w-3.5 h-3.5" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="font-bold text-white group-hover/item:text-[#d4af37]">About Us</div>
+                      <div className="font-bold text-white group-hover/item:text-[#ffd25d]">About Us</div>
                       <div className="text-[11px] text-stone-400 truncate">Our story, mission, quality promise &amp; values</div>
                     </div>
                   </button>
@@ -644,7 +644,7 @@ export const Header: React.FC<HeaderProps> = ({
                       <Printer className="w-3.5 h-3.5" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="font-bold text-white group-hover/item:text-[#d4af37]">Our Services</div>
+                      <div className="font-bold text-white group-hover/item:text-[#ffd25d]">Our Services</div>
                       <div className="text-[11px] text-stone-400 truncate">Commercial printing, signage, packaging &amp; apparel</div>
                     </div>
                   </button>
@@ -661,7 +661,7 @@ export const Header: React.FC<HeaderProps> = ({
                       <ImageIcon className="w-3.5 h-3.5" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="font-bold text-white group-hover/item:text-[#d4af37]">Our Portfolios</div>
+                      <div className="font-bold text-white group-hover/item:text-[#ffd25d]">Our Portfolios</div>
                       <div className="text-[11px] text-stone-400 truncate">Completed projects gallery, summits &amp; client works</div>
                     </div>
                   </button>
@@ -678,7 +678,7 @@ export const Header: React.FC<HeaderProps> = ({
                       <HelpCircle className="w-3.5 h-3.5" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="font-bold text-white group-hover/item:text-[#d4af37]">How It Works / FAQ</div>
+                      <div className="font-bold text-white group-hover/item:text-[#ffd25d]">How It Works / FAQ</div>
                       <div className="text-[11px] text-stone-400 truncate">4-step ordering guide, turnaround &amp; FAQs</div>
                     </div>
                   </button>
@@ -695,7 +695,7 @@ export const Header: React.FC<HeaderProps> = ({
                       <Phone className="w-3.5 h-3.5" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="font-bold text-white group-hover/item:text-[#d4af37]">Contact Us</div>
+                      <div className="font-bold text-white group-hover/item:text-[#ffd25d]">Contact Us</div>
                       <div className="text-[11px] text-stone-400 truncate">Yenagoa press complex, WhatsApp &amp; telephone desk</div>
                     </div>
                   </button>
@@ -709,7 +709,7 @@ export const Header: React.FC<HeaderProps> = ({
               id="desktop-header-book-online-btn"
               type="button"
               onClick={onOpenBookOnline}
-              className="relative px-4 py-1.5 rounded-full bg-gradient-to-r from-[#d4af37] via-[#e5c158] to-[#b8860b] hover:from-[#e5c158] hover:to-[#d4af37] text-black font-extrabold text-xs tracking-tight shadow-md shadow-[#d4af37]/25 flex items-center gap-1.5 active:scale-95 transition-all cursor-pointer group"
+              className="relative px-4 py-1.5 rounded-full bg-gradient-to-r from-[#ffd25d] via-[#e5c158] to-[#b8860b] hover:from-[#e5c158] hover:to-[#ffd25d] text-black font-extrabold text-xs tracking-tight shadow-md shadow-[#ffd25d]/25 flex items-center gap-1.5 active:scale-95 transition-all cursor-pointer group"
               title="Configure, calculate live quote and book online"
             >
               <Calendar className="w-3.5 h-3.5 stroke-[2.4]" />
@@ -738,7 +738,7 @@ export const Header: React.FC<HeaderProps> = ({
             <div className="relative">
               <button
                 onClick={() => setShowSearchModal(!showSearchModal)}
-                className="p-2 text-stone-300 hover:text-[#d4af37] transition-colors rounded-full hover:bg-white/10"
+                className="p-2 text-stone-300 hover:text-[#ffd25d] transition-colors rounded-full hover:bg-white/10"
                 aria-label="Search items"
               >
                 <Search className="w-5 h-5 stroke-[2.2]" />
@@ -775,26 +775,30 @@ export const Header: React.FC<HeaderProps> = ({
               )}
             </div>
 
-            {/* Shopping Cart Icon with Counter matching screenshot */}
+            {/* Shopping Cart Icon with Counter */}
             <button
               id="cart-toggle-btn"
               onClick={onOpenCart}
-              className="flex items-center gap-1.5 p-1.5 text-stone-200 hover:text-[#d4af37] transition-colors"
+              className="relative flex items-center justify-center min-w-[44px] min-h-[44px] p-2 text-stone-200 hover:text-[#ffd25d] hover:bg-white/10 rounded-full transition-colors"
               aria-label="Shopping Cart"
             >
               <ShoppingBag className="w-5 h-5 stroke-[2.2]" />
-              <span className="text-xs font-bold text-stone-200">
-                {cartCount}
-              </span>
+              {cartCount > 0 ? (
+                <span className="absolute top-1 right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-[#f5be38] text-black font-black text-[10px] flex items-center justify-center shadow-md animate-in zoom-in-75 duration-150">
+                  {cartCount}
+                </span>
+              ) : (
+                <span className="text-[11px] font-bold text-stone-400 ml-1">0</span>
+              )}
             </button>
 
-            {/* Mobile Menu Toggle */}
+            {/* Mobile Menu Hamburger Toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-1.5 text-stone-200 md:hidden hover:text-[#d4af37]"
-              aria-label="Open menu"
+              className="flex items-center justify-center min-w-[44px] min-h-[44px] p-2 text-stone-200 md:hidden hover:text-[#ffd25d] hover:bg-white/10 rounded-xl transition-colors cursor-pointer"
+              aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-6 h-6 text-white" /> : <Menu className="w-6 h-6 text-white" />}
             </button>
           </div>
         </div>
@@ -803,17 +807,17 @@ export const Header: React.FC<HeaderProps> = ({
 
       {/* Mobile Menu Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-[#0a0b0e] border-b border-white/15 px-4 py-3 space-y-3">
+        <div className="md:hidden bg-[#0a0b0e] border-b border-white/15 px-4 py-4 space-y-4 animate-in slide-in-from-top-2 duration-200">
           {/* Mobile Direct Action Buttons */}
-          <div className="grid grid-cols-2 gap-2 pt-1">
+          <div className="grid grid-cols-2 gap-2.5 pt-1">
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
                 onOpenBookOnline?.();
               }}
-              className="py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#d4af37] via-[#e5c158] to-[#b8860b] text-black font-extrabold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-[#d4af37]/20 active:scale-95 transition-all cursor-pointer"
+              className="min-h-[44px] py-2.5 px-3.5 rounded-xl bg-gradient-to-r from-[#ffd25d] via-[#f5be38] to-[#e5ab20] text-black font-black text-xs flex items-center justify-center gap-1.5 shadow-md shadow-[#f5be38]/20 active:scale-95 transition-all cursor-pointer"
             >
-              <Calendar className="w-3.5 h-3.5" />
+              <Calendar className="w-4 h-4 text-black" />
               <span>Order Online</span>
             </button>
             <button
@@ -825,9 +829,9 @@ export const Header: React.FC<HeaderProps> = ({
                   onOpenCatalog?.();
                 }
               }}
-              className="py-2.5 px-3 rounded-xl bg-white/10 hover:bg-white/15 text-[#ebd07f] border border-[#dfbc5e]/30 font-bold text-xs flex items-center justify-center gap-1.5 active:scale-95 transition-all cursor-pointer"
+              className="min-h-[44px] py-2.5 px-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-[#ffd25d] border border-[#ffd25d]/40 font-bold text-xs flex items-center justify-center gap-1.5 active:scale-95 transition-all cursor-pointer"
             >
-              <Sparkles className="w-3.5 h-3.5" />
+              <Sparkles className="w-4 h-4 text-[#ffd25d]" />
               <span>Catalog</span>
             </button>
           </div>
@@ -839,28 +843,28 @@ export const Header: React.FC<HeaderProps> = ({
                 setMobileMenuOpen(false);
                 onOpenQuoteModal();
               }}
-              className="w-full py-2 px-3 rounded-xl bg-[#14141c] hover:bg-white/5 border border-white/10 text-stone-300 hover:text-white text-xs font-semibold flex items-center justify-between transition-colors cursor-pointer"
+              className="w-full min-h-[44px] py-2.5 px-3.5 rounded-xl bg-[#14141c] hover:bg-white/10 border border-white/15 text-stone-200 hover:text-white text-xs font-semibold flex items-center justify-between transition-colors cursor-pointer"
             >
               <span className="flex items-center gap-2">
-                <FileText className="w-3.5 h-3.5 text-[#f5be38]" />
+                <FileText className="w-4 h-4 text-[#ffd25d]" />
                 <span>Need a Custom Enterprise Quote?</span>
               </span>
-              <ChevronRight className="w-3.5 h-3.5 text-stone-500" />
+              <ChevronRight className="w-4 h-4 text-stone-400" />
             </button>
           )}
 
           <div className="text-xs font-bold text-stone-400 uppercase tracking-wider">
-            Explore Categories
+            Quick Navigation &amp; Info
           </div>
           {/* Quick Displays & Company Info Links */}
-          <div className="bg-white/5 border border-white/10 rounded-xl p-3">
-            <div className="text-[11px] font-bold uppercase tracking-wider text-amber-400 mb-2 flex items-center gap-1.5">
-              <Info className="w-3.5 h-3.5" />
+          <div className="bg-white/5 border border-white/10 rounded-2xl p-3.5">
+            <div className="text-xs font-bold uppercase tracking-wider text-[#ffd25d] mb-2.5 flex items-center gap-1.5">
+              <Info className="w-4 h-4 text-[#ffd25d]" />
               <span>Displays &amp; Company Hub</span>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
               {[
-                { tab: 'info' as const, label: 'Info' },
+                { tab: 'info' as const, label: 'About / FAQs' },
                 { tab: 'about' as const, label: 'About Us' },
                 { tab: 'services' as const, label: 'Our Services' },
                 { tab: 'portfolios' as const, label: 'Our Portfolios' },
@@ -873,12 +877,16 @@ export const Header: React.FC<HeaderProps> = ({
                     setMobileMenuOpen(false);
                     onOpenInfoModal?.(item.tab);
                   }}
-                  className="px-2.5 py-1.5 bg-white/10 text-stone-200 hover:bg-white/20 font-semibold text-xs rounded-lg text-left shadow-xs border border-white/10 transition-colors"
+                  className="min-h-[42px] px-3 py-2 bg-white/10 text-stone-100 hover:bg-white/20 active:bg-white/25 font-bold text-xs rounded-xl text-left shadow-xs border border-white/10 transition-colors flex items-center"
                 >
                   {item.label}
                 </button>
               ))}
             </div>
+          </div>
+
+          <div className="text-xs font-bold text-stone-400 uppercase tracking-wider pt-1">
+            Browse Categories
           </div>
 
           <div className="grid grid-cols-2 gap-2">
@@ -892,9 +900,9 @@ export const Header: React.FC<HeaderProps> = ({
                   onNavigateHome();
                 }
               }}
-              className={`text-left p-2.5 rounded-lg text-xs font-bold ${
+              className={`min-h-[44px] text-left p-3 rounded-xl text-xs font-bold transition-all ${
                 selectedCategory === 'all'
-                  ? 'bg-[#b8860b] text-white'
+                  ? 'bg-gradient-to-r from-[#ffd25d] to-[#f5be38] text-black shadow-md'
                   : 'bg-white/10 text-stone-200 hover:bg-white/15'
               }`}
             >
@@ -912,10 +920,10 @@ export const Header: React.FC<HeaderProps> = ({
                     onNavigateHome();
                   }
                 }}
-                className={`text-left p-2.5 rounded-lg text-xs font-semibold ${
+                className={`min-h-[44px] text-left p-3 rounded-xl text-xs font-semibold transition-all ${
                   selectedCategory === cat.id
-                    ? 'bg-[#b8860b] text-white'
-                    : 'bg-white/5 text-stone-300 hover:bg-white/10'
+                    ? 'bg-gradient-to-r from-[#ffd25d] to-[#f5be38] text-black font-bold shadow-md'
+                    : 'bg-white/5 text-stone-200 hover:bg-white/10'
                 }`}
               >
                 {cat.label}
@@ -923,10 +931,10 @@ export const Header: React.FC<HeaderProps> = ({
             ))}
           </div>
 
-          <div className="pt-2 border-t border-white/10 flex items-center justify-between text-xs">
+          <div className="pt-3 border-t border-white/10 flex items-center justify-between text-xs">
             <a
               href="tel:+2347030372539"
-              className="text-amber-400 font-bold"
+              className="text-[#ffd25d] font-bold flex items-center gap-1.5 min-h-[40px] px-2"
             >
               📞 +234 703 037 2539
             </a>
@@ -934,7 +942,7 @@ export const Header: React.FC<HeaderProps> = ({
               href="https://wa.me/2347030372539"
               target="_blank"
               rel="noreferrer"
-              className="text-[#d4af37] font-bold"
+              className="text-[#ffd25d] font-bold flex items-center gap-1.5 min-h-[40px] px-2"
             >
               💬 WhatsApp
             </a>
