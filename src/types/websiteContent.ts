@@ -155,7 +155,7 @@ export const DEFAULT_SHOWCASE_SERVICES: ShowcaseServiceItem[] = [
 export const DEFAULT_WEBSITE_CONTENT: WebsiteContent = {
   heroHeadline: '#1 Online Printing Company in Bayelsa',
   heroSubheadline: 'Banners • Branding • Digital Printing',
-  heroEyebrow: 'Grow Your Brand with Premium, Fast Printing',
+  heroEyebrow: 'Bring your business to the best scale',
   heroDescription: 'Every order includes precision color matching + a free pre-press audit — perfect prints, every time',
   heroBackgroundImage: 'https://cdn.hstockplus.org/uploads/public/img-1790066633477-1b16a758309b0fff.webp',
   heroSlides: DEFAULT_HERO_SLIDES,
@@ -173,13 +173,13 @@ export const DEFAULT_WEBSITE_CONTENT: WebsiteContent = {
   googleMapsEmbedUrl: 'https://maps.google.com/maps?q=9.081999,8.675277&hl=en&z=16&output=embed'
 };
 
-const STORAGE_KEY = 'inkshine_website_content_v5';
+const STORAGE_KEY = 'inkshine_website_content_v6';
 
 export function loadSavedWebsiteContent(): WebsiteContent {
   try {
     let saved = localStorage.getItem(STORAGE_KEY);
     if (!saved) {
-      saved = localStorage.getItem('inkshine_website_content_v4') || localStorage.getItem('inkshine_website_content_v3') || localStorage.getItem('inkshine_website_content_v2');
+      saved = localStorage.getItem('inkshine_website_content_v5') || localStorage.getItem('inkshine_website_content_v4') || localStorage.getItem('inkshine_website_content_v3') || localStorage.getItem('inkshine_website_content_v2');
     }
     if (saved) {
       const parsed = JSON.parse(saved);
@@ -191,8 +191,7 @@ export function loadSavedWebsiteContent(): WebsiteContent {
 
       const heroHeadline = parsed.heroHeadline || DEFAULT_WEBSITE_CONTENT.heroHeadline;
       const heroSubheadline = parsed.heroSubheadline || DEFAULT_WEBSITE_CONTENT.heroSubheadline;
-      const isOldEyebrow = !parsed.heroEyebrow || parsed.heroEyebrow === 'Bring your business to the best scale';
-      const heroEyebrow = isOldEyebrow ? DEFAULT_WEBSITE_CONTENT.heroEyebrow : parsed.heroEyebrow;
+      const heroEyebrow = parsed.heroEyebrow || DEFAULT_WEBSITE_CONTENT.heroEyebrow;
       const isOldDesc = !parsed.heroDescription || parsed.heroDescription.includes('Select from top print collections');
       const heroDescription = isOldDesc ? DEFAULT_WEBSITE_CONTENT.heroDescription : parsed.heroDescription;
 

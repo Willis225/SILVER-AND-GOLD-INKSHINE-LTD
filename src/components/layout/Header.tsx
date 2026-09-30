@@ -727,7 +727,7 @@ export const Header: React.FC<HeaderProps> = ({
                 title="Need custom die-cuts, foil stamping, or enterprise bulk specifications?"
               >
                 <FileText className="w-3.5 h-3.5 text-[#f5be38]" />
-                <span className="whitespace-nowrap">Custom Quote?</span>
+                <span className="whitespace-nowrap">Custom Quote</span>
               </button>
             )}
           </nav>

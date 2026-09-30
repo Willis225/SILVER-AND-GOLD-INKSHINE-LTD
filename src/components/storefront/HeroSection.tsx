@@ -106,7 +106,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             >
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 shadow-sm">
                 <span className="w-2 h-2 rounded-full bg-white shadow-[0_0_8px_#ffffff]" />
-                <span className="text-[11px] sm:text-xs font-black tracking-wider uppercase text-white">
+                <span className="text-[11px] sm:text-xs font-black tracking-wider text-white">
                   {eyebrow}
                 </span>
                 <Sparkles className="w-3.5 h-3.5 text-white" />
@@ -166,7 +166,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 </div>
                 <div className="h-3.5 w-[1px] bg-white/20" />
                 <span className="font-extrabold text-white text-xs sm:text-sm tracking-tight">
-                  168K+ Clients • 5K+ Businesses Served
+                  5,000+ Businesses Served • 4.8/5 Google Rated
                 </span>
               </div>
             </motion.div>

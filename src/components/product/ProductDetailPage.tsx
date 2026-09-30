@@ -583,7 +583,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                     }}
                     className="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-[#f5be38] hover:text-white text-xs font-bold whitespace-nowrap transition-colors flex items-center gap-1 cursor-pointer shrink-0"
                   >
-                    <span>Need a Custom Quote?</span>
+                    <span>Request Custom Quote</span>
                     <ChevronRight className="w-3.5 h-3.5" />
                   </button>
                 </div>
@@ -647,7 +647,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                   : 'border-transparent text-stone-400 hover:text-white'
               }`}
             >
-              Need a Custom Quote?
+              Custom Quote
             </button>
           </div>
 
