@@ -22,7 +22,13 @@ import {
   Award,
   FileText,
   RotateCcw,
-  Lock
+  Lock,
+  Flag,
+  Megaphone,
+  Package,
+  Shirt,
+  Gift,
+  ArrowRight
 } from 'lucide-react';
 import { CompanyLogoMark } from './CompanyLogo';
 import { PRINT_FAQS } from '../../data/seedData';
@@ -82,7 +88,7 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
     { id: 'contact', label: 'Contact Us', icon: Phone },
     { id: 'terms', label: 'Terms & Conditions', icon: FileText },
     { id: 'privacy', label: 'Privacy Policy', icon: Lock },
-    { id: 'returns', label: 'Return Policy', icon: RotateCcw },
+    { id: 'returns', label: 'Refund Policy', icon: RotateCcw },
   ];
 
   const handleContactSubmit = (e: React.FormEvent) => {
@@ -264,202 +270,267 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
           {/* TAB 2: ABOUT US */}
           {activeTab === 'about' && (
             <div className="space-y-6 animate-in fade-in-50 duration-150">
-              <div className="space-y-3">
-                <div className="text-xs font-bold text-[#f5be38] uppercase tracking-wider">
-                  Our Story &amp; Heritage
-                </div>
+              
+              {/* Who We Are Hero Section */}
+              <div className="bg-[#14151e] border border-white/10 rounded-2xl p-6 sm:p-7 space-y-4 shadow-sm">
+                <div className="w-[60px] h-[3px] bg-[#D4AF37] rounded-full shadow-[0_0_12px_rgba(212,175,55,0.5)]" />
                 <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight">
-                  Pioneering World-Class Commercial Print &amp; Brand Fabrication in the Niger Delta
+                  Who We Are
                 </h3>
-                <p className="text-xs sm:text-sm text-stone-300 leading-relaxed">
-                  Founded in Bayelsa State, <strong>Silver &amp; Gold Inkshine Ltd</strong> was established with a singular focus: giving Nigerian corporations, SMEs, public institutions, and events access to international-grade print production without enduring weeks of shipping delays from overseas or distant hubs.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-2">
-                <div className="p-5 rounded-2xl bg-[#14151e] border border-white/10 space-y-2">
-                  <div className="text-xs font-bold uppercase text-[#f5be38] flex items-center gap-2">
-                    <Sparkles className="w-4 h-4" />
-                    <span>Our Mission</span>
-                  </div>
-                  <p className="text-xs text-stone-400 leading-relaxed">
-                    To engineer impactful visual branding, superior display craftsmanship, and high-fidelity print materials that help forward-thinking organizations capture market attention, build lasting credibility, and drive commercial success.
+                <div className="space-y-3 text-xs sm:text-sm text-[#E8E8EA] leading-relaxed">
+                  <p>
+                    <strong className="text-white font-bold">Silver &amp; Gold Inkshine Ltd</strong> is Yenagoa and Bayelsa’s premier full-service commercial printing press — proudly serving businesses, government bodies, schools, churches, event planners, and growing brands across all 36 States of Nigeria.
                   </p>
-                </div>
-
-                <div className="p-5 rounded-2xl bg-[#14151e] border border-white/10 space-y-2">
-                  <div className="text-xs font-bold uppercase text-[#f5be38] flex items-center gap-2">
-                    <Award className="w-4 h-4" />
-                    <span>Our Standard of Excellence</span>
-                  </div>
-                  <p className="text-xs text-stone-400 leading-relaxed">
-                    We do not cut corners. From genuine aluminum luxury teardrop cassettes and 340gsm light-blocking Solite film to fade-resistant UV inks that endure harsh tropical weather, every piece that leaves our press is built to impress.
+                  <p>
+                    Born from a simple belief: quality printing should never require traveling out of state. We built our facility right here in Opolo-Epie, Yenagoa, to bring world-class standards home — so local businesses can look world-class without leaving Bayelsa.
+                  </p>
+                  <p className="text-stone-400">
+                    From a single idea to a full production floor with industrial offset, digital, and large-format UV presses, our mission has stayed the same: help Nigerian brands look professional, advertise better, and print with confidence.
                   </p>
                 </div>
               </div>
 
-              <div className="border-t border-white/10 pt-6">
-                <h4 className="font-bold text-sm text-white mb-3">Why Leading Brands Choose Us</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-                  <div className="flex items-start gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-[#f5be38] shrink-0 mt-0.5" />
-                    <div>
-                      <strong className="block text-white">Direct Factory Pricing:</strong>
-                      <span className="text-stone-400">No middleman markups on roll-up stands or substrates.</span>
+              {/* Our Story & Heritage */}
+              <div className="bg-[#14151e] border border-white/10 rounded-2xl p-6 space-y-4">
+                <h4 className="text-base sm:text-lg font-bold text-[#D4AF37]">
+                  Our Story — More Than Ink on Paper
+                </h4>
+                <div className="space-y-3 text-xs sm:text-sm text-[#E8E8EA] leading-relaxed">
+                  <p>
+                    It started with a gap: businesses in Bayelsa were sending designs to Lagos, Port Harcourt, and beyond — waiting weeks, paying extra for shipping, and still risking damage in transit. We knew our state deserved better.
+                  </p>
+                  <p>
+                    In 2021, we opened our doors with one goal: match the best standards in the country, right here at home.
+                  </p>
+                  <p>
+                    Today, we operate from our purpose-built complex on Medford Okilo Road, opposite Pepperoni in Opolo-Epie. Our team combines skilled press operators, graphic designers, and finishing specialists — people who live and work right here in Yenagoa. Every banner, business card, sign, and box we produce isn’t just a job — it’s proof that excellence lives in Bayelsa.
+                  </p>
+                </div>
+              </div>
+
+              {/* Our Standard — What Makes Us Different */}
+              <div className="space-y-3">
+                <div className="text-center space-y-1">
+                  <h4 className="text-base sm:text-lg font-bold text-[#D4AF37]">
+                    Our Standard — What Makes Us Different
+                  </h4>
+                  <p className="text-xs text-[#C8C8CC]">
+                    Your order carries our name — that’s why we treat yours like our own.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+                  <div className="p-4 rounded-xl bg-[#14151e] border border-white/10 space-y-1.5">
+                    <div className="flex items-center gap-2 text-white font-bold text-xs sm:text-sm">
+                      <CheckCircle2 className="w-4 h-4 text-[#D4AF37]" />
+                      <span>Zero-Defect Guarantee</span>
                     </div>
+                    <p className="text-xs text-[#C8C8CC]">If it’s not perfect, we reprint it — no questions, no extra cost.</p>
                   </div>
-                  <div className="flex items-start gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-[#f5be38] shrink-0 mt-0.5" />
-                    <div>
-                      <strong className="block text-white">Free Artwork Pre-Flight:</strong>
-                      <span className="text-stone-400">Automated file sanity checking for bleeds, DPI, and safe areas.</span>
+
+                  <div className="p-4 rounded-xl bg-[#14151e] border border-white/10 space-y-1.5">
+                    <div className="flex items-center gap-2 text-white font-bold text-xs sm:text-sm">
+                      <CheckCircle2 className="w-4 h-4 text-[#D4AF37]" />
+                      <span>Free Pre-Press Audit</span>
                     </div>
+                    <p className="text-xs text-[#C8C8CC]">Every file checked: resolution, bleed, color, layout before print.</p>
                   </div>
-                  <div className="flex items-start gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-[#f5be38] shrink-0 mt-0.5" />
-                    <div>
-                      <strong className="block text-white">Strict SLA Delivery:</strong>
-                      <span className="text-stone-400">Guaranteed turnaround backed by real-time order tracking.</span>
+
+                  <div className="p-4 rounded-xl bg-[#14151e] border border-white/10 space-y-1.5">
+                    <div className="flex items-center gap-2 text-white font-bold text-xs sm:text-sm">
+                      <CheckCircle2 className="w-4 h-4 text-[#D4AF37]" />
+                      <span>2400 DPI Precision</span>
                     </div>
+                    <p className="text-xs text-[#C8C8CC]">Industrial presses, color-calibrated daily for sharp vibrancy.</p>
+                  </div>
+
+                  <div className="p-4 rounded-xl bg-[#14151e] border border-white/10 space-y-1.5">
+                    <div className="flex items-center gap-2 text-white font-bold text-xs sm:text-sm">
+                      <CheckCircle2 className="w-4 h-4 text-[#D4AF37]" />
+                      <span>Real People, Real Support</span>
+                    </div>
+                    <p className="text-xs text-[#C8C8CC]">Direct WhatsApp team replies in minutes. No chatbots.</p>
+                  </div>
+
+                  <div className="p-4 rounded-xl bg-[#14151e] border border-white/10 space-y-1.5">
+                    <div className="flex items-center gap-2 text-white font-bold text-xs sm:text-sm">
+                      <CheckCircle2 className="w-4 h-4 text-[#D4AF37]" />
+                      <span>Packed to Travel</span>
+                    </div>
+                    <p className="text-xs text-[#C8C8CC]">Moisture-proof reinforced packaging across all 36 States.</p>
+                  </div>
+
+                  <div className="p-4 rounded-xl bg-[#14151e] border border-white/10 space-y-1.5">
+                    <div className="flex items-center gap-2 text-white font-bold text-xs sm:text-sm">
+                      <CheckCircle2 className="w-4 h-4 text-[#D4AF37]" />
+                      <span>CAC Registered (RC 1892044)</span>
+                    </div>
+                    <p className="text-xs text-[#C8C8CC]">Fully accredited commercial printer — legitimate &amp; accountable.</p>
                   </div>
                 </div>
               </div>
+
+              {/* Mission, Vision & Core Values */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+                <div className="p-4 rounded-xl bg-[#14151e] border border-white/10 space-y-2">
+                  <div className="text-xs font-bold uppercase text-[#F0D775]">Mission</div>
+                  <p className="text-xs text-[#C8C8CC]">
+                    To deliver premium, reliable, and affordable printing solutions that empower every business and organisation to shine — locally and nationwide.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-xl bg-[#14151e] border border-white/10 space-y-2">
+                  <div className="text-xs font-bold uppercase text-[#F0D775]">Vision</div>
+                  <p className="text-xs text-[#C8C8CC]">
+                    To become Nigeria’s most trusted printing partner and position Yenagoa as a commercial production hub.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-xl bg-[#14151e] border border-white/10 space-y-2">
+                  <div className="text-xs font-bold uppercase text-[#F0D775]">Core Values</div>
+                  <ul className="text-xs text-[#C8C8CC] space-y-1">
+                    <li>• Excellence in Every Detail</li>
+                    <li>• Speed Without Compromise</li>
+                    <li>• Integrity Always</li>
+                    <li>• Community First</li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Location & Contact CTA */}
+              <div className="p-5 rounded-2xl bg-gradient-to-r from-[#181926] to-[#12131c] border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div className="text-xs text-stone-300">
+                  <strong className="text-white block text-sm">Visit Our Yenagoa Production Complex:</strong>
+                  875 Medford Okilo Rd, Opolo-Epie, Yenagoa, Bayelsa State • +234 703 037 2539
+                </div>
+                <a
+                  href="https://wa.me/2347030372539?text=Hello%20Silver%20%26%20Gold%20Inkshine%2C%20I%20would%20like%20to%20learn%20more%20about%20your%20printing%20services"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-5 py-2.5 rounded-xl bg-[#D4AF37] hover:bg-[#e5c158] text-black font-black text-xs shrink-0 shadow-md transition-all cursor-pointer"
+                >
+                  Chat on WhatsApp Now
+                </a>
+              </div>
+
             </div>
           )}
 
           {/* TAB 3: OUR SERVICES */}
           {activeTab === 'services' && (
             <div className="space-y-6 animate-in fade-in-50 duration-150">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <div>
-                  <h3 className="text-lg sm:text-xl font-black text-white tracking-tight">
-                    Comprehensive Printing &amp; Brand Fabrication Services
-                  </h3>
-                  <p className="text-xs text-stone-400">
-                    Industrial equipment and artisan finishing under one roof in Bayelsa State.
-                  </p>
-                </div>
+              <div className="bg-[#14151e] border border-white/10 rounded-2xl p-6 space-y-2">
+                <div className="w-[60px] h-[3px] bg-[#D4AF37] rounded-full shadow-[0_0_12px_rgba(212,175,55,0.5)]" />
+                <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+                  Our Printing Services
+                </h3>
+                <p className="text-xs sm:text-sm text-[#C8C8CC]">
+                  Full-Service Commercial Printing — Everything Your Brand Needs, Under One Roof
+                </p>
+                <p className="text-xs text-[#E8E8EA] pt-1">
+                  From everyday business cards to large-format signage, custom packaging, and corporate gifts — we deliver premium, consistent printing for businesses, government bodies, and events across Bayelsa and all 36 States of Nigeria.
+                </p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="p-4 rounded-2xl border border-white/10 bg-[#14151e] hover:border-[#f5be38]/50 transition-colors group">
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="w-8 h-8 rounded-lg bg-[#f5be38]/10 text-[#f5be38] flex items-center justify-center font-bold">
-                      01
-                    </div>
-                    <h4 className="font-bold text-sm text-white group-hover:text-[#f5be38] transition-colors">
-                      Large Format &amp; Display Systems
-                    </h4>
-                  </div>
-                  <p className="text-xs text-stone-400 leading-relaxed mb-3">
-                    Luxury &amp; standard rollup banners, teardrop feather flags, backdrop media walls, canopy gazebos, and exhibition booth displays.
-                  </p>
-                  <div className="flex flex-wrap gap-1 text-[11px] text-stone-400 font-medium">
-                    <span className="bg-[#181824] px-2 py-0.5 rounded-md border border-white/10">Roll-ups</span>
-                    <span className="bg-[#181824] px-2 py-0.5 rounded-md border border-white/10">Flags</span>
-                    <span className="bg-[#181824] px-2 py-0.5 rounded-md border border-white/10">Media Walls</span>
-                    <span className="bg-[#181824] px-2 py-0.5 rounded-md border border-white/10">Pop-up Counters</span>
-                  </div>
-                </div>
+                {[
+                  {
+                    icon: FileText,
+                    title: 'Business Stationery',
+                    desc: 'Business cards, letterheads, envelopes, presentation folders, notepads & company profiles.',
+                    items: ['Business Cards', 'Letterheads', 'Envelopes', 'Folders', 'Annual Reports'],
+                    catKey: 'office_stationery'
+                  },
+                  {
+                    icon: Flag,
+                    title: 'Banners & Event Displays',
+                    desc: 'Roll-up stands, flex & vinyl banners, flags, backdrop walls, gazebo tents & promotional tables.',
+                    items: ['Roll-Up Stands', 'Flex Banners', 'Teardrop Flags', 'Media Backdrops', 'Gazebo Tents'],
+                    catKey: 'banners_stands'
+                  },
+                  {
+                    icon: Megaphone,
+                    title: 'Flyers & Promotional Materials',
+                    desc: 'A5/A4 flyers, brochures, event programmes, handbills, menus, calendars & diaries.',
+                    items: ['Flyers', 'Brochures', 'Leaflets', 'Calendars', 'Info Cards'],
+                    catKey: 'flyers_handbills'
+                  },
+                  {
+                    icon: Package,
+                    title: 'Packaging & Branded Labels',
+                    desc: 'Custom product boxes, food-safe containers, gift bags, waterproof stickers & shipping cartons.',
+                    items: ['Product Boxes', 'Food Containers', 'Kraft Bags', 'Die-Cut Stickers', 'Mailers'],
+                    catKey: 'packaging_shipping_cartons'
+                  },
+                  {
+                    icon: Shirt,
+                    title: 'Branded Clothing & Apparel',
+                    desc: 'T-shirts, polos, embroidered uniforms, face caps, hoodies, aprons & souvenir shirts.',
+                    items: ['Polos', 'T-Shirts', 'Caps', 'Corporate Uniforms', 'Hoodies'],
+                    catKey: 'custom_apparels_caps'
+                  },
+                  {
+                    icon: Building2,
+                    title: 'Signage & 3D Branding',
+                    desc: '3D illuminated LED letters, acrylic reception signs, shopfront pylons, lightboxes & vehicle wraps.',
+                    items: ['3D Channel Letters', 'Acrylic Signs', 'Shopfronts', 'Lightboxes', 'Vehicle Wraps'],
+                    catKey: 'signages'
+                  },
+                  {
+                    icon: Gift,
+                    title: 'Corporate Gifts & Souvenirs',
+                    desc: 'Mugs, water bottles, pens, tote bags, executive gift sets & floor mats.',
+                    items: ['Mugs', 'Bottles', 'Pens', 'Tote Bags', 'Executive Sets'],
+                    catKey: 'gift_items_souvenirs'
+                  },
+                  {
+                    icon: Award,
+                    title: 'Awards & Plaques',
+                    desc: 'Crystal & glass engraved plaques, wooden shields, custom trophies & appreciation medals.',
+                    items: ['Crystal Plaques', 'Wooden Shields', 'Trophies', 'Medals', 'Keepsakes'],
+                    catKey: 'awards'
+                  }
+                ].map((srv, sIdx) => {
+                  const Icon = srv.icon;
+                  return (
+                    <div key={sIdx} className="p-4 rounded-2xl border border-white/10 bg-[#14151e] hover:border-[#D4AF37]/50 transition-colors flex flex-col justify-between group">
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2.5">
+                          <div className="w-8 h-8 rounded-lg bg-[#D4AF37]/15 text-[#D4AF37] flex items-center justify-center">
+                            <Icon className="w-4 h-4" />
+                          </div>
+                          <h4 className="font-bold text-sm text-white group-hover:text-[#D4AF37] transition-colors">
+                            {srv.title}
+                          </h4>
+                        </div>
+                        <p className="text-xs text-stone-300 leading-relaxed">
+                          {srv.desc}
+                        </p>
+                        <div className="flex flex-wrap gap-1 pt-1">
+                          {srv.items.map((it, itIdx) => (
+                            <span key={itIdx} className="text-[10.5px] bg-[#181824] px-2 py-0.5 rounded border border-white/10 text-stone-300">
+                              {it}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
 
-                <div className="p-4 rounded-2xl border border-white/10 bg-[#14151e] hover:border-[#f5be38]/50 transition-colors group">
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="w-8 h-8 rounded-lg bg-[#f5be38]/10 text-[#f5be38] flex items-center justify-center font-bold">
-                      02
+                      {onSelectCategory && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            onClose();
+                            onSelectCategory(srv.catKey);
+                          }}
+                          className="mt-3 text-xs font-bold text-[#D4AF37] hover:underline flex items-center gap-1 cursor-pointer"
+                        >
+                          <span>Explore {srv.title} Products</span>
+                          <ArrowRight className="w-3 h-3" />
+                        </button>
+                      )}
                     </div>
-                    <h4 className="font-bold text-sm text-white group-hover:text-[#f5be38] transition-colors">
-                      Commercial Stationery &amp; Publications
-                    </h4>
-                  </div>
-                  <p className="text-xs text-stone-400 leading-relaxed mb-3">
-                    Premium matte velvet laminated business cards, embossed letterheads, presentation folders, corporate annual reports, flyers &amp; magazines.
-                  </p>
-                  <div className="flex flex-wrap gap-1 text-[11px] text-stone-400 font-medium">
-                    <span className="bg-[#181824] px-2 py-0.5 rounded-md border border-white/10">Business Cards</span>
-                    <span className="bg-[#181824] px-2 py-0.5 rounded-md border border-white/10">Brochures</span>
-                    <span className="bg-[#181824] px-2 py-0.5 rounded-md border border-white/10">Letterheads</span>
-                    <span className="bg-[#181824] px-2 py-0.5 rounded-md border border-white/10">Books</span>
-                  </div>
-                </div>
-
-                <div className="p-4 rounded-2xl border border-white/10 bg-[#14151e] hover:border-[#f5be38]/50 transition-colors group">
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="w-8 h-8 rounded-lg bg-[#f5be38]/10 text-[#f5be38] flex items-center justify-center font-bold">
-                      03
-                    </div>
-                    <h4 className="font-bold text-sm text-white group-hover:text-[#f5be38] transition-colors">
-                      Custom Apparels, Uniforms &amp; Caps
-                    </h4>
-                  </div>
-                  <p className="text-xs text-stone-400 leading-relaxed mb-3">
-                    Precision 3D embroidered polo shirts, executive oxford button-down shirts, corporate safety overalls, medical scrubs, and custom face caps.
-                  </p>
-                  <div className="flex flex-wrap gap-1 text-[11px] text-stone-400 font-medium">
-                    <span className="bg-[#181824] px-2 py-0.5 rounded-md border border-white/10">Polos</span>
-                    <span className="bg-[#181824] px-2 py-0.5 rounded-md border border-white/10">Caps</span>
-                    <span className="bg-[#181824] px-2 py-0.5 rounded-md border border-white/10">Safety Workwear</span>
-                    <span className="bg-[#181824] px-2 py-0.5 rounded-md border border-white/10">Uniforms</span>
-                  </div>
-                </div>
-
-                <div className="p-4 rounded-2xl border border-white/10 bg-[#14151e] hover:border-[#f5be38]/50 transition-colors group">
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="w-8 h-8 rounded-lg bg-[#f5be38]/10 text-[#f5be38] flex items-center justify-center font-bold">
-                      04
-                    </div>
-                    <h4 className="font-bold text-sm text-white group-hover:text-[#f5be38] transition-colors">
-                      Packaging, Boxes &amp; Paper Bags
-                    </h4>
-                  </div>
-                  <p className="text-xs text-stone-400 leading-relaxed mb-3">
-                    FDA food-grade takeout containers, corrugated shipping cartons, boutique rope kraft carrier bags, and custom product labels.
-                  </p>
-                  <div className="flex flex-wrap gap-1 text-[11px] text-stone-400 font-medium">
-                    <span className="bg-[#181824] px-2 py-0.5 rounded-md border border-white/10">Food Packs</span>
-                    <span className="bg-[#181824] px-2 py-0.5 rounded-md border border-white/10">Shipping Cartons</span>
-                    <span className="bg-[#181824] px-2 py-0.5 rounded-md border border-white/10">Kraft Bags</span>
-                    <span className="bg-[#181824] px-2 py-0.5 rounded-md border border-white/10">Vinyl Labels</span>
-                  </div>
-                </div>
-
-                <div className="p-4 rounded-2xl border border-white/10 bg-[#14151e] hover:border-[#f5be38]/50 transition-colors group">
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="w-8 h-8 rounded-lg bg-[#f5be38]/10 text-[#f5be38] flex items-center justify-center font-bold">
-                      05
-                    </div>
-                    <h4 className="font-bold text-sm text-white group-hover:text-[#f5be38] transition-colors">
-                      Signages, Vehicle Wraps &amp; Carports
-                    </h4>
-                  </div>
-                  <p className="text-xs text-stone-400 leading-relaxed mb-3">
-                    3D LED channel letters, pylon directional signs, commercial fleet vehicle wrapping, one-way vision graphics, and architectural tensile carports.
-                  </p>
-                  <div className="flex flex-wrap gap-1 text-[11px] text-stone-400 font-medium">
-                    <span className="bg-[#181824] px-2 py-0.5 rounded-md border border-white/10">3D Signages</span>
-                    <span className="bg-[#181824] px-2 py-0.5 rounded-md border border-white/10">Vehicle Wraps</span>
-                    <span className="bg-[#181824] px-2 py-0.5 rounded-md border border-white/10">Tensile Carports</span>
-                  </div>
-                </div>
-
-                <div className="p-4 rounded-2xl border border-white/10 bg-[#14151e] hover:border-[#f5be38]/50 transition-colors group">
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="w-8 h-8 rounded-lg bg-[#f5be38]/10 text-[#f5be38] flex items-center justify-center font-bold">
-                      06
-                    </div>
-                    <h4 className="font-bold text-sm text-white group-hover:text-[#f5be38] transition-colors">
-                      Corporate Gifts &amp; Souvenirs
-                    </h4>
-                  </div>
-                  <p className="text-xs text-stone-400 leading-relaxed mb-3">
-                    Laser-engraved thermal vacuum flasks, ceramic mugs, debossed executive leather notebooks, luxury pens, and event umbrella souvenirs.
-                  </p>
-                  <div className="flex flex-wrap gap-1 text-[11px] text-stone-400 font-medium">
-                    <span className="bg-[#181824] px-2 py-0.5 rounded-md border border-white/10">Vacuum Flasks</span>
-                    <span className="bg-[#181824] px-2 py-0.5 rounded-md border border-white/10">Mugs</span>
-                    <span className="bg-[#181824] px-2 py-0.5 rounded-md border border-white/10">Notebooks</span>
-                    <span className="bg-[#181824] px-2 py-0.5 rounded-md border border-white/10">Crystal Plaques</span>
-                  </div>
-                </div>
+                  );
+                })}
               </div>
             </div>
           )}
@@ -876,6 +947,32 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
                       <p className="text-xs sm:text-sm text-stone-300 leading-relaxed bg-black/30 p-3.5 rounded-xl border border-white/5">
                         {doc.summary}
                       </p>
+
+                      {doc.quickSummaryTable && (
+                        <div className="pt-2">
+                          <div className="text-[11px] font-black uppercase tracking-wider text-[#f5be38] mb-2">
+                            ⚡ Quick Summary
+                          </div>
+                          <div className="overflow-x-auto rounded-xl border border-white/10 bg-black/40">
+                            <table className="w-full text-left text-xs border-collapse">
+                              <thead>
+                                <tr className="border-b border-white/10 bg-white/5">
+                                  <th className="py-2.5 px-3 font-bold text-white">{doc.quickSummaryTable.headers[0]}</th>
+                                  <th className="py-2.5 px-3 font-bold text-white">{doc.quickSummaryTable.headers[1]}</th>
+                                </tr>
+                              </thead>
+                              <tbody className="divide-y divide-white/5">
+                                {doc.quickSummaryTable.rows.map((row, rIdx) => (
+                                  <tr key={rIdx} className="hover:bg-white/5 transition-colors">
+                                    <td className="py-2 px-3 font-semibold text-stone-200">{row.col1}</td>
+                                    <td className="py-2 px-3 text-stone-300">{row.col2}</td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      )}
                     </div>
 
                     {/* Quick Switch Sub-Pills */}
@@ -884,7 +981,7 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
                       {[
                         { id: 'terms' as const, label: 'Terms & Conditions' },
                         { id: 'privacy' as const, label: 'Privacy Policy' },
-                        { id: 'returns' as const, label: 'Return Policy' },
+                        { id: 'returns' as const, label: 'Refund Policy' },
                       ].map((item) => (
                         <button
                           key={item.id}

@@ -8,12 +8,21 @@ export interface LegalPolicySection {
   }[];
 }
 
+export interface LegalPolicySummaryTableRow {
+  col1: string;
+  col2: string;
+}
+
 export interface LegalPolicyDocument {
   id: 'terms' | 'privacy' | 'returns';
   title: string;
   badge: string;
   lastUpdated: string;
   summary: string;
+  quickSummaryTable?: {
+    headers: [string, string];
+    rows: LegalPolicySummaryTableRow[];
+  };
   sections: LegalPolicySection[];
 }
 
@@ -112,150 +121,296 @@ export const LEGAL_POLICIES: Record<'terms' | 'privacy' | 'returns', LegalPolicy
   },
   privacy: {
     id: 'privacy',
-    title: 'Corporate Privacy Policy',
-    badge: 'NDPR & NDPA 2023 Compliant',
-    lastUpdated: 'September 2026',
-    summary: 'Silver & Gold Inkshine Ltd is committed to safeguarding the privacy, confidentiality, and proprietary design assets of our individual and corporate clients. This policy details how we collect, process, protect, and manage your personal and corporate information in strict compliance with the Nigeria Data Protection Act (NDPA 2023) and the Nigeria Data Protection Regulation (NDPR).',
+    title: 'Privacy Policy',
+    badge: 'NDPR Compliant • Silver & Gold Inkshine Ltd',
+    lastUpdated: '30 September 2026',
+    summary: 'Silver & Gold Inkshine Ltd (“we”, “us”, “our”) is committed to protecting your privacy and the security of your personal information. This Privacy Policy explains what information we collect, how we use it, and your rights regarding your data when you visit our website at silver-and-gold-inkshine-ltd.vercel.app and use our printing and related services.',
     sections: [
       {
-        id: 'data-collection',
-        title: '1. Information We Collect',
+        id: 'introduction',
+        title: '1. Introduction',
         content: [
-          'We collect information necessary to fulfill commercial print manufacturing, pre-press auditing, customer billing, and nationwide dispatch operations:',
-          '• Contact Information: Full name, company / institutional designation, official email address, telephone numbers, and WhatsApp contact details.',
-          '• Delivery & Logistics Data: Physical delivery address, landmark directions, recipient contact person, and preferred regional transport terminal.',
-          '• Design & Production Assets: Vector graphics, logos, brand typography, marketing copy, high-resolution photographs, and specialized printing briefs submitted for production.',
-          '• Transactional & Invoicing Records: Bank transfer reference details, transaction slips, purchase orders, withholding tax certificates, and order history.'
+          'Silver & Gold Inkshine Ltd (“we”, “us”, “our”) is committed to protecting your privacy and the security of your personal information. This Privacy Policy explains what information we collect, how we use it, and your rights regarding your data when you visit our website at silver-and-gold-inkshine-ltd.vercel.app and use our printing and related services.',
+          'By using our website or services, you agree to the practices described in this Policy. If you do not agree, please do not use our site or services.'
         ]
       },
       {
-        id: 'data-usage',
-        title: '2. Lawful Basis & Purpose of Data Processing',
+        id: 'information-we-collect',
+        title: '2. Information We Collect',
         content: [
-          'We process your personal and corporate information under the lawful bases of contractual necessity, statutory compliance, and legitimate commercial interests:',
-          '• Contract Execution: Conducting pre-flight file verification, RIP machine processing, printing, binding, laser cutting, and fabrication.',
-          '• Order Communication: Providing real-time production updates, digital proof approvals, dispatch tracking codes, and delivery confirmation via SMS, phone, or WhatsApp.',
-          '• Fiscal Accounting: Generating proforma invoices, tax receipts, delivery notes, and complying with statutory Federal Inland Revenue Service (FIRS) audit mandates.',
-          '• Service Quality Improvement: Monitoring customer satisfaction, website performance, and print longevity feedback.'
+          'We collect only the information necessary to provide and improve our services:'
+        ],
+        subsections: [
+          {
+            subtitle: '2.1 Information You Provide Directly',
+            paragraphs: [
+              '• Contact details: Full name, business/organization name, WhatsApp number, email address, physical address',
+              '• Project details: Product type, quantity, size, specifications, deadlines, and special instructions',
+              '• Files & artwork: Designs, images, logos, and documents you send us for printing',
+              '• Payment information: Bank transfer details, transaction references — we do not store full card numbers or sensitive financial credentials',
+              '• Communications: Messages sent via WhatsApp, contact forms, email, or in-person inquiries'
+            ]
+          },
+          {
+            subtitle: '2.2 Information Collected Automatically',
+            paragraphs: [
+              '• Technical data: IP address, browser type, device type, pages visited, time spent on site',
+              '• Usage patterns: How you navigate our site, links clicked, and service categories viewed',
+              '• Cookies: We use basic cookies to improve your experience — see Section 6 below'
+            ]
+          },
+          {
+            subtitle: '2.3 Information You Choose Not to Provide',
+            paragraphs: [
+              'You may browse our site without sharing personal details. However, certain information is required to process orders, send quotes, or deliver products — if withheld, we may be unable to provide the requested service.'
+            ]
+          }
         ]
       },
       {
-        id: 'asset-confidentiality',
-        title: '3. Artwork Confidentiality & Proprietary Security',
+        id: 'how-we-use-information',
+        title: '3. How We Use Your Information',
         content: [
-          'We treat all client design files, corporate manuscripts, election campaign collaterals, confidential corporate annual reports, security certificates, and proprietary product packaging as strictly confidential.',
-          'Our pre-press servers, RIP workstations, and digital archives are protected by enterprise firewall encryption, role-based operator permissions, and restricted physical access.',
-          'We never sell, rent, license, or publicly leak customer design files, corporate databases, or mailing lists to any third party under any circumstance.'
+          'We use your information only for these purposes:',
+          '✅ To process, produce, and deliver your printing orders',
+          '✅ To respond to your inquiries, quotes, and support requests',
+          '✅ To send order updates, proofs, and delivery notifications via WhatsApp or email',
+          '✅ To verify your identity and prevent fraud or unauthorized transactions',
+          '✅ To improve our website, services, and customer experience',
+          '✅ To send important service announcements and policy updates',
+          '✅ To comply with legal and regulatory obligations',
+          'We will never sell, rent, or lease your personal information to third parties for marketing purposes.'
         ]
       },
       {
-        id: 'third-party-sharing',
-        title: '4. Third-Party Disclosures & Courier Partners',
+        id: 'how-we-share-information',
+        title: '4. How We Share Your Information',
         content: [
-          'We disclose only the minimal necessary data to vetted third parties under strict confidentiality agreements:',
-          '• Logistics & Courier Services: Sharing shipping addresses and recipient phone numbers with reputable transit partners (such as GIG Logistics, DHL, Peace Mass Transit, and certified local riders) solely to execute doorstep or terminal delivery.',
-          '• Statutory Authorities: Disclosing transaction documentation when strictly required by Nigerian law, court subpoenas, or law enforcement investigations.'
+          'Your privacy is important to us. We share your data only when necessary:',
+          '• Service Providers: Trusted third parties who assist us — delivery/courier partners, payment processors, hosting platforms — bound by strict confidentiality agreements',
+          '• Legal Requirements: When required by law, court order, or government authority',
+          '• Business Transfer: In the event of a merger, sale, or transfer of our business — you will be notified and given clear choices',
+          '• With Your Consent: When you explicitly agree — for example, to feature your completed project in our portfolio',
+          'We do not share your files, designs, or creative work without your explicit permission.'
         ]
       },
       {
-        id: 'retention-archival',
-        title: '5. Artwork Retention, Archival & Deletion Protocol',
+        id: 'data-security-storage',
+        title: '5. Data Security & Storage',
         content: [
-          'To facilitate effortless repeat orders and brand consistency, we maintain a secure encrypted archive of approved production files for twenty-four (24) months.',
-          'Clients may at any time request the immediate permanent deletion of their archived design files, company assets, or personal records from our digital storage systems by writing to privacy@silverandgold.ng.',
-          'Financial and tax transaction logs are retained for the statutory period mandated by Nigerian accounting regulations.'
+          '• All personal information is stored securely with restricted access — only authorized staff who need it to serve you may access it',
+          '• Files are retained only as long as needed: active orders = kept until delivery + 90 days; completed orders = archived securely then deleted unless you request otherwise',
+          '• We use encrypted connections (HTTPS) throughout our website',
+          '• Payment transactions are processed through secure, compliant channels',
+          '• No method of transmission over the internet is 100% secure — but we continuously apply industry-standard safeguards to protect your data'
         ]
       },
       {
-        id: 'user-rights',
-        title: '6. Your Rights Under the NDPA 2023',
+        id: 'cookies-tracking',
+        title: '6. Cookies & Tracking',
         content: [
-          'Under the Nigeria Data Protection Act 2023, you possess comprehensive rights regarding your personal information, including:',
-          '• The right to access and obtain a copy of your personal data held in our systems.',
-          '• The right to rectify inaccurate, outdated, or incomplete personal or corporate records.',
-          '• The right to withdraw consent for marketing communications or promotional showcase features.',
-          '• The right to lodge a complaint with the Nigeria Data Protection Commission (NDPC) if you believe your data has been handled improperly.'
+          '• We use basic cookies to remember your preferences and improve site functionality',
+          '• You may disable cookies in your browser settings — some features may be limited',
+          '• We do not currently use third-party advertising or marketing tracking cookies'
         ]
       },
       {
-        id: 'dpo-contact',
-        title: '7. Data Protection Officer (DPO) Contact',
+        id: 'your-rights',
+        title: '7. Your Rights',
         content: [
-          'For inquiries, data access requests, or privacy concerns, please contact our Data Protection Officer at:',
-          'Silver & Gold Inkshine Ltd — Legal & Data Compliance Desk',
-          'No. 875 Medford Okilo Road (Mbiama-Yenagoa Road), Opolo-Epie, Yenagoa, Bayelsa State, Nigeria.',
-          'Email: privacy@silverandgold.ng | Telephone / WhatsApp: +234 703 037 2539'
+          'Under the Nigerian Data Protection Regulations (NDPR) and applicable laws, you have the right to:',
+          '• Access — Request a copy of all personal information we hold about you',
+          '• Correction — Ask us to update or correct inaccurate information',
+          '• Deletion — Request removal of your data — we will comply unless legal obligations require us to retain certain records',
+          '• Withdraw Consent — Opt out of communications at any time — simply reply “STOP” or message us via WhatsApp',
+          '• Data Portability — Request your data in a usable, transferable format',
+          'To exercise any of these rights, contact us at:',
+          '📞 +234 703 037 2539',
+          '💬 Chat on WhatsApp — fastest response'
+        ]
+      },
+      {
+        id: 'childrens-privacy',
+        title: '8. Children’s Privacy',
+        content: [
+          'Our website and services are intended for business and adult customers. We do not knowingly collect personal information from children under 18. If we become aware that a child has provided personal data, we will delete it immediately.'
+        ]
+      },
+      {
+        id: 'third-party-links',
+        title: '9. Third-Party Links',
+        content: [
+          'Our website may contain links to external sites such as Google Maps, payment portals, or social media. We are not responsible for the privacy practices or content of those sites — we encourage you to review their privacy policies separately.'
+        ]
+      },
+      {
+        id: 'updates-to-policy',
+        title: '10. Updates to This Policy',
+        content: [
+          'We may update this Privacy Policy periodically to reflect changes in our practices or legal requirements. The “Effective Date” at the top will change, and material updates will be posted prominently on this page. Continued use of our services after changes constitutes acceptance of the revised Policy.'
+        ]
+      },
+      {
+        id: 'contact-us',
+        title: '11. Contact Us',
+        content: [
+          'For questions, concerns, or requests regarding your privacy or this policy:',
+          'Silver & Gold Inkshine Ltd',
+          'No. 875 Medford Okilo Road',
+          'Opolo-Epie, Yenagoa',
+          'Bayelsa State, Nigeria',
+          '📞 +234 703 037 2539',
+          '💬 WhatsApp: +234 703 037 2539',
+          '📧 Available on request'
         ]
       }
     ]
   },
   returns: {
     id: 'returns',
-    title: 'Return, Reprint & Refund Policy',
-    badge: '100% Quality Guarantee',
-    lastUpdated: 'September 2026',
-    summary: 'At Silver & Gold Inkshine Ltd, we hold our craftsmanship to the highest industrial printing standards. Every job includes an automated pre-press audit and multi-stage quality control. This policy outlines our clear, fair, and fast procedures for reprints, returns, and refunds in the rare event of a manufacturing discrepancy.',
+    title: 'Refund Policy',
+    badge: 'Fair & Industry-Standard • Silver & Gold Inkshine Ltd',
+    lastUpdated: '30 September 2026',
+    summary: 'This Refund Policy explains our rules for refunds, cancellations, and reprints. By placing an order with Silver & Gold Inkshine Ltd, you agree to the terms below. Printing is custom-made for you — so our policy differs from standard retail. We balance your rights with our business fairness.',
+    quickSummaryTable: {
+      headers: ['Situation', 'What Happens'],
+      rows: [
+        { col1: 'Cancel before proof', col2: '✅ Full refund' },
+        { col1: 'Cancel after approval', col2: '⚠️ Store credit only' },
+        { col1: 'Our printing error', col2: '✅ Free reprint or refund' },
+        { col1: 'Your file/design error', col2: '⚠️ Discounted reprint' },
+        { col1: 'Claim window', col2: '⏱️ 48 hours after delivery' },
+        { col1: 'Refund processing', col2: '5–7 business days' }
+      ]
+    },
     sections: [
       {
-        id: 'guarantee-commitment',
-        title: '1. Our 100% Quality Assurance Guarantee',
+        id: 'introduction',
+        title: '1. Introduction',
         content: [
-          'We stand behind every print job produced at our press plant. If an order suffers from a verified manufacturing fault or fails to match the specifications confirmed in the approved digital proof, we commit to rectifying the issue promptly at zero additional cost to the client.',
-          'Our primary remedy for any verified production defect is an immediate priority reprint expedited through our production queue.'
+          'This Refund Policy explains our rules for refunds, cancellations, and reprints. By placing an order with Silver & Gold Inkshine Ltd, you agree to the terms below.',
+          'Printing is custom-made for you — so our policy differs from standard retail. We balance your rights with our business fairness.'
         ]
       },
       {
-        id: 'claim-window',
-        title: '2. Claim Notification Window & Reporting Procedure',
-        content: [
-          'Due to the custom and perishable nature of personalized print materials, all claims regarding missing items, print defects, or transport damage must be reported within seventy-two (72) hours of physical delivery or collection.',
-          'How to File a Claim:',
-          '1. Send a detailed message via WhatsApp (+234 703 037 2539) or email (orders@silverandgold.ng) with your Order ID / Proforma number.',
-          '2. Provide clear, well-lit photographs and/or a short video showing the affected items, highlighting the specific defect across multiple samples in the batch.',
-          '3. Our Quality Assurance Manager will inspect the evidence against your signed digital proof and issue a resolution within twenty-four (24) business hours.'
+        id: 'order-cancellation',
+        title: '2. Order Cancellation — Before Printing',
+        content: [],
+        subsections: [
+          {
+            subtitle: '✅ Full Refund',
+            paragraphs: [
+              'You get 100% refund if:',
+              '• You cancel before we send your digital proof for approval',
+              '• We haven’t started any production work',
+              '• Payment made via bank transfer, mobile money, or WhatsApp payment'
+            ]
+          },
+          {
+            subtitle: '⚠️ Partial / No Refund',
+            paragraphs: [
+              '• After proof approval: No cash refund — your order is already in production',
+              '• If you cancel after we’ve started setup/printing: We may offer store credit for 70–80% of your payment, at our discretion',
+              '• Rush/same-day orders: Cannot be cancelled once confirmed'
+            ]
+          }
         ]
       },
       {
-        id: 'covered-defects',
-        title: '3. Issues Covered by Free Expedited Reprint Guarantee',
+        id: 'production-errors',
+        title: '3. Our Responsibility — Production Errors',
         content: [
-          'The Company provides a 100% free expedited reprint for the following verified manufacturing and assembly defects:',
-          '• Severe color banding, mechanical ink smearing, or missing print passes caused by printer head failure.',
-          '• Plate misalignment or double-imaging on offset press runs.',
-          '• Incorrect paper stock, substrate, or grammage noticeably divergent from the approved quotation.',
-          '• Trimming errors exceeding acceptable industry tolerance (+/- 1.5mm) that slice into safe-zone graphics or text.',
-          '• Defective structural hardware (e.g., jammed rollup banner springs, broken banner base feet, peeling laminations, cracked acrylic awards prior to customer transit).',
-          '• Total job misprints where the finished work does not match the approved digital proof file.'
+          'If the finished product does not match the approved proof or has production defects:'
+        ],
+        subsections: [
+          {
+            subtitle: '✅ What We Offer — Your Choice',
+            paragraphs: [
+              '• Free reprint with corrected specifications — fastest resolution',
+              '• Partial refund (50–80%) if only part of the order is affected',
+              '• Full refund — only if reprint is impossible or we fail to meet agreed timeline by more than 5 business days'
+            ]
+          },
+          {
+            subtitle: 'Examples Covered — No Extra Cost',
+            paragraphs: [
+              '• Colors differ noticeably from approved digital proof',
+              '• Blurry text, streaks, smudges, or ink errors',
+              '• Wrong size, quantity, or material supplied',
+              '• Damage caused by poor packaging (reported within 48 hours)',
+              '• Misspelling or layout error we introduced after you approved'
+            ]
+          },
+          {
+            subtitle: 'How to Claim',
+            paragraphs: [
+              '• Notify us within 48 hours of delivery/pickup',
+              '• Send clear photos + description via WhatsApp',
+              '• Keep the defective items — we may need to inspect them'
+            ]
+          }
         ]
       },
       {
-        id: 'non-covered-scenarios',
-        title: '4. Exclusions & Situations Not Eligible for Return/Reprint',
+        id: 'customer-files',
+        title: '4. Your Responsibility — Customer-Provided Files',
         content: [
-          'Because commercial print materials are customized to client-specific branding and cannot be resold, returns, reprints, or refunds cannot be granted under the following circumstances:',
-          '• Customer-Approved Typographical Errors: Spelling mistakes, incorrect phone numbers, wrong dates, or grammatical errors that were visible in the client-approved proof.',
-          '• Low-Resolution or Blurry Source Artwork: Pixelation or degradation resulting from client-supplied low-DPI raster images (e.g. 72 DPI web screenshots or low-quality camera photos).',
-          '• Standard RGB to CMYK Shifts: Minor color differences that naturally occur when digital RGB screen colors (which emit light) are converted to physical CMYK process inks (which reflect light).',
-          '• Client Change of Mind: Modifications requested after production has commenced, including date changes, venue alterations, or cancelled events.',
-          '• Unauthorized Third-Party Mishandling: Physical damage caused by customer mishandling, outdoor exposure to storms beyond specified weather ratings, or improper storage after delivery.'
+          'We print exactly the file you approve. These cases are not eligible for cash refund:',
+          '• Low-resolution images, blurriness, or pixelation in your file',
+          '• Colors shifting slightly from what you see on your screen (every monitor displays differently — we print to industry-standard CMYK)',
+          '• Missing bleed, incorrect margins, or layout issues in your design',
+          '• Typos, misspellings, or wrong details in your approved artwork',
+          '• Order quantity/size mistake you confirmed',
+          '• Change of mind after approval'
+        ],
+        subsections: [
+          {
+            subtitle: '✅ What We Can Do',
+            paragraphs: [
+              '• We offer discounted reprint at cost price — fast turnaround',
+              '• We can help fix your file for a small design fee',
+              '• No refunds once printed — but we will help you get it right next time'
+            ]
+          }
         ]
       },
       {
-        id: 'resolution-refunds',
-        title: '5. Resolution Hierarchy: Reprint, Store Credit & Refunds',
+        id: 'delivery-timelines',
+        title: '5. Delivery & Timelines',
         content: [
-          'When a defect claim is verified and validated by our Quality Control Desk, the following resolution protocol applies:',
-          '1. Tier 1 (Default): Priority Factory Reprint — The affected quantity is placed on our express press queue and reprinted immediately with free delivery.',
-          '2. Tier 2: Store Credit — If a reprint timeline cannot meet an impending event deadline, a 100% store credit voucher is credited to the client\'s account for future print orders.',
-          '3. Tier 3: Commercial Refund — If the Company is unable to reprint the job or fulfill the contracted specifications, a direct monetary refund for the affected items will be processed via electronic bank transfer within three to five (3–5) business days.'
+          '• Bayelsa Same-Day/Next-Day: If we miss confirmed slot → priority reprint or partial refund',
+          '• Nationwide Delivery: 3–5 business days — delays by courier are not our fault, but we will assist you to follow up',
+          '• Unclaimed orders: If you fail to receive/pick up and don’t notify us → no refund; re-delivery at your cost'
         ]
       },
       {
-        id: 'return-logistics',
-        title: '6. Defective Item Return Logistics',
+        id: 'payment-refund-process',
+        title: '6. Payment Refund Process',
         content: [
-          'To prevent fraudulent claims and support factory quality audits, the Company may require the client to surrender or return the defective batch to our Yenagoa press plant or designated logistics hub.',
-          'Where the return is mandated by our QA team for inspection, Silver & Gold Inkshine Ltd will cover the return courier shipping costs.'
+          '• Refunds processed within 5–7 business days of agreement',
+          '• Method: Same way you paid — bank transfer, mobile money, or wallet reversal',
+          '• Bank transfer delays beyond our control are not our responsibility',
+          '• No cash refunds to third parties — only to the original payer'
+        ]
+      },
+      {
+        id: 'special-custom-items',
+        title: '7. Special & Custom Items',
+        content: [
+          '• Custom design services: Non-refundable once design is delivered',
+          '• Bulk/wholesale orders: 50% deposit is non-refundable after approval',
+          '• Personalized items: No return or exchange possible — each is unique',
+          '• Digital proofs/designs: Final files are yours — no refund once sent'
+        ]
+      },
+      {
+        id: 'contact-us',
+        title: '8. How to Contact Us',
+        content: [
+          'All refund/claim requests via WhatsApp for fastest service:',
+          '📞 +234 703 037 2539',
+          '📍 Silver & Gold Inkshine Ltd',
+          'Opolo-Epie, Yenagoa, Bayelsa State'
         ]
       }
     ]

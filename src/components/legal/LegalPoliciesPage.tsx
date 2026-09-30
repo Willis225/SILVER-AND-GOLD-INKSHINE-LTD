@@ -79,9 +79,9 @@ export const LegalPoliciesPage: React.FC<LegalPoliciesPageProps> = ({
     },
     {
       id: 'returns',
-      label: 'Return & Refund Policy',
+      label: 'Refund Policy',
       icon: RotateCcw,
-      desc: '100% quality guarantee, reprint protocol & 72-hour claim window'
+      desc: 'Cancellations, free production reprints, claim window & refund process'
     }
   ];
 
@@ -293,6 +293,33 @@ export const LegalPoliciesPage: React.FC<LegalPoliciesPageProps> = ({
               <p className="text-sm text-stone-300 leading-relaxed bg-white/5 p-4 rounded-2xl border border-white/10">
                 {activeDoc.summary}
               </p>
+
+              {/* Prominent Quick Summary Table if defined */}
+              {activeDoc.quickSummaryTable && (
+                <div className="pt-2">
+                  <div className="text-xs font-black uppercase tracking-wider text-[#f5be38] mb-2.5 flex items-center gap-2">
+                    <span>⚡ Quick Summary at a Glance</span>
+                  </div>
+                  <div className="overflow-x-auto rounded-2xl border border-white/15 bg-black/40">
+                    <table className="w-full text-left text-xs border-collapse">
+                      <thead>
+                        <tr className="border-b border-white/10 bg-white/5">
+                          <th className="py-3 px-4 font-black text-white">{activeDoc.quickSummaryTable.headers[0]}</th>
+                          <th className="py-3 px-4 font-black text-white">{activeDoc.quickSummaryTable.headers[1]}</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-white/5">
+                        {activeDoc.quickSummaryTable.rows.map((row, rIdx) => (
+                          <tr key={rIdx} className="hover:bg-white/5 transition-colors">
+                            <td className="py-2.5 px-4 font-bold text-stone-200">{row.col1}</td>
+                            <td className="py-2.5 px-4 text-stone-300">{row.col2}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Sections Accordion / Cards */}

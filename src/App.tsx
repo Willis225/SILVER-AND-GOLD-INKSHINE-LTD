@@ -30,6 +30,8 @@ import { CatalogModal } from './components/modals/CatalogModal';
 import { RequestQuoteModal } from './components/modals/RequestQuoteModal';
 import { CategoriesPage } from './components/categories/CategoriesPage';
 import { LegalPoliciesPage, LegalDocType } from './components/legal/LegalPoliciesPage';
+import { AboutUsPage } from './components/about/AboutUsPage';
+import { ServicesPage } from './components/services/ServicesPage';
 import { ShieldCheck } from 'lucide-react';
 import { SAMPLE_PRODUCTS, NIGERIAN_SHIPPING_ZONES } from './data/seedData';
 import { INITIAL_ORDERS } from './data/seedOrders';
@@ -219,9 +221,9 @@ export default function App() {
     setIsBookOnlineOpen(true);
   };
 
-  // Mode toggle between Live Storefront, Dedicated Categories Page, PDP, Checkout, Architecture Sandbox, Legal Policies, and Admin Dashboard
+  // Mode toggle between Live Storefront, Dedicated Categories Page, PDP, Checkout, Architecture Sandbox, Legal Policies, About Us, Services, and Admin Dashboard
   // By default, open the main customer-facing website ('storefront') unless explicitly requested via URL pathname (/admin), hash (#admin), or parameter (?admin or ?view=admin)
-  const [viewMode, setViewMode] = useState<'storefront' | 'categories' | 'pdp' | 'checkout' | 'stage1_sandbox' | 'admin' | 'policies'>(() => {
+  const [viewMode, setViewMode] = useState<'storefront' | 'categories' | 'pdp' | 'checkout' | 'stage1_sandbox' | 'admin' | 'policies' | 'about' | 'services'>(() => {
     if (typeof window !== 'undefined') {
       const pathname = (window.location.pathname || '').toLowerCase();
       const hash = (window.location.hash || '').toLowerCase();
@@ -243,7 +245,25 @@ export default function App() {
       if (hash === '#categories' || viewParam === 'categories' || pathname.endsWith('/categories')) {
         return 'categories';
       }
-      if (hash === '#terms' || hash === '#privacy' || hash === '#returns' || hash === '#return-policy' || hash === '#policies' || viewParam === 'policies') {
+      if (hash === '#about' || viewParam === 'about' || pathname.endsWith('/about')) {
+        return 'about';
+      }
+      if (hash === '#services' || viewParam === 'services' || pathname.endsWith('/services')) {
+        return 'services';
+      }
+      if (
+        hash === '#terms' || 
+        hash === '#privacy' || 
+        hash === '#returns' || 
+        hash === '#return-policy' || 
+        hash === '#refund-policy' || 
+        hash === '#refunds' || 
+        hash === '#policies' || 
+        viewParam === 'policies' || 
+        pathname.endsWith('/refund-policy') || 
+        pathname.endsWith('/privacy-policy') || 
+        pathname.endsWith('/terms')
+      ) {
         return 'policies';
       }
     }
@@ -272,13 +292,17 @@ export default function App() {
         setViewMode('admin');
       } else if (hash === '#categories' || viewParam === 'categories' || pathname.endsWith('/categories')) {
         setViewMode('categories');
+      } else if (hash === '#about' || viewParam === 'about' || pathname.endsWith('/about')) {
+        setViewMode('about');
+      } else if (hash === '#services' || viewParam === 'services' || pathname.endsWith('/services')) {
+        setViewMode('services');
       } else if (hash === '#terms') {
         setLegalInitialDoc('terms');
         setViewMode('policies');
-      } else if (hash === '#privacy') {
+      } else if (hash === '#privacy' || pathname.endsWith('/privacy-policy')) {
         setLegalInitialDoc('privacy');
         setViewMode('policies');
-      } else if (hash === '#returns' || hash === '#return-policy') {
+      } else if (hash === '#returns' || hash === '#return-policy' || hash === '#refund-policy' || hash === '#refunds' || pathname.endsWith('/refund-policy')) {
         setLegalInitialDoc('returns');
         setViewMode('policies');
       } else if (hash === '#policies' || viewParam === 'policies') {
@@ -626,6 +650,27 @@ export default function App() {
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
             onOpenContact={() => handleOpenInfoModal('contact')}
+          />
+        )}
+
+        {viewMode === 'about' && (
+          <AboutUsPage
+            onNavigateHome={() => {
+              setViewMode('storefront');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
+          />
+        )}
+
+        {viewMode === 'services' && (
+          <ServicesPage
+            onNavigateHome={() => {
+              setViewMode('storefront');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onSelectCategory={(cat) => handleOpenCategories(cat)}
+            onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
           />
         )}
 
