@@ -27,12 +27,14 @@ import { CompanyLogoMark } from '../common/CompanyLogo';
 interface BookOnlinePageProps {
   onNavigateHome: () => void;
   onOpenPolicies?: (docKey?: 'terms' | 'privacy' | 'returns') => void;
+  onOpenCustomQuote?: () => void;
   initialProductType?: string;
 }
 
 export const BookOnlinePage: React.FC<BookOnlinePageProps> = ({
   onNavigateHome,
   onOpenPolicies,
+  onOpenCustomQuote,
   initialProductType
 }) => {
   // Form State
@@ -254,9 +256,15 @@ Please review and send quote & proof. Thank you!`;
           <div className="relative w-full h-full">
             {/* Background Graphic Imagery */}
             <img
-              src="/startup-corporate-identity-bundle.jpg"
+              src="https://kommodo.ai/i/MoNH6zpXs6l1MjdaNFOe"
+              onError={(e) => {
+                const target = e.currentTarget;
+                if (!target.src.includes('startup-corporate-identity-bundle')) {
+                  target.src = '/startup-corporate-identity-bundle.jpg';
+                }
+              }}
               alt="Silver & Gold Inkshine commercial printing materials showcase"
-              className="w-full h-full object-cover object-center opacity-40 lg:opacity-60 scale-105"
+              className="w-full h-full object-cover object-center opacity-45 lg:opacity-65 scale-105"
             />
             {/* Horizontal Left-to-Right Fade Gradient: Ensures left side seamlessly melts into #0F0F12 while right side stays visible */}
             <div className="absolute inset-0 bg-gradient-to-r from-[#0F0F12] via-[#0F0F12]/80 to-transparent" />

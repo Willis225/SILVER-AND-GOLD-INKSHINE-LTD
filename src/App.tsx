@@ -33,6 +33,7 @@ import { LegalPoliciesPage, LegalDocType } from './components/legal/LegalPolicie
 import { AboutUsPage } from './components/about/AboutUsPage';
 import { ServicesPage } from './components/services/ServicesPage';
 import { BookOnlinePage } from './components/order/BookOnlinePage';
+import { CustomQuotePage } from './components/quote/CustomQuotePage';
 import { ShieldCheck } from 'lucide-react';
 import { SAMPLE_PRODUCTS, NIGERIAN_SHIPPING_ZONES } from './data/seedData';
 import { INITIAL_ORDERS } from './data/seedOrders';
@@ -230,9 +231,21 @@ export default function App() {
     }
   };
 
-  // Mode toggle between Live Storefront, Dedicated Categories Page, PDP, Checkout, Architecture Sandbox, Legal Policies, About Us, Services, Book Online / Order, and Admin Dashboard
+  const handleOpenCustomQuote = () => {
+    setViewMode('quote');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    try {
+      if (window.location.hash !== '#quote') {
+        window.history.pushState(null, '', '#quote');
+      }
+    } catch {
+      // Safe fallback
+    }
+  };
+
+  // Mode toggle between Live Storefront, Dedicated Categories Page, PDP, Checkout, Architecture Sandbox, Legal Policies, About Us, Services, Book Online / Order, Custom Quote, and Admin Dashboard
   // By default, open the main customer-facing website ('storefront') unless explicitly requested via URL pathname (/admin), hash (#admin), or parameter (?admin or ?view=admin)
-  const [viewMode, setViewMode] = useState<'storefront' | 'categories' | 'pdp' | 'checkout' | 'stage1_sandbox' | 'admin' | 'policies' | 'about' | 'services' | 'order'>(() => {
+  const [viewMode, setViewMode] = useState<'storefront' | 'categories' | 'pdp' | 'checkout' | 'stage1_sandbox' | 'admin' | 'policies' | 'about' | 'services' | 'order' | 'quote'>(() => {
     if (typeof window !== 'undefined') {
       const pathname = (window.location.pathname || '').toLowerCase();
       const hash = (window.location.hash || '').toLowerCase();
@@ -250,6 +263,9 @@ export default function App() {
         hasAdminParam
       ) {
         return 'admin';
+      }
+      if (hash === '#quote' || hash === '#custom-quote' || viewParam === 'quote' || viewParam === 'custom-quote' || pathname.endsWith('/quote') || pathname.endsWith('/custom-quote')) {
+        return 'quote';
       }
       if (hash === '#categories' || viewParam === 'categories' || pathname.endsWith('/categories')) {
         return 'categories';
@@ -302,6 +318,8 @@ export default function App() {
         hasAdminParam
       ) {
         setViewMode('admin');
+      } else if (hash === '#quote' || hash === '#custom-quote' || viewParam === 'quote' || viewParam === 'custom-quote' || pathname.endsWith('/quote') || pathname.endsWith('/custom-quote')) {
+        setViewMode('quote');
       } else if (hash === '#categories' || viewParam === 'categories' || pathname.endsWith('/categories')) {
         setViewMode('categories');
       } else if (hash === '#about' || viewParam === 'about' || pathname.endsWith('/about')) {
@@ -576,7 +594,7 @@ export default function App() {
           onOpenBookOnline={() => handleOpenBookOnline()}
           onOpenCatalog={() => handleOpenCategoriesPage('all')}
           onOpenCategoriesPage={handleOpenCategoriesPage}
-          onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
+          onOpenQuoteModal={handleOpenCustomQuote}
         />
       )}
 
@@ -652,7 +670,7 @@ export default function App() {
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
             onAddToCart={handleAddToCart}
-            onOpenCustomQuote={() => setIsQuoteModalOpen(true)}
+            onOpenCustomQuote={handleOpenCustomQuote}
           />
         )}
 
@@ -673,7 +691,7 @@ export default function App() {
               setViewMode('storefront');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
-            onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
+            onOpenQuoteModal={handleOpenCustomQuote}
           />
         )}
 
@@ -684,7 +702,7 @@ export default function App() {
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
             onSelectCategory={(cat) => handleOpenCategories(cat)}
-            onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
+            onOpenQuoteModal={handleOpenCustomQuote}
           />
         )}
 
@@ -695,6 +713,22 @@ export default function App() {
               setViewMode('storefront');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
+            onOpenPolicies={(docKey) => {
+              setLegalInitialDoc(docKey || 'terms');
+              setViewMode('policies');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onOpenCustomQuote={handleOpenCustomQuote}
+          />
+        )}
+
+        {viewMode === 'quote' && (
+          <CustomQuotePage
+            onNavigateHome={() => {
+              setViewMode('storefront');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onOpenBookOnline={() => handleOpenBookOnline()}
             onOpenPolicies={(docKey) => {
               setLegalInitialDoc(docKey || 'terms');
               setViewMode('policies');
@@ -814,7 +848,7 @@ export default function App() {
             <LocationMapSection
               mapUrl={websiteContent.googleMapsUrl}
               embedUrl={websiteContent.googleMapsEmbedUrl}
-              onRequestQuote={() => setIsQuoteModalOpen(true)}
+              onRequestQuote={handleOpenCustomQuote}
             />
           </>
         )}
@@ -829,7 +863,7 @@ export default function App() {
           }}
           onOpenInfoModal={handleOpenInfoModal}
           onOpenCategoriesPage={handleOpenCategoriesPage}
-          onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
+          onOpenQuoteModal={handleOpenCustomQuote}
         />
       )}
 
