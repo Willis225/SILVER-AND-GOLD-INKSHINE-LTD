@@ -44,7 +44,6 @@ import {
 import { ProductCategory, Product } from '../../types/schema';
 import { CompanyLogoMark } from '../common/CompanyLogo';
 import { InfoModalTab } from '../common/CompanyInfoModal';
-import { GlobalSearchModal } from '../common/GlobalSearchModal';
 
 interface HeaderProps {
   cartCount: number;
@@ -59,6 +58,7 @@ interface HeaderProps {
   onOpenCatalog?: () => void;
   onOpenCategoriesPage?: (categoryKey?: string) => void;
   onOpenQuoteModal?: () => void;
+  onOpenSearch?: () => void;
   onNavigateToPage?: (page: 'storefront' | 'categories' | 'about' | 'services' | 'order' | 'quote' | 'policies', docKey?: 'terms' | 'privacy' | 'returns') => void;
   products?: Product[];
 }
@@ -104,12 +104,21 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenCatalog,
   onOpenCategoriesPage,
   onOpenQuoteModal,
+  onOpenSearch,
   onNavigateToPage,
   products = [],
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [showSearchModal, setShowSearchModal] = useState(false);
+
+  const handleTriggerSearch = () => {
+    if (onOpenSearch) {
+      onOpenSearch();
+    } else {
+      setShowSearchModal(true);
+    }
+  };
 
   const handleCategoryNav = (cat: ProductCategory | string) => {
     onSelectCategory(cat as ProductCategory);
@@ -741,7 +750,8 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="flex items-center gap-3">
             {/* Search Icon / Toggle -> Opens Global Search Modal */}
             <button
-              onClick={() => setShowSearchModal(true)}
+              type="button"
+              onClick={handleTriggerSearch}
               className="p-2 text-stone-300 hover:text-[#ffd25d] transition-colors rounded-full hover:bg-white/10 cursor-pointer"
               aria-label="Search items and categories"
               title="Search flyers, banners, business cards, signage..."
@@ -788,7 +798,7 @@ export const Header: React.FC<HeaderProps> = ({
             type="button"
             onClick={() => {
               setMobileMenuOpen(false);
-              setShowSearchModal(true);
+              handleTriggerSearch();
             }}
             className="w-full py-2.5 px-3.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/20 text-left flex items-center justify-between text-stone-300 text-xs transition-colors cursor-pointer"
           >
@@ -942,38 +952,6 @@ export const Header: React.FC<HeaderProps> = ({
       )}
       {/* Liquid Gold & Silver Hairline Accent under the whole header */}
       <div className="h-[1.5px] w-full bg-gradient-to-r from-transparent via-[#f5be38] via-white to-transparent opacity-80" />
-
-      {/* Global Interactive Search Modal / Palette */}
-      <GlobalSearchModal
-        isOpen={showSearchModal}
-        onClose={() => setShowSearchModal(false)}
-        searchQuery={searchQuery}
-        onSearchChange={onSearchChange}
-        onSelectCategory={(catId) => {
-          handleCategoryNav(catId);
-        }}
-        onSelectProduct={(prodId) => {
-          if (onOpenCategoriesPage) {
-            onOpenCategoriesPage('all', prodId);
-          } else {
-            onNavigateHome();
-          }
-        }}
-        onNavigateToPage={(page, docKey) => {
-          if (onNavigateToPage) {
-            onNavigateToPage(page, docKey);
-          } else if (page === 'order' && onOpenBookOnline) {
-            onOpenBookOnline();
-          } else if (page === 'quote' && onOpenQuoteModal) {
-            onOpenQuoteModal();
-          } else if (page === 'categories' && onOpenCategoriesPage) {
-            onOpenCategoriesPage('all');
-          } else {
-            onNavigateHome();
-          }
-        }}
-        products={products}
-      />
     </header>
   );
 };

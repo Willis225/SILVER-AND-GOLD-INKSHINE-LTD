@@ -339,7 +339,7 @@ export const OrderDetailDrawer: React.FC<OrderDetailDrawerProps> = ({
                     <div className="flex items-start justify-between gap-2">
                       <h5 className="font-bold text-stone-900 text-sm">{item.productName}</h5>
                       <span className="font-mono font-bold text-stone-900 text-sm whitespace-nowrap">
-                        ₦{item.totalPriceNgn.toLocaleString()}
+                        ₦{(item.totalPriceNgn || 0).toLocaleString()}
                       </span>
                     </div>
 
@@ -348,7 +348,7 @@ export const OrderDetailDrawer: React.FC<OrderDetailDrawerProps> = ({
                         Qty: {item.quantity}
                       </span>
                       <span className="px-2 py-0.5 bg-stone-100 text-stone-700 rounded text-[11px]">
-                        ₦{item.unitPriceNgn.toLocaleString()} / unit
+                        ₦{(item.unitPriceNgn || 0).toLocaleString()} / unit
                       </span>
                       {item.turnaroundEstimate && (
                         <span className="px-2 py-0.5 bg-amber-50 text-amber-800 border border-amber-200 rounded text-[11px]">
@@ -488,27 +488,27 @@ export const OrderDetailDrawer: React.FC<OrderDetailDrawerProps> = ({
             <div className="space-y-1.5 text-xs">
               <div className="flex justify-between text-stone-600">
                 <span>Subtotal:</span>
-                <span className="font-mono">₦{order.subtotalNgn.toLocaleString()}</span>
+                <span className="font-mono">₦{(order.subtotalNgn || 0).toLocaleString()}</span>
               </div>
               <div className="flex justify-between text-stone-600">
                 <span>Interstate / Local Delivery Fee:</span>
-                <span className="font-mono">₦{order.shippingFeeNgn.toLocaleString()}</span>
+                <span className="font-mono">₦{(order.shippingFeeNgn || 0).toLocaleString()}</span>
               </div>
-              {order.discountNgn > 0 && (
+              {(order.discountNgn || 0) > 0 && (
                 <div className="flex justify-between text-[#b8860b] font-medium">
                   <span>Corporate Discount:</span>
-                  <span className="font-mono">-₦{order.discountNgn.toLocaleString()}</span>
+                  <span className="font-mono">-₦{(order.discountNgn || 0).toLocaleString()}</span>
                 </div>
               )}
               <div className="flex justify-between text-stone-600">
                 <span>Statutory Nigerian VAT (7.5%):</span>
                 <span className="font-mono">
-                  ₦{(Math.round((order.subtotalNgn - order.discountNgn) * 0.075)).toLocaleString()}
+                  ₦{(Math.round(((order.subtotalNgn || 0) - (order.discountNgn || 0)) * 0.075)).toLocaleString()}
                 </span>
               </div>
               <div className="border-t border-stone-200 pt-1.5 flex justify-between text-sm font-bold text-stone-900">
                 <span>Grand Total Settled:</span>
-                <span className="font-mono text-base text-amber-700">₦{order.grandTotalNgn.toLocaleString()}</span>
+                <span className="font-mono text-base text-amber-700">₦{(order.grandTotalNgn || 0).toLocaleString()}</span>
               </div>
             </div>
 

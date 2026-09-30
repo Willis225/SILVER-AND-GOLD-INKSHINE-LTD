@@ -357,7 +357,7 @@ export const PressFloorQueue: React.FC<PressFloorQueueProps> = ({
                         </span>
                       )}
                     </td>
-                    <td className="py-3 px-4 font-mono text-stone-600">₦{item.unitCostNgn.toLocaleString()}</td>
+                    <td className="py-3 px-4 font-mono text-stone-600">₦{(item.unitCostNgn || 0).toLocaleString()}</td>
                     <td className="py-3 px-4 text-right">
                       <button
                         onClick={() => {

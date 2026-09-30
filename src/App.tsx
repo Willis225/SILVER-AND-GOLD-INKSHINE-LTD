@@ -28,6 +28,7 @@ import { GlassBottomDock } from './components/navigation/GlassBottomDock';
 import { BookOnlineModal } from './components/modals/BookOnlineModal';
 import { CatalogModal } from './components/modals/CatalogModal';
 import { RequestQuoteModal } from './components/modals/RequestQuoteModal';
+import { GlobalSearchModal } from './components/common/GlobalSearchModal';
 import { CategoriesPage } from './components/categories/CategoriesPage';
 import { LegalPoliciesPage, LegalDocType } from './components/legal/LegalPoliciesPage';
 import { AboutUsPage } from './components/about/AboutUsPage';
@@ -199,6 +200,7 @@ export default function App() {
   const [isBookOnlineOpen, setIsBookOnlineOpen] = useState(false);
   const [isCatalogOpen, setIsCatalogOpen] = useState(false);
   const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
+  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const [bookOnlineService, setBookOnlineService] = useState('');
   const [activeCategoryTag, setActiveCategoryTag] = useState<string>('all');
 
@@ -595,6 +597,7 @@ export default function App() {
           onOpenCatalog={() => handleOpenCategoriesPage('all')}
           onOpenCategoriesPage={handleOpenCategoriesPage}
           onOpenQuoteModal={handleOpenCustomQuote}
+          onOpenSearch={() => setIsSearchModalOpen(true)}
           onNavigateToPage={(page, docKey) => {
             if (page === 'order') {
               handleOpenBookOnline();
@@ -962,6 +965,53 @@ export default function App() {
         onSelectCategory={(catKey) => {
           handleOpenCategoriesPage(catKey);
         }}
+      />
+
+      {/* Global High-Contrast Search Modal / Command Palette */}
+      <GlobalSearchModal
+        isOpen={isSearchModalOpen}
+        onClose={() => setIsSearchModalOpen(false)}
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        onSelectCategory={(catKey) => {
+          setIsSearchModalOpen(false);
+          handleOpenCategoriesPage(catKey);
+        }}
+        onSelectProduct={(prodId) => {
+          setIsSearchModalOpen(false);
+          const found = (products || []).find(p => p.id === prodId || p.sku === prodId || p.slug === prodId);
+          if (found) {
+            setActivePdpProduct(found);
+            setViewMode('pdp');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          } else {
+            handleOpenCategoriesPage('all', prodId);
+          }
+        }}
+        onNavigateToPage={(page, docKey) => {
+          setIsSearchModalOpen(false);
+          if (page === 'order') {
+            handleOpenBookOnline();
+          } else if (page === 'quote') {
+            handleOpenCustomQuote();
+          } else if (page === 'categories') {
+            handleOpenCategoriesPage('all');
+          } else if (page === 'about') {
+            setViewMode('about');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          } else if (page === 'services') {
+            setViewMode('services');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          } else if (page === 'policies') {
+            setLegalInitialDoc(docKey || 'terms');
+            setViewMode('policies');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          } else {
+            setViewMode('storefront');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+        }}
+        products={products}
       />
     </div>
   );
