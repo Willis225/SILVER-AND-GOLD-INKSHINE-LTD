@@ -193,7 +193,7 @@ export const Footer: React.FC<FooterProps> = ({
               <span>•</span>
               <button 
                 type="button"
-                onClick={() => onOpenInfoModal?.('contact')}
+                onClick={() => onOpenInfoModal?.('returns')}
                 className="text-white hover:text-stone-300 font-bold underline underline-offset-2 cursor-pointer"
               >
                 Return Policy

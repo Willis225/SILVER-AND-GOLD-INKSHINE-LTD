@@ -19,12 +19,16 @@ import {
   Send,
   Calendar,
   Layers,
-  Award
+  Award,
+  FileText,
+  RotateCcw,
+  Lock
 } from 'lucide-react';
 import { CompanyLogoMark } from './CompanyLogo';
 import { PRINT_FAQS } from '../../data/seedData';
+import { LEGAL_POLICIES } from '../../data/legalPoliciesContent';
 
-export type InfoModalTab = 'info' | 'about' | 'services' | 'portfolios' | 'faq' | 'contact';
+export type InfoModalTab = 'info' | 'about' | 'services' | 'portfolios' | 'faq' | 'contact' | 'terms' | 'privacy' | 'returns';
 
 interface CompanyInfoModalProps {
   isOpen: boolean;
@@ -76,6 +80,9 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
     { id: 'portfolios', label: 'Our Portfolios', icon: ImageIcon },
     { id: 'faq', label: 'How It Works / FAQ', icon: HelpCircle },
     { id: 'contact', label: 'Contact Us', icon: Phone },
+    { id: 'terms', label: 'Terms & Conditions', icon: FileText },
+    { id: 'privacy', label: 'Privacy Policy', icon: Lock },
+    { id: 'returns', label: 'Return Policy', icon: RotateCcw },
   ];
 
   const handleContactSubmit = (e: React.FormEvent) => {
@@ -840,6 +847,116 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
                   )}
                 </div>
               </div>
+            </div>
+          )}
+
+          {/* TAB 7, 8, 9: LEGAL POLICIES (Terms & Conditions, Privacy Policy, Return Policy) */}
+          {(activeTab === 'terms' || activeTab === 'privacy' || activeTab === 'returns') && (
+            <div className="space-y-6 animate-in fade-in-50 duration-150">
+              {(() => {
+                const doc = LEGAL_POLICIES[activeTab];
+                return (
+                  <div className="space-y-6">
+                    {/* Header Banner */}
+                    <div className="bg-[#14151e] border border-white/10 rounded-2xl p-5 space-y-3 shadow-xs">
+                      <div className="flex flex-wrap items-center justify-between gap-2">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#f5be38]/15 border border-[#f5be38]/30 text-[#f5be38] text-xs font-bold">
+                          <ShieldCheck className="w-3.5 h-3.5" />
+                          <span>{doc.badge}</span>
+                        </div>
+                        <div className="text-[11px] font-mono text-stone-400">
+                          Last Updated: <strong className="text-white">{doc.lastUpdated}</strong>
+                        </div>
+                      </div>
+
+                      <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+                        {doc.title}
+                      </h3>
+
+                      <p className="text-xs sm:text-sm text-stone-300 leading-relaxed bg-black/30 p-3.5 rounded-xl border border-white/5">
+                        {doc.summary}
+                      </p>
+                    </div>
+
+                    {/* Quick Switch Sub-Pills */}
+                    <div className="flex flex-wrap items-center gap-2 pt-1 pb-1">
+                      <span className="text-xs text-stone-400 font-bold">Switch Document:</span>
+                      {[
+                        { id: 'terms' as const, label: 'Terms & Conditions' },
+                        { id: 'privacy' as const, label: 'Privacy Policy' },
+                        { id: 'returns' as const, label: 'Return Policy' },
+                      ].map((item) => (
+                        <button
+                          key={item.id}
+                          onClick={() => setActiveTab(item.id)}
+                          className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                            activeTab === item.id
+                              ? 'bg-white text-black font-black shadow-xs'
+                              : 'bg-white/5 text-stone-300 hover:bg-white/10 hover:text-white'
+                          }`}
+                        >
+                          {item.label}
+                        </button>
+                      ))}
+                    </div>
+
+                    {/* Policy Clauses List */}
+                    <div className="space-y-4">
+                      {doc.sections.map((section) => (
+                        <div
+                          key={section.id}
+                          className="bg-[#14151e] rounded-2xl border border-white/10 p-5 space-y-2.5 shadow-xs"
+                        >
+                          <h4 className="text-sm sm:text-base font-bold text-white border-b border-white/10 pb-2">
+                            {section.title}
+                          </h4>
+
+                          <div className="space-y-2 text-xs sm:text-[13px] text-stone-300 leading-relaxed">
+                            {section.content.map((p, pIdx) => (
+                              <p key={pIdx} className="text-stone-300">
+                                {p}
+                              </p>
+                            ))}
+
+                            {section.subsections && (
+                              <div className="pt-2 space-y-2">
+                                {section.subsections.map((sub, sIdx) => (
+                                  <div key={sIdx} className="bg-white/5 p-3 rounded-xl space-y-1">
+                                    <div className="font-bold text-white text-xs">
+                                      {sub.subtitle}
+                                    </div>
+                                    {sub.paragraphs.map((subP, subPIdx) => (
+                                      <p key={subPIdx} className="text-xs text-stone-300">
+                                        {subP}
+                                      </p>
+                                    ))}
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Regulatory Notice */}
+                    <div className="p-4 rounded-xl bg-white/5 border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+                      <div className="text-stone-400">
+                        Official compliance document for <strong className="text-white">Silver &amp; Gold Inkshine Ltd</strong> (RC 1892044).
+                      </div>
+                      <a
+                        href="https://wa.me/2347030372539?text=Hello%20Silver%20%26%20Gold%20Inkshine%2C%20I%20have%20an%20inquiry%20regarding%20commercial%20terms%20or%20policies"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-[#f5be38] hover:underline font-bold inline-flex items-center gap-1 shrink-0"
+                      >
+                        <span>Contact Compliance Desk</span>
+                        <ExternalLink className="w-3 h-3" />
+                      </a>
+                    </div>
+                  </div>
+                );
+              })()}
             </div>
           )}
         </div>

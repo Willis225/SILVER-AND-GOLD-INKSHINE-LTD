@@ -29,6 +29,7 @@ import { BookOnlineModal } from './components/modals/BookOnlineModal';
 import { CatalogModal } from './components/modals/CatalogModal';
 import { RequestQuoteModal } from './components/modals/RequestQuoteModal';
 import { CategoriesPage } from './components/categories/CategoriesPage';
+import { LegalPoliciesPage, LegalDocType } from './components/legal/LegalPoliciesPage';
 import { ShieldCheck } from 'lucide-react';
 import { SAMPLE_PRODUCTS, NIGERIAN_SHIPPING_ZONES } from './data/seedData';
 import { INITIAL_ORDERS } from './data/seedOrders';
@@ -172,6 +173,9 @@ export default function App() {
   // Dedicated PDP Product
   const [activePdpProduct, setActivePdpProduct] = useState<Product | null>(null);
 
+  // Legal Policies Document State
+  const [legalInitialDoc, setLegalInitialDoc] = useState<LegalDocType>('terms');
+
   // Company Info & Displays Hub Modal
   const [isCompanyInfoOpen, setIsCompanyInfoOpen] = useState(false);
   const [companyInfoTab, setCompanyInfoTab] = useState<InfoModalTab>('info');
@@ -179,6 +183,12 @@ export default function App() {
   const handleOpenInfoModal = (tab: InfoModalTab = 'info') => {
     setCompanyInfoTab(tab);
     setIsCompanyInfoOpen(true);
+  };
+
+  const handleOpenLegalPage = (doc: LegalDocType = 'terms') => {
+    setLegalInitialDoc(doc);
+    setViewMode('policies');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   // Glass Bottom Dock Modal States (Book Online, Info, Categories)
@@ -209,9 +219,9 @@ export default function App() {
     setIsBookOnlineOpen(true);
   };
 
-  // Mode toggle between Live Storefront, Dedicated Categories Page, PDP, Checkout, Architecture Sandbox, and Admin Dashboard
+  // Mode toggle between Live Storefront, Dedicated Categories Page, PDP, Checkout, Architecture Sandbox, Legal Policies, and Admin Dashboard
   // By default, open the main customer-facing website ('storefront') unless explicitly requested via URL pathname (/admin), hash (#admin), or parameter (?admin or ?view=admin)
-  const [viewMode, setViewMode] = useState<'storefront' | 'categories' | 'pdp' | 'checkout' | 'stage1_sandbox' | 'admin'>(() => {
+  const [viewMode, setViewMode] = useState<'storefront' | 'categories' | 'pdp' | 'checkout' | 'stage1_sandbox' | 'admin' | 'policies'>(() => {
     if (typeof window !== 'undefined') {
       const pathname = (window.location.pathname || '').toLowerCase();
       const hash = (window.location.hash || '').toLowerCase();
@@ -232,6 +242,9 @@ export default function App() {
       }
       if (hash === '#categories' || viewParam === 'categories' || pathname.endsWith('/categories')) {
         return 'categories';
+      }
+      if (hash === '#terms' || hash === '#privacy' || hash === '#returns' || hash === '#return-policy' || hash === '#policies' || viewParam === 'policies') {
+        return 'policies';
       }
     }
     return 'storefront';
@@ -259,6 +272,17 @@ export default function App() {
         setViewMode('admin');
       } else if (hash === '#categories' || viewParam === 'categories' || pathname.endsWith('/categories')) {
         setViewMode('categories');
+      } else if (hash === '#terms') {
+        setLegalInitialDoc('terms');
+        setViewMode('policies');
+      } else if (hash === '#privacy') {
+        setLegalInitialDoc('privacy');
+        setViewMode('policies');
+      } else if (hash === '#returns' || hash === '#return-policy') {
+        setLegalInitialDoc('returns');
+        setViewMode('policies');
+      } else if (hash === '#policies' || viewParam === 'policies') {
+        setViewMode('policies');
       } else if (hash === '#storefront' || viewParam === 'storefront' || hash === '#home') {
         setViewMode('storefront');
       }
@@ -591,6 +615,17 @@ export default function App() {
             }}
             onAddToCart={handleAddToCart}
             onOpenCustomQuote={() => setIsQuoteModalOpen(true)}
+          />
+        )}
+
+        {viewMode === 'policies' && (
+          <LegalPoliciesPage
+            initialDocument={legalInitialDoc}
+            onNavigateHome={() => {
+              setViewMode('storefront');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onOpenContact={() => handleOpenInfoModal('contact')}
           />
         )}
 
