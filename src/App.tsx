@@ -595,6 +595,29 @@ export default function App() {
           onOpenCatalog={() => handleOpenCategoriesPage('all')}
           onOpenCategoriesPage={handleOpenCategoriesPage}
           onOpenQuoteModal={handleOpenCustomQuote}
+          onNavigateToPage={(page, docKey) => {
+            if (page === 'order') {
+              handleOpenBookOnline();
+            } else if (page === 'quote') {
+              handleOpenCustomQuote();
+            } else if (page === 'categories') {
+              handleOpenCategoriesPage('all');
+            } else if (page === 'about') {
+              setViewMode('about');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else if (page === 'services') {
+              setViewMode('services');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else if (page === 'policies') {
+              setLegalInitialDoc(docKey || 'terms');
+              setViewMode('policies');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+              setViewMode('storefront');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+          }}
+          products={products}
         />
       )}
 

@@ -41,9 +41,10 @@ import {
   Building2,
   HelpCircle,
 } from 'lucide-react';
-import { ProductCategory } from '../../types/schema';
+import { ProductCategory, Product } from '../../types/schema';
 import { CompanyLogoMark } from '../common/CompanyLogo';
 import { InfoModalTab } from '../common/CompanyInfoModal';
+import { GlobalSearchModal } from '../common/GlobalSearchModal';
 
 interface HeaderProps {
   cartCount: number;
@@ -58,6 +59,8 @@ interface HeaderProps {
   onOpenCatalog?: () => void;
   onOpenCategoriesPage?: (categoryKey?: string) => void;
   onOpenQuoteModal?: () => void;
+  onNavigateToPage?: (page: 'storefront' | 'categories' | 'about' | 'services' | 'order' | 'quote' | 'policies', docKey?: 'terms' | 'privacy' | 'returns') => void;
+  products?: Product[];
 }
 
 export const CATEGORIES: { id: ProductCategory; label: string }[] = [
@@ -101,6 +104,8 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenCatalog,
   onOpenCategoriesPage,
   onOpenQuoteModal,
+  onNavigateToPage,
+  products = [],
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -734,46 +739,15 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* Right Action Icons: Search + Cart */}
           <div className="flex items-center gap-3">
-            {/* Search Icon / Toggle */}
-            <div className="relative">
-              <button
-                onClick={() => setShowSearchModal(!showSearchModal)}
-                className="p-2 text-stone-300 hover:text-[#ffd25d] transition-colors rounded-full hover:bg-white/10"
-                aria-label="Search items"
-              >
-                <Search className="w-5 h-5 stroke-[2.2]" />
-              </button>
-
-              {showSearchModal && (
-                <div className="absolute right-0 mt-2 w-72 sm:w-80 bg-[#0c0d12] border border-white/15 rounded-2xl shadow-2xl p-3 z-50">
-                  <div className="relative">
-                    <input
-                      type="text"
-                      value={searchQuery}
-                      onChange={(e) => onSearchChange(e.target.value)}
-                      placeholder="Search roll-up banners, flags, stickers..."
-                      autoFocus
-                      className="w-full bg-white/10 border border-white/20 rounded-xl pl-9 pr-3 py-2 text-xs text-white placeholder:text-stone-400 focus:outline-hidden focus:ring-2 focus:ring-[#b8860b]"
-                    />
-                    <Search className="w-4 h-4 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2" />
-                  </div>
-                  {searchQuery && (
-                    <div className="mt-2 pt-2 border-t border-white/10 flex items-center justify-between text-[11px]">
-                      <span className="text-stone-400">Filtering catalog...</span>
-                      <button 
-                        onClick={() => {
-                          onSearchChange('');
-                          setShowSearchModal(false);
-                        }}
-                        className="text-stone-400 hover:text-white font-bold"
-                      >
-                        Clear
-                      </button>
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
+            {/* Search Icon / Toggle -> Opens Global Search Modal */}
+            <button
+              onClick={() => setShowSearchModal(true)}
+              className="p-2 text-stone-300 hover:text-[#ffd25d] transition-colors rounded-full hover:bg-white/10 cursor-pointer"
+              aria-label="Search items and categories"
+              title="Search flyers, banners, business cards, signage..."
+            >
+              <Search className="w-5 h-5 stroke-[2.2]" />
+            </button>
 
             {/* Shopping Cart Icon with Counter */}
             <button
@@ -808,6 +782,23 @@ export const Header: React.FC<HeaderProps> = ({
       {/* Mobile Menu Drawer */}
       {mobileMenuOpen && (
         <div className="md:hidden bg-[#0a0b0e] border-b border-white/15 px-4 py-4 space-y-4 animate-in slide-in-from-top-2 duration-200">
+          
+          {/* Mobile Instant Search Input Trigger */}
+          <button
+            type="button"
+            onClick={() => {
+              setMobileMenuOpen(false);
+              setShowSearchModal(true);
+            }}
+            className="w-full py-2.5 px-3.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/20 text-left flex items-center justify-between text-stone-300 text-xs transition-colors cursor-pointer"
+          >
+            <span className="flex items-center gap-2">
+              <Search className="w-4 h-4 text-[#ffd25d]" />
+              <span className="text-stone-400">Search flyers, banners, cards, signs...</span>
+            </span>
+            <span className="text-[10px] text-[#ffd25d] font-bold px-1.5 py-0.5 rounded bg-[#ffd25d]/10 border border-[#ffd25d]/30">SEARCH</span>
+          </button>
+
           {/* Mobile Direct Action Buttons */}
           <div className="grid grid-cols-2 gap-2.5 pt-1">
             <button
@@ -951,6 +942,38 @@ export const Header: React.FC<HeaderProps> = ({
       )}
       {/* Liquid Gold & Silver Hairline Accent under the whole header */}
       <div className="h-[1.5px] w-full bg-gradient-to-r from-transparent via-[#f5be38] via-white to-transparent opacity-80" />
+
+      {/* Global Interactive Search Modal / Palette */}
+      <GlobalSearchModal
+        isOpen={showSearchModal}
+        onClose={() => setShowSearchModal(false)}
+        searchQuery={searchQuery}
+        onSearchChange={onSearchChange}
+        onSelectCategory={(catId) => {
+          handleCategoryNav(catId);
+        }}
+        onSelectProduct={(prodId) => {
+          if (onOpenCategoriesPage) {
+            onOpenCategoriesPage('all', prodId);
+          } else {
+            onNavigateHome();
+          }
+        }}
+        onNavigateToPage={(page, docKey) => {
+          if (onNavigateToPage) {
+            onNavigateToPage(page, docKey);
+          } else if (page === 'order' && onOpenBookOnline) {
+            onOpenBookOnline();
+          } else if (page === 'quote' && onOpenQuoteModal) {
+            onOpenQuoteModal();
+          } else if (page === 'categories' && onOpenCategoriesPage) {
+            onOpenCategoriesPage('all');
+          } else {
+            onNavigateHome();
+          }
+        }}
+        products={products}
+      />
     </header>
   );
 };
