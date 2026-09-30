@@ -19,14 +19,14 @@ import { openDB } from 'idb';
 export interface RecentJobMediaItem {
   id: string;
   type: 'video' | 'image';
-  title: string;
+  title?: string;
   mediaUrl: string;
   thumbnailUrl?: string;
   badge?: string;
   isCustom?: boolean;
 }
 
-const STORAGE_KEY = 'inkshine_recent_jobs_media_v2';
+const STORAGE_KEY = 'inkshine_recent_jobs_media_v3';
 const DB_NAME = 'inkshine_recent_jobs_db';
 const DB_STORE = 'videos_and_images';
 
@@ -35,34 +35,34 @@ const DEFAULT_MEDIA_ITEMS: RecentJobMediaItem[] = [
   {
     id: 'job-v1',
     type: 'video',
-    title: 'Commercial Printing & Workshop Reel',
+    title: '',
     mediaUrl: 'https://www.kapwing.com/w/JxRjisdMGT',
     thumbnailUrl: 'https://cdn.hstockplus.org/uploads/public/img-1790091847996-3aa2bb1c6a4e12cd.webp',
-    badge: 'Video Tour',
+    badge: '',
   },
   {
     id: 'job-v2',
     type: 'video',
-    title: 'Large Format Banner Production',
+    title: '',
     mediaUrl: 'https://plain-weur-prod-public.komododecks.com/202609/27/TEkrPEfKgNUoailKXbQ9/image.jpg',
     thumbnailUrl: '/magnetic-curved-popup-backdrop.jpg',
-    badge: 'Exhibition',
+    badge: '',
   },
   {
     id: 'job-v3',
     type: 'image',
-    title: '3D Illuminated Channel Letters',
+    title: '',
     mediaUrl: '/3d-illuminated-led-channel-letters.jpg',
     thumbnailUrl: '/3d-illuminated-led-channel-letters.jpg',
-    badge: '3D Signage',
+    badge: '',
   },
   {
     id: 'job-v4',
     type: 'image',
-    title: 'Fleet Vehicle Branding',
+    title: '',
     mediaUrl: '/commercial-fleet-vehicle-branding.jpg',
     thumbnailUrl: '/commercial-fleet-vehicle-branding.jpg',
-    badge: 'Vehicle Wrap',
+    badge: '',
   }
 ];
 
@@ -374,29 +374,17 @@ export const RecentJobsMediaBox: React.FC<RecentJobsMediaBoxProps> = ({ allowUpl
                     {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
                   </button>
                 </div>
-
-                <div className="text-xs font-bold text-white px-3 py-1 rounded-md bg-white/10 truncate max-w-[200px] sm:max-w-none">
-                  {activeItem?.title}
-                </div>
               </div>
             </div>
           ) : (
             <div className="relative w-full h-full flex items-center justify-center bg-black">
               <img
                 src={mediaSourceInfo?.src || activeItem?.mediaUrl}
-                alt={activeItem?.title}
+                alt={activeItem?.title || 'Recent Job'}
                 className="w-full h-full object-contain"
               />
             </div>
           )}
-
-          {/* Active Item Badge */}
-          <div className="absolute top-3.5 left-3.5 z-20 flex items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-black bg-black/90 text-white border border-white/30 backdrop-blur-md shadow-lg">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              {activeItem?.badge || 'Recent Job'}
-            </span>
-          </div>
 
         </div>
 
@@ -421,7 +409,7 @@ export const RecentJobsMediaBox: React.FC<RecentJobsMediaBoxProps> = ({ allowUpl
               <div className="relative aspect-[16/10] bg-black overflow-hidden">
                 <img
                   src={item.thumbnailUrl || (isItemVideo ? '/magnetic-curved-popup-backdrop.jpg' : item.mediaUrl)}
-                  alt={item.title}
+                  alt={item.title || 'Recent Job'}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-black/40 group-hover:bg-black/10 transition-colors" />
@@ -446,16 +434,6 @@ export const RecentJobsMediaBox: React.FC<RecentJobsMediaBoxProps> = ({ allowUpl
                     <Trash2 className="w-3 h-3" />
                   </button>
                 )}
-              </div>
-
-              {/* Minimal Title Banner */}
-              <div className="p-2 bg-black border-t border-white/5 flex items-center justify-between gap-1.5">
-                <span className="text-[11px] font-bold text-white truncate">
-                  {item.title}
-                </span>
-                <span className="text-[9.5px] font-bold text-stone-400 uppercase shrink-0">
-                  {item.badge || (isItemVideo ? 'Video' : 'Photo')}
-                </span>
               </div>
             </div>
           );
