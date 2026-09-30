@@ -149,20 +149,39 @@ export const AboutUsPage: React.FC<AboutUsPageProps> = ({
           </div>
 
           {/* Column 2: Facility & Team Imagery */}
-          <div className="lg:col-span-5 flex justify-center lg:justify-end">
-            <div className="relative w-full max-w-md rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.6)] border border-white/15 group">
+          <div className="lg:col-span-5 flex flex-col items-center lg:items-end space-y-3">
+            <div className="relative w-full max-w-md rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.7)] border border-white/20 group">
               <img
-                src="/inkshine-brand-portrait.png"
-                alt="Silver & Gold Inkshine facility — Yenagoa, Bayelsa"
-                className="w-full aspect-[4/3] object-cover object-top group-hover:scale-105 transition-transform duration-700"
+                src="/industrial-large-format-printer.jpg"
+                alt="Silver & Gold Inkshine commercial printing facility — Yenagoa, Bayelsa"
+                className="w-full aspect-[4/3] object-cover object-center group-hover:scale-105 transition-transform duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
-              <div className="absolute bottom-4 left-4 right-4 text-xs font-bold text-white bg-black/70 backdrop-blur-md p-3 rounded-xl border border-white/10">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent pointer-events-none" />
+              
+              {/* Gold Top Badge */}
+              <div className="absolute top-3.5 left-3.5 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/80 backdrop-blur-md border border-[#D4AF37]/40 text-[#D4AF37] text-[11px] font-black">
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>1,200 SQM PRESS FLOOR</span>
+              </div>
+
+              {/* Bottom Caption Bar */}
+              <div className="absolute bottom-3 left-3 right-3 text-xs font-bold text-white bg-black/80 backdrop-blur-md p-3 rounded-xl border border-white/15">
                 <div className="flex items-center gap-1.5 text-[#D4AF37] text-[11px] uppercase tracking-wider font-extrabold mb-0.5">
                   <Building2 className="w-3.5 h-3.5" />
                   <span>Yenagoa Commercial Press Plant</span>
                 </div>
-                <span>Silver &amp; Gold Inkshine Ltd • Opolo-Epie Complex</span>
+                <span className="text-stone-300 font-medium text-[11px]">875 Medford Okilo Rd, Opolo-Epie Complex • Offset, UV &amp; Digital</span>
+              </div>
+            </div>
+
+            <div className="w-full max-w-md grid grid-cols-2 gap-2.5">
+              <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 text-center">
+                <div className="text-[10px] text-stone-400 font-bold uppercase">Press Capacity</div>
+                <div className="text-xs font-black text-[#D4AF37]">50,000+ Prints / Day</div>
+              </div>
+              <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 text-center">
+                <div className="text-[10px] text-stone-400 font-bold uppercase">Color Calibration</div>
+                <div className="text-xs font-black text-white">2400 DPI CMYK</div>
               </div>
             </div>
           </div>

@@ -23,8 +23,8 @@ interface HeroVideoPlayerProps {
   className?: string;
 }
 
-// User-provided official video from Kapwing
-const DEFAULT_VIDEO_URL = "https://www.kapwing.com/w/JxRjisdMGT";
+// User-provided official video
+const DEFAULT_VIDEO_URL = "https://kommodo.ai/i/MoNH6zpXs6l1MjdaNFOe";
 const DEFAULT_POSTER = "https://cdn.hstockplus.org/uploads/public/img-1790091847996-3aa2bb1c6a4e12cd.webp";
 
 export const HeroVideoPlayer: React.FC<HeroVideoPlayerProps> = ({
@@ -53,11 +53,23 @@ export const HeroVideoPlayer: React.FC<HeroVideoPlayerProps> = ({
     }
   }, [initialVideoUrl]);
 
-  // Detect URL type (Kapwing, YouTube, Vimeo, or Direct HTML5 Video)
+  // Detect URL type (Kommodo, Kapwing, YouTube, Vimeo, or Direct HTML5 Video)
   const videoSourceInfo = useMemo(() => {
     const url = (videoUrl || DEFAULT_VIDEO_URL).trim();
 
-    // 1. Kapwing
+    // 1. Kommodo.ai
+    if (url.includes('kommodo.ai')) {
+      const match = url.match(/kommodo\.ai\/(?:i|e|v|videos)\/([a-zA-Z0-9_-]+)/);
+      const id = match ? match[1] : 'MoNH6zpXs6l1MjdaNFOe';
+      return {
+        type: 'kommodo' as const,
+        embedUrl: `https://kommodo.ai/e/${id}?autoplay=true`,
+        shareUrl: `https://kommodo.ai/i/${id}`,
+        id
+      };
+    }
+
+    // 2. Kapwing
     if (url.includes('kapwing.com')) {
       const match = url.match(/kapwing\.com\/(?:w|e|videos)\/([a-zA-Z0-9_-]+)/);
       const id = match ? match[1] : 'JxRjisdMGT';
@@ -209,7 +221,7 @@ export const HeroVideoPlayer: React.FC<HeroVideoPlayerProps> = ({
       )}
 
       {/* RENDER VIDEO OR EMBED */}
-      {videoSourceInfo.type === 'kapwing' ? (
+      {videoSourceInfo.type === 'kommodo' || videoSourceInfo.type === 'kapwing' ? (
         <div className="absolute inset-0 w-full h-full bg-[#050508] flex flex-col items-center justify-center">
           <iframe
             key={iframeKey}

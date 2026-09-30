@@ -32,6 +32,7 @@ import { CategoriesPage } from './components/categories/CategoriesPage';
 import { LegalPoliciesPage, LegalDocType } from './components/legal/LegalPoliciesPage';
 import { AboutUsPage } from './components/about/AboutUsPage';
 import { ServicesPage } from './components/services/ServicesPage';
+import { BookOnlinePage } from './components/order/BookOnlinePage';
 import { ShieldCheck } from 'lucide-react';
 import { SAMPLE_PRODUCTS, NIGERIAN_SHIPPING_ZONES } from './data/seedData';
 import { INITIAL_ORDERS } from './data/seedOrders';
@@ -218,12 +219,20 @@ export default function App() {
 
   const handleOpenBookOnline = (service: string = '') => {
     setBookOnlineService(service);
-    setIsBookOnlineOpen(true);
+    setViewMode('order');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    try {
+      if (window.location.hash !== '#order') {
+        window.history.pushState(null, '', '#order');
+      }
+    } catch {
+      // Safe fallback
+    }
   };
 
-  // Mode toggle between Live Storefront, Dedicated Categories Page, PDP, Checkout, Architecture Sandbox, Legal Policies, About Us, Services, and Admin Dashboard
+  // Mode toggle between Live Storefront, Dedicated Categories Page, PDP, Checkout, Architecture Sandbox, Legal Policies, About Us, Services, Book Online / Order, and Admin Dashboard
   // By default, open the main customer-facing website ('storefront') unless explicitly requested via URL pathname (/admin), hash (#admin), or parameter (?admin or ?view=admin)
-  const [viewMode, setViewMode] = useState<'storefront' | 'categories' | 'pdp' | 'checkout' | 'stage1_sandbox' | 'admin' | 'policies' | 'about' | 'services'>(() => {
+  const [viewMode, setViewMode] = useState<'storefront' | 'categories' | 'pdp' | 'checkout' | 'stage1_sandbox' | 'admin' | 'policies' | 'about' | 'services' | 'order'>(() => {
     if (typeof window !== 'undefined') {
       const pathname = (window.location.pathname || '').toLowerCase();
       const hash = (window.location.hash || '').toLowerCase();
@@ -250,6 +259,9 @@ export default function App() {
       }
       if (hash === '#services' || viewParam === 'services' || pathname.endsWith('/services')) {
         return 'services';
+      }
+      if (hash === '#order' || hash === '#book-online' || hash === '#book' || viewParam === 'order' || viewParam === 'book' || pathname.endsWith('/order') || pathname.endsWith('/book-online')) {
+        return 'order';
       }
       if (
         hash === '#terms' || 
@@ -296,6 +308,8 @@ export default function App() {
         setViewMode('about');
       } else if (hash === '#services' || viewParam === 'services' || pathname.endsWith('/services')) {
         setViewMode('services');
+      } else if (hash === '#order' || hash === '#book-online' || hash === '#book' || viewParam === 'order' || viewParam === 'book' || pathname.endsWith('/order') || pathname.endsWith('/book-online')) {
+        setViewMode('order');
       } else if (hash === '#terms') {
         setLegalInitialDoc('terms');
         setViewMode('policies');
@@ -671,6 +685,21 @@ export default function App() {
             }}
             onSelectCategory={(cat) => handleOpenCategories(cat)}
             onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
+          />
+        )}
+
+        {viewMode === 'order' && (
+          <BookOnlinePage
+            initialProductType={bookOnlineService}
+            onNavigateHome={() => {
+              setViewMode('storefront');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onOpenPolicies={(docKey) => {
+              setLegalInitialDoc(docKey || 'terms');
+              setViewMode('policies');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
           />
         )}
 

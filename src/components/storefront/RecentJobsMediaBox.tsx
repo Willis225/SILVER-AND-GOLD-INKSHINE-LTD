@@ -28,7 +28,7 @@ export interface RecentJobMediaBoxItem {
   isCustom?: boolean;
 }
 
-const STORAGE_KEY = 'inkshine_recent_jobs_media_grid_v4';
+const STORAGE_KEY = 'inkshine_recent_jobs_media_grid_v5';
 const DB_NAME = 'inkshine_recent_jobs_db';
 const DB_STORE = 'videos_and_images';
 
@@ -37,7 +37,7 @@ const DEFAULT_4_BOXES: RecentJobMediaBoxItem[] = [
   {
     id: 'box-1',
     type: 'video',
-    mediaUrl: 'https://www.kapwing.com/w/JxRjisdMGT',
+    mediaUrl: 'https://kommodo.ai/i/MoNH6zpXs6l1MjdaNFOe',
     thumbnailUrl: 'https://cdn.hstockplus.org/uploads/public/img-1790091847996-3aa2bb1c6a4e12cd.webp',
   },
   {
@@ -72,6 +72,16 @@ async function getIndexedDb() {
 
 function resolveMediaInfo(url: string, type: 'video' | 'image') {
   const cleanUrl = (url || '').trim();
+
+  if (cleanUrl.includes('kommodo.ai')) {
+    const match = cleanUrl.match(/kommodo\.ai\/(?:i|e|v|videos)\/([a-zA-Z0-9_-]+)/);
+    const id = match ? match[1] : 'MoNH6zpXs6l1MjdaNFOe';
+    return {
+      type: 'kommodo' as const,
+      embedUrl: `https://kommodo.ai/e/${id}?autoplay=true`,
+      shareUrl: `https://kommodo.ai/i/${id}`
+    };
+  }
 
   if (cleanUrl.includes('kapwing.com')) {
     const match = cleanUrl.match(/kapwing\.com\/(?:w|e|videos)\/([a-zA-Z0-9_-]+)/);
@@ -291,7 +301,7 @@ export const RecentJobsMediaBox: React.FC<RecentJobsMediaBoxProps> = ({ allowUpl
         {boxes.map((box, idx) => {
           const media = resolveMediaInfo(box.mediaUrl, box.type);
           const isDirectVideo = media.type === 'direct_video';
-          const isIframeVideo = media.type === 'kapwing' || media.type === 'youtube' || media.type === 'vimeo';
+          const isIframeVideo = media.type === 'kommodo' || media.type === 'kapwing' || media.type === 'youtube' || media.type === 'vimeo';
           const isVideo = isDirectVideo || isIframeVideo || box.type === 'video';
 
           return (

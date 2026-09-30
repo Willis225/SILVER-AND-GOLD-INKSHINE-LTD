@@ -704,7 +704,7 @@ export const Header: React.FC<HeaderProps> = ({
               )}
             </div>
 
-            {/* Unified Single Primary Action Button: Order Online / Booking */}
+            {/* Unified Single Primary Action Button: Book Online */}
             <button
               id="desktop-header-book-online-btn"
               type="button"
@@ -713,7 +713,7 @@ export const Header: React.FC<HeaderProps> = ({
               title="Configure, calculate live quote and book online"
             >
               <Calendar className="w-3.5 h-3.5 stroke-[2.4]" />
-              <span className="whitespace-nowrap">Order Online</span>
+              <span className="whitespace-nowrap">Book Online</span>
               <span className="w-1.5 h-1.5 rounded-full bg-black/70 animate-pulse" />
             </button>
 
@@ -818,7 +818,7 @@ export const Header: React.FC<HeaderProps> = ({
               className="min-h-[44px] py-2.5 px-3.5 rounded-xl bg-gradient-to-r from-[#ffd25d] via-[#f5be38] to-[#e5ab20] text-black font-black text-xs flex items-center justify-center gap-1.5 shadow-md shadow-[#f5be38]/20 active:scale-95 transition-all cursor-pointer"
             >
               <Calendar className="w-4 h-4 text-black" />
-              <span>Order Online</span>
+              <span>Book Online</span>
             </button>
             <button
               onClick={() => {
