@@ -244,7 +244,7 @@ Please review and send detailed quote. Thank you!`;
     <div className="min-h-screen bg-[#0F0F12] text-stone-200 antialiased selection:bg-[#D4AF37]/30 selection:text-white">
       
       {/* Top Floating Navigation Header */}
-      <div className="sticky top-0 z-40 bg-[#0F0F12]/95 backdrop-blur-md border-b border-white/10 px-4 sm:px-6 lg:px-8 py-3.5 shadow-lg">
+      <div className="relative z-20 bg-[#0F0F12]/95 backdrop-blur-md border-b border-white/10 px-4 sm:px-6 lg:px-8 py-3.5 shadow-lg">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
           
           {/* Back to Home */}
@@ -294,13 +294,7 @@ Please review and send detailed quote. Thank you!`;
         <div className="absolute top-0 right-0 bottom-0 w-full sm:w-2/3 lg:w-1/2 pointer-events-none select-none z-0 overflow-hidden">
           <div className="relative w-full h-full">
             <img
-              src="https://kommodo.ai/i/MoNH6zpXs6l1MjdaNFOe"
-              onError={(e) => {
-                const target = e.currentTarget;
-                if (!target.src.includes('advertising-materials-portfolio')) {
-                  target.src = '/advertising-materials-portfolio.jpg';
-                }
-              }}
+              src="/advertising-materials-portfolio.jpg"
               alt="Silver & Gold Inkshine custom print projects showcase"
               className="w-full h-full object-cover object-center opacity-40 lg:opacity-55 scale-105"
             />

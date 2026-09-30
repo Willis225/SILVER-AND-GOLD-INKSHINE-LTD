@@ -88,7 +88,7 @@ export const LegalPoliciesPage: React.FC<LegalPoliciesPageProps> = ({
   return (
     <div className="min-h-screen bg-[#08080a] text-stone-200 antialiased selection:bg-[#f5be38]/30 selection:text-white">
       {/* Top Legal Header Navigation */}
-      <div className="sticky top-0 z-30 bg-[#0c0d12]/95 backdrop-blur-md border-b border-white/10 px-4 sm:px-6 lg:px-8 py-3.5 shadow-lg">
+      <div className="relative z-20 bg-[#0c0d12]/95 backdrop-blur-md border-b border-white/10 px-4 sm:px-6 lg:px-8 py-3.5 shadow-lg">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
           
           {/* Back to Storefront Button */}

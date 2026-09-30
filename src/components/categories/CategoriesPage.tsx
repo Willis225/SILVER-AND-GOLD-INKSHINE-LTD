@@ -369,7 +369,7 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
   return (
     <div className="min-h-screen bg-[#08080a] text-stone-200 font-sans selection:bg-[#f5be38] selection:text-black bg-grid-pattern">
       {/* 1. Top Breadcrumb & Page Bar */}
-      <div className="border-b border-white/10 bg-[#0d0e14]/90 sticky top-0 z-30 backdrop-blur-md">
+      <div className="border-b border-white/10 bg-[#0d0e14]/90 relative z-20 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap items-center justify-between gap-3">
           {/* Breadcrumb path */}
           <div className="flex items-center gap-2 text-xs sm:text-sm text-stone-400">

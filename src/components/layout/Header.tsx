@@ -131,7 +131,7 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-[#000000] border-b border-white/10 shadow-lg">
+    <header className="sticky top-0 z-50 bg-[#000000] border-b border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.85)] backdrop-blur-md">
       {/* Top Utility Bar: Liquid Silver & Gold Shimmer */}
       <div className="gold-silver-shimmer text-stone-950 text-xs py-1.5 px-4 sm:px-6 lg:px-8 border-b border-black/20 shadow-xs relative overflow-hidden">
         {/* Subtle luminous metallic gloss sheen */}
@@ -265,7 +265,7 @@ export const Header: React.FC<HeaderProps> = ({
                 </button>
 
                 {activeDropdown === 'prints' && (
-                  <div className="absolute top-full left-0 w-80 bg-[#0c0d12] border border-white/15 rounded-2xl shadow-2xl py-2 z-50 animate-in fade-in-50 duration-150 backdrop-blur-xl">
+                  <div className="absolute top-full left-0 w-80 bg-[#0c0d12] border border-white/15 rounded-2xl shadow-2xl py-2 z-[70] animate-in fade-in-50 duration-150 backdrop-blur-xl">
                     <button
                       onClick={() => handleCategoryNav('advertising_materials')}
                       className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item cursor-pointer"
@@ -362,7 +362,7 @@ export const Header: React.FC<HeaderProps> = ({
               </button>
 
               {activeDropdown === 'branding' && (
-                <div className="absolute top-full left-0 w-80 bg-[#0c0d12] border border-white/15 rounded-2xl shadow-2xl py-2 z-50 animate-in fade-in-50 duration-150 backdrop-blur-xl">
+                <div className="absolute top-full left-0 w-80 bg-[#0c0d12] border border-white/15 rounded-2xl shadow-2xl py-2 z-[70] animate-in fade-in-50 duration-150 backdrop-blur-xl">
                   <button
                     onClick={() => handleCategoryNav('custom_apparels_caps')}
                     className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item cursor-pointer"
@@ -472,7 +472,7 @@ export const Header: React.FC<HeaderProps> = ({
               </button>
 
               {activeDropdown === 'displays' && (
-                <div className="absolute top-full left-0 w-80 bg-[#0c0d12] border border-white/15 rounded-2xl shadow-2xl py-2 z-50 animate-in fade-in-50 duration-150 backdrop-blur-xl">
+                <div className="absolute top-full left-0 w-80 bg-[#0c0d12] border border-white/15 rounded-2xl shadow-2xl py-2 z-[70] animate-in fade-in-50 duration-150 backdrop-blur-xl">
                   <button
                     onClick={() => handleCategoryNav('banners_stands')}
                     className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item cursor-pointer"
@@ -611,7 +611,7 @@ export const Header: React.FC<HeaderProps> = ({
               </button>
 
               {activeDropdown === 'info' && (
-                <div className="absolute top-full left-0 w-80 bg-[#0c0d12] border border-white/15 rounded-2xl shadow-2xl py-2 z-50 animate-in fade-in-50 duration-150 backdrop-blur-xl">
+                <div className="absolute top-full left-0 w-80 bg-[#0c0d12] border border-white/15 rounded-2xl shadow-2xl py-2 z-[70] animate-in fade-in-50 duration-150 backdrop-blur-xl">
                   {/* -Company Info */}
                   <button
                     onClick={() => {

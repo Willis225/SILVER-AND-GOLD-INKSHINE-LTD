@@ -205,7 +205,7 @@ Please review and send quote & proof. Thank you!`;
     <div className="min-h-screen bg-[#0F0F12] text-stone-200 antialiased selection:bg-[#D4AF37]/30 selection:text-white">
       
       {/* Top Floating Navigation Header */}
-      <div className="sticky top-0 z-40 bg-[#0F0F12]/95 backdrop-blur-md border-b border-white/10 px-4 sm:px-6 lg:px-8 py-3.5 shadow-lg">
+      <div className="relative z-20 bg-[#0F0F12]/95 backdrop-blur-md border-b border-white/10 px-4 sm:px-6 lg:px-8 py-3.5 shadow-lg">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
           
           {/* Back to Home */}
@@ -256,15 +256,9 @@ Please review and send quote & proof. Thank you!`;
           <div className="relative w-full h-full">
             {/* Background Graphic Imagery */}
             <img
-              src="https://kommodo.ai/i/MoNH6zpXs6l1MjdaNFOe"
-              onError={(e) => {
-                const target = e.currentTarget;
-                if (!target.src.includes('startup-corporate-identity-bundle')) {
-                  target.src = '/startup-corporate-identity-bundle.jpg';
-                }
-              }}
+              src="/startup-corporate-identity-bundle.jpg"
               alt="Silver & Gold Inkshine commercial printing materials showcase"
-              className="w-full h-full object-cover object-center opacity-45 lg:opacity-65 scale-105"
+              className="w-full h-full object-cover object-center opacity-40 lg:opacity-60 scale-105"
             />
             {/* Horizontal Left-to-Right Fade Gradient: Ensures left side seamlessly melts into #0F0F12 while right side stays visible */}
             <div className="absolute inset-0 bg-gradient-to-r from-[#0F0F12] via-[#0F0F12]/80 to-transparent" />
