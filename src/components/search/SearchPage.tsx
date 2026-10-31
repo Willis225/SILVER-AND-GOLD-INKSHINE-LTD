@@ -157,45 +157,6 @@ export const SearchPage: React.FC<SearchPageProps> = ({
   return (
     <div className="min-h-screen bg-[#08080a] text-stone-200 antialiased selection:bg-[#f5be38]/30 selection:text-white flex flex-col justify-between">
       <div>
-        {/* Top Sticky Header */}
-        <div className="sticky top-0 z-50 bg-[#0c0d12]/95 backdrop-blur-md border-b border-white/10 px-4 sm:px-6 lg:px-8 py-3.5 shadow-lg">
-          <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
-            <button
-              type="button"
-              onClick={onNavigateHome}
-              className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-stone-300 hover:text-white bg-white/5 hover:bg-white/10 px-3.5 py-2 rounded-xl border border-white/10 transition-all cursor-pointer group"
-            >
-              <ArrowLeft className="w-4 h-4 text-[#f5be38] group-hover:-translate-x-0.5 transition-transform" />
-              <span>Back to Storefront</span>
-            </button>
-
-            <div className="flex items-center gap-2.5">
-              <div className="w-7 h-7 flex items-center justify-center">
-                <CompanyLogoMark className="w-full h-full" />
-              </div>
-              <div className="hidden sm:block">
-                <div className="text-xs font-black tracking-tight text-white flex items-center gap-1">
-                  <span>SILVER &amp; GOLD INKSHINE</span>
-                  <span className="text-[10px] font-mono text-[#f5be38] font-bold">RC 1892044</span>
-                </div>
-                <div className="text-[10px] text-stone-400">Official Search &amp; Discovery Hub</div>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <a
-                href="https://wa.me/2347030372539?text=Hello%20Silver%20%26%20Gold%20Inkshine%2C%20I%20am%20searching%20for%20print%20products"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-1.5 text-xs font-black text-black bg-[#f5be38] hover:bg-[#ffd15c] px-3.5 py-2 rounded-xl shadow-xs transition-colors cursor-pointer"
-              >
-                <span>WhatsApp Desk</span>
-                <ExternalLink className="w-3.5 h-3.5" />
-              </a>
-            </div>
-          </div>
-        </div>
-
         {/* Hero Search Banner */}
         <div className="relative bg-[#0d0e14] border-b border-white/10 py-16 sm:py-20 px-4 sm:px-6 lg:px-8 overflow-hidden text-center">
           <div className="absolute inset-0 bg-[radial-gradient(rgba(245,190,56,0.08)_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
@@ -221,7 +182,7 @@ export const SearchPage: React.FC<SearchPageProps> = ({
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search flyers, banners, business cards, 3D signs, stickers..."
                 autoFocus
-                className="w-full bg-[#181822] border-2 border-white/15 focus:border-[#f5be38] rounded-2xl py-4 pl-12 pr-12 text-sm sm:text-base text-white placeholder-stone-400 focus:outline-hidden shadow-2xl transition-all"
+                className="w-full bg-[#181822] border-2 border-white/15 focus:border-[#f5be38] rounded-2xl py-4 pl-12 pr-12 text-base text-white placeholder-stone-400 focus:outline-hidden shadow-2xl transition-all"
               />
               {query && (
                 <button

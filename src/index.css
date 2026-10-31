@@ -5,7 +5,7 @@ html,
 body {
   width: 100%;
   max-width: 100vw;
-  overflow-x: clip;
+  overflow-x: hidden;
   margin: 0;
   padding: 0;
   -webkit-text-size-adjust: 100%;
@@ -13,14 +13,29 @@ body {
   scroll-behavior: smooth;
   background-color: #08080a;
   color: #f4f4f5;
+  touch-action: manipulation;
 }
 
 #root {
   width: 100%;
   max-width: 100vw;
-  overflow-x: clip;
+  overflow-x: hidden;
   min-height: 100vh;
   background-color: #08080a;
+  position: relative;
+}
+
+/* Prevent iOS Mobile Safari and Android Chrome from Auto-Zooming on Focus */
+input,
+textarea,
+select,
+input[type="text"],
+input[type="search"],
+input[type="email"],
+input[type="tel"],
+input[type="number"] {
+  font-size: 16px !important; /* iOS enforces 16px minimum to disable automatic viewport zoom */
+  touch-action: manipulation;
 }
 
 /* Ensure images and media never cause horizontal overflows */
