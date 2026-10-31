@@ -615,10 +615,10 @@ export const Header: React.FC<HeaderProps> = ({
                   {/* -Company Info */}
                   <button
                     onClick={() => {
-                      onOpenInfoModal?.('info');
+                      onNavigateToPage?.('about');
                       setActiveDropdown(null);
                     }}
-                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item"
+                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item cursor-pointer"
                   >
                     <div className="w-7 h-7 rounded-lg bg-white/10 text-stone-300 flex items-center justify-center shrink-0 group-hover/item:bg-[#b8860b] group-hover/item:text-white transition-colors">
                       <Info className="w-3.5 h-3.5" />
@@ -632,10 +632,10 @@ export const Header: React.FC<HeaderProps> = ({
                   {/* -About Us */}
                   <button
                     onClick={() => {
-                      onOpenInfoModal?.('about');
+                      onNavigateToPage?.('about');
                       setActiveDropdown(null);
                     }}
-                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item"
+                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item cursor-pointer"
                   >
                     <div className="w-7 h-7 rounded-lg bg-white/10 text-stone-300 flex items-center justify-center shrink-0 group-hover/item:bg-[#b8860b] group-hover/item:text-white transition-colors">
                       <Building2 className="w-3.5 h-3.5" />
@@ -649,10 +649,10 @@ export const Header: React.FC<HeaderProps> = ({
                   {/* -Our Services */}
                   <button
                     onClick={() => {
-                      onOpenInfoModal?.('services');
+                      onNavigateToPage?.('services');
                       setActiveDropdown(null);
                     }}
-                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item"
+                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item cursor-pointer"
                   >
                     <div className="w-7 h-7 rounded-lg bg-white/10 text-stone-300 flex items-center justify-center shrink-0 group-hover/item:bg-[#b8860b] group-hover/item:text-white transition-colors">
                       <Printer className="w-3.5 h-3.5" />
@@ -666,10 +666,10 @@ export const Header: React.FC<HeaderProps> = ({
                   {/* -Our Portfolios */}
                   <button
                     onClick={() => {
-                      onOpenInfoModal?.('portfolios');
+                      onNavigateToPage?.('portfolios');
                       setActiveDropdown(null);
                     }}
-                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item"
+                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item cursor-pointer"
                   >
                     <div className="w-7 h-7 rounded-lg bg-white/10 text-stone-300 flex items-center justify-center shrink-0 group-hover/item:bg-[#b8860b] group-hover/item:text-white transition-colors">
                       <ImageIcon className="w-3.5 h-3.5" />
@@ -683,10 +683,10 @@ export const Header: React.FC<HeaderProps> = ({
                   {/* -How It Works / FAQ */}
                   <button
                     onClick={() => {
-                      onOpenInfoModal?.('faq');
+                      onNavigateToPage?.('faq');
                       setActiveDropdown(null);
                     }}
-                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item"
+                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item cursor-pointer"
                   >
                     <div className="w-7 h-7 rounded-lg bg-white/10 text-stone-300 flex items-center justify-center shrink-0 group-hover/item:bg-[#b8860b] group-hover/item:text-white transition-colors">
                       <HelpCircle className="w-3.5 h-3.5" />
@@ -700,10 +700,10 @@ export const Header: React.FC<HeaderProps> = ({
                   {/* -Contact Us */}
                   <button
                     onClick={() => {
-                      onOpenInfoModal?.('contact');
+                      onNavigateToPage?.('about');
                       setActiveDropdown(null);
                     }}
-                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item"
+                    className="w-full text-left px-4 py-2.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 group/item cursor-pointer"
                   >
                     <div className="w-7 h-7 rounded-lg bg-white/10 text-stone-300 flex items-center justify-center shrink-0 group-hover/item:bg-[#b8860b] group-hover/item:text-white transition-colors">
                       <Phone className="w-3.5 h-3.5" />
@@ -857,20 +857,28 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
               {[
-                { tab: 'info' as const, label: 'About / FAQs' },
+                { tab: 'about' as const, label: 'About / FAQs' },
                 { tab: 'about' as const, label: 'About Us' },
                 { tab: 'services' as const, label: 'Our Services' },
                 { tab: 'portfolios' as const, label: 'Our Portfolios' },
                 { tab: 'faq' as const, label: 'How It Works / FAQ' },
-                { tab: 'contact' as const, label: 'Contact Us' },
-              ].map((item) => (
+                { tab: 'about' as const, label: 'Contact Us' },
+              ].map((item, idx) => (
                 <button
-                  key={item.tab}
+                  key={idx}
                   onClick={() => {
                     setMobileMenuOpen(false);
-                    onOpenInfoModal?.(item.tab);
+                    if (item.label.includes('Service')) {
+                      onNavigateToPage?.('services');
+                    } else if (item.label.includes('Portfolio')) {
+                      onNavigateToPage?.('portfolios');
+                    } else if (item.label.includes('FAQ') || item.label.includes('How')) {
+                      onNavigateToPage?.('faq');
+                    } else {
+                      onNavigateToPage?.('about');
+                    }
                   }}
-                  className="min-h-[42px] px-3 py-2 bg-white/10 text-stone-100 hover:bg-white/20 active:bg-white/25 font-bold text-xs rounded-xl text-left shadow-xs border border-white/10 transition-colors flex items-center"
+                  className="min-h-[42px] px-3 py-2 bg-white/10 text-stone-100 hover:bg-white/20 active:bg-white/25 font-bold text-xs rounded-xl text-left shadow-xs border border-white/10 transition-colors flex items-center cursor-pointer"
                 >
                   {item.label}
                 </button>
