@@ -30,6 +30,7 @@ import { STORE_CATEGORIES, getProductCategoryTag } from '../../utils/categoryUti
 import { ImageManagerModal, PRINT_IMAGE_PRESETS } from './ImageManagerModal';
 import { compressImageFile, saveUploadedImageToCloud } from '../../lib/firebase';
 import { lockProductImage } from '../../lib/imageLockRegistry';
+import { processExternalImageUrl } from '../../services/imageSearchService';
 
 interface ProductPricingManagerProps {
   products: Product[];
@@ -855,12 +856,15 @@ export const ProductPricingManager: React.FC<ProductPricingManagerProps> = ({
                         type="text"
                         value={editModalImage}
                         onChange={(e) => {
-                          setEditModalImage(e.target.value);
-                          if (e.target.value && !editModalImages.includes(e.target.value)) {
-                            setEditModalImages(prev => [e.target.value, ...prev]);
+                          const raw = e.target.value;
+                          const processed = processExternalImageUrl(raw);
+                          const clean = processed.valid ? processed.cleanUrl : raw;
+                          setEditModalImage(clean);
+                          if (clean && !editModalImages.includes(clean)) {
+                            setEditModalImages(prev => [clean, ...prev]);
                           }
                         }}
-                        placeholder="Or paste direct image URL for cover"
+                        placeholder="Paste image link (Google Drive, Pinterest, web link)"
                         className="flex-1 px-3 py-1.5 rounded-lg border border-stone-300 text-xs focus:ring-2 focus:ring-[#b8860b]"
                       />
                     </div>

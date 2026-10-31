@@ -172,6 +172,13 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
               <img
                 src={galleryImages[activeImageIdx]}
                 alt={product.name}
+                referrerPolicy="no-referrer"
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  if (!target.src.includes('luxury-rollup-banner-stand.jpg')) {
+                    target.src = '/luxury-rollup-banner-stand.jpg';
+                  }
+                }}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
               <div className="absolute top-3 left-3 flex flex-col gap-1.5">
@@ -206,7 +213,18 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                       : 'border-white/10 hover:border-white/20 opacity-70 hover:opacity-100'
                   }`}
                 >
-                  <img src={img} alt={`Angle ${idx + 1}`} className="w-full h-full object-cover" />
+                  <img
+                    src={img}
+                    alt={`Angle ${idx + 1}`}
+                    referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      const target = e.currentTarget;
+                      if (!target.src.includes('luxury-rollup-banner-stand.jpg')) {
+                        target.src = '/luxury-rollup-banner-stand.jpg';
+                      }
+                    }}
+                    className="w-full h-full object-cover"
+                  />
                 </button>
               ))}
             </div>

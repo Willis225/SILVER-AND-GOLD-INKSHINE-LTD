@@ -47,7 +47,7 @@ const DEFAULT_SIGNAGE_ITEMS: SignageItem[] = [
     title: 'Caution, Safety, Danger & Industrial Warning Signage Boards',
     price: 'Price on Request',
     numericPrice: 0,
-    imageUrl: 'https://images.unsplash.com/photo-1508873696983-2df5293cb32f?auto=format&fit=crop&w=700&q=80',
+    imageUrl: '/windproof-waterbase-poster-signs.jpg',
     category: 'signages',
   },
 ];
@@ -150,6 +150,12 @@ export const SignageCompanySection: React.FC<SignageCompanySectionProps> = ({
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                       loading="lazy"
                       referrerPolicy="no-referrer"
+                      onError={(e) => {
+                        const target = e.currentTarget;
+                        if (!target.src.includes('3d-signs-lagos.jpg')) {
+                          target.src = '/3d-signs-lagos.jpg';
+                        }
+                      }}
                     />
                   ) : (
                     <div className="w-full h-full p-4 flex flex-col items-center justify-center bg-[#181820] text-stone-300 text-center">

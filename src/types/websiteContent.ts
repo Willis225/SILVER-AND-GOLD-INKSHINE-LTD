@@ -155,7 +155,7 @@ export const DEFAULT_SHOWCASE_SERVICES: ShowcaseServiceItem[] = [
 export const DEFAULT_WEBSITE_CONTENT: WebsiteContent = {
   heroHeadline: '#1 Online Printing Company in Bayelsa',
   heroSubheadline: 'Banners • Branding • Digital Printing',
-  heroEyebrow: 'Bring your business to the best scale',
+  heroEyebrow: 'Grow Your Brand with Premium, Fast Printing',
   heroDescription: 'Every order includes precision color matching + a free pre-press audit — perfect prints, every time',
   heroBackgroundImage: 'https://cdn.hstockplus.org/uploads/public/img-1790066633477-1b16a758309b0fff.webp',
   heroSlides: DEFAULT_HERO_SLIDES,

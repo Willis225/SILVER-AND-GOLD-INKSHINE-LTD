@@ -105,7 +105,7 @@ export const PRINT_IMAGE_PRESETS: PresetImage[] = [
   {
     label: 'Hand-Carved Wooden & Gold Plaque',
     category: 'awards',
-    url: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=1000&q=80'
+    url: '/wooden-award-plaque.jpg'
   },
   {
     label: 'Beveled Acrylic Achievement Trophy',
@@ -132,7 +132,7 @@ export const PRINT_IMAGE_PRESETS: PresetImage[] = [
   {
     label: 'Matte Vinyl Roll Labels & Stickers',
     category: 'packaging',
-    url: 'https://images.unsplash.com/photo-1607344645866-009c320c5ab8?auto=format&fit=crop&w=1000&q=80'
+    url: '/product-packaging-labels-stickers.jpg'
   },
 
   // Corporate Stationery & Books

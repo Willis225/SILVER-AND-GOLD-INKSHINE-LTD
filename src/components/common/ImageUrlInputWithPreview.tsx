@@ -44,6 +44,7 @@ export const ImageUrlInputWithPreview: React.FC<ImageUrlInputWithPreviewProps> =
   id
 }) => {
   const [inputValue, setInputValue] = useState<string>(value || '');
+  const [previewUrl, setPreviewUrl] = useState<string>(value || '');
   const [imageStatus, setImageStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [imageDimensions, setImageDimensions] = useState<{ width: number; height: number } | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -55,6 +56,7 @@ export const ImageUrlInputWithPreview: React.FC<ImageUrlInputWithPreviewProps> =
   useEffect(() => {
     if (value !== inputValue) {
       setInputValue(value || '');
+      setPreviewUrl(value || '');
       if (value) {
         validateAndTestUrl(value);
       } else {
@@ -71,6 +73,7 @@ export const ImageUrlInputWithPreview: React.FC<ImageUrlInputWithPreviewProps> =
       setImageStatus('idle');
       setImageDimensions(null);
       setErrorMessage(null);
+      setPreviewUrl('');
       return;
     }
 
@@ -82,6 +85,7 @@ export const ImageUrlInputWithPreview: React.FC<ImageUrlInputWithPreviewProps> =
       return;
     }
 
+    setPreviewUrl(processed.cleanUrl);
     // Begin testing image loading
     setImageStatus('loading');
     setErrorMessage(null);
@@ -304,12 +308,16 @@ export const ImageUrlInputWithPreview: React.FC<ImageUrlInputWithPreviewProps> =
 
             {imageStatus === 'success' && (
               <img
-                src={inputValue}
+                src={previewUrl || inputValue}
                 alt="URL Preview"
                 className={`w-full h-full transition-all duration-300 ${
                   objectFit === 'contain' ? 'object-contain p-2' : 'object-cover'
                 }`}
                 referrerPolicy="no-referrer"
+                onError={() => {
+                  setImageStatus('error');
+                  setErrorMessage('Failed to display image in browser. Please check if link allows external embedding.');
+                }}
               />
             )}
           </div>

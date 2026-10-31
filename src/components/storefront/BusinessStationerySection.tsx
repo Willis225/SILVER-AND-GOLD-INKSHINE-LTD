@@ -161,6 +161,12 @@ export const BusinessStationerySection: React.FC<BusinessStationerySectionProps>
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                       loading="lazy"
                       referrerPolicy="no-referrer"
+                      onError={(e) => {
+                        const target = e.currentTarget;
+                        if (!target.src.includes('premium-matte-business-cards.jpg')) {
+                          target.src = '/premium-matte-business-cards.jpg';
+                        }
+                      }}
                     />
                   ) : (
                     <div className="w-full h-full p-4 flex flex-col items-center justify-center bg-[#0d0d12] text-stone-300 text-center">

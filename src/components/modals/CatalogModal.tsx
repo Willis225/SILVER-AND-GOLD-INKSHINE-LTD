@@ -48,7 +48,7 @@ const ARTWORK_SAMPLES = [
     title: 'Custom Textured Oil & Acrylic Canvas Painting',
     category: 'Canvas Art & Paintings',
     categoryTag: 'paintings',
-    imageUrl: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=800&q=80',
+    imageUrl: '/floating-canvas-acrylic-wall-art.jpg',
     specs: 'Gallery Wrapped 380gsm Cotton Canvas, Pine Frame',
     startingPriceNgn: 45000,
     turnaround: '2-3 Days',
@@ -423,6 +423,13 @@ export const CatalogModal: React.FC<CatalogModalProps> = ({
                         alt={item.title}
                         className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                         loading="lazy"
+                        referrerPolicy="no-referrer"
+                        onError={(e) => {
+                          const target = e.currentTarget;
+                          if (!target.src.includes('floating-canvas-acrylic-wall-art.jpg')) {
+                            target.src = '/floating-canvas-acrylic-wall-art.jpg';
+                          }
+                        }}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
                       

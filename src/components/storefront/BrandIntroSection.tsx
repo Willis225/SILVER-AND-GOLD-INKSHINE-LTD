@@ -13,13 +13,13 @@ export const BrandIntroSection: React.FC<BrandIntroSectionProps> = ({ onExploreP
 
   return (
     <section className="bg-white text-stone-900 py-14 sm:py-20 border-b border-stone-200 relative overflow-hidden">
-      {/* Subtle architectural hairline grid background */}
+      {/* Subtle radial dot pattern */}
       <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:24px_24px] opacity-70 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
           
-          {/* Left Column: Descriptive Text & Bullet Points with Staggered Scroll Reveal */}
+          {/* Left Column: Descriptive Text & Bullet Points */}
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -36,7 +36,7 @@ export const BrandIntroSection: React.FC<BrandIntroSectionProps> = ({ onExploreP
               Order everything you need for your business, events or promotions at <strong className="font-bold text-stone-950">SILVER &amp; GOLD INKSHINE LTD</strong> and have them delivered nationwide in 3–5 business days! Send your print-ready artwork or hire our graphic experts to help you. We design and print quality roll-up banners, display stands, flyers, business cards, custom t-shirts, branded apparels, vehicle branding, signage, packaging labels, stickers, posters, promotional gifts and more.
             </p>
 
-            {/* Bullet Points with solid black circular badges and crisp white checkmarks */}
+            {/* Bullet Points */}
             <div className="space-y-3.5 pt-1">
               <div className="flex items-center gap-3">
                 <div className="w-6 h-6 rounded-full bg-stone-950 text-white flex items-center justify-center shrink-0 shadow-sm">
@@ -67,7 +67,7 @@ export const BrandIntroSection: React.FC<BrandIntroSectionProps> = ({ onExploreP
             </div>
           </motion.div>
 
-          {/* Right Column: Promotional Banner Image on Clean Studio Card */}
+          {/* Right Column: Promotional Commercial Media Showcase Banner */}
           <motion.div 
             initial={{ opacity: 0, scale: 0.96, y: 24 }}
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
@@ -77,7 +77,9 @@ export const BrandIntroSection: React.FC<BrandIntroSectionProps> = ({ onExploreP
           >
             <div 
               onClick={onExploreProducts}
-              className={`relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl border border-stone-200 bg-white group transition-all duration-500 hover:border-stone-400 hover:shadow-2xl ${onExploreProducts ? 'cursor-pointer' : ''}`}
+              className={`relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl border border-stone-200 bg-white group transition-all duration-500 hover:border-stone-400 hover:shadow-2xl ${
+                onExploreProducts ? 'cursor-pointer' : ''
+              }`}
             >
               <div className="relative w-full aspect-[1492/1054] overflow-hidden bg-stone-100">
                 <img
@@ -91,8 +93,8 @@ export const BrandIntroSection: React.FC<BrandIntroSectionProps> = ({ onExploreP
                     }
                   }}
                 />
-
-                {/* Subtle sheen highlight on hover */}
+                
+                {/* Clean hover light sheen effect */}
                 <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
               </div>
             </div>

@@ -150,6 +150,12 @@ export const CustomAwardsSection: React.FC<CustomAwardsSectionProps> = ({
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                       loading="lazy"
                       referrerPolicy="no-referrer"
+                      onError={(e) => {
+                        const target = e.currentTarget;
+                        if (!target.src.includes('wooden-award-plaque.jpg')) {
+                          target.src = '/wooden-award-plaque.jpg';
+                        }
+                      }}
                     />
                   ) : (
                     <div className="w-full h-full p-4 flex flex-col items-center justify-center bg-stone-100 text-stone-700 text-center">

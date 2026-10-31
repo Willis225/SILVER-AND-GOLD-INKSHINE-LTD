@@ -150,6 +150,12 @@ export const BannersDisplayStandsSection: React.FC<BannersDisplayStandsSectionPr
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                       loading="lazy"
                       referrerPolicy="no-referrer"
+                      onError={(e) => {
+                        const target = e.currentTarget;
+                        if (!target.src.includes('luxury-rollup-banner-stand.jpg')) {
+                          target.src = '/luxury-rollup-banner-stand.jpg';
+                        }
+                      }}
                     />
                   ) : (
                     <div className="w-full h-full p-4 flex flex-col items-center justify-center bg-[#181820] text-stone-300 text-center">

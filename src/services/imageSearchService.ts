@@ -135,7 +135,7 @@ export const CURATED_PRINT_GALLERY: Record<string, Array<{ title: string; url: s
   stickers_labels: [
     {
       title: 'Custom Die-Cut Waterproof Vinyl Stickers',
-      url: 'https://images.unsplash.com/photo-1607344645866-009c320c5ab8?auto=format&fit=crop&w=1000&q=80'
+      url: '/product-packaging-labels-stickers.jpg'
     },
     {
       title: 'Roll Labels with Metallic Foil Finish',
@@ -353,32 +353,92 @@ export function processExternalImageUrl(inputUrl: string): {
   source: 'Pinterest' | 'Web' | 'Google';
   error?: string;
 } {
-  let trimmed = inputUrl.trim();
+  let trimmed = (inputUrl || '').trim();
   if (!trimmed) {
     return { valid: false, cleanUrl: '', source: 'Web', error: 'Please provide an image link' };
   }
 
   // Prepend https:// if protocol omitted (e.g. i.pinimg.com/... or images.unsplash.com/...)
-  if (!/^https?:\/\//i.test(trimmed) && !trimmed.startsWith('//') && !trimmed.startsWith('data:')) {
+  if (!/^https?:\/\//i.test(trimmed) && !trimmed.startsWith('//') && !trimmed.startsWith('data:') && !trimmed.startsWith('/')) {
     trimmed = 'https://' + trimmed;
+  }
+
+  // Handle root-relative local paths
+  if (trimmed.startsWith('/')) {
+    return { valid: true, cleanUrl: trimmed, source: 'Web' };
+  }
+
+  // Handle data URIs
+  if (trimmed.startsWith('data:image/')) {
+    return { valid: true, cleanUrl: trimmed, source: 'Web' };
   }
 
   try {
     const parsed = new URL(trimmed);
 
-    // 1. Check if user copied a Google Images search result link (contains ?imgurl=...)
-    if (parsed.hostname.includes('google.') && parsed.searchParams.has('imgurl')) {
-      const directImg = parsed.searchParams.get('imgurl');
-      if (directImg) {
+    // 1. Google Drive direct view link conversion (lh3.googleusercontent.com works directly in <img> tags!)
+    if (parsed.hostname.includes('drive.google.com') || parsed.hostname.includes('docs.google.com')) {
+      let fileId = parsed.searchParams.get('id');
+      if (!fileId) {
+        const match = parsed.pathname.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+        if (match && match[1]) {
+          fileId = match[1];
+        }
+      }
+      if (fileId) {
         return {
           valid: true,
-          cleanUrl: decodeURIComponent(directImg),
+          cleanUrl: `https://lh3.googleusercontent.com/d/${fileId}`,
           source: 'Google'
         };
       }
     }
 
-    // 2. Direct Pinterest image CDN (i.pinimg.com/originals/... or /736x/...)
+    // 2. Check if user copied a Google Images search result link (contains ?imgurl=... or ?url=...)
+    if (parsed.hostname.includes('google.') && (parsed.searchParams.has('imgurl') || parsed.searchParams.has('url'))) {
+      const directImg = parsed.searchParams.get('imgurl') || parsed.searchParams.get('url');
+      if (directImg && directImg.startsWith('http')) {
+        return processExternalImageUrl(decodeURIComponent(directImg));
+      }
+    }
+
+    // 3. Dropbox direct raw link conversion
+    if (parsed.hostname.includes('dropbox.com')) {
+      parsed.searchParams.set('raw', '1');
+      parsed.searchParams.delete('dl');
+      const directUrl = parsed.toString().replace('www.dropbox.com', 'dl.dropboxusercontent.com');
+      return {
+        valid: true,
+        cleanUrl: directUrl,
+        source: 'Web'
+      };
+    }
+
+    // 4. Imgur links (convert page links to direct image URLs)
+    if (parsed.hostname.includes('imgur.com') && !parsed.hostname.startsWith('i.')) {
+      const match = parsed.pathname.match(/\/([a-zA-Z0-9]{5,8})(?:\.[a-z]+)?$/);
+      if (match && match[1]) {
+        return {
+          valid: true,
+          cleanUrl: `https://i.imgur.com/${match[1]}.jpg`,
+          source: 'Web'
+        };
+      }
+    }
+
+    // 5. Postimg links (convert view link to direct)
+    if (parsed.hostname.includes('postimg.cc') && !parsed.hostname.startsWith('i.')) {
+      const match = parsed.pathname.match(/\/([a-zA-Z0-9]+)$/);
+      if (match && match[1]) {
+        return {
+          valid: true,
+          cleanUrl: `https://i.postimg.cc/${match[1]}/image.jpg`,
+          source: 'Web'
+        };
+      }
+    }
+
+    // 6. Direct Pinterest image CDN (i.pinimg.com/originals/... or /736x/...)
     if (parsed.hostname.includes('pinimg.com')) {
       return {
         valid: true,
@@ -387,30 +447,7 @@ export function processExternalImageUrl(inputUrl: string): {
       };
     }
 
-    // 3. Dropbox direct raw link conversion
-    if (parsed.hostname.includes('dropbox.com')) {
-      parsed.searchParams.set('raw', '1');
-      parsed.searchParams.delete('dl');
-      return {
-        valid: true,
-        cleanUrl: parsed.toString(),
-        source: 'Web'
-      };
-    }
-
-    // 4. Google Drive direct view link conversion
-    if (parsed.hostname.includes('drive.google.com')) {
-      const match = parsed.pathname.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
-      if (match && match[1]) {
-        return {
-          valid: true,
-          cleanUrl: `https://drive.google.com/uc?export=view&id=${match[1]}`,
-          source: 'Web'
-        };
-      }
-    }
-
-    // 5. Standard direct image or web URL
+    // 7. Standard direct image or web URL
     return {
       valid: true,
       cleanUrl: trimmed,

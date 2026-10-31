@@ -53,13 +53,13 @@ canvas {
   background-size: 24px 24px;
 }
 
-/* Radiant Gold Glow & Accents */
+/* Radiant Gold Elevation & Accents */
 .gold-glow {
-  box-shadow: 0 0 35px rgba(245, 190, 56, 0.35);
+  box-shadow: 0 4px 14px rgba(245, 190, 56, 0.15);
 }
 
 .gold-glow-subtle {
-  box-shadow: 0 0 20px rgba(245, 190, 56, 0.18);
+  box-shadow: 0 2px 8px rgba(245, 190, 56, 0.10);
 }
 
 @keyframes goldSilverShimmer {

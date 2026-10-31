@@ -203,6 +203,13 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
                         alt={product.name}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy"
+                        referrerPolicy="no-referrer"
+                        onError={(e) => {
+                          const target = e.currentTarget;
+                          if (!target.src.includes('luxury-rollup-banner-stand.jpg')) {
+                            target.src = '/luxury-rollup-banner-stand.jpg';
+                          }
+                        }}
                       />
                       <div className="absolute top-2.5 left-2.5 flex flex-col gap-1">
                         {product.badge && (

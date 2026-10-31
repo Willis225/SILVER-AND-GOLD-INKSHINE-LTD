@@ -1853,6 +1853,47 @@ function notifyLocksUpdated(): void {
 // =========================================================================
 
 /**
+ * Cleans and normalizes external URLs (Google Drive, Dropbox, Imgur, missing protocols)
+ * so they can be reliably rendered in standard <img> tags with zero CORS or preview issues.
+ */
+export function cleanRenderableImageUrl(url?: string): string {
+  if (!url || typeof url !== 'string') return '';
+  let trimmed = url.trim();
+  if (!trimmed) return '';
+
+  // Google Drive conversion to lh3.googleusercontent.com direct image CDN
+  if (trimmed.includes('drive.google.com') || trimmed.includes('docs.google.com')) {
+    const idMatch = trimmed.match(/[?&]id=([a-zA-Z0-9_-]+)/) || trimmed.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+    if (idMatch && idMatch[1]) {
+      return `https://lh3.googleusercontent.com/d/${idMatch[1]}`;
+    }
+  }
+
+  // Dropbox direct link
+  if (trimmed.includes('dropbox.com')) {
+    return trimmed
+      .replace('www.dropbox.com', 'dl.dropboxusercontent.com')
+      .replace('dropbox.com', 'dl.dropboxusercontent.com')
+      .replace(/([?&])dl=0/, '$1raw=1');
+  }
+
+  // Imgur page to direct image
+  if (trimmed.includes('imgur.com') && !trimmed.includes('i.imgur.com')) {
+    const match = trimmed.match(/\/([a-zA-Z0-9]{5,8})(?:\.[a-z]+)?$/);
+    if (match && match[1]) {
+      return `https://i.imgur.com/${match[1]}.jpg`;
+    }
+  }
+
+  // Prepend https:// if protocol is omitted
+  if (!/^https?:\/\//i.test(trimmed) && !trimmed.startsWith('//') && !trimmed.startsWith('data:') && !trimmed.startsWith('/')) {
+    trimmed = 'https://' + trimmed;
+  }
+
+  return trimmed;
+}
+
+/**
  * Lock an image to a product so it NEVER changes or reverts
  */
 export function lockProductImage(
@@ -1864,11 +1905,14 @@ export function lockProductImage(
 ): void {
   if (!productId || !imageUrl) return;
 
+  const cleanedUrl = cleanRenderableImageUrl(imageUrl);
+  const cleanedImages = (images && images.length > 0 ? images : [imageUrl]).map(cleanRenderableImageUrl);
+
   const map = getLockedImagesMap();
   map[productId] = {
     id: productId,
-    imageUrl,
-    images: images && images.length > 0 ? images : [imageUrl],
+    imageUrl: cleanedUrl,
+    images: cleanedImages,
     title,
     lockedAt: new Date().toISOString(),
     isUserCustomized,
@@ -1912,11 +1956,12 @@ export function applyImageLocksToProduct(product: Product): Product {
   if (!product || !product.id) return product;
   const lock = getLockedImageForProduct(product.id);
   if (lock && isValidImageUrl(lock.imageUrl)) {
-    const validImages = (lock.images || []).filter(isValidImageUrl);
+    const cleanedMain = cleanRenderableImageUrl(lock.imageUrl);
+    const validImages = (lock.images || []).map(cleanRenderableImageUrl).filter(isValidImageUrl);
     return {
       ...product,
-      image: lock.imageUrl,
-      images: validImages.length > 0 ? validImages : [lock.imageUrl],
+      image: cleanedMain,
+      images: validImages.length > 0 ? validImages : [cleanedMain],
     };
   }
   return product;
@@ -1935,11 +1980,12 @@ export function applyImageLocksToProducts(products: Product[]): Product[] {
     if (!p || !p.id) return p;
     const lock = map[p.id];
     if (lock && isValidImageUrl(lock.imageUrl)) {
-      const validImages = (lock.images || []).filter(isValidImageUrl);
+      const cleanedMain = cleanRenderableImageUrl(lock.imageUrl);
+      const validImages = (lock.images || []).map(cleanRenderableImageUrl).filter(isValidImageUrl);
       return {
         ...p,
-        image: lock.imageUrl,
-        images: validImages.length > 0 ? validImages : [lock.imageUrl],
+        image: cleanedMain,
+        images: validImages.length > 0 ? validImages : [cleanedMain],
       };
     }
     return p;

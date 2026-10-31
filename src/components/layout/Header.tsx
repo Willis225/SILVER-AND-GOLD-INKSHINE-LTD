@@ -40,6 +40,7 @@ import {
   Info,
   Building2,
   HelpCircle,
+  Clock,
 } from 'lucide-react';
 import { ProductCategory, Product } from '../../types/schema';
 import { CompanyLogoMark } from '../common/CompanyLogo';
@@ -211,8 +212,6 @@ export const Header: React.FC<HeaderProps> = ({
               >
                 <Mail className="w-3.5 h-3.5" />
               </a>
-
-              {/* Discreet Staff Portal in Top Bar */}
             </div>
           </div>
         </div>
@@ -249,7 +248,8 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
 
             {/* Desktop Category Navigation */}
-            <nav className="hidden md:flex items-center space-x-5 text-sm font-semibold text-stone-200">
+            <nav className="hidden md:flex items-center space-x-6 text-sm font-semibold text-stone-200">
+
               {/* Prints */}
               <div 
                 className="relative group py-2"
@@ -257,7 +257,7 @@ export const Header: React.FC<HeaderProps> = ({
                 onMouseLeave={() => setActiveDropdown(null)}
               >
                 <button 
-                  onClick={() => handleCategoryNav('advertising_materials')}
+                  onClick={() => handleCategoryNav('all')}
                   className="flex items-center gap-1 hover:text-[#ffd25d] text-stone-200 transition-colors cursor-pointer"
                 >
                   <span>Prints</span>
@@ -718,41 +718,31 @@ export const Header: React.FC<HeaderProps> = ({
               )}
             </div>
 
-            {/* Unified Single Primary Action Button: Book Online */}
+            {/* Book Online & Custom Quote Buttons */}
             <button
-              id="desktop-header-book-online-btn"
-              type="button"
               onClick={onOpenBookOnline}
-              className="relative px-4 py-1.5 rounded-full bg-gradient-to-r from-[#ffd25d] via-[#e5c158] to-[#b8860b] hover:from-[#e5c158] hover:to-[#ffd25d] text-black font-extrabold text-xs tracking-tight shadow-md shadow-[#ffd25d]/25 flex items-center gap-1.5 active:scale-95 transition-all cursor-pointer group"
-              title="Configure, calculate live quote and book online"
+              className="h-9 px-4 rounded-full bg-gradient-to-r from-[#f5be38] to-[#e5af28] hover:from-[#e5af28] hover:to-[#d49f18] text-stone-950 font-black text-xs inline-flex items-center gap-1.5 transition-all shadow-md active:scale-95 cursor-pointer border border-amber-300/50"
             >
-              <Calendar className="w-3.5 h-3.5 stroke-[2.4]" />
-              <span className="whitespace-nowrap">Book Online</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-black/70 animate-pulse" />
+              <Calendar className="w-3.5 h-3.5 text-stone-950" />
+              <span>Book Online</span>
             </button>
 
-            {/* Subtle Custom Quote Link for non-standard/enterprise jobs */}
-            {onOpenQuoteModal && (
-              <button
-                id="desktop-header-custom-quote-link"
-                type="button"
-                onClick={onOpenQuoteModal}
-                className="text-stone-300 hover:text-[#f5be38] text-xs font-semibold px-2.5 py-1.5 rounded-lg hover:bg-white/5 transition-colors flex items-center gap-1 cursor-pointer"
-                title="Need custom die-cuts, foil stamping, or enterprise bulk specifications?"
-              >
-                <FileText className="w-3.5 h-3.5 text-[#f5be38]" />
-                <span className="whitespace-nowrap">Custom Quote</span>
-              </button>
-            )}
+            <button
+              onClick={onOpenQuoteModal}
+              className="h-9 px-3.5 rounded-lg bg-white/10 hover:bg-white/15 text-stone-200 hover:text-white font-semibold text-xs inline-flex items-center gap-1.5 transition-all border border-white/20 cursor-pointer"
+            >
+              <FileText className="w-3.5 h-3.5 text-[#f5be38]" />
+              <span>Custom Quote</span>
+            </button>
           </nav>
 
-          {/* Right Action Icons: Search + Cart */}
-          <div className="flex items-center gap-3">
-            {/* Search Icon / Toggle -> Opens Global Search Modal */}
+          {/* Right Action Icons: Search + Cart + Get a Quote Primary CTA Button */}
+          <div className="flex items-center gap-3 sm:gap-4">
+            {/* Search Icon / Toggle */}
             <button
               type="button"
               onClick={handleTriggerSearch}
-              className="p-2 text-stone-300 hover:text-[#ffd25d] transition-colors rounded-full hover:bg-white/10 cursor-pointer"
+              className="p-2 text-slate-600 hover:text-slate-900 transition-colors rounded-full hover:bg-slate-100 cursor-pointer"
               aria-label="Search items and categories"
               title="Search flyers, banners, business cards, signage..."
             >
@@ -763,17 +753,26 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               id="cart-toggle-btn"
               onClick={onOpenCart}
-              className="relative flex items-center justify-center min-w-[44px] min-h-[44px] p-2 text-stone-200 hover:text-[#ffd25d] hover:bg-white/10 rounded-full transition-colors"
+              className="relative flex items-center justify-center min-w-[40px] min-h-[40px] p-2 text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-full transition-colors cursor-pointer"
               aria-label="Shopping Cart"
             >
               <ShoppingBag className="w-5 h-5 stroke-[2.2]" />
               {cartCount > 0 ? (
-                <span className="absolute top-1 right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-[#f5be38] text-black font-black text-[10px] flex items-center justify-center shadow-md animate-in zoom-in-75 duration-150">
+                <span className="absolute top-0.5 right-0.5 min-w-[18px] h-[18px] px-1 rounded-full bg-amber-500 text-slate-950 font-black text-[10px] flex items-center justify-center shadow-sm">
                   {cartCount}
                 </span>
               ) : (
-                <span className="text-[11px] font-bold text-stone-400 ml-1">0</span>
+                <span className="text-[11px] font-bold text-slate-400 ml-1">0</span>
               )}
+            </button>
+
+            {/* Solid Black/Dark Navy 'Get a Quote' Primary Button */}
+            <button
+              type="button"
+              onClick={onOpenQuoteModal || onOpenBookOnline}
+              className="hidden sm:inline-flex h-10 px-5 rounded-lg bg-[#0F172A] hover:bg-black text-white font-bold text-xs uppercase tracking-wider items-center gap-1.5 transition-all shadow-sm active:scale-95 cursor-pointer"
+            >
+              <span>Get a Quote</span>
             </button>
 
             {/* Mobile Menu Hamburger Toggle */}

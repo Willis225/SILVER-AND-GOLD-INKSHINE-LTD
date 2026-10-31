@@ -14,8 +14,15 @@ import { EventExhibitionSection } from './components/storefront/EventExhibitionS
 import { SignageCompanySection } from './components/storefront/SignageCompanySection';
 import { WhyChooseUsSection } from './components/storefront/WhyChooseUsSection';
 import { CustomAwardsSection } from './components/storefront/CustomAwardsSection';
-import { SocialProofSection } from './components/storefront/SocialProofSection';
+import { GoogleReviewsSection } from './components/storefront/GoogleReviewsSection';
 import { LocationMapSection } from './components/storefront/LocationMapSection';
+import { DualPromoBanners } from './components/storefront/DualPromoBanners';
+import { DealsOfTheDaySection } from './components/storefront/DealsOfTheDaySection';
+import { WideFeatureBanner } from './components/storefront/WideFeatureBanner';
+import { SecondarySpotlightSection } from './components/storefront/SecondarySpotlightSection';
+import { CommercialInsightsBlogSection } from './components/storefront/CommercialInsightsBlogSection';
+import { FinalCtaShowcaseBanner } from './components/storefront/FinalCtaShowcaseBanner';
+import { TrustedLogosStrip } from './components/storefront/TrustedLogosStrip';
 import { Footer } from './components/layout/Footer';
 import { ProductQuickViewModal } from './components/storefront/ProductQuickViewModal';
 import { CartDrawer, CartItem } from './components/storefront/CartDrawer';
@@ -767,7 +774,7 @@ export default function App() {
 
         {viewMode === 'storefront' && (
           <>
-            {/* 1. Hero Section (Clean, high-impact printing press layout with permanent video showcase) */}
+            {/* 1. Split Hero Section */}
             <HeroSection
               onExploreProducts={scrollToCatalog}
               onOpenPricingSandbox={() => setViewMode('stage1_sandbox')}
@@ -779,8 +786,8 @@ export default function App() {
               eyebrow={websiteContent.heroEyebrow}
               description={websiteContent.heroDescription}
               backgroundImageUrl={
-                websiteContent.heroBackgroundImage && 
-                websiteContent.heroBackgroundImage !== '/homepage-bg.jpg' && 
+                websiteContent.heroBackgroundImage &&
+                websiteContent.heroBackgroundImage !== '/homepage-bg.jpg' &&
                 websiteContent.heroBackgroundImage !== '/7aa493911d023086a5442472c889df70.jpg' &&
                 websiteContent.heroBackgroundImage !== '/hero-banner-main.webp' &&
                 !websiteContent.heroBackgroundImage.includes('unsplash')
@@ -789,90 +796,64 @@ export default function App() {
               }
             />
 
-            {/* 2. Instant Printing Press Category Navigator & 4 Quality Pillars ("What would you like to print today?") */}
+            {/* 2. Category Carousel Row */}
             <PrintingCategoriesQuickNav
               onSelectCategory={(cat) => handleOpenCategories(cat)}
               onExploreCatalog={() => handleOpenCategories('all')}
             />
 
-            {/* 3. Business Stationery & Office Printing (Top Pitch: Silver & Gold on Black) */}
-            <BusinessStationerySection
-              products={products}
-              onViewProducts={() => handleOpenCategories('cards_invitations')}
-              onSelectItem={handleSectionItemSelect}
+            {/* 3. Dual Split Promo Banners */}
+            <DualPromoBanners
+              onSelectCategory={(cat) => handleOpenCategories(cat)}
+              onRequestQuote={handleOpenCustomQuote}
             />
 
-            {/* 4. Brand Introduction & Promotions Overview (100% Quality, 12% Bulk Discounts, Fast Delivery) */}
-            <BrandIntroSection onExploreProducts={scrollToCatalog} />
-
-            {/* 5. Top-Quality Printing Services Showcase Carousel */}
-            <ServicesShowcaseSection
-              title={websiteContent.showcaseTitle}
-              description={websiteContent.showcaseDescription}
-              items={websiteContent.showcaseServices}
-              onOrderNow={() => {
-                handleOpenCategories('all');
+            {/* 4. 4x2 Product/Service Grid (Deals of the Day with Timer & Badges) */}
+            <DealsOfTheDaySection
+              onSelectProduct={(prod) => {
+                setActivePdpProduct(prod);
+                setViewMode('pdp');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
-              onSelectItem={(item) => {
-                handleOpenCategories(item.category || 'all', item.id);
+              onExploreCatalog={() => handleOpenCategories('all')}
+              onAddToCart={(prod) => {
+                setActivePdpProduct(prod);
+                setViewMode('pdp');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
             />
 
-            {/* 6. Banners, Display Stands & Advertising Materials Carousel */}
-            <BannersDisplayStandsSection
-              products={products}
-              onViewProducts={() => handleOpenCategories('banners_stands')}
-              onSelectItem={handleSectionItemSelect}
+            {/* 5. Full-Width Mid-Page Banner */}
+            <WideFeatureBanner
+              onOrderNow={() => handleOpenCategories('all')}
+              onExploreProducts={scrollToCatalog}
             />
 
-            {/* 7. Packaging, Labels & Custom Cartons (Commercial print priority) */}
-            <PackagingLabelsSection
-              products={products}
-              onViewProducts={() => handleOpenCategories('packaging_shipping_cartons')}
-              onSelectItem={handleSectionItemSelect}
+            {/* 6. Asymmetric Feature Block */}
+            <SecondarySpotlightSection
+              onSelectCategory={(cat) => handleOpenCategories(cat)}
+              onExploreCatalog={() => handleOpenCategories('all')}
             />
 
-            {/* 8. Branded Corporate Gifts & Promotional Items */}
-            <BrandedGiftsSection
-              products={products}
-              onViewProducts={() => handleOpenCategories('gift_items_souvenirs')}
-              onSelectItem={handleSectionItemSelect}
+            {/* 7. Centered Testimonial Card & Logo Strip */}
+            <div className="space-y-0">
+              <GoogleReviewsSection />
+              <TrustedLogosStrip />
+            </div>
+
+            {/* 8. 3-Column Info/Article Grid */}
+            <CommercialInsightsBlogSection
+              onExploreInsights={() => handleOpenCategories('all')}
+              onSelectCategory={(cat) => handleOpenCategories(cat)}
             />
 
-            {/* 9. Signage Making & 3D Letter Fabrication */}
-            <SignageCompanySection
-              products={products}
-              onViewProducts={() => handleOpenCategories('signages')}
-              onSelectItem={handleSectionItemSelect}
+            {/* 9. Pre-Footer CTA Showcase Banner */}
+            <FinalCtaShowcaseBanner
+              onOrderNow={() => handleOpenCategories('all')}
+              onRequestQuote={handleOpenCustomQuote}
             />
 
-            {/* 10. Event, Exhibition and Activation Branding Materials */}
-            <EventExhibitionSection
-              products={products}
-              onViewProducts={() => handleOpenCategories('events_exhibitions')}
-              onSelectItem={handleSectionItemSelect}
-            />
-
-            {/* 11. Nigeria's Trusted Online Printing Company Feature */}
-            <TrustedCompanyFeatureSection />
-
-            {/* 12. Custom Award Plaques and Trophies Printing */}
-            <CustomAwardsSection
-              products={products}
-              onViewProducts={() => handleOpenCategories('awards')}
-              onSelectItem={handleSectionItemSelect}
-            />
-
-            {/* 13. Why Businesses Choose SILVER & GOLD INKSHINE LTD */}
-            <WhyChooseUsSection
-              title={websiteContent.whyChooseTitle}
-              description={websiteContent.whyChooseDescription}
-            />
-
-            {/* 14. Trust & Social Proof (Verified Reviews, Client Logos, Real Completed Jobs) */}
-            <SocialProofSection />
-
-            {/* 15. Official Production Plant & Location Map */}
+            {/* 10. Official Production Plant & Location Map */}
             <LocationMapSection
               mapUrl={websiteContent.googleMapsUrl}
               embedUrl={websiteContent.googleMapsEmbedUrl}

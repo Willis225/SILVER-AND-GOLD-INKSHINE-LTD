@@ -602,6 +602,13 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
                       <img
                         src={item.image}
                         alt={item.name}
+                        referrerPolicy="no-referrer"
+                        onError={(e) => {
+                          const target = e.currentTarget;
+                          if (!target.src.includes('luxury-rollup-banner-stand.jpg')) {
+                            target.src = '/luxury-rollup-banner-stand.jpg';
+                          }
+                        }}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform"
                       />
                     </div>
@@ -689,7 +696,18 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
               <div id="highlighted-product-banner" className="mb-6 p-4 sm:p-5 bg-gradient-to-r from-[#181824] to-[#121217] border-2 border-[#f5be38] rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-[0_0_25px_rgba(245,190,56,0.15)] animate-fadeIn">
                 <div className="flex items-center gap-3.5 min-w-0">
                   <div className="w-14 h-14 rounded-xl overflow-hidden bg-black/50 border border-[#f5be38]/50 shrink-0 shadow-sm">
-                    <img src={highlightedProduct.image} alt={highlightedProduct.name} className="w-full h-full object-cover" />
+                    <img
+                      src={highlightedProduct.image}
+                      alt={highlightedProduct.name}
+                      referrerPolicy="no-referrer"
+                      onError={(e) => {
+                        const target = e.currentTarget;
+                        if (!target.src.includes('luxury-rollup-banner-stand.jpg')) {
+                          target.src = '/luxury-rollup-banner-stand.jpg';
+                        }
+                      }}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                   <div className="min-w-0">
                     <div className="flex items-center gap-1.5 text-xs font-extrabold text-[#f5be38] uppercase tracking-wider">
@@ -817,6 +835,13 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
                           <img
                             src={product.image}
                             alt={product.name}
+                            referrerPolicy="no-referrer"
+                            onError={(e) => {
+                              const target = e.currentTarget;
+                              if (!target.src.includes('luxury-rollup-banner-stand.jpg')) {
+                                target.src = '/luxury-rollup-banner-stand.jpg';
+                              }
+                            }}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                             loading="lazy"
                           />
@@ -932,6 +957,13 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
                         <img 
                           src={product.image} 
                           alt={product.name}
+                          referrerPolicy="no-referrer"
+                          onError={(e) => {
+                            const target = e.currentTarget;
+                            if (!target.src.includes('luxury-rollup-banner-stand.jpg')) {
+                              target.src = '/luxury-rollup-banner-stand.jpg';
+                            }
+                          }}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
                         />
                         {isHighlighted ? (
