@@ -42,7 +42,7 @@ export const SecondarySpotlightSection: React.FC<SecondarySpotlightSectionProps>
               </h3>
 
               <div className="text-xs sm:text-sm text-stone-300 font-mono">
-                Start selling <span className="text-white font-extrabold text-base">$235.00</span>
+                <span className="text-[#f5be38] font-extrabold text-sm uppercase tracking-wider">Price on Request</span>
               </div>
 
               <div className="pt-2">
@@ -119,8 +119,8 @@ export const SecondarySpotlightSection: React.FC<SecondarySpotlightSectionProps>
               </div>
 
               <div className="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between">
-                <div className="text-xs sm:text-sm font-extrabold text-stone-950 font-mono">
-                  $32.00 <span className="text-[10px] text-stone-400 font-normal">₦12,500</span>
+                <div className="text-xs font-black text-amber-800 uppercase tracking-wider">
+                  Price on Request
                 </div>
                 <button
                   type="button"
@@ -161,8 +161,8 @@ export const SecondarySpotlightSection: React.FC<SecondarySpotlightSectionProps>
               </div>
 
               <div className="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between">
-                <div className="text-xs sm:text-sm font-extrabold text-stone-950 font-mono">
-                  $28.00 <span className="text-[10px] text-stone-400 font-normal">₦9,500</span>
+                <div className="text-xs font-black text-amber-800 uppercase tracking-wider">
+                  Price on Request
                 </div>
                 <button
                   type="button"
