@@ -18,19 +18,22 @@ import {
 import { ProductCategory } from '../../types/schema';
 import { InfoModalTab } from '../common/CompanyInfoModal';
 import { CompanyLogoMark } from '../common/CompanyLogo';
+import { LegalDocType } from '../legal/LegalPoliciesPage';
 
 interface FooterProps {
   onSelectCategory: (cat: ProductCategory | 'all') => void;
   onOpenInfoModal?: (tab?: InfoModalTab) => void;
   onOpenCategoriesPage?: (catKey?: string) => void;
   onOpenQuoteModal?: () => void;
+  onOpenLegalPage?: (doc: LegalDocType) => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({ 
   onSelectCategory, 
   onOpenInfoModal,
   onOpenCategoriesPage,
-  onOpenQuoteModal 
+  onOpenQuoteModal,
+  onOpenLegalPage
 }) => {
   const handleCategoryClick = (catKey: string) => {
     if (onOpenCategoriesPage) {
@@ -119,7 +122,7 @@ export const Footer: React.FC<FooterProps> = ({
             <div className="text-xs text-stone-400 space-x-2 pt-1">
               <button 
                 type="button"
-                onClick={() => onOpenInfoModal?.('terms')}
+                onClick={() => onOpenLegalPage?.('terms')}
                 className="text-stone-200 hover:text-[#f5be38] font-bold underline underline-offset-2 cursor-pointer"
               >
                 Terms &amp; Conditions
@@ -127,7 +130,7 @@ export const Footer: React.FC<FooterProps> = ({
               <span>•</span>
               <button 
                 type="button"
-                onClick={() => onOpenInfoModal?.('privacy')}
+                onClick={() => onOpenLegalPage?.('privacy')}
                 className="text-stone-200 hover:text-[#f5be38] font-bold underline underline-offset-2 cursor-pointer"
               >
                 Privacy Policy
@@ -135,7 +138,7 @@ export const Footer: React.FC<FooterProps> = ({
               <span>•</span>
               <button 
                 type="button"
-                onClick={() => onOpenInfoModal?.('returns')}
+                onClick={() => onOpenLegalPage?.('returns')}
                 className="text-stone-200 hover:text-[#f5be38] font-bold underline underline-offset-2 cursor-pointer"
               >
                 Refund Policy

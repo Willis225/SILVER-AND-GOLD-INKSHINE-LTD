@@ -873,6 +873,7 @@ export default function App() {
           onOpenInfoModal={handleOpenInfoModal}
           onOpenCategoriesPage={handleOpenCategoriesPage}
           onOpenQuoteModal={handleOpenCustomQuote}
+          onOpenLegalPage={handleOpenLegalPage}
         />
       )}
 
