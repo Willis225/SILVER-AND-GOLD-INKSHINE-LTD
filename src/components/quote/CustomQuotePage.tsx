@@ -243,46 +243,7 @@ Please review and send detailed quote. Thank you!`;
   return (
     <div className="min-h-screen bg-[#0F0F12] text-stone-200 antialiased selection:bg-[#D4AF37]/30 selection:text-white">
       
-      {/* Top Floating Navigation Header */}
-      <div className="relative z-20 bg-[#0F0F12]/95 backdrop-blur-md border-b border-white/10 px-4 sm:px-6 lg:px-8 py-3.5 shadow-lg">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
-          
-          {/* Back to Home */}
-          <button
-            type="button"
-            onClick={onNavigateHome}
-            className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-stone-300 hover:text-white bg-white/5 hover:bg-white/10 px-3.5 py-2 rounded-xl border border-white/10 transition-all cursor-pointer group"
-          >
-            <ArrowLeft className="w-4 h-4 text-[#D4AF37] group-hover:-translate-x-0.5 transition-transform" />
-            <span>Back to Storefront</span>
-          </button>
 
-          {/* Logo */}
-          <div className="flex items-center gap-2.5">
-            <div className="w-7 h-7 flex items-center justify-center">
-              <CompanyLogoMark className="w-full h-full" />
-            </div>
-            <div className="hidden sm:block">
-              <div className="text-xs font-black tracking-tight text-white flex items-center gap-1.5">
-                <span>SILVER &amp; GOLD INKSHINE LTD</span>
-                <span className="text-[10px] font-mono text-[#D4AF37] font-bold px-1.5 py-0.5 rounded bg-[#D4AF37]/10 border border-[#D4AF37]/30">RC 1892044</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Direct WhatsApp Quick Chat */}
-          <a
-            href="https://wa.me/2347030372539?text=Hello%20Silver%20%26%20Gold%20Inkshine%2C%20I%20would%20like%20to%20request%20a%20custom%20quote"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs font-black text-black bg-[#D4AF37] hover:bg-[#e5c158] px-3.5 py-2 rounded-xl shadow-xs transition-colors cursor-pointer"
-          >
-            <MessageCircle className="w-3.5 h-3.5 fill-black" />
-            <span className="hidden xs:inline">WhatsApp Help</span>
-          </a>
-
-        </div>
-      </div>
 
       {/* ========================================================================= */}
       {/* SECTION 1 — PAGE HERO                                                     */}

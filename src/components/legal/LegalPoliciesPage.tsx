@@ -109,59 +109,7 @@ export const LegalPoliciesPage: React.FC<LegalPoliciesPageProps> = ({
 
   return (
     <div className="min-h-screen bg-white text-stone-900 antialiased selection:bg-[#f5be38]/30 selection:text-black">
-      {/* Top Legal Header Navigation */}
-      <div className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-stone-200 px-4 sm:px-6 lg:px-8 py-3.5 shadow-xs">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
-          
-          {/* Back to Storefront Button */}
-          <button
-            type="button"
-            onClick={onNavigateHome}
-            className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-stone-700 hover:text-stone-950 bg-stone-100 hover:bg-stone-200 px-3.5 py-2 rounded-xl border border-stone-300 transition-all cursor-pointer group"
-          >
-            <ArrowLeft className="w-4 h-4 text-amber-600 group-hover:-translate-x-0.5 transition-transform" />
-            <span>Back to Storefront</span>
-          </button>
 
-          {/* Logo & Corporate Tag */}
-          <div className="flex items-center gap-2.5">
-            <div className="w-7 h-7 flex items-center justify-center">
-              <CompanyLogoMark className="w-full h-full" />
-            </div>
-            <div className="hidden sm:block">
-              <div className="text-xs font-black tracking-tight text-stone-900 flex items-center gap-1">
-                <span>SILVER &amp; GOLD INKSHINE</span>
-                <span className="text-[10px] font-mono text-amber-700 font-bold">RC 1892044</span>
-              </div>
-              <div className="text-[10px] text-stone-500">Legal &amp; NDPR 2023 Compliance Center</div>
-            </div>
-          </div>
-
-          {/* Action Utilities (Print & WhatsApp Support) */}
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={handlePrint}
-              className="hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold text-stone-700 hover:text-stone-950 bg-stone-100 hover:bg-stone-200 px-3 py-2 rounded-xl border border-stone-300 transition-colors cursor-pointer"
-              title="Print official legal documentation"
-            >
-              <PrinterIcon className="w-3.5 h-3.5 text-stone-600" />
-              <span>Print Document</span>
-            </button>
-
-            <a
-              href="https://wa.me/2347030372539?text=Hello%20Silver%20%26%20Gold%20Inkshine%2C%20I%20have%20a%20legal%2Forder%20inquiry%20regarding%20terms%20or%20policies"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1.5 text-xs font-black text-stone-950 bg-[#f5be38] hover:bg-[#ffd15c] px-3.5 py-2 rounded-xl shadow-xs transition-colors cursor-pointer border border-amber-400"
-            >
-              <span>Legal Desk</span>
-              <ExternalLink className="w-3.5 h-3.5" />
-            </a>
-          </div>
-
-        </div>
-      </div>
 
       {/* SaaS Reference Hero Banner (Pure White Background) */}
       <div className="relative bg-white border-b border-stone-200 py-16 sm:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden text-center">
