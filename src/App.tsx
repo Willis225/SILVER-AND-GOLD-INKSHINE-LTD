@@ -39,6 +39,8 @@ import { CategoriesPage } from './components/categories/CategoriesPage';
 import { LegalPoliciesPage, LegalDocType } from './components/legal/LegalPoliciesPage';
 import { AboutUsPage } from './components/about/AboutUsPage';
 import { ServicesPage } from './components/services/ServicesPage';
+import { PortfoliosPage } from './components/portfolios/PortfoliosPage';
+import { HowItWorksPage } from './components/faq/HowItWorksPage';
 import { BookOnlinePage } from './components/order/BookOnlinePage';
 import { CustomQuotePage } from './components/quote/CustomQuotePage';
 import { ShieldCheck } from 'lucide-react';
@@ -192,8 +194,33 @@ export default function App() {
   const [companyInfoTab, setCompanyInfoTab] = useState<InfoModalTab>('info');
 
   const handleOpenInfoModal = (tab: InfoModalTab = 'info') => {
-    setCompanyInfoTab(tab);
-    setIsCompanyInfoOpen(true);
+    if (tab === 'about' || tab === 'info') {
+      setViewMode('about');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    if (tab === 'services') {
+      setViewMode('services');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    if (tab === 'portfolios') {
+      setViewMode('portfolios');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    if (tab === 'faq') {
+      setViewMode('faq');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    if (tab === 'contact') {
+      setViewMode('about');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    setViewMode('about');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleOpenLegalPage = (doc: LegalDocType = 'terms') => {
@@ -256,7 +283,7 @@ export default function App() {
 
   // Mode toggle between Live Storefront, Dedicated Categories Page, PDP, Checkout, Architecture Sandbox, Legal Policies, About Us, Services, Book Online / Order, Custom Quote, and Admin Dashboard
   // By default, open the main customer-facing website ('storefront') unless explicitly requested via URL pathname (/admin), hash (#admin), or parameter (?admin or ?view=admin)
-  const [viewMode, setViewMode] = useState<'storefront' | 'categories' | 'pdp' | 'checkout' | 'stage1_sandbox' | 'admin' | 'policies' | 'about' | 'services' | 'order' | 'quote'>(() => {
+  const [viewMode, setViewMode] = useState<'storefront' | 'categories' | 'pdp' | 'checkout' | 'stage1_sandbox' | 'admin' | 'policies' | 'about' | 'services' | 'order' | 'quote' | 'portfolios' | 'faq'>(() => {
     if (typeof window !== 'undefined') {
       const pathname = (window.location.pathname || '').toLowerCase();
       const hash = (window.location.hash || '').toLowerCase();
@@ -286,6 +313,12 @@ export default function App() {
       }
       if (hash === '#services' || viewParam === 'services' || pathname.endsWith('/services')) {
         return 'services';
+      }
+      if (hash === '#portfolios' || viewParam === 'portfolios' || pathname.endsWith('/portfolios')) {
+        return 'portfolios';
+      }
+      if (hash === '#faq' || viewParam === 'faq' || pathname.endsWith('/faq')) {
+        return 'faq';
       }
       if (hash === '#order' || hash === '#book-online' || hash === '#book' || viewParam === 'order' || viewParam === 'book' || pathname.endsWith('/order') || pathname.endsWith('/book-online')) {
         return 'order';
@@ -337,6 +370,10 @@ export default function App() {
         setViewMode('about');
       } else if (hash === '#services' || viewParam === 'services' || pathname.endsWith('/services')) {
         setViewMode('services');
+      } else if (hash === '#portfolios' || viewParam === 'portfolios' || pathname.endsWith('/portfolios')) {
+        setViewMode('portfolios');
+      } else if (hash === '#faq' || viewParam === 'faq' || pathname.endsWith('/faq')) {
+        setViewMode('faq');
       } else if (hash === '#order' || hash === '#book-online' || hash === '#book' || viewParam === 'order' || viewParam === 'book' || pathname.endsWith('/order') || pathname.endsWith('/book-online')) {
         setViewMode('order');
       } else if (hash === '#terms') {
@@ -620,6 +657,12 @@ export default function App() {
             } else if (page === 'services') {
               setViewMode('services');
               window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else if (page === 'portfolios') {
+              setViewMode('portfolios');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else if (page === 'faq') {
+              setViewMode('faq');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
             } else if (page === 'policies') {
               setLegalInitialDoc(docKey || 'terms');
               setViewMode('policies');
@@ -737,6 +780,26 @@ export default function App() {
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
             onSelectCategory={(cat) => handleOpenCategories(cat)}
+            onOpenQuoteModal={handleOpenCustomQuote}
+          />
+        )}
+
+        {viewMode === 'portfolios' && (
+          <PortfoliosPage
+            onNavigateHome={() => {
+              setViewMode('storefront');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onOpenQuoteModal={handleOpenCustomQuote}
+          />
+        )}
+
+        {viewMode === 'faq' && (
+          <HowItWorksPage
+            onNavigateHome={() => {
+              setViewMode('storefront');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
             onOpenQuoteModal={handleOpenCustomQuote}
           />
         )}
