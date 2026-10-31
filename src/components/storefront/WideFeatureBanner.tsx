@@ -18,27 +18,28 @@ export const WideFeatureBanner: React.FC<WideFeatureBannerProps> = ({
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Landscape Wide Showcase Banner (Presvila Layout) */}
-        <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-[#38BDF8] via-[#0284C7] to-[#06B6D4] text-white p-8 sm:p-12 lg:p-14 shadow-xl">
+        {/* Landscape Wide Showcase Banner (Black & Faded Grey Theme) */}
+        <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-[#18181b] via-[#09090d] to-[#141417] text-white p-8 sm:p-12 lg:p-14 shadow-2xl border border-white/25">
           
           {/* Subtle noise / mesh overlay */}
-          <div className="absolute inset-0 bg-black/20 backdrop-blur-[1px] pointer-events-none" />
+          <div className="absolute inset-0 bg-white/[0.02] backdrop-blur-[1px] pointer-events-none" />
+          <div className="absolute top-0 right-0 w-96 h-96 bg-stone-500/10 rounded-full blur-3xl pointer-events-none" />
 
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             
             {/* Left Content Column */}
             <div className="lg:col-span-6 space-y-5">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/40 border border-white/20 text-xs font-mono font-bold tracking-wider text-white uppercase backdrop-blur-xs">
-                <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/25 text-xs font-mono font-bold tracking-wider text-stone-200 uppercase backdrop-blur-xs">
+                <Sparkles className="w-3.5 h-3.5 text-[#f5be38]" />
                 <span>BEST SELLER PRODUCTS</span>
               </div>
 
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-[1.15] text-balance">
                 Discover Our Best Selling <br />
-                Product You Need
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-stone-200 via-slate-300 to-stone-400">Product You Need</span>
               </h2>
 
-              <p className="text-sm sm:text-base text-white/90 leading-relaxed max-w-lg">
+              <p className="text-sm sm:text-base text-stone-300 leading-relaxed max-w-lg">
                 High-density offset brochures, corporate presentation kits, and velvet-laminated cards engineered for high-impact enterprise presentations.
               </p>
 
@@ -46,10 +47,10 @@ export const WideFeatureBanner: React.FC<WideFeatureBannerProps> = ({
                 <button
                   type="button"
                   onClick={onOrderNow || onExploreProducts}
-                  className="h-11 px-6 rounded-lg bg-[#000000] hover:bg-[#18181B] text-white font-semibold text-sm inline-flex items-center gap-2 transition-all shadow-md active:scale-95 cursor-pointer border border-white/20"
+                  className="h-11 px-6 rounded-lg bg-stone-200 hover:bg-white text-stone-950 font-bold text-sm inline-flex items-center gap-2 transition-all shadow-md active:scale-95 cursor-pointer border border-stone-300"
                 >
                   <span>Make an Order</span>
-                  <ArrowRight className="w-4 h-4 text-[#D4AF37]" />
+                  <ArrowRight className="w-4 h-4 text-stone-950" />
                 </button>
               </div>
             </div>

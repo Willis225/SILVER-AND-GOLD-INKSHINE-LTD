@@ -21,7 +21,7 @@ export const FinalCtaShowcaseBanner: React.FC<FinalCtaShowcaseBannerProps> = ({
         <div className="absolute inset-0 bg-[radial-gradient(rgba(0,0,0,0.04)_1px,transparent_1px)] [background-size:24px_24px] opacity-70" />
       </div>
 
-      {/* Floating 4-Corner Print Mockup Graphics (Presvila Composition) */}
+      {/* Floating 4-Corner Print Mockup Graphics */}
       <div className="absolute inset-0 max-w-7xl mx-auto pointer-events-none overflow-hidden select-none hidden md:block">
         
         {/* Top-Left: Person with printed portfolio */}
@@ -82,19 +82,19 @@ export const FinalCtaShowcaseBanner: React.FC<FinalCtaShowcaseBannerProps> = ({
 
       </div>
 
-      {/* Center High-Impact Typography & Dual CTA Buttons */}
+      {/* Center High-Impact Typography & Dual CTA Buttons (Black & Gold) */}
       <div className="relative max-w-2xl mx-auto px-4 sm:px-6 text-center z-10 space-y-6">
         
         {/* Eyebrow */}
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-stone-100 border border-stone-300 text-xs font-mono font-bold tracking-widest text-purple-700 uppercase shadow-xs">
-          <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+        <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-stone-100 border border-amber-300 text-xs font-mono font-bold tracking-widest text-stone-900 uppercase shadow-xs">
+          <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
           <span>CONTACT US FOR MORE</span>
         </div>
 
         {/* Headline */}
         <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-stone-950 tracking-tight leading-[1.15]">
           Enjoy Up Your Vacations <br />
-          In the <span className="text-[#7C3AED]">Best Printing</span>
+          In the <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] via-amber-500 to-[#b8860b]">Best Printing</span>
         </h2>
 
         {/* Value Proposition Description */}
@@ -102,25 +102,25 @@ export const FinalCtaShowcaseBanner: React.FC<FinalCtaShowcaseBannerProps> = ({
           Start your next commercial print run with Silver &amp; Gold Inkshine Ltd. High-fidelity offset precision, premium papers, and seamless delivery to your doorstep.
         </p>
 
-        {/* Dual Ergonomic Action Buttons */}
+        {/* Dual Ergonomic Action Buttons (Black & Gold Theme) */}
         <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
           {/* Primary Shop Now Button */}
           <button
             type="button"
             onClick={onOrderNow}
-            className="h-11 px-6 rounded-lg bg-[#7C3AED] hover:bg-[#6D28D9] text-white font-bold text-sm inline-flex items-center justify-center gap-2 transition-all shadow-md active:scale-95 cursor-pointer"
+            className="h-11 px-6 rounded-lg bg-black hover:bg-stone-900 text-white font-bold text-sm inline-flex items-center justify-center gap-2 transition-all shadow-md active:scale-95 cursor-pointer border border-white/20"
           >
             <span>Shop Now</span>
-            <ArrowRight className="w-4 h-4 text-white" />
+            <ArrowRight className="w-4 h-4 text-[#D4AF37]" />
           </button>
 
           {/* Secondary Contact Us Button */}
           <button
             type="button"
             onClick={onRequestQuote}
-            className="h-11 px-6 rounded-lg bg-[#10B981] hover:bg-[#059669] text-white font-semibold text-sm inline-flex items-center justify-center gap-2 transition-all shadow-md active:scale-95 cursor-pointer"
+            className="h-11 px-6 rounded-lg bg-[#f5be38] hover:bg-[#e5af28] text-stone-950 font-bold text-sm inline-flex items-center justify-center gap-2 transition-all shadow-md active:scale-95 cursor-pointer border border-amber-300"
           >
-            <Phone className="w-4 h-4 text-white" />
+            <Phone className="w-4 h-4 text-stone-950" />
             <span>Contact Us</span>
           </button>
         </div>
