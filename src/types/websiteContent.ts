@@ -165,8 +165,8 @@ export const DEFAULT_WEBSITE_CONTENT: WebsiteContent = {
   whyChooseTitle: 'Bayelsa & Nigeria’s Fast, Affordable, and Reliable Online Printing Company',
   whyChooseDescription: 'Choose SILVER & GOLD INKSHINE LTD because we make printing simple, affordable and reliable for businesses, schools, churches, event planners, product owners and corporate organisations across Nigeria. We understand that customers want quality work without wasting money, delaying their events or struggling with poor finishing — and that is exactly what we deliver.',
   companyName: 'Silver & Gold Inkshine Ltd',
-  contactEmail: 'orders@silverandgold.ng',
-  contactPhone: '+234 703 037 2539',
+  contactEmail: 'inkshineltd@gmail.com',
+  contactPhone: '+234 703 037 2539 / +234 905 594 7639',
   address: 'No. 875 Medford Okilo Road (Mbiama-Yenagoa Road), Opolo-Epie, directly opposite Pepperoni, Yenagoa, Bayelsa State, Nigeria',
   googlePreferredSourceUrl: 'https://share.google/5obB8jqnby72M5IDG',
   googleMapsUrl: 'https://maps.app.goo.gl/FHkoQGNuL8p13jnG6',
@@ -223,6 +223,12 @@ export function loadSavedWebsiteContent(): WebsiteContent {
           : DEFAULT_SHOWCASE_SERVICES,
         googleMapsUrl: resolvedMapUrl,
         googleMapsEmbedUrl: resolvedEmbedUrl,
+        contactEmail: (!parsed.contactEmail || parsed.contactEmail.includes('silverandgold.ng') || parsed.contactEmail.includes('silverandgoldinkshine.com')) 
+          ? DEFAULT_WEBSITE_CONTENT.contactEmail 
+          : parsed.contactEmail,
+        contactPhone: (!parsed.contactPhone || !parsed.contactPhone.includes('9055947639') && !parsed.contactPhone.includes('905 594 7639'))
+          ? DEFAULT_WEBSITE_CONTENT.contactPhone
+          : parsed.contactPhone,
       };
 
       return mergedContent;

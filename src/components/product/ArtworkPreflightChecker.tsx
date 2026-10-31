@@ -457,11 +457,11 @@ export const ArtworkPreflightChecker: React.FC<ArtworkPreflightCheckerProps> = (
           <div className="bg-[#121217] rounded-xl p-3 border border-white/10 text-xs space-y-2 text-stone-300">
             <div className="flex items-center justify-between">
               <span>📧 Pre-Press Direct Email:</span>
-              <span className="font-mono font-bold text-white">artwork@inkshine.ng</span>
+              <span className="font-mono font-bold text-white">inkshineltd@gmail.com</span>
             </div>
             <div className="flex items-center justify-between">
-              <span>💬 Instant WhatsApp Despatch:</span>
-              <span className="font-mono font-bold text-[#f5be38]">+234 (0) 703 037 2539</span>
+              <span>💬 Instant Call &amp; WhatsApp:</span>
+              <span className="font-mono font-bold text-[#f5be38]">+234 703 037 2539 / 0905 594 7639</span>
             </div>
           </div>
         </div>

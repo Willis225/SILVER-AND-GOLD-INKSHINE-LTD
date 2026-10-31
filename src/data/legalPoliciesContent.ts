@@ -259,9 +259,9 @@ export const LEGAL_POLICIES: Record<'terms' | 'privacy' | 'returns', LegalPolicy
           'No. 875 Medford Okilo Road',
           'Opolo-Epie, Yenagoa',
           'Bayelsa State, Nigeria',
-          '📞 +234 703 037 2539',
+          '📞 +234 703 037 2539 / 0905 594 7639',
           '💬 WhatsApp: +234 703 037 2539',
-          '📧 Available on request'
+          '📧 inkshineltd@gmail.com'
         ]
       }
     ]
@@ -408,7 +408,8 @@ export const LEGAL_POLICIES: Record<'terms' | 'privacy' | 'returns', LegalPolicy
         title: '8. How to Contact Us',
         content: [
           'All refund/claim requests via WhatsApp for fastest service:',
-          '📞 +234 703 037 2539',
+          '📞 +234 703 037 2539 / 0905 594 7639',
+          '📧 inkshineltd@gmail.com',
           '📍 Silver & Gold Inkshine Ltd',
           'Opolo-Epie, Yenagoa, Bayelsa State'
         ]

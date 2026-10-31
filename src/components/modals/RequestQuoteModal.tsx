@@ -410,6 +410,10 @@ export const RequestQuoteModal: React.FC<RequestQuoteModalProps> = ({
                   <a href="tel:+2347030372539" className="text-stone-300 hover:text-[#f5be38] transition-colors">
                     +234 703 037 2539
                   </a>
+                  <span className="text-stone-500 mx-1.5">•</span>
+                  <a href="tel:+2349055947639" className="text-stone-300 hover:text-[#f5be38] transition-colors">
+                    0905 594 7639
+                  </a>
                 </div>
               </div>
 
@@ -421,10 +425,10 @@ export const RequestQuoteModal: React.FC<RequestQuoteModalProps> = ({
                 <div>
                   <strong className="text-white font-bold">Email Us:</strong>{' '}
                   <a 
-                    href="mailto:orders@silverandgold.ng" 
+                    href="mailto:inkshineltd@gmail.com" 
                     className="underline text-[#f5be38] hover:text-[#ffd15c] transition-colors"
                   >
-                    orders@silverandgold.ng
+                    inkshineltd@gmail.com
                   </a>
                 </div>
               </div>

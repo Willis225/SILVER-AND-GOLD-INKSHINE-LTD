@@ -358,7 +358,7 @@ export const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
                 <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 text-xs text-amber-900 flex items-start gap-2">
                   <ShieldCheck className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
                   <div>
-                    <strong>Quote Request First:</strong> You can forward large print files to <code>orders@silverandgold.ng</code> or WhatsApp after submitting your quote request.
+                    <strong>Quote Request First:</strong> You can forward large print files to <code>inkshineltd@gmail.com</code> or WhatsApp after submitting your quote request.
                   </div>
                 </div>
               )}

@@ -793,9 +793,11 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
                       </div>
                       <div>
                         <strong className="block text-white">Direct Telephone Desk:</strong>
-                        <a href="tel:+2347030372539" className="text-[#f5be38] font-bold hover:underline">
-                          +234 (0) 703 037 2539
-                        </a>
+                        <div className="text-[#f5be38] font-bold flex items-center gap-2 flex-wrap">
+                          <a href="tel:+2347030372539" className="hover:underline">+234 (0) 703 037 2539</a>
+                          <span className="text-stone-500">•</span>
+                          <a href="tel:+2349055947639" className="hover:underline">+234 (0) 905 594 7639</a>
+                        </div>
                       </div>
                     </div>
 
@@ -805,8 +807,8 @@ export const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
                       </div>
                       <div>
                         <strong className="block text-white">Official Electronic Mail:</strong>
-                        <a href="mailto:orders@silverandgold.ng" className="text-stone-400 hover:text-[#f5be38]">
-                          orders@silverandgold.ng / support@silverandgold.ng
+                        <a href="mailto:inkshineltd@gmail.com" className="text-stone-300 hover:text-[#f5be38]">
+                          inkshineltd@gmail.com
                         </a>
                       </div>
                     </div>

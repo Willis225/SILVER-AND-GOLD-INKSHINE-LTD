@@ -150,13 +150,12 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* Right Section: Call Button + Social Icons */}
           <div className="flex items-center gap-2 sm:gap-4 shrink-0">
-            <a
-              href="tel:+2347030372539"
-              className="bg-black/90 hover:bg-black text-white hover:text-[#f5be38] font-black text-[10px] sm:text-xs px-2.5 sm:px-3 py-1 rounded-full transition-all shadow-sm border border-white/30 flex items-center gap-1.5 shrink-0 backdrop-blur-xs"
-            >
+            <div className="bg-black/90 text-white font-black text-[10px] sm:text-xs px-2.5 sm:px-3 py-1 rounded-full shadow-sm border border-white/30 flex items-center gap-1.5 shrink-0 backdrop-blur-xs">
               <Phone className="w-3 h-3 text-[#f5be38] shrink-0" />
-              <span>+234 703 037 2539</span>
-            </a>
+              <a href="tel:+2347030372539" className="hover:text-[#f5be38] transition-colors">+234 703 037 2539</a>
+              <span className="text-white/40">|</span>
+              <a href="tel:+2349055947639" className="hover:text-[#f5be38] transition-colors">0905 594 7639</a>
+            </div>
 
             {/* Social Icons */}
             <div className="hidden sm:flex items-center gap-2.5 text-neutral-900">
@@ -206,7 +205,7 @@ export const Header: React.FC<HeaderProps> = ({
                 <Share2 className="w-3.5 h-3.5" />
               </a>
               <a 
-                href="mailto:orders@silverandgold.ng" 
+                href="mailto:inkshineltd@gmail.com" 
                 className="hover:text-black hover:scale-110 transition-all drop-shadow-[0_1px_0_rgba(255,255,255,0.4)]"
                 aria-label="Email"
               >

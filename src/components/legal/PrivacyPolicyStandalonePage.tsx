@@ -144,7 +144,7 @@ export const PrivacyPolicyStandalonePage: React.FC<PrivacyPolicyPageProps> = ({
                 Silver &amp; Gold Inkshine Ltd does not sell your personal data or client artwork files. We do not use client orders for advertising. We collect only what we need to deliver your commercial print runs and keep your corporate account secure.
               </p>
               <p className="text-stone-600 text-xs sm:text-sm leading-relaxed">
-                This document is written in plain language — not legal camouflage. If something isn&apos;t clear, email us at <a href="mailto:orders@silverandgold.ng" className="text-amber-700 font-bold underline">orders@silverandgold.ng</a>.
+                This document is written in plain language — not legal camouflage. If something isn&apos;t clear, email us at <a href="mailto:inkshineltd@gmail.com" className="text-amber-700 font-bold underline">inkshineltd@gmail.com</a>.
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
