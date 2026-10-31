@@ -43,6 +43,7 @@ import { PortfoliosPage } from './components/portfolios/PortfoliosPage';
 import { HowItWorksPage } from './components/faq/HowItWorksPage';
 import { BookOnlinePage } from './components/order/BookOnlinePage';
 import { CustomQuotePage } from './components/quote/CustomQuotePage';
+import { SearchPage } from './components/search/SearchPage';
 import { ShieldCheck } from 'lucide-react';
 import { SAMPLE_PRODUCTS, NIGERIAN_SHIPPING_ZONES } from './data/seedData';
 import { INITIAL_ORDERS } from './data/seedOrders';
@@ -283,7 +284,7 @@ export default function App() {
 
   // Mode toggle between Live Storefront, Dedicated Categories Page, PDP, Checkout, Architecture Sandbox, Legal Policies, About Us, Services, Book Online / Order, Custom Quote, and Admin Dashboard
   // By default, open the main customer-facing website ('storefront') unless explicitly requested via URL pathname (/admin), hash (#admin), or parameter (?admin or ?view=admin)
-  const [viewMode, setViewMode] = useState<'storefront' | 'categories' | 'pdp' | 'checkout' | 'stage1_sandbox' | 'admin' | 'policies' | 'about' | 'services' | 'order' | 'quote' | 'portfolios' | 'faq'>(() => {
+  const [viewMode, setViewMode] = useState<'storefront' | 'categories' | 'pdp' | 'checkout' | 'stage1_sandbox' | 'admin' | 'policies' | 'about' | 'services' | 'order' | 'quote' | 'portfolios' | 'faq' | 'search'>(() => {
     if (typeof window !== 'undefined') {
       const pathname = (window.location.pathname || '').toLowerCase();
       const hash = (window.location.hash || '').toLowerCase();
@@ -304,6 +305,9 @@ export default function App() {
       }
       if (hash === '#quote' || hash === '#custom-quote' || viewParam === 'quote' || viewParam === 'custom-quote' || pathname.endsWith('/quote') || pathname.endsWith('/custom-quote')) {
         return 'quote';
+      }
+      if (hash === '#search' || viewParam === 'search' || pathname.endsWith('/search')) {
+        return 'search';
       }
       if (hash === '#categories' || viewParam === 'categories' || pathname.endsWith('/categories')) {
         return 'categories';
@@ -364,6 +368,8 @@ export default function App() {
         setViewMode('admin');
       } else if (hash === '#quote' || hash === '#custom-quote' || viewParam === 'quote' || viewParam === 'custom-quote' || pathname.endsWith('/quote') || pathname.endsWith('/custom-quote')) {
         setViewMode('quote');
+      } else if (hash === '#search' || viewParam === 'search' || pathname.endsWith('/search')) {
+        setViewMode('search');
       } else if (hash === '#categories' || viewParam === 'categories' || pathname.endsWith('/categories')) {
         setViewMode('categories');
       } else if (hash === '#about' || viewParam === 'about' || pathname.endsWith('/about')) {
@@ -416,6 +422,19 @@ export default function App() {
       console.error(e);
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleOpenSearchPage = (query: string = '') => {
+    setSearchQuery(query);
+    setViewMode('search');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    try {
+      if (window.location.hash !== '#search') {
+        window.history.pushState(null, '', '#search');
+      }
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const handleReturnToStorefront = (catKey?: string) => {
@@ -643,7 +662,7 @@ export default function App() {
           onOpenCatalog={() => handleOpenCategoriesPage('all')}
           onOpenCategoriesPage={handleOpenCategoriesPage}
           onOpenQuoteModal={handleOpenCustomQuote}
-          onOpenSearch={() => setIsSearchModalOpen(true)}
+          onOpenSearch={() => handleOpenSearchPage(searchQuery)}
           onNavigateToPage={(page, docKey) => {
             if (page === 'order') {
               handleOpenBookOnline();
@@ -678,6 +697,26 @@ export default function App() {
 
       {/* Main View Router */}
       <main className="flex-1">
+        {viewMode === 'search' && (
+          <SearchPage
+            initialQuery={searchQuery}
+            onNavigateHome={() => {
+              setViewMode('storefront');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onSelectCategory={(catKey) => {
+              handleOpenCategoriesPage(catKey);
+            }}
+            onSelectProduct={(prod) => {
+              setActivePdpProduct(prod);
+              setViewMode('pdp');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onOpenCustomQuote={handleOpenCustomQuote}
+            products={products}
+          />
+        )}
+
         {viewMode === 'categories' && (
           <CategoriesPage
             products={products}

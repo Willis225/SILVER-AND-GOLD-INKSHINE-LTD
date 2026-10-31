@@ -170,7 +170,7 @@ export const Header: React.FC<HeaderProps> = ({
                 <Instagram className="w-3.5 h-3.5" />
               </a>
               <a 
-                href="https://facebook.com" 
+                href="https://web.facebook.com/silverGoldprinting?locale=en_GB&_rdc=1&_rdr#" 
                 target="_blank" 
                 rel="noreferrer" 
                 className="hover:text-black hover:scale-110 transition-all drop-shadow-[0_1px_0_rgba(255,255,255,0.4)]"
@@ -727,13 +727,6 @@ export const Header: React.FC<HeaderProps> = ({
               <span>Book Online</span>
             </button>
 
-            <button
-              onClick={onOpenQuoteModal}
-              className="h-9 px-3.5 rounded-lg bg-white/10 hover:bg-white/15 text-stone-200 hover:text-white font-semibold text-xs inline-flex items-center gap-1.5 transition-all border border-white/20 cursor-pointer"
-            >
-              <FileText className="w-3.5 h-3.5 text-[#f5be38]" />
-              <span>Custom Quote</span>
-            </button>
           </nav>
 
           {/* Right Action Icons: Search + Cart + Get a Quote Primary CTA Button */}

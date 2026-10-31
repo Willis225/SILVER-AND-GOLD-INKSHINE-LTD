@@ -409,7 +409,7 @@ export const AboutUsPage: React.FC<AboutUsPageProps> = ({
               <div className="lg:col-span-6 rounded-3xl overflow-hidden border border-white/15 shadow-xl bg-black h-[320px] sm:h-[380px]">
                 <iframe
                   title="Google Maps - Silver & Gold Inkshine Ltd"
-                  src="https://maps.google.com/maps?q=9.081999,8.675277&hl=en&z=16&output=embed"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3939.799753905124!2d8.675277!3d9.081999000000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1051630150b084b5%3A0xf18b26f8ebf417f7!2sSILVER%20%26%20GOLD%20PRINTING%20HOUSE!5e0!3m2!1sen!2sng!4v1793466680089!5m2!1sen!2sng"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
