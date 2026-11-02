@@ -30,8 +30,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   onSelectProductQuickView,
   onSelectCategory,
   slides,
-  headline = '#1 Online Printing Company in Bayelsa',
-  subheadline = 'Banners • Branding • Digital Printing',
+  headline = '#1 Online Printing & Branding Company in Bayelsa',
+  subheadline = 'Banners, Branding, Digital Printing & Packaging',
   eyebrow = 'Grow Your Brand with Premium, Fast Printing',
   description = 'Buy your custom products online and have them delivered across Bayelsa.',
   backgroundImageUrl = 'https://cdn.hstockplus.org/uploads/public/img-1790066633477-1b16a758309b0fff.webp',
@@ -44,11 +44,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         <div className="absolute -top-32 -left-32 w-96 sm:w-[500px] h-96 sm:h-[500px] rounded-full bg-[radial-gradient(circle,rgba(245,190,56,0.12)_0%,transparent_70%)] blur-3xl" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch min-h-[500px] lg:min-h-[580px]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:pl-8 lg:pr-0 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch min-h-[520px] lg:min-h-[580px] xl:min-h-[620px]">
           
           {/* Left Column: Typography, Star Rating, Pill CTAs, Bottom Badges */}
-          <div className="lg:col-span-7 xl:col-span-7 py-12 sm:py-16 lg:py-20 pr-0 lg:pr-8 flex flex-col justify-center space-y-6 sm:space-y-7">
+          <div className="lg:col-span-6 xl:col-span-6 py-10 sm:py-14 lg:py-16 pr-0 lg:pr-6 flex flex-col justify-center space-y-6 sm:space-y-7 z-20">
             
             {/* Headline & Subheadline */}
             <motion.div 
@@ -57,11 +57,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
               className="space-y-3"
             >
-              <h1 className="text-3xl xs:text-4xl sm:text-5xl lg:text-[48px] xl:text-[54px] font-black tracking-tight text-white leading-[1.08] text-balance">
+              <h1 className="text-3xl xs:text-4xl sm:text-5xl lg:text-[44px] xl:text-[50px] font-black tracking-tight text-white leading-[1.08] text-balance">
                 {headline}
               </h1>
 
-              <div className="text-xl xs:text-2xl sm:text-3xl lg:text-[32px] font-extrabold tracking-tight text-stone-200">
+              <div className="text-xl xs:text-2xl sm:text-3xl lg:text-[28px] xl:text-[30px] font-extrabold tracking-tight text-[#f5be38]">
                 {subheadline}
               </div>
 
@@ -140,23 +140,31 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
           </div>
 
-          {/* Right Column: Flush / Full-Bleed Hero Image to Top, Bottom, and Right */}
+          {/* Right Column: Promotional Hero Image (Woman pointing towards left headline) */}
           <motion.div 
-            initial={{ opacity: 0, x: 30 }}
+            initial={{ opacity: 0, x: 24 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-5 xl:col-span-5 relative w-full h-full min-h-[420px] lg:min-h-full overflow-hidden flex items-end justify-center lg:justify-end"
+            className="lg:col-span-6 xl:col-span-6 relative w-full h-full pb-8 lg:pb-0 flex items-center justify-center lg:justify-end overflow-hidden"
           >
-            <div className="relative w-full h-full flex items-center justify-center lg:justify-end">
+            {/* Image Wrapper: Maintains natural proportions on mobile/tablet, full-bleed flush on desktop */}
+            <div className="relative w-full aspect-[1457/1079] sm:aspect-[1457/1079] lg:aspect-auto lg:h-full lg:min-h-[580px] xl:min-h-[620px] rounded-2xl lg:rounded-none overflow-hidden border border-white/10 lg:border-none shadow-2xl lg:shadow-none flex items-center justify-center lg:justify-end">
               <img
-                src="/inkshine-brand-portrait.png"
-                alt="Silver & Gold Inkshine Ltd Printing Press Ambassador"
-                className="w-full h-full object-cover object-top lg:object-right-top"
+                src="/assets/aistudio/image_88a63b88.png"
+                alt="Silver & Gold Printing Services Ambassador in Yenagoa Printing Studio"
+                className="w-full h-full object-cover object-[32%_center] sm:object-[35%_center] lg:object-[32%_center] select-none"
                 loading="eager"
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  if (!target.src.includes('inkshine-hero-ambassador.png')) {
+                    target.src = '/inkshine-hero-ambassador.png';
+                  }
+                }}
               />
-              {/* Gentle bottom & left gradient fade to blend with dark container */}
-              <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-[#07080a] to-transparent pointer-events-none hidden lg:block" />
-              <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#07080a] to-transparent pointer-events-none lg:hidden" />
+
+              {/* Gentle blend gradients on desktop so image edges meet dark hero background naturally */}
+              <div className="absolute inset-y-0 left-0 w-12 xl:w-20 bg-gradient-to-r from-[#07080a] to-transparent pointer-events-none hidden lg:block z-10" />
+              <div className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-[#07080a] to-transparent pointer-events-none hidden lg:block z-10" />
             </div>
           </motion.div>
 

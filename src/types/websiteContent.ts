@@ -153,10 +153,10 @@ export const DEFAULT_SHOWCASE_SERVICES: ShowcaseServiceItem[] = [
 ];
 
 export const DEFAULT_WEBSITE_CONTENT: WebsiteContent = {
-  heroHeadline: '#1 Online Printing Company in Bayelsa',
-  heroSubheadline: 'Banners • Branding • Digital Printing',
+  heroHeadline: '#1 Online Printing & Branding Company in Bayelsa',
+  heroSubheadline: 'Banners, Branding, Digital Printing & Packaging',
   heroEyebrow: 'Grow Your Brand with Premium, Fast Printing',
-  heroDescription: 'Every order includes precision color matching + a free pre-press audit — perfect prints, every time',
+  heroDescription: 'Buy your custom products online and have them delivered across Bayelsa.',
   heroBackgroundImage: 'https://cdn.hstockplus.org/uploads/public/img-1790066633477-1b16a758309b0fff.webp',
   heroSlides: DEFAULT_HERO_SLIDES,
   showcaseTitle: 'Top-Quality Printing Services',
@@ -170,16 +170,16 @@ export const DEFAULT_WEBSITE_CONTENT: WebsiteContent = {
   address: 'No. 875 Medford Okilo Road (Mbiama-Yenagoa Road), Opolo-Epie, directly opposite Pepperoni, Yenagoa, Bayelsa State, Nigeria',
   googlePreferredSourceUrl: 'https://share.google/5obB8jqnby72M5IDG',
   googleMapsUrl: 'https://maps.app.goo.gl/FHkoQGNuL8p13jnG6',
-  googleMapsEmbedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3939.799753905124!2d8.675277!3d9.081999000000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1051630150b084b5%3A0xf18b26f8ebf417f7!2sSILVER%20%26%20GOLD%20PRINTING%20HOUSE!5e0!3m2!1sen!2sng!4v1793466680089!5m2!1sen!2sng'
+  googleMapsEmbedUrl: 'https://maps.google.com/maps?q=No.+875+Medford+Okilo+Road,+Opolo-Epie,+Yenagoa,+Bayelsa+State,+Nigeria&t=&z=15&ie=UTF8&iwloc=&output=embed'
 };
 
-const STORAGE_KEY = 'inkshine_website_content_v7';
+const STORAGE_KEY = 'inkshine_website_content_v8';
 
 export function loadSavedWebsiteContent(): WebsiteContent {
   try {
     let saved = localStorage.getItem(STORAGE_KEY);
     if (!saved) {
-      saved = localStorage.getItem('inkshine_website_content_v6') || localStorage.getItem('inkshine_website_content_v5') || localStorage.getItem('inkshine_website_content_v4');
+      saved = localStorage.getItem('inkshine_website_content_v7') || localStorage.getItem('inkshine_website_content_v6') || localStorage.getItem('inkshine_website_content_v5') || localStorage.getItem('inkshine_website_content_v4');
     }
     if (saved) {
       const parsed = JSON.parse(saved);
@@ -189,17 +189,21 @@ export function loadSavedWebsiteContent(): WebsiteContent {
         ? parsed.heroSlides
         : DEFAULT_HERO_SLIDES;
 
-      const heroHeadline = parsed.heroHeadline || DEFAULT_WEBSITE_CONTENT.heroHeadline;
-      const heroSubheadline = parsed.heroSubheadline || DEFAULT_WEBSITE_CONTENT.heroSubheadline;
+      const heroHeadline = (!parsed.heroHeadline || parsed.heroHeadline === '#1 Online Printing Company in Bayelsa')
+        ? DEFAULT_WEBSITE_CONTENT.heroHeadline
+        : parsed.heroHeadline;
+      const heroSubheadline = (!parsed.heroSubheadline || parsed.heroSubheadline.includes('•'))
+        ? DEFAULT_WEBSITE_CONTENT.heroSubheadline
+        : parsed.heroSubheadline;
       const heroEyebrow = parsed.heroEyebrow || DEFAULT_WEBSITE_CONTENT.heroEyebrow;
       const isOldDesc = !parsed.heroDescription || parsed.heroDescription.includes('Select from top print collections');
       const heroDescription = isOldDesc ? DEFAULT_WEBSITE_CONTENT.heroDescription : parsed.heroDescription;
 
-      const hasOldMapUrl = parsed.googleMapsUrl === 'https://maps.app.goo.gl/LSvreepfyxDCE4246' || !parsed.googleMapsEmbedUrl || parsed.googleMapsEmbedUrl.includes('output=embed');
-      const resolvedMapUrl = (!parsed.googleMapsUrl || hasOldMapUrl)
+      const isInvalidEmbed = !parsed.googleMapsEmbedUrl || parsed.googleMapsEmbedUrl.includes('9.081999') || !parsed.googleMapsEmbedUrl.includes('google.com/maps');
+      const resolvedMapUrl = (!parsed.googleMapsUrl || parsed.googleMapsUrl === 'https://maps.app.goo.gl/LSvreepfyxDCE4246')
         ? DEFAULT_WEBSITE_CONTENT.googleMapsUrl
         : parsed.googleMapsUrl;
-      const resolvedEmbedUrl = (!parsed.googleMapsEmbedUrl || hasOldMapUrl || parsed.googleMapsEmbedUrl.includes('output=embed'))
+      const resolvedEmbedUrl = isInvalidEmbed
         ? DEFAULT_WEBSITE_CONTENT.googleMapsEmbedUrl
         : parsed.googleMapsEmbedUrl;
 

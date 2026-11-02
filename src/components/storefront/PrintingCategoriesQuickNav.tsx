@@ -28,7 +28,7 @@ const CATEGORY_ITEMS: CategoryCardItem[] = [
   {
     id: 'packaging_shipping_cartons',
     title: 'Package Design',
-    image: '/custom-gift-boxes-lagos.jpg',
+    image: '/corrugated-shipping-cartons-mailer-boxes.jpg',
   },
   {
     id: 'books_magazines',
@@ -119,6 +119,12 @@ export const PrintingCategoriesQuickNav: React.FC<PrintingCategoriesQuickNavProp
                     alt={item.title}
                     loading="lazy"
                     referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      const target = e.currentTarget;
+                      if (!target.src.includes('custom-branded-pouch-packaging.jpg')) {
+                        target.src = '/custom-branded-pouch-packaging.jpg';
+                      }
+                    }}
                     className="w-full h-full object-contain filter drop-shadow-sm"
                   />
                 </div>

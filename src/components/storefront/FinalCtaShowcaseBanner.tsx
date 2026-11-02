@@ -20,13 +20,19 @@ export const FinalCtaShowcaseBanner: React.FC<FinalCtaShowcaseBannerProps> = ({
         {/* Compact Horizontal Banner with Warm Cream Background (#FFF3E0) */}
         <div className="relative rounded-2xl sm:rounded-3xl bg-[#FFF3E0] border border-amber-200/80 px-6 py-10 sm:py-14 overflow-hidden shadow-sm flex items-center justify-between">
           
-          {/* Left Anchored Product Image (Blue Branded Bag) */}
-          <div className="hidden sm:block absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 w-28 sm:w-36 lg:w-44 aspect-square pointer-events-none select-none">
+          {/* Left Anchored Product Image inside clean rounded frame */}
+          <div className="hidden sm:flex absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 w-28 sm:w-36 lg:w-40 aspect-square rounded-[12px] bg-white/90 p-3 sm:p-3.5 shadow-md border border-amber-200/70 backdrop-blur-xs items-center justify-center overflow-hidden pointer-events-none select-none transition-transform hover:scale-102">
             <img
-              src="/luxury-kraft-shopping-carrier-bags.jpg"
+              src="/custom-paper-bags-a3.jpg"
               alt="Custom Printed Bag"
-              className="w-full h-full object-contain filter drop-shadow-md transform -rotate-6"
+              className="w-full h-full object-contain filter drop-shadow-xs"
               loading="lazy"
+              onError={(e) => {
+                const target = e.currentTarget;
+                if (!target.src.includes('luxury-kraft-shopping-carrier-bags.jpg')) {
+                  target.src = '/luxury-kraft-shopping-carrier-bags.jpg';
+                }
+              }}
             />
           </div>
 
@@ -65,13 +71,19 @@ export const FinalCtaShowcaseBanner: React.FC<FinalCtaShowcaseBannerProps> = ({
 
           </div>
 
-          {/* Right Anchored Product Image (Blue Branded Bag) */}
-          <div className="hidden sm:block absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 w-28 sm:w-36 lg:w-44 aspect-square pointer-events-none select-none">
+          {/* Right Anchored Product Image inside clean rounded frame */}
+          <div className="hidden sm:flex absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 w-28 sm:w-36 lg:w-40 aspect-square rounded-[12px] bg-white/90 p-3 sm:p-3.5 shadow-md border border-amber-200/70 backdrop-blur-xs items-center justify-center overflow-hidden pointer-events-none select-none transition-transform hover:scale-102">
             <img
-              src="/luxury-kraft-shopping-carrier-bags.jpg"
+              src="/custom-paper-bags-a3.jpg"
               alt="Custom Printed Bag"
-              className="w-full h-full object-contain filter drop-shadow-md transform rotate-6"
+              className="w-full h-full object-contain filter drop-shadow-xs"
               loading="lazy"
+              onError={(e) => {
+                const target = e.currentTarget;
+                if (!target.src.includes('luxury-kraft-shopping-carrier-bags.jpg')) {
+                  target.src = '/luxury-kraft-shopping-carrier-bags.jpg';
+                }
+              }}
             />
           </div>
 
