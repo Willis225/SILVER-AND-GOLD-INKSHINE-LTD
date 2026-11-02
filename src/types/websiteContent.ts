@@ -170,16 +170,16 @@ export const DEFAULT_WEBSITE_CONTENT: WebsiteContent = {
   address: 'No. 875 Medford Okilo Road (Mbiama-Yenagoa Road), Opolo-Epie, directly opposite Pepperoni, Yenagoa, Bayelsa State, Nigeria',
   googlePreferredSourceUrl: 'https://share.google/5obB8jqnby72M5IDG',
   googleMapsUrl: 'https://maps.app.goo.gl/FHkoQGNuL8p13jnG6',
-  googleMapsEmbedUrl: 'https://maps.google.com/maps?q=No.+875+Medford+Okilo+Road,+Opolo-Epie,+Yenagoa,+Bayelsa+State,+Nigeria&t=&z=15&ie=UTF8&iwloc=&output=embed'
+  googleMapsEmbedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3939.799754004253!2d8.672702075019492!3d9.081998990981594!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1051630150b084b5%3A0xf18b26f8ebf417f7!2sSILVER%20%26%20GOLD%20PRINTING%20HOUSE!5e0!3m2!1sen!2sng!4v1793657630467!5m2!1sen!2sng'
 };
 
-const STORAGE_KEY = 'inkshine_website_content_v8';
+const STORAGE_KEY = 'inkshine_website_content_v9';
 
 export function loadSavedWebsiteContent(): WebsiteContent {
   try {
     let saved = localStorage.getItem(STORAGE_KEY);
     if (!saved) {
-      saved = localStorage.getItem('inkshine_website_content_v7') || localStorage.getItem('inkshine_website_content_v6') || localStorage.getItem('inkshine_website_content_v5') || localStorage.getItem('inkshine_website_content_v4');
+      saved = localStorage.getItem('inkshine_website_content_v8') || localStorage.getItem('inkshine_website_content_v7') || localStorage.getItem('inkshine_website_content_v6') || localStorage.getItem('inkshine_website_content_v5');
     }
     if (saved) {
       const parsed = JSON.parse(saved);
@@ -199,7 +199,7 @@ export function loadSavedWebsiteContent(): WebsiteContent {
       const isOldDesc = !parsed.heroDescription || parsed.heroDescription.includes('Select from top print collections');
       const heroDescription = isOldDesc ? DEFAULT_WEBSITE_CONTENT.heroDescription : parsed.heroDescription;
 
-      const isInvalidEmbed = !parsed.googleMapsEmbedUrl || parsed.googleMapsEmbedUrl.includes('9.081999') || !parsed.googleMapsEmbedUrl.includes('google.com/maps');
+      const isInvalidEmbed = !parsed.googleMapsEmbedUrl || !parsed.googleMapsEmbedUrl.includes('0x1051630150b084b5');
       const resolvedMapUrl = (!parsed.googleMapsUrl || parsed.googleMapsUrl === 'https://maps.app.goo.gl/LSvreepfyxDCE4246')
         ? DEFAULT_WEBSITE_CONTENT.googleMapsUrl
         : parsed.googleMapsUrl;

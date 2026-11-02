@@ -181,7 +181,6 @@ export const SearchPage: React.FC<SearchPageProps> = ({
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search flyers, banners, business cards, 3D signs, stickers..."
-                autoFocus
                 className="w-full bg-[#181822] border-2 border-white/15 focus:border-[#f5be38] rounded-2xl py-4 pl-12 pr-12 text-base text-white placeholder-stone-400 focus:outline-hidden shadow-2xl transition-all"
               />
               {query && (

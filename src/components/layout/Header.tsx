@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Search, 
   ShoppingBag, 
@@ -42,6 +42,8 @@ import {
   HelpCircle,
   Clock,
   ArrowRight,
+  Home,
+  MapPin,
 } from 'lucide-react';
 import { ProductCategory, Product } from '../../types/schema';
 import { CompanyLogoMark } from '../common/CompanyLogo';
@@ -113,8 +115,50 @@ export const Header: React.FC<HeaderProps> = ({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [showSearchModal, setShowSearchModal] = useState(false);
+  const [mobileSearchInput, setMobileSearchInput] = useState(searchQuery || '');
+
+  // Keep mobile search input synced with search query
+  useEffect(() => {
+    setMobileSearchInput(searchQuery || '');
+  }, [searchQuery]);
+
+  // Lock body scroll when mobile standalone page is open to prevent background scrolling/floating
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [mobileMenuOpen]);
 
   const handleTriggerSearch = () => {
+    if (onOpenSearch) {
+      onOpenSearch();
+    } else {
+      setShowSearchModal(true);
+    }
+  };
+
+  const handleMobileSearchSubmit = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    const query = mobileSearchInput.trim() || searchQuery.trim();
+    if (query) {
+      onSearchChange(query);
+    }
+    setMobileMenuOpen(false);
+    if (onOpenSearch) {
+      onOpenSearch();
+    } else {
+      setShowSearchModal(true);
+    }
+  };
+
+  const handleQuickSearch = (tag: string) => {
+    setMobileSearchInput(tag);
+    onSearchChange(tag);
+    setMobileMenuOpen(false);
     if (onOpenSearch) {
       onOpenSearch();
     } else {
@@ -782,175 +826,341 @@ export const Header: React.FC<HeaderProps> = ({
       </div>
     </div>
 
-      {/* Mobile Menu Drawer */}
-      {mobileMenuOpen && (
-        <div className="md:hidden bg-[#0a0b0e] border-b border-white/15 px-4 py-4 space-y-4 animate-in slide-in-from-top-2 duration-200">
-          
-          {/* Mobile Instant Search Input Trigger */}
-          <button
-            type="button"
-            onClick={() => {
-              setMobileMenuOpen(false);
-              handleTriggerSearch();
-            }}
-            className="w-full py-2.5 px-3.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/20 text-left flex items-center justify-between text-stone-300 text-xs transition-colors cursor-pointer"
-          >
-            <span className="flex items-center gap-2">
-              <Search className="w-4 h-4 text-[#ffd25d]" />
-              <span className="text-stone-400">Search flyers, banners, cards, signs...</span>
-            </span>
-            <span className="text-[10px] text-[#ffd25d] font-bold px-1.5 py-0.5 rounded bg-[#ffd25d]/10 border border-[#ffd25d]/30">SEARCH</span>
-          </button>
+      {/* Dedicated Standalone Mobile Full-Screen Page (Swipes in from corner/right edge, NOT floating on homepage) */}
+      <div
+        className={`fixed inset-0 z-[100] md:hidden transition-all duration-300 ${
+          mobileMenuOpen
+            ? 'opacity-100 pointer-events-auto visible'
+            : 'opacity-0 pointer-events-none invisible'
+        }`}
+        aria-modal="true"
+        role="dialog"
+        aria-label="Mobile Navigation & Search Page"
+      >
+        {/* Full-screen Dark Backdrop */}
+        <div
+          className={`fixed inset-0 bg-black/85 backdrop-blur-md transition-opacity duration-300 ${
+            mobileMenuOpen ? 'opacity-100' : 'opacity-0'
+          }`}
+          onClick={() => setMobileMenuOpen(false)}
+        />
 
-          {/* Mobile Direct Action Buttons */}
-          <div className="grid grid-cols-2 gap-2.5 pt-1">
+        {/* Standalone Full-Screen Sliding Page (Swipes in from the right corner) */}
+        <div
+          className={`fixed inset-0 bg-[#07080b] flex flex-col h-[100dvh] w-full overflow-hidden shadow-2xl transition-transform duration-300 ease-out transform ${
+            mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
+        >
+          {/* Top Page Header Bar */}
+          <div className="shrink-0 bg-[#0c0e14] border-b border-white/10 px-4 py-3 flex items-center justify-between shadow-md">
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
-                onOpenBookOnline?.();
+                onNavigateHome();
               }}
-              className="min-h-[44px] py-2.5 px-3.5 rounded-xl bg-gradient-to-r from-[#ffd25d] via-[#f5be38] to-[#e5ab20] text-black font-black text-xs flex items-center justify-center gap-1.5 shadow-md shadow-[#f5be38]/20 active:scale-95 transition-all cursor-pointer"
+              className="flex items-center gap-2.5 text-left active:scale-95 transition-transform cursor-pointer"
             >
-              <Calendar className="w-4 h-4 text-black" />
-              <span>Book Online</span>
+              <CompanyLogoMark className="w-8 h-8 rounded-full border border-[#f5be38]/40 shadow-sm" />
+              <div>
+                <div className="text-white font-black text-sm tracking-tight flex items-center gap-1.5">
+                  <span>SILVER &amp; GOLD</span>
+                  <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-[#f5be38]/20 text-[#ffd25d] border border-[#f5be38]/40">
+                    HUB
+                  </span>
+                </div>
+                <div className="text-[10px] text-stone-400 font-medium">Search &amp; Navigation Page</div>
+              </div>
             </button>
+
+            {/* Prominent Swipe/Close Page Button */}
             <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                if (onOpenCategoriesPage) {
-                  onOpenCategoriesPage('all');
-                } else {
-                  onOpenCatalog?.();
-                }
-              }}
-              className="min-h-[44px] py-2.5 px-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-[#ffd25d] border border-[#ffd25d]/40 font-bold text-xs flex items-center justify-center gap-1.5 active:scale-95 transition-all cursor-pointer"
+              type="button"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center gap-1.5 min-h-[40px] px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/20 active:bg-white/30 text-white border border-white/20 text-xs font-bold transition-all cursor-pointer shadow-sm"
+              aria-label="Close page"
             >
-              <Sparkles className="w-4 h-4 text-[#ffd25d]" />
-              <span>Catalog</span>
+              <span>Close</span>
+              <X className="w-4 h-4 text-white" />
             </button>
           </div>
 
-          {/* Subtle Custom Quote Row in Mobile Drawer */}
-          {onOpenQuoteModal && (
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onOpenQuoteModal();
-              }}
-              className="w-full min-h-[44px] py-2.5 px-3.5 rounded-xl bg-[#14141c] hover:bg-white/10 border border-white/15 text-stone-200 hover:text-white text-xs font-semibold flex items-center justify-between transition-colors cursor-pointer"
-            >
-              <span className="flex items-center gap-2">
-                <FileText className="w-4 h-4 text-[#ffd25d]" />
-                <span>Need a Custom Enterprise Quote?</span>
-              </span>
-              <ChevronRight className="w-4 h-4 text-stone-400" />
-            </button>
-          )}
+          {/* Liquid Gold/Silver Hairline Line */}
+          <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-[#f5be38] via-white to-transparent opacity-80 shrink-0" />
 
-          <div className="text-xs font-bold text-stone-400 uppercase tracking-wider">
-            Quick Navigation &amp; Info
-          </div>
-          {/* Quick Displays & Company Info Links */}
-          <div className="bg-white/5 border border-white/10 rounded-2xl p-3.5">
-            <div className="text-xs font-bold uppercase tracking-wider text-[#ffd25d] mb-2.5 flex items-center gap-1.5">
-              <Info className="w-4 h-4 text-[#ffd25d]" />
-              <span>Displays &amp; Company Hub</span>
+          {/* Scrollable Standalone Page Body */}
+          <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-5 space-y-5">
+            {/* 1. Integrated Search Engine */}
+            <div className="bg-[#12131b] border border-white/15 rounded-2xl p-4 shadow-lg">
+              <div className="flex items-center justify-between mb-2.5">
+                <div className="text-xs font-black uppercase tracking-wider text-[#ffd25d] flex items-center gap-1.5">
+                  <Search className="w-3.5 h-3.5 text-[#ffd25d]" />
+                  <span>Search Engine</span>
+                </div>
+                <span className="text-[10px] text-stone-400">Search products &amp; prints</span>
+              </div>
+
+              <form onSubmit={handleMobileSearchSubmit} className="space-y-2.5">
+                <div className="relative flex items-center">
+                  <Search className="absolute left-3.5 w-4 h-4 text-[#ffd25d] pointer-events-none" />
+                  <input
+                    type="search"
+                    value={mobileSearchInput}
+                    onChange={(e) => setMobileSearchInput(e.target.value)}
+                    placeholder="Search flyers, banners, stickers, cards..."
+                    className="w-full h-11 pl-10 pr-20 bg-white/5 border border-white/20 focus:border-[#f5be38] focus:bg-white/10 text-white placeholder:text-stone-400 text-sm rounded-xl outline-none transition-all"
+                  />
+                  {mobileSearchInput && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setMobileSearchInput('');
+                        onSearchChange('');
+                      }}
+                      className="absolute right-16 p-1 text-stone-400 hover:text-white cursor-pointer"
+                      title="Clear search"
+                    >
+                      <X className="w-3.5 h-3.5" />
+                    </button>
+                  )}
+                  <button
+                    type="submit"
+                    className="absolute right-1.5 h-8 px-3 rounded-lg bg-[#f5be38] hover:bg-[#e5af28] text-black font-extrabold text-xs flex items-center justify-center transition-all active:scale-95 shadow-sm cursor-pointer"
+                  >
+                    Search
+                  </button>
+                </div>
+              </form>
+
+              {/* Quick Search Chips */}
+              <div className="mt-3 pt-3 border-t border-white/10">
+                <div className="text-[11px] font-semibold text-stone-400 mb-2">Popular Searches:</div>
+                <div className="flex flex-wrap gap-1.5">
+                  {[
+                    'Banners & Stands',
+                    'T-Shirt Printing',
+                    'Flyers & Handbills',
+                    'Package Design',
+                    'Stickers & Labels',
+                    'Custom Apparels',
+                    'Mug Printing',
+                    'Vehicle Branding',
+                    'Roll-Up Stand',
+                  ].map((tag) => (
+                    <button
+                      key={tag}
+                      type="button"
+                      onClick={() => handleQuickSearch(tag)}
+                      className="text-[11px] px-2.5 py-1 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 text-stone-300 hover:text-[#ffd25d] transition-colors active:scale-95 cursor-pointer"
+                    >
+                      {tag}
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-              {[
-                { tab: 'about' as const, label: 'About / FAQs' },
-                { tab: 'about' as const, label: 'About Us' },
-                { tab: 'services' as const, label: 'Our Services' },
-                { tab: 'portfolios' as const, label: 'Our Portfolios' },
-                { tab: 'faq' as const, label: 'How It Works / FAQ' },
-                { tab: 'about' as const, label: 'Contact Us' },
-              ].map((item, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    if (item.label.includes('Service')) {
-                      onNavigateToPage?.('services');
-                    } else if (item.label.includes('Portfolio')) {
-                      onNavigateToPage?.('portfolios');
-                    } else if (item.label.includes('FAQ') || item.label.includes('How')) {
-                      onNavigateToPage?.('faq');
-                    } else {
-                      onNavigateToPage?.('about');
-                    }
-                  }}
-                  className="min-h-[42px] px-3 py-2 bg-white/10 text-stone-100 hover:bg-white/20 active:bg-white/25 font-bold text-xs rounded-xl text-left shadow-xs border border-white/10 transition-colors flex items-center cursor-pointer"
-                >
-                  {item.label}
-                </button>
-              ))}
-            </div>
-          </div>
 
-          <div className="text-xs font-bold text-stone-400 uppercase tracking-wider pt-1">
-            Browse Categories
-          </div>
-
-          <div className="grid grid-cols-2 gap-2">
-            <button
-              onClick={() => {
-                onSelectCategory('all');
-                setMobileMenuOpen(false);
-                if (onOpenCategoriesPage) {
-                  onOpenCategoriesPage('all');
-                } else {
-                  onNavigateHome();
-                }
-              }}
-              className={`min-h-[44px] text-left p-3 rounded-xl text-xs font-bold transition-all ${
-                selectedCategory === 'all'
-                  ? 'bg-gradient-to-r from-[#ffd25d] to-[#f5be38] text-black shadow-md'
-                  : 'bg-white/10 text-stone-200 hover:bg-white/15'
-              }`}
-            >
-              All Products
-            </button>
-            {CATEGORIES.map((cat) => (
+            {/* 2. Direct Action Buttons */}
+            <div className="grid grid-cols-2 gap-2.5">
               <button
-                key={cat.id}
+                type="button"
                 onClick={() => {
-                  onSelectCategory(cat.id);
+                  setMobileMenuOpen(false);
+                  onOpenBookOnline?.();
+                }}
+                className="min-h-[52px] p-3 rounded-2xl bg-gradient-to-r from-[#ffd25d] via-[#f5be38] to-[#e5ab20] text-black font-black text-xs flex flex-col justify-center items-start shadow-md shadow-[#f5be38]/20 active:scale-95 transition-all cursor-pointer"
+              >
+                <div className="flex items-center gap-1.5">
+                  <Calendar className="w-4 h-4 text-black" />
+                  <span className="text-sm font-black">Book Online</span>
+                </div>
+                <span className="text-[10px] text-black/80 font-medium">Fast ordering &amp; proof</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
                   setMobileMenuOpen(false);
                   if (onOpenCategoriesPage) {
-                    onOpenCategoriesPage(cat.id);
+                    onOpenCategoriesPage('all');
                   } else {
-                    onNavigateHome();
+                    onOpenCatalog?.();
                   }
                 }}
-                className={`min-h-[44px] text-left p-3 rounded-xl text-xs font-semibold transition-all ${
-                  selectedCategory === cat.id
-                    ? 'bg-gradient-to-r from-[#ffd25d] to-[#f5be38] text-black font-bold shadow-md'
-                    : 'bg-white/5 text-stone-200 hover:bg-white/10'
-                }`}
+                className="min-h-[52px] p-3 rounded-2xl bg-white/10 hover:bg-white/15 text-[#ffd25d] border border-[#ffd25d]/40 font-bold text-xs flex flex-col justify-center items-start active:scale-95 transition-all cursor-pointer"
               >
-                {cat.label}
+                <div className="flex items-center gap-1.5">
+                  <Sparkles className="w-4 h-4 text-[#ffd25d]" />
+                  <span className="text-sm font-black text-white">Catalog</span>
+                </div>
+                <span className="text-[10px] text-stone-400 font-medium">Browse 24+ Categories</span>
               </button>
-            ))}
-          </div>
+            </div>
 
-          <div className="pt-3 border-t border-white/10 flex items-center justify-between text-xs">
-            <a
-              href="tel:+2347030372539"
-              className="text-[#ffd25d] font-bold flex items-center gap-1.5 min-h-[40px] px-2"
-            >
-              📞 +234 703 037 2539
-            </a>
-            <a
-              href="https://wa.me/2347030372539"
-              target="_blank"
-              rel="noreferrer"
-              className="text-[#ffd25d] font-bold flex items-center gap-1.5 min-h-[40px] px-2"
-            >
-              💬 WhatsApp
-            </a>
+            {/* 3. Customized Enterprise Quote Card */}
+            {onOpenQuoteModal && (
+              <button
+                type="button"
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onOpenQuoteModal();
+                }}
+                className="w-full p-4 rounded-2xl bg-gradient-to-r from-[#171822] to-[#12131b] hover:from-[#20212f] hover:to-[#171824] border border-[#f5be38]/30 text-left transition-all active:scale-[0.98] cursor-pointer shadow-lg group relative overflow-hidden"
+              >
+                <div className="pointer-events-none absolute -right-6 -bottom-6 w-24 h-24 bg-[#f5be38]/10 rounded-full blur-xl" />
+                <div className="flex items-center justify-between">
+                  <div className="flex items-start gap-3">
+                    <div className="p-2.5 rounded-xl bg-[#f5be38]/15 border border-[#f5be38]/30 text-[#ffd25d] shrink-0">
+                      <FileText className="w-5 h-5 text-[#ffd25d]" />
+                    </div>
+                    <div>
+                      <div className="text-sm font-black text-white flex items-center gap-1.5">
+                        <span>Needs a Customized Enterprise Quote?</span>
+                      </div>
+                      <p className="text-xs text-stone-300 mt-0.5">
+                        Bulk printing, corporate packaging &amp; custom specifications
+                      </p>
+                      <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#ffd25d] mt-2">
+                        <span>Request Custom Enterprise Quote</span>
+                        <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                      </span>
+                    </div>
+                  </div>
+                  <ChevronRight className="w-5 h-5 text-stone-400 group-hover:text-white shrink-0 ml-2" />
+                </div>
+              </button>
+            )}
+
+            {/* 4. Quick Navigation Hub */}
+            <div className="bg-[#12131b] border border-white/10 rounded-2xl p-4 shadow-md">
+              <div className="text-xs font-black uppercase tracking-wider text-[#ffd25d] mb-3 flex items-center gap-1.5">
+                <Info className="w-4 h-4 text-[#ffd25d]" />
+                <span>Quick Navigation &amp; Company Hub</span>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                {[
+                  { label: 'Home Page', action: () => { setMobileMenuOpen(false); onNavigateHome(); } },
+                  { label: 'Our Services', action: () => { setMobileMenuOpen(false); onNavigateToPage?.('services'); } },
+                  { label: 'Our Portfolios', action: () => { setMobileMenuOpen(false); onNavigateToPage?.('portfolios'); } },
+                  { label: 'How It Works / FAQ', action: () => { setMobileMenuOpen(false); onNavigateToPage?.('faq'); } },
+                  { label: 'About Us', action: () => { setMobileMenuOpen(false); onNavigateToPage?.('about'); } },
+                  { label: 'Contact Us', action: () => { setMobileMenuOpen(false); onNavigateToPage?.('about'); } },
+                ].map((item, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={item.action}
+                    className="min-h-[46px] px-3 py-2.5 bg-white/5 hover:bg-white/15 active:bg-white/20 text-stone-100 font-bold text-xs rounded-xl text-left border border-white/10 transition-colors flex items-center justify-between cursor-pointer group"
+                  >
+                    <span>{item.label}</span>
+                    <ChevronRight className="w-3.5 h-3.5 text-stone-400 group-hover:text-[#ffd25d] transition-colors" />
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* 5. Browse All Categories */}
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <div className="text-xs font-black uppercase tracking-wider text-[#ffd25d]">
+                  Browse Categories
+                </div>
+                <span className="text-[10px] font-semibold text-stone-400">
+                  {CATEGORIES.length + 1} categories
+                </span>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    onSelectCategory('all');
+                    setMobileMenuOpen(false);
+                    if (onOpenCategoriesPage) {
+                      onOpenCategoriesPage('all');
+                    } else {
+                      onNavigateHome();
+                    }
+                  }}
+                  className={`min-h-[46px] text-left p-3 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
+                    selectedCategory === 'all'
+                      ? 'bg-gradient-to-r from-[#ffd25d] to-[#f5be38] text-black shadow-md'
+                      : 'bg-white/10 text-stone-200 hover:bg-white/15 border border-white/10'
+                  }`}
+                >
+                  <span>🌟 All Products</span>
+                  <ChevronRight className={`w-3.5 h-3.5 ${selectedCategory === 'all' ? 'text-black' : 'text-stone-400'}`} />
+                </button>
+                {CATEGORIES.map((cat) => (
+                  <button
+                    key={cat.id}
+                    type="button"
+                    onClick={() => {
+                      onSelectCategory(cat.id);
+                      setMobileMenuOpen(false);
+                      if (onOpenCategoriesPage) {
+                        onOpenCategoriesPage(cat.id);
+                      } else {
+                        onNavigateHome();
+                      }
+                    }}
+                    className={`min-h-[46px] text-left p-3 rounded-xl text-xs font-semibold transition-all flex items-center justify-between ${
+                      selectedCategory === cat.id
+                        ? 'bg-gradient-to-r from-[#ffd25d] to-[#f5be38] text-black font-bold shadow-md'
+                        : 'bg-white/5 text-stone-200 hover:bg-white/10 border border-white/5'
+                    }`}
+                  >
+                    <span className="line-clamp-1">{cat.label}</span>
+                    <ChevronRight className={`w-3.5 h-3.5 shrink-0 ml-1 ${selectedCategory === cat.id ? 'text-black' : 'text-stone-500'}`} />
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* 6. Direct Support & Contact Hotlines */}
+            <div className="pt-4 border-t border-white/15 space-y-3">
+              <div className="text-[11px] font-bold uppercase tracking-wider text-stone-400">
+                Direct Customer Support &amp; Enquiries
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <a
+                  href="tel:+2347030372539"
+                  className="min-h-[44px] px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-[#ffd25d] font-bold text-xs flex items-center justify-center gap-1.5 transition-colors"
+                >
+                  <Phone className="w-3.5 h-3.5 text-[#ffd25d]" />
+                  <span>+234 703 037 2539</span>
+                </a>
+                <a
+                  href="tel:+2349055947639"
+                  className="min-h-[44px] px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-[#ffd25d] font-bold text-xs flex items-center justify-center gap-1.5 transition-colors"
+                >
+                  <Phone className="w-3.5 h-3.5 text-[#ffd25d]" />
+                  <span>0905 594 7639</span>
+                </a>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <a
+                  href="https://wa.me/2347030372539"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="min-h-[44px] px-3 py-2 rounded-xl bg-[#25D366]/15 hover:bg-[#25D366]/25 border border-[#25D366]/30 text-[#25D366] font-bold text-xs flex items-center justify-center gap-1.5 transition-colors"
+                >
+                  <span>💬 WhatsApp Chat</span>
+                </a>
+                <a
+                  href="mailto:inkshineltd@gmail.com"
+                  className="min-h-[44px] px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-stone-300 font-bold text-xs flex items-center justify-center gap-1.5 transition-colors"
+                >
+                  <Mail className="w-3.5 h-3.5 text-stone-400" />
+                  <span>inkshineltd@gmail.com</span>
+                </a>
+              </div>
+              <div className="text-center text-[10px] text-stone-400 pt-1 pb-4">
+                📍 Yenagoa, Bayelsa State, Nigeria • Fast Nationwide Delivery
+              </div>
+            </div>
           </div>
         </div>
-      )}
+      </div>
       {/* Liquid Gold & Silver Hairline Accent under the whole header */}
       <div className="h-[1.5px] w-full bg-gradient-to-r from-transparent via-[#f5be38] via-white to-transparent opacity-80" />
     </header>
