@@ -1,6 +1,5 @@
 import React from 'react';
-import { motion } from 'motion/react';
-import { Star, ShoppingBag, ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight, ShoppingBag, Eye } from 'lucide-react';
 import { ProductCategory } from '../../types/schema';
 
 interface SecondarySpotlightSectionProps {
@@ -14,71 +13,48 @@ export const SecondarySpotlightSection: React.FC<SecondarySpotlightSectionProps>
 }) => {
   return (
     <section 
-      aria-label="Secondary Product Spotlight"
-      className="relative bg-white text-slate-900 py-16 sm:py-20 border-b border-slate-200"
+      aria-label="Nice Colorful Bag Printing"
+      className="relative bg-white text-slate-900 py-8 sm:py-12 border-b border-slate-200"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Split Grid: Left Promo Card (50%) + Right 2 Product Cards (50%) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-stretch">
+        {/* 3-Column Asymmetrical Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-stretch">
           
           {/* ========================================================================= */}
-          {/* LEFT PROMO BANNER: 50% OFF TODAY - NICE COLORFULL BAG PRINTING (Black & Grey) */}
+          {/* LEFT PROMO CARD: Dark Rounded Banner with Gold Pill Button                */}
           {/* ========================================================================= */}
-          <div className="lg:col-span-6 rounded-2xl overflow-hidden bg-gradient-to-br from-[#18181b] via-[#09090d] to-[#141417] p-7 sm:p-8 flex flex-col justify-between text-white shadow-xl relative group border border-white/25">
+          <div className="lg:col-span-5 rounded-2xl overflow-hidden bg-[#0d0e14] p-6 sm:p-8 flex flex-col justify-between text-white shadow-lg border border-white/10 relative group">
             
-            {/* Subtle glow */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-stone-500/10 rounded-full blur-2xl pointer-events-none" />
-
-            <div className="relative z-10 space-y-4">
-              <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-white/10 border border-white/25 text-xs font-mono font-bold tracking-wider text-stone-200 uppercase backdrop-blur-xs">
-                <Sparkles className="w-3.5 h-3.5 text-[#f5be38]" />
-                <span>GET 50% OFF TODAY</span>
-              </div>
-
+            <div className="relative z-10 space-y-3">
               <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight leading-tight">
-                Nice Colorfull <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-stone-200 via-slate-300 to-stone-400">Bag Printing</span>
+                Nice Colorful <br />
+                Bag Printing
               </h3>
 
-              <div className="text-xs sm:text-sm text-stone-300 font-mono">
-                <span className="text-[#f5be38] font-extrabold text-sm uppercase tracking-wider">Price on Request</span>
-              </div>
+              <p className="text-xs sm:text-sm text-stone-300 font-normal">
+                Stand out with vibrant bags.
+              </p>
 
               <div className="pt-2">
                 <button
                   type="button"
                   onClick={() => onSelectCategory('paper_bags_tags')}
-                  className="h-10 px-6 rounded-lg bg-stone-200 hover:bg-white text-stone-950 font-bold text-xs uppercase tracking-wider inline-flex items-center gap-2 transition-all shadow-md active:scale-95 cursor-pointer border border-stone-300"
+                  className="h-10 px-5 rounded-full bg-[#f5be38] hover:bg-[#e5af28] text-black font-extrabold text-xs inline-flex items-center gap-1.5 transition-all shadow-md active:scale-95 cursor-pointer"
                 >
-                  <span>Shop Now</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-stone-950" />
+                  <span>Get Started</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-black" />
                 </button>
               </div>
             </div>
 
-            {/* Bag & Mug / Cup Graphics Cutout */}
-            <div className="relative z-10 mt-6 flex items-end justify-center sm:justify-end gap-3">
-              <div className="w-40 sm:w-48 aspect-square rounded-xl bg-black/60 p-2 flex items-center justify-center overflow-hidden transition-transform duration-500 group-hover:scale-105 border border-white/20">
+            {/* Bag Graphic Cutout on Bottom-Right */}
+            <div className="relative z-10 mt-6 flex justify-end">
+              <div className="w-40 sm:w-48 aspect-square rounded-xl bg-black/40 p-2 flex items-center justify-center overflow-hidden transition-transform duration-500 group-hover:scale-105 border border-white/10">
                 <img
                   src="/luxury-kraft-shopping-carrier-bags.jpg"
-                  alt="Custom Printed Luxury Bags"
-                  className="w-full h-full object-contain drop-shadow-xl"
-                  loading="lazy"
-                  referrerPolicy="no-referrer"
-                  onError={(e) => {
-                    const target = e.currentTarget;
-                    if (!target.src.includes('custom-paper-bags-a3.jpg')) {
-                      target.src = '/custom-paper-bags-a3.jpg';
-                    }
-                  }}
-                />
-              </div>
-              <div className="w-24 sm:w-28 aspect-square rounded-xl bg-black/60 p-2 flex items-center justify-center overflow-hidden transition-transform duration-500 group-hover:scale-105 border border-white/20">
-                <img
-                  src="/vacuum-flask-coffee-mug-set.jpg"
-                  alt="Branded Drinkware"
-                  className="w-full h-full object-contain drop-shadow-lg"
+                  alt="Custom Colorful Printed Bags"
+                  className="w-full h-full object-contain filter drop-shadow-md"
                   loading="lazy"
                 />
               </div>
@@ -87,90 +63,84 @@ export const SecondarySpotlightSection: React.FC<SecondarySpotlightSectionProps>
           </div>
 
           {/* ========================================================================= */}
-          {/* RIGHT SIDE: 2 INDIVIDUAL PRODUCT CARDS (Book Design & Cap Mockup)          */}
+          {/* RIGHT 2 CLEAN PRODUCT CARDS: With Yellow Pill Buttons                     */}
           {/* ========================================================================= */}
-          <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-6 items-stretch">
+          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6 items-stretch">
             
-            {/* Card 1: Book Design with Add to Cart button */}
-            <div className="group rounded-xl bg-[#FFFFFF] text-[#0F172A] p-5 flex flex-col justify-between shadow-md hover:shadow-xl transition-all duration-300 border border-stone-200">
+            {/* Card 1: Bag Design */}
+            <div className="group rounded-2xl bg-white text-slate-900 p-5 flex flex-col justify-between shadow-2xs hover:shadow-md transition-all duration-300 border border-slate-200/80 hover:border-slate-300">
               <div>
-                <div className="flex items-center justify-between gap-2 mb-3">
-                  <span className="text-xs font-bold text-stone-500 uppercase tracking-wider">
-                    Hoodie
-                  </span>
-                  <div className="flex items-center text-amber-500">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-3 h-3 fill-amber-500" />
-                    ))}
-                  </div>
-                </div>
-
-                <div className="w-full aspect-square bg-stone-50 rounded-lg p-2 mb-3 overflow-hidden flex items-center justify-center">
+                {/* Product Thumbnail inside soft light well */}
+                <div className="w-full aspect-square bg-[#F0F7FF] rounded-xl p-4 mb-4 overflow-hidden flex items-center justify-center border border-sky-100 group-hover:scale-104 transition-transform duration-300">
                   <img
-                    src="/executive-embroidered-polo-shirts.jpg"
-                    alt="Hoodie Design"
-                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                    src="/custom-paper-bags-a3.jpg"
+                    alt="Bag Design"
+                    className="w-full h-full object-contain filter drop-shadow-sm"
+                    loading="lazy"
+                    onError={(e) => {
+                      const target = e.currentTarget;
+                      if (!target.src.includes('luxury-kraft-shopping-carrier-bags.jpg')) {
+                        target.src = '/luxury-kraft-shopping-carrier-bags.jpg';
+                      }
+                    }}
                   />
                 </div>
 
-                <h4 className="font-bold text-sm sm:text-base text-stone-900 group-hover:text-teal-700 transition-colors">
-                  Book Design
-                </h4>
+                <div className="space-y-1">
+                  <h4 className="font-extrabold text-base text-slate-900 group-hover:text-black transition-colors">
+                    Bag Design
+                  </h4>
+                  <div className="text-sm font-black text-slate-950 font-mono">
+                    Price on Request
+                  </div>
+                </div>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between">
-                <div className="text-xs font-black text-amber-800 uppercase tracking-wider">
-                  Price on Request
-                </div>
+              {/* Yellow Pill Button: View Details -> */}
+              <div className="mt-4 pt-3 flex items-center justify-end">
                 <button
                   type="button"
-                  onClick={() => onSelectCategory('books_magazines')}
-                  className="h-8 px-3 rounded-md bg-stone-900 hover:bg-black text-white font-semibold text-xs inline-flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
+                  onClick={() => onSelectCategory('paper_bags_tags')}
+                  className="h-8 px-4 rounded-full bg-[#f5be38] hover:bg-[#e5af28] text-black font-extrabold text-xs inline-flex items-center gap-1.5 transition-all shadow-2xs active:scale-95 cursor-pointer"
                 >
-                  <ShoppingBag className="w-3 h-3" />
-                  <span>Buy</span>
+                  <span>View Details</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-black" />
                 </button>
               </div>
             </div>
 
-            {/* Card 2: Cap Mockup with Add to Cart button */}
-            <div className="group rounded-xl bg-[#FFFFFF] text-[#0F172A] p-5 flex flex-col justify-between shadow-md hover:shadow-xl transition-all duration-300 border border-stone-200">
+            {/* Card 2: Cap Printing */}
+            <div className="group rounded-2xl bg-white text-slate-900 p-5 flex flex-col justify-between shadow-2xs hover:shadow-md transition-all duration-300 border border-slate-200/80 hover:border-slate-300">
               <div>
-                <div className="flex items-center justify-between gap-2 mb-3">
-                  <span className="text-xs font-bold text-stone-500 uppercase tracking-wider">
-                    Cap
-                  </span>
-                  <div className="flex items-center text-amber-500">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-3 h-3 fill-amber-500" />
-                    ))}
-                  </div>
-                </div>
-
-                <div className="w-full aspect-square bg-stone-50 rounded-lg p-2 mb-3 overflow-hidden flex items-center justify-center">
+                {/* Product Thumbnail inside soft light well */}
+                <div className="w-full aspect-square bg-[#F8F9FA] rounded-xl p-4 mb-4 overflow-hidden flex items-center justify-center border border-slate-100 group-hover:scale-104 transition-transform duration-300">
                   <img
                     src="/custom-branded-pouch-packaging.jpg"
-                    alt="Cap Mockup"
-                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                    alt="Cap Printing"
+                    className="w-full h-full object-contain filter drop-shadow-sm"
+                    loading="lazy"
                   />
                 </div>
 
-                <h4 className="font-bold text-sm sm:text-base text-stone-900 group-hover:text-teal-700 transition-colors">
-                  Cap Printing
-                </h4>
+                <div className="space-y-1">
+                  <h4 className="font-extrabold text-base text-slate-900 group-hover:text-black transition-colors">
+                    Cap Printing
+                  </h4>
+                  <div className="text-sm font-black text-slate-950 font-mono">
+                    Price on Request
+                  </div>
+                </div>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between">
-                <div className="text-xs font-black text-amber-800 uppercase tracking-wider">
-                  Price on Request
-                </div>
+              {/* Yellow Pill Button: Add to Cart -> */}
+              <div className="mt-4 pt-3 flex items-center justify-end">
                 <button
                   type="button"
                   onClick={() => onSelectCategory('custom_apparels_caps')}
-                  className="h-8 px-3 rounded-md bg-stone-900 hover:bg-black text-white font-semibold text-xs inline-flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
+                  className="h-8 px-4 rounded-full bg-[#f5be38] hover:bg-[#e5af28] text-black font-extrabold text-xs inline-flex items-center gap-1.5 transition-all shadow-2xs active:scale-95 cursor-pointer"
                 >
-                  <ShoppingBag className="w-3 h-3" />
-                  <span>Buy</span>
+                  <span>Add to Cart</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-black" />
                 </button>
               </div>
             </div>

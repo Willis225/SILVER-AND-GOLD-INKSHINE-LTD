@@ -41,6 +41,7 @@ import {
   Building2,
   HelpCircle,
   Clock,
+  ArrowRight,
 } from 'lucide-react';
 import { ProductCategory, Product } from '../../types/schema';
 import { CompanyLogoMark } from '../common/CompanyLogo';
@@ -734,7 +735,7 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               type="button"
               onClick={handleTriggerSearch}
-              className="p-2 text-slate-600 hover:text-slate-900 transition-colors rounded-full hover:bg-slate-100 cursor-pointer"
+              className="p-2 text-stone-200 hover:text-white transition-colors rounded-full hover:bg-white/10 cursor-pointer"
               aria-label="Search items and categories"
               title="Search flyers, banners, business cards, signage..."
             >
@@ -745,7 +746,7 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               id="cart-toggle-btn"
               onClick={onOpenCart}
-              className="relative flex items-center justify-center min-w-[40px] min-h-[40px] p-2 text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-full transition-colors cursor-pointer"
+              className="relative flex items-center justify-center min-w-[40px] min-h-[40px] p-2 text-stone-200 hover:text-white hover:bg-white/10 rounded-full transition-colors cursor-pointer"
               aria-label="Shopping Cart"
             >
               <ShoppingBag className="w-5 h-5 stroke-[2.2]" />
@@ -758,13 +759,14 @@ export const Header: React.FC<HeaderProps> = ({
               )}
             </button>
 
-            {/* Solid Black/Dark Navy 'Get a Quote' Primary Button */}
+            {/* Gold/Yellow 'Get a Quote' Pill CTA Button (Matching Reference Mockup) */}
             <button
               type="button"
               onClick={onOpenQuoteModal || onOpenBookOnline}
-              className="hidden sm:inline-flex h-10 px-5 rounded-lg bg-[#0F172A] hover:bg-black text-white font-bold text-xs uppercase tracking-wider items-center gap-1.5 transition-all shadow-sm active:scale-95 cursor-pointer"
+              className="hidden sm:inline-flex h-9 sm:h-10 px-5 rounded-full bg-[#f5be38] hover:bg-[#e5af28] text-black font-extrabold text-xs sm:text-sm items-center gap-1.5 transition-all shadow-md active:scale-95 cursor-pointer"
             >
               <span>Get a Quote</span>
+              <ArrowRight className="w-3.5 h-3.5 text-black" />
             </button>
 
             {/* Mobile Menu Hamburger Toggle */}

@@ -898,19 +898,13 @@ export default function App() {
               }
             />
 
-            {/* 2. Category Carousel Row */}
+            {/* 2. Category Carousel Row (Explore All Categories) */}
             <PrintingCategoriesQuickNav
               onSelectCategory={(cat) => handleOpenCategories(cat)}
               onExploreCatalog={() => handleOpenCategories('all')}
             />
 
-            {/* 3. Dual Split Promo Banners */}
-            <DualPromoBanners
-              onSelectCategory={(cat) => handleOpenCategories(cat)}
-              onRequestQuote={handleOpenCustomQuote}
-            />
-
-            {/* 4. 4x2 Product/Service Grid (Deals of the Day with Timer & Badges) */}
+            {/* 3. Deals of the Day with Countdown & Badges (Matching Reference Mockup) */}
             <DealsOfTheDaySection
               onSelectProduct={(prod) => {
                 setActivePdpProduct(prod);
@@ -923,6 +917,12 @@ export default function App() {
                 setViewMode('pdp');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
+            />
+
+            {/* 4. Dual Split Promo Banners (Preserved Extra Section) */}
+            <DualPromoBanners
+              onSelectCategory={(cat) => handleOpenCategories(cat)}
+              onRequestQuote={handleOpenCustomQuote}
             />
 
             {/* 5. Full-Width Mid-Page Banner */}

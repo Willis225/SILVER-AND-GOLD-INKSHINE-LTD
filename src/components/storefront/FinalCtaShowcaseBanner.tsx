@@ -1,6 +1,5 @@
 import React from 'react';
-import { motion } from 'motion/react';
-import { ArrowRight, Phone, Sparkles } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 interface FinalCtaShowcaseBannerProps {
   onOrderNow: () => void;
@@ -13,116 +12,69 @@ export const FinalCtaShowcaseBanner: React.FC<FinalCtaShowcaseBannerProps> = ({
 }) => {
   return (
     <section 
-      aria-label="Pre-Footer Promotional Showcase Banner"
-      className="relative bg-white text-stone-900 py-20 sm:py-24 lg:py-28 border-b border-stone-200 overflow-hidden"
+      aria-label="Promotional Showcase Banner"
+      className="relative bg-white py-10 sm:py-14 border-b border-stone-200 overflow-hidden"
     >
-      {/* Subtle background ambient mesh */}
-      <div className="absolute inset-0 pointer-events-none select-none overflow-hidden z-0">
-        <div className="absolute inset-0 bg-[radial-gradient(rgba(0,0,0,0.04)_1px,transparent_1px)] [background-size:24px_24px] opacity-70" />
-      </div>
-
-      {/* Floating 4-Corner Print Mockup Graphics */}
-      <div className="absolute inset-0 max-w-7xl mx-auto pointer-events-none overflow-hidden select-none hidden md:block">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Top-Left: Person with printed portfolio */}
-        <motion.div 
-          initial={{ y: 0 }}
-          animate={{ y: [-4, 4, -4] }}
-          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute top-6 left-6 lg:left-12 w-36 sm:w-44 aspect-4/3 rounded-xl overflow-hidden shadow-xl border border-stone-200 bg-stone-100"
-        >
-          <img 
-            src="/brochures-event-programs-flyers.jpg" 
-            alt="Corporate Brochures Print" 
-            className="w-full h-full object-cover"
-          />
-        </motion.div>
+        {/* Compact Horizontal Banner with Warm Cream Background (#FFF3E0) */}
+        <div className="relative rounded-2xl sm:rounded-3xl bg-[#FFF3E0] border border-amber-200/80 px-6 py-10 sm:py-14 overflow-hidden shadow-sm flex items-center justify-between">
+          
+          {/* Left Anchored Product Image (Blue Branded Bag) */}
+          <div className="hidden sm:block absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 w-28 sm:w-36 lg:w-44 aspect-square pointer-events-none select-none">
+            <img
+              src="/luxury-kraft-shopping-carrier-bags.jpg"
+              alt="Custom Printed Bag"
+              className="w-full h-full object-contain filter drop-shadow-md transform -rotate-6"
+              loading="lazy"
+            />
+          </div>
 
-        {/* Top-Right: Person wearing branded printed apparel */}
-        <motion.div 
-          initial={{ y: 0 }}
-          animate={{ y: [4, -4, 4] }}
-          transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute top-6 right-6 lg:right-12 w-36 sm:w-44 aspect-4/3 rounded-xl overflow-hidden shadow-xl border border-stone-200 bg-stone-100"
-        >
-          <img 
-            src="/executive-embroidered-polo-shirts.jpg" 
-            alt="Corporate Embroidered Polos" 
-            className="w-full h-full object-cover"
-          />
-        </motion.div>
+          {/* Centered Heading & Dual Pill Buttons */}
+          <div className="relative z-10 max-w-xl mx-auto text-center space-y-4">
+            
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-950 tracking-tight leading-tight">
+              Enjoy Up Your Vacations <br />
+              In <span className="inline-block bg-[#f5be38] text-black px-2.5 py-0.5 rounded-md font-black shadow-2xs">the Best</span> Printing
+            </h2>
 
-        {/* Bottom-Left: Custom cartons / brochures spread */}
-        <motion.div 
-          initial={{ y: 0 }}
-          animate={{ y: [3, -3, 3] }}
-          transition={{ duration: 3.8, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute bottom-6 left-8 lg:left-16 w-36 sm:w-44 aspect-4/3 rounded-xl overflow-hidden shadow-xl border border-stone-200 bg-stone-100"
-        >
-          <img 
-            src="/corrugated-shipping-cartons-mailer-boxes.jpg" 
-            alt="Custom Corrugated Packaging" 
-            className="w-full h-full object-cover"
-          />
-        </motion.div>
+            <p className="text-xs sm:text-sm text-stone-700 max-w-md mx-auto font-medium">
+              Get your custom printed items for your next trip and events.
+            </p>
 
-        {/* Bottom-Right: Branded bottles / drinkware */}
-        <motion.div 
-          initial={{ y: 0 }}
-          animate={{ y: [-3, 3, -3] }}
-          transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute bottom-6 right-8 lg:right-16 w-36 sm:w-44 aspect-4/3 rounded-xl overflow-hidden shadow-xl border border-stone-200 bg-stone-100"
-        >
-          <img 
-            src="/vacuum-flask-coffee-mug-set.jpg" 
-            alt="Branded Drinkware" 
-            className="w-full h-full object-cover"
-          />
-        </motion.div>
+            {/* Two Pill Buttons: Get a Quote in Gold, Learn More in White/Outline */}
+            <div className="pt-2 flex flex-wrap items-center justify-center gap-3.5">
+              <button
+                type="button"
+                onClick={onRequestQuote}
+                className="h-10 sm:h-11 px-6 rounded-full bg-[#f5be38] hover:bg-[#e5af28] text-black font-extrabold text-xs sm:text-sm inline-flex items-center gap-2 transition-all shadow-md active:scale-95 cursor-pointer"
+              >
+                <span>Get a Quote</span>
+                <ArrowRight className="w-4 h-4 text-black" />
+              </button>
 
-      </div>
+              <button
+                type="button"
+                onClick={onOrderNow}
+                className="h-10 sm:h-11 px-6 rounded-full bg-white hover:bg-stone-50 text-slate-900 border border-slate-300 font-extrabold text-xs sm:text-sm inline-flex items-center gap-2 transition-all shadow-2xs active:scale-95 cursor-pointer"
+              >
+                <span>Learn More</span>
+                <ArrowRight className="w-4 h-4 text-slate-900" />
+              </button>
+            </div>
 
-      {/* Center High-Impact Typography & Dual CTA Buttons (Black & Gold) */}
-      <div className="relative max-w-2xl mx-auto px-4 sm:px-6 text-center z-10 space-y-6">
-        
-        {/* Eyebrow */}
-        <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-stone-100 border border-amber-300 text-xs font-mono font-bold tracking-widest text-stone-900 uppercase shadow-xs">
-          <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
-          <span>CONTACT US FOR MORE</span>
-        </div>
+          </div>
 
-        {/* Headline */}
-        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-stone-950 tracking-tight leading-[1.15]">
-          Enjoy Up Your Vacations <br />
-          In the <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] via-amber-500 to-[#b8860b]">Best Printing</span>
-        </h2>
+          {/* Right Anchored Product Image (Blue Branded Bag) */}
+          <div className="hidden sm:block absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 w-28 sm:w-36 lg:w-44 aspect-square pointer-events-none select-none">
+            <img
+              src="/luxury-kraft-shopping-carrier-bags.jpg"
+              alt="Custom Printed Bag"
+              className="w-full h-full object-contain filter drop-shadow-md transform rotate-6"
+              loading="lazy"
+            />
+          </div>
 
-        {/* Value Proposition Description */}
-        <p className="text-stone-600 text-sm sm:text-base leading-relaxed max-w-lg mx-auto">
-          Start your next commercial print run with Silver &amp; Gold Inkshine Ltd. High-fidelity offset precision, premium papers, and seamless delivery to your doorstep.
-        </p>
-
-        {/* Dual Ergonomic Action Buttons (Black & Gold Theme) */}
-        <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
-          {/* Primary Shop Now Button */}
-          <button
-            type="button"
-            onClick={onOrderNow}
-            className="h-11 px-6 rounded-lg bg-black hover:bg-stone-900 text-white font-bold text-sm inline-flex items-center justify-center gap-2 transition-all shadow-md active:scale-95 cursor-pointer border border-white/20"
-          >
-            <span>Shop Now</span>
-            <ArrowRight className="w-4 h-4 text-[#D4AF37]" />
-          </button>
-
-          {/* Secondary Contact Us Button */}
-          <button
-            type="button"
-            onClick={onRequestQuote}
-            className="h-11 px-6 rounded-lg bg-[#f5be38] hover:bg-[#e5af28] text-stone-950 font-bold text-sm inline-flex items-center justify-center gap-2 transition-all shadow-md active:scale-95 cursor-pointer border border-amber-300"
-          >
-            <Phone className="w-4 h-4 text-stone-950" />
-            <span>Contact Us</span>
-          </button>
         </div>
 
       </div>

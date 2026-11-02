@@ -1,6 +1,4 @@
 import React from 'react';
-import { motion } from 'motion/react';
-import { ShieldCheck, Award } from 'lucide-react';
 
 export interface EnterpriseBrand {
   id: string;
@@ -12,296 +10,152 @@ export interface EnterpriseBrand {
 
 export const ENTERPRISE_BRANDS: EnterpriseBrand[] = [
   {
+    id: 'google',
+    name: 'Google',
+    category: 'Technology',
+    badge: 'Enterprise Partner',
+    renderLogo: () => (
+      <span className="font-bold text-lg tracking-tight">
+        <span className="text-[#4285F4]">G</span>
+        <span className="text-[#EA4335]">o</span>
+        <span className="text-[#FBBC05]">o</span>
+        <span className="text-[#4285F4]">g</span>
+        <span className="text-[#34A853]">l</span>
+        <span className="text-[#EA4335]">e</span>
+      </span>
+    ),
+  },
+  {
+    id: 'microsoft',
+    name: 'Microsoft',
+    category: 'Technology',
+    badge: 'Enterprise Partner',
+    renderLogo: () => (
+      <span className="inline-flex items-center gap-1.5 font-semibold text-stone-800 text-sm">
+        <span className="grid grid-cols-2 gap-0.5 w-3.5 h-3.5">
+          <span className="bg-[#F25022]" />
+          <span className="bg-[#7FBA00]" />
+          <span className="bg-[#00A4EF]" />
+          <span className="bg-[#FFB900]" />
+        </span>
+        <span>Microsoft</span>
+      </span>
+    ),
+  },
+  {
+    id: 'youtube',
+    name: 'YouTube',
+    category: 'Media & Streaming',
+    badge: 'Content Partner',
+    renderLogo: () => (
+      <span className="inline-flex items-center gap-1 font-bold text-stone-900 text-sm">
+        <span className="w-4 h-3 bg-[#FF0000] rounded-xs flex items-center justify-center">
+          <span className="w-0 h-0 border-y-2 border-y-transparent border-l-2.5 border-l-white" />
+        </span>
+        <span>YouTube</span>
+      </span>
+    ),
+  },
+  {
+    id: 'instagram',
+    name: 'Instagram',
+    category: 'Social Media',
+    badge: 'Verified Brand',
+    renderLogo: () => (
+      <span className="inline-flex items-center gap-1 font-semibold text-stone-800 text-sm">
+        <span className="w-3.5 h-3.5 rounded-sm bg-gradient-to-tr from-[#FD1D1D] via-[#E1306C] to-[#405DE6] flex items-center justify-center">
+          <span className="w-2 h-2 rounded-2xs border border-white" />
+        </span>
+        <span>Instagram</span>
+      </span>
+    ),
+  },
+  {
+    id: 'whatsapp',
+    name: 'WhatsApp',
+    category: 'Messaging & Support',
+    badge: 'Verified Business',
+    renderLogo: () => (
+      <span className="inline-flex items-center gap-1 font-semibold text-stone-800 text-sm">
+        <span className="w-3.5 h-3.5 rounded-full bg-[#25D366] flex items-center justify-center text-white text-[8px] font-black">
+          W
+        </span>
+        <span>WhatsApp</span>
+      </span>
+    ),
+  },
+  {
+    id: 'paypal',
+    name: 'PayPal',
+    category: 'Payments',
+    badge: 'Fintech',
+    renderLogo: () => (
+      <span className="font-extrabold text-sm text-[#003087]">
+        <span>Pay</span><span className="text-[#0079C1]">Pal</span>
+      </span>
+    ),
+  },
+  {
+    id: 'netflix',
+    name: 'Netflix',
+    category: 'Entertainment',
+    badge: 'Global Media',
+    renderLogo: () => (
+      <span className="font-black text-sm text-[#E50914] tracking-wider uppercase">
+        Netflix
+      </span>
+    ),
+  },
+  {
     id: 'access-bank',
-    name: 'Access Bank Plc',
-    category: 'Commercial Banking',
+    name: 'Access Bank',
+    category: 'Banking',
     badge: 'Tier-1 Bank',
     renderLogo: () => (
-      <svg viewBox="0 0 160 44" className="h-7 w-auto max-w-[120px]" fill="none" xmlns="http://www.w3.org/2000/svg">
-        {/* Access Bank Chevron arrows */}
-        <path d="M6 8 L18 22 L6 36 L12 36 L24 22 L12 8 Z" fill="#F37021" />
-        <path d="M18 8 L30 22 L18 36 L24 36 L36 22 L24 8 Z" fill="#F37021" />
-        <path d="M30 8 L42 22 L30 36 L36 36 L48 22 L36 8 Z" fill="#002D62" />
-        {/* Wordmark */}
-        <text x="56" y="27" fontFamily="system-ui, -apple-system, sans-serif" fontSize="18" fontWeight="800" fill="#002D62" letterSpacing="-0.5">
-          access
-        </text>
-        <circle cx="120" cy="18" r="2.5" fill="#F37021" />
-      </svg>
+      <span className="font-black text-xs text-[#002D62] tracking-tight">
+        <span className="text-[#F37021]">»</span> access
+      </span>
     ),
   },
   {
     id: 'flutterwave',
     name: 'Flutterwave',
-    category: 'Fintech & Payments',
-    badge: 'Tech Unicorn',
+    category: 'Fintech',
+    badge: 'Payments Unicorn',
     renderLogo: () => (
-      <svg viewBox="0 0 170 44" className="h-7 w-auto max-w-[125px]" fill="none" xmlns="http://www.w3.org/2000/svg">
-        {/* Flutterwave colorful wave ribbons */}
-        <g transform="translate(6, 6)">
-          <path d="M4 24 C4 14, 14 6, 24 6 C20 12, 14 18, 4 24 Z" fill="#FF9A00" opacity="0.95" />
-          <path d="M24 6 C32 10, 36 20, 30 28 C26 22, 22 14, 24 6 Z" fill="#FB6340" />
-          <path d="M4 24 C12 28, 22 28, 30 22 C24 26, 14 26, 4 24 Z" fill="#11CDEF" />
-          <circle cx="17" cy="17" r="4" fill="#2DCE89" />
-        </g>
-        {/* Wordmark */}
-        <text x="48" y="27" fontFamily="system-ui, -apple-system, sans-serif" fontSize="17" fontWeight="800" fill="#0B132B" letterSpacing="-0.3">
-          flutterwave
-        </text>
-      </svg>
-    ),
-  },
-  {
-    id: 'dangote',
-    name: 'Dangote Group',
-    category: 'Conglomerate & Manufacturing',
-    badge: 'Corporate',
-    renderLogo: () => (
-      <svg viewBox="0 0 160 44" className="h-7 w-auto max-w-[120px]" fill="none" xmlns="http://www.w3.org/2000/svg">
-        {/* Dangote geometric shield mark */}
-        <g transform="translate(8, 7)">
-          <path d="M0 0 L14 0 L22 15 L8 15 Z" fill="#E31837" />
-          <path d="M10 15 L24 15 L16 30 L2 30 Z" fill="#003366" />
-          <circle cx="12" cy="15" r="3" fill="#FFFFFF" />
-        </g>
-        {/* Wordmark */}
-        <text x="40" y="24" fontFamily="system-ui, -apple-system, sans-serif" fontSize="16" fontWeight="900" fill="#003366" letterSpacing="0.5">
-          DANGOTE
-        </text>
-        <text x="40" y="34" fontFamily="system-ui, -apple-system, sans-serif" fontSize="8" fontWeight="700" fill="#E31837" letterSpacing="2">
-          GROUP
-        </text>
-      </svg>
-    ),
-  },
-  {
-    id: 'mtn',
-    name: 'MTN Nigeria',
-    category: 'Telecommunications',
-    badge: 'Telco Giant',
-    renderLogo: () => (
-      <svg viewBox="0 0 150 44" className="h-7 w-auto max-w-[110px]" fill="none" xmlns="http://www.w3.org/2000/svg">
-        {/* MTN Yellow pill with oval */}
-        <rect x="6" y="8" width="56" height="28" rx="14" fill="#FFCC00" />
-        <ellipse cx="34" cy="22" rx="22" ry="10" stroke="#000000" strokeWidth="2" fill="none" />
-        <text x="34" y="26" textAnchor="middle" fontFamily="system-ui, -apple-system, sans-serif" fontSize="11" fontWeight="900" fill="#000000" letterSpacing="0.8">
-          MTN
-        </text>
-        <text x="70" y="27" fontFamily="system-ui, -apple-system, sans-serif" fontSize="15" fontWeight="800" fill="#1A1A1A">
-          Nigeria
-        </text>
-      </svg>
-    ),
-  },
-  {
-    id: 'paystack',
-    name: 'Paystack',
-    category: 'Fintech & Payments',
-    badge: 'Stripe Company',
-    renderLogo: () => (
-      <svg viewBox="0 0 150 44" className="h-7 w-auto max-w-[115px]" fill="none" xmlns="http://www.w3.org/2000/svg">
-        {/* Paystack stacked lines symbol */}
-        <g transform="translate(8, 10)">
-          <rect x="0" y="0" width="22" height="4.5" rx="2.25" fill="#00C3F9" />
-          <rect x="0" y="8.5" width="22" height="4.5" rx="2.25" fill="#00C3F9" />
-          <rect x="0" y="17" width="13" height="4.5" rx="2.25" fill="#00C3F9" />
-        </g>
-        {/* Wordmark */}
-        <text x="38" y="27" fontFamily="system-ui, -apple-system, sans-serif" fontSize="17" fontWeight="800" fill="#001738" letterSpacing="-0.4">
-          paystack
-        </text>
-      </svg>
-    ),
-  },
-  {
-    id: 'gtbank',
-    name: 'Guaranty Trust',
-    category: 'Financial Services',
-    badge: 'GTCO Holding',
-    renderLogo: () => (
-      <svg viewBox="0 0 160 44" className="h-7 w-auto max-w-[125px]" fill="none" xmlns="http://www.w3.org/2000/svg">
-        {/* GTBank iconic orange square */}
-        <rect x="8" y="7" width="30" height="30" rx="4" fill="#E05A10" />
-        <text x="18" y="28" fontFamily="Georgia, serif" fontSize="20" fontWeight="900" fill="#FFFFFF">
-          gt
-        </text>
-        <rect x="30" y="13" width="4" height="4" fill="#6B7280" />
-        {/* Wordmark */}
-        <text x="46" y="22" fontFamily="system-ui, -apple-system, sans-serif" fontSize="13" fontWeight="800" fill="#1F2937">
-          Guaranty Trust
-        </text>
-        <text x="46" y="32" fontFamily="system-ui, -apple-system, sans-serif" fontSize="8" fontWeight="600" fill="#6B7280" letterSpacing="0.5">
-          GTCO HOLDINGS
-        </text>
-      </svg>
-    ),
-  },
-  {
-    id: 'kuda',
-    name: 'Kuda Bank',
-    category: 'Digital Banking',
-    badge: 'Microfinance',
-    renderLogo: () => (
-      <svg viewBox="0 0 140 44" className="h-7 w-auto max-w-[110px]" fill="none" xmlns="http://www.w3.org/2000/svg">
-        {/* Kuda purple circle + K mark */}
-        <circle cx="22" cy="22" r="15" fill="#40196D" />
-        <path d="M17 14 L17 30 M27 15 L19 22 L27 29" stroke="#00E5FF" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-        {/* Wordmark */}
-        <text x="44" y="27" fontFamily="system-ui, -apple-system, sans-serif" fontSize="19" fontWeight="900" fill="#40196D" letterSpacing="-0.5">
-          kuda.
-        </text>
-      </svg>
-    ),
-  },
-  {
-    id: 'unilag',
-    name: 'Niger Delta University',
-    category: 'Higher Education',
-    badge: 'Academic Institution',
-    renderLogo: () => (
-      <svg viewBox="0 0 160 44" className="h-7 w-auto max-w-[125px]" fill="none" xmlns="http://www.w3.org/2000/svg">
-        {/* UNILAG Crest shield */}
-        <g transform="translate(8, 7)">
-          <path d="M0 4 C0 4, 7 0, 14 0 C21 0, 28 4, 28 4 L28 18 C28 26, 14 30, 14 30 C14 30, 0 26, 0 18 Z" fill="#006633" />
-          <path d="M5 10 L14 6 L23 10 L14 14 Z" fill="#D4AF37" />
-          <rect x="10" y="16" width="8" height="6" fill="#FFFFFF" rx="1" />
-        </g>
-        {/* Wordmark */}
-        <text x="44" y="22" fontFamily="Times New Roman, serif" fontSize="14" fontWeight="800" fill="#006633" letterSpacing="0.2">
-          UNILAG
-        </text>
-        <text x="44" y="32" fontFamily="system-ui, -apple-system, sans-serif" fontSize="8" fontWeight="600" fill="#6B7280">
-          Univ. of Nigeria
-        </text>
-      </svg>
-    ),
-  },
-  {
-    id: 'oando',
-    name: 'Oando Clean Energy',
-    category: 'Energy & Infrastructure',
-    badge: 'Energy Leader',
-    renderLogo: () => (
-      <svg viewBox="0 0 150 44" className="h-7 w-auto max-w-[115px]" fill="none" xmlns="http://www.w3.org/2000/svg">
-        {/* Oando flame / ring */}
-        <g transform="translate(8, 8)">
-          <circle cx="14" cy="14" r="13" stroke="#E31B23" strokeWidth="3" fill="none" />
-          <path d="M9 18 C9 13, 14 7, 14 7 C14 7, 19 13, 19 18 C19 21, 17 23, 14 23 C11 23, 9 21, 9 18 Z" fill="#002B49" />
-        </g>
-        {/* Wordmark */}
-        <text x="42" y="27" fontFamily="system-ui, -apple-system, sans-serif" fontSize="17" fontWeight="900" fill="#002B49">
-          Oando
-        </text>
-      </svg>
-    ),
-  },
-  {
-    id: 'leadway',
-    name: 'Leadway Assurance',
-    category: 'Insurance & Pension',
-    badge: 'Financial Services',
-    renderLogo: () => (
-      <svg viewBox="0 0 160 44" className="h-7 w-auto max-w-[125px]" fill="none" xmlns="http://www.w3.org/2000/svg">
-        {/* Leadway shield badge */}
-        <g transform="translate(8, 8)">
-          <rect x="0" y="0" width="26" height="26" rx="5" fill="#0A2540" />
-          <path d="M6 13 L13 6 L20 13 L13 20 Z" stroke="#D4AF37" strokeWidth="2.5" fill="none" />
-        </g>
-        {/* Wordmark */}
-        <text x="42" y="22" fontFamily="system-ui, -apple-system, sans-serif" fontSize="13" fontWeight="900" fill="#0A2540" letterSpacing="0.8">
-          LEADWAY
-        </text>
-        <text x="42" y="32" fontFamily="system-ui, -apple-system, sans-serif" fontSize="8" fontWeight="600" fill="#8C7030">
-          ASSURANCE PLC
-        </text>
-      </svg>
+      <span className="font-extrabold text-xs text-[#0B132B]">
+        flutterwave
+      </span>
     ),
   },
 ];
 
-interface TrustedLogosStripProps {
-  className?: string;
-  variant?: 'light' | 'subtle' | 'compact';
-}
-
-export const TrustedLogosStrip: React.FC<TrustedLogosStripProps> = ({ 
-  className = '',
-  variant = 'light'
-}) => {
+export const TrustedLogosStrip: React.FC = () => {
   return (
     <section 
-      id="trusted-enterprises-section"
-      className={`relative py-12 sm:py-16 border-b border-amber-900/15 bg-[#f5efe4] text-stone-900 overflow-hidden ${className}`}
+      aria-label="Trusted By Logos"
+      className="bg-white py-6 sm:py-8 border-b border-slate-200"
     >
-      {/* Warm ambient micro-texture */}
-      <div className="absolute inset-0 bg-[radial-gradient(#dfd4c4_1px,transparent_1px)] [background-size:20px_20px] opacity-80 pointer-events-none" />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Section Header */}
-        <div className="text-center space-y-2.5 mb-7 sm:mb-9">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-100/90 border border-amber-300/80 text-amber-950 text-[11px] font-black tracking-wider uppercase shadow-sm">
-            <ShieldCheck className="w-3.5 h-3.5 text-amber-800" />
-            <span>Official Corporate Printing Partner</span>
-          </div>
-
-          <h2 className="text-xs sm:text-sm md:text-base font-black uppercase tracking-wider sm:tracking-widest text-stone-950 max-w-3xl mx-auto leading-relaxed">
-            TRUSTED BY NIGERIA&apos;S LEADING ENTERPRISES, FINTECHS &amp; INSTITUTIONS
-          </h2>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Soft Cream/Peach Tinted Container (#FFF8EE) */}
+        <div className="rounded-2xl bg-[#FFF8EE] border border-amber-100/80 px-6 py-6 sm:py-8 space-y-5 text-center">
           
-          <p className="text-[12px] sm:text-[13px] text-stone-600 font-medium">
-            Over 50,000+ corporate orders executed with 100% color accuracy, premium substrates &amp; nationwide delivery
-          </p>
-        </div>
+          <h3 className="text-xs sm:text-sm font-bold text-slate-700 tracking-wide">
+            Trusted by leading businesses, schools &amp; institutions
+          </h3>
 
-        {/* Continuous Straight Single-Line Moving Marquee */}
-        <div className="relative w-full overflow-hidden py-2">
-          {/* Left & Right Edge Vignette Fades to Cream White */}
-          <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-28 bg-gradient-to-r from-[#f5efe4] via-[#f5efe4]/85 to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-28 bg-gradient-to-l from-[#f5efe4] via-[#f5efe4]/85 to-transparent z-10 pointer-events-none" />
-
-          <div className="animate-marquee-straight items-center gap-3 sm:gap-4 py-2">
-            {[...ENTERPRISE_BRANDS, ...ENTERPRISE_BRANDS].map((brand, index) => (
-              <div
-                key={`${brand.id}-${index}`}
-                className="group relative bg-white hover:bg-amber-50/50 border border-stone-200/90 hover:border-amber-400/80 rounded-2xl px-4 sm:px-5 py-3 flex items-center gap-3.5 transition-all duration-300 shadow-sm hover:shadow-md shrink-0 h-[66px] min-w-[210px] sm:min-w-[240px]"
-              >
-                {/* Brand Logo Presentation Box */}
-                <div className="h-8 sm:h-9 w-24 sm:w-28 flex items-center justify-center shrink-0 transition-transform group-hover:scale-105 duration-200 bg-stone-50/90 border border-stone-100 rounded-lg px-2 py-1">
-                  {brand.renderLogo()}
-                </div>
-
-                <div className="h-6 w-px bg-stone-200 shrink-0" />
-
-                {/* Sub-label & Industry Badge */}
-                <div className="flex flex-col text-left shrink-0">
-                  <span className="font-extrabold text-xs text-stone-900 tracking-tight truncate max-w-[85px] sm:max-w-[110px]">
-                    {brand.name}
-                  </span>
-                  <span className="text-[10px] font-bold text-amber-700 group-hover:text-amber-800 transition-colors">
-                    {brand.badge}
-                  </span>
-                </div>
+          {/* Clean Single Horizontal Row of Brand Logos */}
+          <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10 lg:gap-12 opacity-85">
+            {ENTERPRISE_BRANDS.map((brand) => (
+              <div key={brand.id} className="flex items-center">
+                {brand.renderLogo()}
               </div>
             ))}
           </div>
+
         </div>
 
-        {/* Bottom Trust Indicators */}
-        <div className="mt-7 pt-5 border-t border-amber-900/15 flex flex-wrap items-center justify-center gap-6 text-[11px] sm:text-xs text-stone-600 font-medium">
-          <div className="flex items-center gap-2 text-stone-800 font-semibold">
-            <Award className="w-4 h-4 text-amber-700" />
-            <span>Bulk Procurement &amp; Corporate Credit Support</span>
-          </div>
-          <span className="hidden sm:inline text-amber-900/30">•</span>
-          <div className="flex items-center gap-2 text-stone-800 font-semibold">
-            <span className="w-2 h-2 rounded-full bg-[#f5be38] shadow-[0_0_8px_rgba(245,190,56,0.8)]" />
-            <span>Direct Proforma Invoices with Tax &amp; CAC Verification</span>
-          </div>
-          <span className="hidden sm:inline text-amber-900/30">•</span>
-          <div className="flex items-center gap-2 text-stone-800 font-semibold">
-            <span>Guaranteed Next-Day Dispatch to Nigeria, Abuja, PH &amp; All 36 States</span>
-          </div>
-        </div>
       </div>
     </section>
   );
