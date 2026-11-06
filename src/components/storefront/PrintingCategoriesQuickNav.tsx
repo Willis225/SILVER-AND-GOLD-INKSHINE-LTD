@@ -137,7 +137,7 @@ export const PrintingCategoriesQuickNav: React.FC<PrintingCategoriesQuickNavProp
             ))}
           </div>
 
-          {/* Right Arrow Button */}
+          {/* Right Arrow Button (Tablet & Desktop) */}
           <button
             type="button"
             onClick={handleNext}
@@ -147,6 +147,29 @@ export const PrintingCategoriesQuickNav: React.FC<PrintingCategoriesQuickNavProp
             <ArrowRight className="w-4 h-4" />
           </button>
 
+        </div>
+
+        {/* Mobile Pagination Controls (Smartphone View) */}
+        <div className="flex sm:hidden items-center justify-center gap-4 pt-1">
+          <button
+            type="button"
+            onClick={handlePrev}
+            aria-label="Previous categories"
+            className="w-8.5 h-8.5 rounded-full bg-white border border-slate-200 shadow-xs flex items-center justify-center text-slate-800 active:scale-95 cursor-pointer"
+          >
+            <ArrowLeft className="w-4 h-4" />
+          </button>
+          <span className="text-[11px] font-semibold text-slate-500">
+            {startIndex + 1}–{Math.min(startIndex + 4, CATEGORY_ITEMS.length)} of {CATEGORY_ITEMS.length}
+          </span>
+          <button
+            type="button"
+            onClick={handleNext}
+            aria-label="Next categories"
+            className="w-8.5 h-8.5 rounded-full bg-slate-900 text-white shadow-xs flex items-center justify-center active:scale-95 cursor-pointer"
+          >
+            <ArrowRight className="w-4 h-4" />
+          </button>
         </div>
 
         {/* Center Pill Button: BROWSE ALL CATEGORIES -> */}

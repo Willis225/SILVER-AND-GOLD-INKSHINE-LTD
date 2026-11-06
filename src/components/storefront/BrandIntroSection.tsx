@@ -27,9 +27,8 @@ export const BrandIntroSection: React.FC<BrandIntroSectionProps> = ({ onExploreP
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-5 space-y-6"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-stone-100 border border-stone-300 text-stone-900 text-xs font-black tracking-widest uppercase shadow-2xs">
-              <span className="w-2 h-2 rounded-full bg-black animate-pulse" />
-              <span>Full-Service Commercial Production</span>
+            <div className="text-xs font-bold tracking-[0.2em] uppercase text-[#b8860b]">
+              Full-Service Commercial Production
             </div>
 
             <p className="text-stone-700 text-sm sm:text-[15.5px] leading-relaxed font-normal text-justify sm:text-left">

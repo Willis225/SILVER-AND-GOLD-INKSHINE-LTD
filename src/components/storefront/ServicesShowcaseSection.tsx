@@ -103,9 +103,8 @@ export const ServicesShowcaseSection: React.FC<ServicesShowcaseSectionProps> = (
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-3 space-y-4 sm:space-y-6"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-white text-xs font-black tracking-widest uppercase">
-              <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
-              <span>Signature Showcase</span>
+            <div className="text-xs font-bold tracking-[0.2em] uppercase text-[#ffd25d]">
+              Signature Commercial Services
             </div>
 
             <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight leading-tight">

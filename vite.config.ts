@@ -45,6 +45,34 @@ export default defineConfig(() => {
       {
         name: 'web-image-search-api',
         configureServer(server) {
+          // Security Header Hardening: Strip X-Powered-By and hide Server software/version headers
+          server.middlewares.use((_req, res, next) => {
+            res.removeHeader('X-Powered-By');
+            res.removeHeader('x-powered-by');
+            res.removeHeader('Server');
+            res.removeHeader('server');
+
+            const origSetHeader = res.setHeader.bind(res);
+            res.setHeader = (name: string, value: any) => {
+              const lower = name.toLowerCase();
+              if (lower === 'x-powered-by' || lower === 'server') {
+                return res;
+              }
+              return origSetHeader(name, value);
+            };
+
+            const origWriteHeader = res.writeHead.bind(res);
+            res.writeHead = (statusCode: number, ...args: any[]) => {
+              res.removeHeader('X-Powered-By');
+              res.removeHeader('x-powered-by');
+              res.removeHeader('Server');
+              res.removeHeader('server');
+              return (origWriteHeader as any)(statusCode, ...args);
+            };
+
+            next();
+          });
+
           server.middlewares.use('/api/search-images', async (req, res) => {
             try {
               const url = new URL(req.url || '', 'http://localhost:3000');
@@ -62,6 +90,35 @@ export default defineConfig(() => {
               res.setHeader('Content-Type', 'application/json');
               res.end(JSON.stringify({ error: err.message, results: [] }));
             }
+          });
+        },
+        configurePreviewServer(server) {
+          // Security Header Hardening for preview server
+          server.middlewares.use((_req, res, next) => {
+            res.removeHeader('X-Powered-By');
+            res.removeHeader('x-powered-by');
+            res.removeHeader('Server');
+            res.removeHeader('server');
+
+            const origSetHeader = res.setHeader.bind(res);
+            res.setHeader = (name: string, value: any) => {
+              const lower = name.toLowerCase();
+              if (lower === 'x-powered-by' || lower === 'server') {
+                return res;
+              }
+              return origSetHeader(name, value);
+            };
+
+            const origWriteHeader = res.writeHead.bind(res);
+            res.writeHead = (statusCode: number, ...args: any[]) => {
+              res.removeHeader('X-Powered-By');
+              res.removeHeader('x-powered-by');
+              res.removeHeader('Server');
+              res.removeHeader('server');
+              return (origWriteHeader as any)(statusCode, ...args);
+            };
+
+            next();
           });
         }
       }

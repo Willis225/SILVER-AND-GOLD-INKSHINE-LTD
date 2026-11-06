@@ -211,7 +211,6 @@ export const WhyChooseUsSection: React.FC<WhyChooseUsSectionProps> = ({
                 </motion.a>
 
                 <p className="text-[11px] text-stone-300 text-left lg:text-right flex items-center gap-1.5 lg:justify-end">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                   <span>Fast WhatsApp pre-press review in minutes</span>
                 </p>
               </div>

@@ -94,35 +94,43 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             
 
 
-            {/* 2. Primary Display Headline & Editorial Subheadline */}
-            <motion.div 
-              initial={{ opacity: 0, y: 22 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.06, ease: [0.16, 1, 0.3, 1] }}
-              className="space-y-3.5"
-            >
-              <h1 className="font-display text-3xl xs:text-4xl sm:text-5xl lg:text-[48px] xl:text-[56px] font-extrabold tracking-[-0.03em] text-white leading-[1.08] text-balance">
+            {/* 2. Primary Display Headline & Editorial Subheadline with Staggered Entrance */}
+            <div className="space-y-4">
+              <motion.h1 
+                initial={{ opacity: 0, y: 35, filter: 'blur(8px)' }}
+                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+                className="font-display text-3xl xs:text-4xl sm:text-5xl lg:text-[46px] xl:text-[54px] font-extrabold tracking-[-0.03em] text-white leading-[1.08] text-balance"
+              >
                 {headline}
-              </h1>
+              </motion.h1>
 
-              <div className="font-display text-lg xs:text-xl sm:text-2xl lg:text-[25px] font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-[#ffd25d] via-[#f5be38] to-stone-200">
+              <motion.div 
+                initial={{ opacity: 0, y: 25, filter: 'blur(6px)' }}
+                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                transition={{ duration: 0.75, delay: 0.28, ease: [0.16, 1, 0.3, 1] }}
+                className="font-display text-lg xs:text-xl sm:text-2xl lg:text-[25px] font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-[#ffd25d] via-[#f5be38] to-stone-200"
+              >
                 {subheadline}
-              </div>
+              </motion.div>
 
               {/* Description Prose */}
-              <p className="text-stone-300 text-sm sm:text-base leading-relaxed max-w-xl font-normal pt-1 text-pretty">
+              <motion.p 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.42, ease: [0.16, 1, 0.3, 1] }}
+                className="text-stone-300 text-sm sm:text-base leading-relaxed max-w-xl font-normal pt-1 text-pretty"
+              >
                 {description}
-              </p>
-            </motion.div>
-
-
+              </motion.p>
+            </div>
 
             {/* 4. Action Buttons: Refined Architectural Radiuses & Micro-Interactions */}
             <motion.div 
-              initial={{ opacity: 0, y: 18 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-wrap items-center gap-4 pt-1"
+              transition={{ duration: 0.65, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
+              className="flex flex-wrap items-center gap-3.5 sm:gap-4 pt-1"
             >
               {/* Primary Action Button */}
               <button
@@ -146,21 +154,19 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               </a>
             </motion.div>
 
-
-
           </div>
 
           {/* =====================================================================
               RIGHT COLUMN: INSTANT PRINT ESTIMATOR INTERACTIVE WIDGET
-              Integrated seamlessly as an authoritative precision console
+              Integrated seamlessly with luxury entrance animation
               ===================================================================== */}
           <motion.div 
-            initial={{ opacity: 0, y: 22 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-5 xl:col-span-5 w-full flex items-center justify-center lg:justify-end"
+            initial={{ opacity: 0, y: 35, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.85, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-5 xl:col-span-5 w-full flex items-center justify-center lg:justify-end relative z-10"
           >
-            <div id="hero-instant-estimator" className="w-full max-w-[340px] sm:max-w-[360px]">
+            <div id="hero-instant-estimator" className="w-full max-w-[340px] sm:max-w-[360px] relative">
               <InstantPrintEstimator isFloating={false} />
             </div>
           </motion.div>

@@ -40,12 +40,12 @@ export const FinalCtaShowcaseBanner: React.FC<FinalCtaShowcaseBannerProps> = ({
           <div className="relative z-10 max-w-xl mx-auto text-center space-y-4">
             
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-950 tracking-tight leading-tight">
-              Enjoy Up Your Vacations <br />
-              In <span className="inline-block bg-[#f5be38] text-black px-2.5 py-0.5 rounded-md font-black shadow-2xs">the Best</span> Printing
+              Elevate Your Brand With <br />
+              <span className="inline-block bg-[#f5be38] text-black px-2.5 py-0.5 rounded-md font-black shadow-2xs">Exceptional</span> Printing
             </h2>
 
             <p className="text-xs sm:text-sm text-stone-700 max-w-md mx-auto font-medium">
-              Get your custom printed items for your next trip and events.
+              High-impact displays, premium merchandise, and bespoke corporate branding delivered nationwide.
             </p>
 
             {/* Two Pill Buttons: Get a Quote in Gold, Learn More in White/Outline */}

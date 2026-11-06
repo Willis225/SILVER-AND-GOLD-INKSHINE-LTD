@@ -75,7 +75,7 @@ export const InstantPrintEstimator: React.FC<InstantPrintEstimatorProps> = ({
         boxShadow: '0 0 0 1px rgba(255, 255, 255, 0.16), 0 24px 60px -10px rgba(0, 0, 0, 0.95), 0 10px 25px -5px rgba(0, 0, 0, 0.7), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 1px 0 rgba(255, 255, 255, 0.12), 0 0 35px rgba(245, 190, 56, 0.08)',
       }}
     >
-      {/* 1. Header: Compact Architectural Title & Live Quote Indicator */}
+      {/* 1. Header: Compact Architectural Title & Specification Indicator */}
       <div className="flex items-center justify-between border-b border-white/15 pb-2.5">
         <div>
           <h3 className="text-[13px] sm:text-sm font-bold tracking-tight text-white font-display uppercase leading-tight">
@@ -83,9 +83,9 @@ export const InstantPrintEstimator: React.FC<InstantPrintEstimatorProps> = ({
           </h3>
           <p className="text-[10px] text-stone-400 font-medium">Fast Custom Specifications</p>
         </div>
-        <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-[#f5be38]/15 border border-[#f5be38]/35 text-[#f5be38] text-[9.5px] font-bold tracking-wider uppercase">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#f5be38] animate-pulse" />
-          <span>Live Quote</span>
+        <div className="text-right">
+          <span className="text-[10.5px] font-bold uppercase tracking-wider text-[#ffd25d]">Factory Direct</span>
+          <p className="text-[9px] text-stone-400 font-medium">Pre-Press Review</p>
         </div>
       </div>
 

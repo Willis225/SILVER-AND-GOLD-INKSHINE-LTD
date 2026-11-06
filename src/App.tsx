@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Header } from './components/layout/Header';
 import { HeroSection } from './components/storefront/HeroSection';
+import { ScrollReveal } from './components/common/ScrollReveal';
 import { BrandIntroSection } from './components/storefront/BrandIntroSection';
 import { PrintingCategoriesQuickNav } from './components/storefront/PrintingCategoriesQuickNav';
 import { ServicesShowcaseSection } from './components/storefront/ServicesShowcaseSection';
@@ -637,7 +638,7 @@ export default function App() {
   const totalCartCount = cartItems.reduce((acc, curr) => acc + curr.quantity, 0);
 
   return (
-    <div className="min-h-screen bg-[#070204] text-stone-100 font-sans antialiased flex flex-col justify-between selection:bg-[#f5be38] selection:text-black relative">
+    <div className="min-h-screen bg-[#070204] text-stone-100 font-sans antialiased flex flex-col justify-between selection:bg-[#f5be38] selection:text-black relative overflow-x-hidden">
       {/* Homepage Background: User-Uploaded Dark Luxury Horizon Wallpaper */}
       {viewMode === 'storefront' && (
         <div className="absolute top-0 left-0 right-0 h-[920px] sm:h-[960px] lg:h-[1020px] pointer-events-none select-none overflow-hidden z-0">
@@ -914,68 +915,86 @@ export default function App() {
             />
 
             {/* 2. Category Carousel Row (Explore All Categories) */}
-            <PrintingCategoriesQuickNav
-              onSelectCategory={(cat) => handleOpenCategories(cat)}
-              onExploreCatalog={() => handleOpenCategories('all')}
-            />
+            <ScrollReveal variant="fade-up" delay={0.05} viewportMargin="-40px">
+              <PrintingCategoriesQuickNav
+                onSelectCategory={(cat) => handleOpenCategories(cat)}
+                onExploreCatalog={() => handleOpenCategories('all')}
+              />
+            </ScrollReveal>
 
             {/* 3. Deals of the Day with Countdown & Badges (Matching Reference Mockup) */}
-            <DealsOfTheDaySection
-              onSelectProduct={(prod) => {
-                setActivePdpProduct(prod);
-                setViewMode('pdp');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-              onExploreCatalog={() => handleOpenCategories('all')}
-              onAddToCart={(prod) => {
-                setActivePdpProduct(prod);
-                setViewMode('pdp');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-            />
+            <ScrollReveal variant="scale-up" delay={0.06} viewportMargin="-40px">
+              <DealsOfTheDaySection
+                onSelectProduct={(prod) => {
+                  setActivePdpProduct(prod);
+                  setViewMode('pdp');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                onExploreCatalog={() => handleOpenCategories('all')}
+                onAddToCart={(prod) => {
+                  setActivePdpProduct(prod);
+                  setViewMode('pdp');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+              />
+            </ScrollReveal>
 
             {/* 4. Dual Split Promo Banners (Preserved Extra Section) */}
-            <DualPromoBanners
-              onSelectCategory={(cat) => handleOpenCategories(cat)}
-              onRequestQuote={handleOpenCustomQuote}
-            />
+            <ScrollReveal variant="slide-left" delay={0.06} viewportMargin="-40px">
+              <DualPromoBanners
+                onSelectCategory={(cat) => handleOpenCategories(cat)}
+                onRequestQuote={handleOpenCustomQuote}
+              />
+            </ScrollReveal>
 
             {/* 5. Full-Width Mid-Page Banner */}
-            <WideFeatureBanner
-              onOrderNow={() => handleOpenCategories('all')}
-              onExploreProducts={scrollToCatalog}
-            />
+            <ScrollReveal variant="blur-reveal" delay={0.06} viewportMargin="-40px">
+              <WideFeatureBanner
+                onOrderNow={() => handleOpenCategories('all')}
+                onExploreProducts={scrollToCatalog}
+              />
+            </ScrollReveal>
 
             {/* 6. Asymmetric Feature Block */}
-            <SecondarySpotlightSection
-              onSelectCategory={(cat) => handleOpenCategories(cat)}
-              onExploreCatalog={() => handleOpenCategories('all')}
-            />
+            <ScrollReveal variant="slide-right" delay={0.06} viewportMargin="-40px">
+              <SecondarySpotlightSection
+                onSelectCategory={(cat) => handleOpenCategories(cat)}
+                onExploreCatalog={() => handleOpenCategories('all')}
+              />
+            </ScrollReveal>
 
             {/* 7. Centered Testimonial Card & Logo Strip */}
-            <div className="space-y-0">
-              <GoogleReviewsSection />
-              <TrustedLogosStrip />
-            </div>
+            <ScrollReveal variant="fade-up" delay={0.06} viewportMargin="-40px">
+              <div className="space-y-0">
+                <GoogleReviewsSection />
+                <TrustedLogosStrip />
+              </div>
+            </ScrollReveal>
 
             {/* 8. 3-Column Info/Article Grid */}
-            <CommercialInsightsBlogSection
-              onExploreInsights={() => handleOpenCategories('all')}
-              onSelectCategory={(cat) => handleOpenCategories(cat)}
-            />
+            <ScrollReveal variant="scale-up" delay={0.06} viewportMargin="-40px">
+              <CommercialInsightsBlogSection
+                onExploreInsights={() => handleOpenCategories('all')}
+                onSelectCategory={(cat) => handleOpenCategories(cat)}
+              />
+            </ScrollReveal>
 
             {/* 9. Pre-Footer CTA Showcase Banner */}
-            <FinalCtaShowcaseBanner
-              onOrderNow={() => handleOpenCategories('all')}
-              onRequestQuote={handleOpenCustomQuote}
-            />
+            <ScrollReveal variant="blur-reveal" delay={0.06} viewportMargin="-40px">
+              <FinalCtaShowcaseBanner
+                onOrderNow={() => handleOpenCategories('all')}
+                onRequestQuote={handleOpenCustomQuote}
+              />
+            </ScrollReveal>
 
             {/* 10. Official Production Plant & Location Map */}
-            <LocationMapSection
-              mapUrl={websiteContent.googleMapsUrl}
-              embedUrl={websiteContent.googleMapsEmbedUrl}
-              onRequestQuote={handleOpenCustomQuote}
-            />
+            <ScrollReveal variant="fade-up" delay={0.06} viewportMargin="-40px">
+              <LocationMapSection
+                mapUrl={websiteContent.googleMapsUrl}
+                embedUrl={websiteContent.googleMapsEmbedUrl}
+                onRequestQuote={handleOpenCustomQuote}
+              />
+            </ScrollReveal>
           </>
         )}
       </main>

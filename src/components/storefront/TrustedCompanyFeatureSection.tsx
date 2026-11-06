@@ -26,9 +26,8 @@ export const TrustedCompanyFeatureSection: React.FC<TrustedCompanyFeatureSection
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-6 space-y-4 sm:space-y-6"
           >
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 text-white text-xs font-black tracking-wide shadow-sm">
-              <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
-              <span>ESTABLISHED COMMERCIAL PRINTING HUB</span>
+            <div className="text-xs font-bold tracking-[0.2em] uppercase text-[#ffd25d]">
+              Established Commercial Printing Hub
             </div>
 
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight leading-tight">
@@ -92,7 +91,6 @@ export const TrustedCompanyFeatureSection: React.FC<TrustedCompanyFeatureSection
 
               {/* Bottom Subtle Printroom Facility Tag */}
               <div className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 bg-black/85 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-white/20 shadow-lg flex items-center gap-2 text-stone-200 z-10">
-                <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
                 <span className="text-[10px] sm:text-xs font-bold text-white">
                   Industrial UV &amp; Large-Format Press Floor, Nigeria
                 </span>

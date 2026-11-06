@@ -33,9 +33,8 @@ export const DualPromoBanners: React.FC<DualPromoBannersProps> = ({
               
               {/* Left text column */}
               <div className="sm:col-span-7 space-y-3">
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/10 border border-[#f5be38]/40 text-xs font-mono font-bold tracking-wider text-[#f5be38] uppercase backdrop-blur-xs">
-                  <Sparkles className="w-3 h-3 text-[#f5be38]" />
-                  <span>LATEST DESIGN</span>
+                <div className="text-[11px] font-bold tracking-[0.2em] text-[#f5be38] uppercase">
+                  Packaging Collection
                 </div>
 
                 <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight leading-tight">
@@ -85,9 +84,8 @@ export const DualPromoBanners: React.FC<DualPromoBannersProps> = ({
               
               {/* Left text column */}
               <div className="sm:col-span-7 space-y-3">
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/10 border border-white/25 text-xs font-mono font-bold tracking-wider text-stone-300 uppercase backdrop-blur-xs">
-                  <Sparkles className="w-3 h-3 text-stone-300" />
-                  <span>LATEST DESIGN</span>
+                <div className="text-[11px] font-bold tracking-[0.2em] text-stone-300 uppercase">
+                  Apparel Studio
                 </div>
 
                 <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight leading-tight">

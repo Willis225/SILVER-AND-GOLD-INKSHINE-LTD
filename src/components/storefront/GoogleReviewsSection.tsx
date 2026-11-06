@@ -115,14 +115,20 @@ export const GoogleReviewsSection: React.FC = () => {
               <div className="space-y-4">
                 {/* Top-Left: Circular Profile Avatar + Name & Role */}
                 <div className="flex items-center gap-3">
-                  <div className="w-11 h-11 rounded-full overflow-hidden border border-white/20 shrink-0 bg-stone-800">
+                  <div className="w-11 h-11 rounded-full overflow-hidden border border-white/20 shrink-0 bg-stone-800 relative flex items-center justify-center">
                     <img
                       src={review.avatar}
                       alt={review.name}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover relative z-10"
                       loading="lazy"
                       referrerPolicy="no-referrer"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                      }}
                     />
+                    <span className="absolute inset-0 flex items-center justify-center font-bold text-xs text-[#ffd25d] bg-[#1a1a22]">
+                      {review.name.split(' ').map((n) => n[0]).join('')}
+                    </span>
                   </div>
                   <div>
                     <h4 className="text-sm font-bold text-white leading-tight">
