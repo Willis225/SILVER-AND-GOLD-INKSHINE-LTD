@@ -177,9 +177,9 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-[#000000] border-b border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.85)] backdrop-blur-md">
+    <header className="sticky top-0 z-50 bg-transparent transition-colors">
       {/* Top Utility Bar: Liquid Silver & Gold Shimmer */}
-      <div className="gold-silver-shimmer text-stone-950 text-xs py-1.5 px-4 sm:px-6 lg:px-8 border-b border-black/20 shadow-xs relative overflow-hidden">
+      <div className="gold-silver-shimmer text-stone-950 text-xs py-1.5 px-4 sm:px-6 lg:px-8 border-none relative overflow-hidden">
         {/* Subtle luminous metallic gloss sheen */}
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/40 via-transparent to-black/10" />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent skew-x-[-25deg] animate-connecting-light" />
@@ -261,8 +261,8 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
       </div>
 
-      {/* Main Brand Header Navigation - Sleek Black */}
-      <div className="bg-[#000000]">
+      {/* Main Brand Header Navigation - Completely Plain & Seamless on Homepage Background */}
+      <div className="relative bg-transparent border-none">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
           <div className="flex items-center justify-between gap-6">
             {/* Brand Logo - SILVER & GOLD INKSHINE LTD */}
@@ -765,9 +765,9 @@ export const Header: React.FC<HeaderProps> = ({
             {/* Book Online & Custom Quote Buttons */}
             <button
               onClick={onOpenBookOnline}
-              className="h-9 px-4 rounded-full bg-gradient-to-r from-[#f5be38] to-[#e5af28] hover:from-[#e5af28] hover:to-[#d49f18] text-stone-950 font-black text-xs inline-flex items-center gap-1.5 transition-all shadow-md active:scale-95 cursor-pointer border border-amber-300/50"
+              className="h-9 px-4 rounded-xl bg-white/10 hover:bg-white/15 text-stone-200 hover:text-white font-bold text-xs inline-flex items-center gap-1.5 transition-all active:scale-95 cursor-pointer border border-white/15"
             >
-              <Calendar className="w-3.5 h-3.5 text-stone-950" />
+              <Calendar className="w-3.5 h-3.5 text-[#f5be38]" />
               <span>Book Online</span>
             </button>
 
@@ -795,22 +795,22 @@ export const Header: React.FC<HeaderProps> = ({
             >
               <ShoppingBag className="w-5 h-5 stroke-[2.2]" />
               {cartCount > 0 ? (
-                <span className="absolute top-0.5 right-0.5 min-w-[18px] h-[18px] px-1 rounded-full bg-amber-500 text-slate-950 font-black text-[10px] flex items-center justify-center shadow-sm">
+                <span className="absolute top-0.5 right-0.5 min-w-[18px] h-[18px] px-1 rounded-full bg-[#f5be38] text-stone-950 font-black text-[10px] flex items-center justify-center shadow-sm">
                   {cartCount}
                 </span>
               ) : (
-                <span className="text-[11px] font-bold text-slate-400 ml-1">0</span>
+                <span className="text-[11px] font-bold text-stone-400 ml-1">0</span>
               )}
             </button>
 
-            {/* Gold/Yellow 'Get a Quote' Pill CTA Button (Matching Reference Mockup) */}
+            {/* Gold 'Get a Quote' CTA Button */}
             <button
               type="button"
               onClick={onOpenQuoteModal || onOpenBookOnline}
-              className="hidden sm:inline-flex h-9 sm:h-10 px-5 rounded-full bg-[#f5be38] hover:bg-[#e5af28] text-black font-extrabold text-xs sm:text-sm items-center gap-1.5 transition-all shadow-md active:scale-95 cursor-pointer"
+              className="hidden sm:inline-flex h-9.5 px-5 rounded-xl bg-gradient-to-r from-[#ffd25d] via-[#f5be38] to-[#e5af28] hover:from-[#f5be38] hover:to-[#d49f18] text-stone-950 font-bold text-xs sm:text-[13px] items-center gap-1.5 transition-all shadow-[0_4px_16px_rgba(245,190,56,0.25)] active:scale-95 cursor-pointer"
             >
               <span>Get a Quote</span>
-              <ArrowRight className="w-3.5 h-3.5 text-black" />
+              <ArrowRight className="w-3.5 h-3.5 text-stone-950 stroke-[2.5]" />
             </button>
 
             {/* Mobile Menu Hamburger Toggle */}

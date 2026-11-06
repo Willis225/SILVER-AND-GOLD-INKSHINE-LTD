@@ -30,6 +30,7 @@ export interface WebsiteContent {
   heroEyebrow: string;
   heroDescription: string;
   heroBackgroundImage?: string;
+  heroOverlayImageUrl?: string;
   heroSlides: HeroSlideItem[];
 
   // Services Showcase Section
@@ -157,7 +158,7 @@ export const DEFAULT_WEBSITE_CONTENT: WebsiteContent = {
   heroSubheadline: 'Banners, Branding, Digital Printing & Packaging',
   heroEyebrow: 'Grow Your Brand with Premium, Fast Printing',
   heroDescription: 'Buy your custom products online and have them delivered across Bayelsa.',
-  heroBackgroundImage: 'https://cdn.hstockplus.org/uploads/public/img-1790066633477-1b16a758309b0fff.webp',
+  heroBackgroundImage: '/assets/aistudio/image_61b565fc.png',
   heroSlides: DEFAULT_HERO_SLIDES,
   showcaseTitle: 'Top-Quality Printing Services',
   showcaseDescription: 'Engineered on industrial press equipment with laser-sharp registration, vibrant CMYK color balance, and rapid nationwide delivery.',

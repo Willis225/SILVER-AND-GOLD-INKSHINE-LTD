@@ -637,7 +637,20 @@ export default function App() {
   const totalCartCount = cartItems.reduce((acc, curr) => acc + curr.quantity, 0);
 
   return (
-    <div className="min-h-screen bg-[#08080a] text-stone-100 font-sans antialiased flex flex-col justify-between selection:bg-[#f5be38] selection:text-black relative">
+    <div className="min-h-screen bg-[#070204] text-stone-100 font-sans antialiased flex flex-col justify-between selection:bg-[#f5be38] selection:text-black relative">
+      {/* Homepage Background: User-Uploaded Dark Luxury Horizon Wallpaper */}
+      {viewMode === 'storefront' && (
+        <div className="absolute top-0 left-0 right-0 h-[920px] sm:h-[960px] lg:h-[1020px] pointer-events-none select-none overflow-hidden z-0">
+          <img
+            src="/assets/aistudio/image_61b565fc.png"
+            alt="Homepage Background"
+            className="w-full h-full object-cover object-center"
+          />
+          {/* Subtle smooth bottom fade so it blends seamlessly into the dark obsidian page below */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/15 via-transparent to-[#070204]" />
+        </div>
+      )}
+
       {/* Global Header (Rendered on storefront, pdp, checkout, and sandbox) */}
       {viewMode !== 'admin' && (
         <Header
@@ -876,12 +889,13 @@ export default function App() {
 
         {viewMode === 'storefront' && (
           <>
-            {/* 1. Split Hero Section */}
+            {/* 1. Hero Section with Cinematic Dark Burgundy Background & Ambassador Placement */}
             <HeroSection
               onExploreProducts={scrollToCatalog}
               onOpenPricingSandbox={() => setViewMode('stage1_sandbox')}
               onSelectProductQuickView={handleOpenProductById}
               onSelectCategory={(cat) => handleOpenCategories(cat)}
+              onOpenCustomQuote={handleOpenCustomQuote}
               slides={websiteContent.heroSlides}
               headline={websiteContent.heroHeadline}
               subheadline={websiteContent.heroSubheadline}
@@ -894,7 +908,7 @@ export default function App() {
                 websiteContent.heroBackgroundImage !== '/hero-banner-main.webp' &&
                 !websiteContent.heroBackgroundImage.includes('unsplash')
                   ? websiteContent.heroBackgroundImage
-                  : 'https://cdn.hstockplus.org/uploads/public/img-1790066633477-1b16a758309b0fff.webp'
+                  : '/assets/aistudio/image_61b565fc.png'
               }
             />
 

@@ -2075,7 +2075,7 @@ export function lockShowcaseServiceImage(
 /**
  * Apply locked images to website content (hero slides, background, showcase services)
  */
-export const CURRENT_OVERLAY_BG = 'https://cdn.hstockplus.org/uploads/public/img-1790066633477-1b16a758309b0fff.webp';
+export const CURRENT_OVERLAY_BG = '/assets/aistudio/image_61b565fc.png';
 
 export function applyImageLocksToWebsiteContent(content: WebsiteContent): WebsiteContent {
   if (!content) return content;
