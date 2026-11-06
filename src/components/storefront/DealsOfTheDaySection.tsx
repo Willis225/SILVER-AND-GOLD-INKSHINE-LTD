@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { Star, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Product } from '../../types/schema';
 
 interface DealsOfTheDaySectionProps {
@@ -98,7 +98,7 @@ export const DealsOfTheDaySection: React.FC<DealsOfTheDaySectionProps> = ({
   return (
     <section 
       aria-label="Deals of the Day"
-      className="relative bg-[#FAFAFA] text-slate-900 py-10 sm:py-14 border-b border-slate-200"
+      className="relative bg-[#070204] text-white py-10 sm:py-14 border-b border-stone-800/80"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         
@@ -107,19 +107,19 @@ export const DealsOfTheDaySection: React.FC<DealsOfTheDaySectionProps> = ({
           
           {/* Left Title + Bold Inline Digital Countdown Timer (23 : 45 : 10 : 25) */}
           <div className="flex flex-wrap items-center gap-3 sm:gap-4">
-            <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-slate-950 tracking-tight">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-white tracking-tight">
               Deals of the Day
             </h2>
 
             {/* Inline Digital Timer */}
-            <div className="inline-flex items-center gap-1.5 font-mono text-sm sm:text-base font-extrabold text-slate-900 bg-white px-3 py-1 rounded-lg border border-slate-200 shadow-2xs">
+            <div className="inline-flex items-center gap-1.5 font-mono text-sm sm:text-base font-extrabold text-white bg-stone-900 px-3 py-1 rounded-lg border border-stone-700 shadow-xs">
               <span>{format2(timeLeft.days)}</span>
-              <span className="text-slate-400">:</span>
+              <span className="text-stone-500">:</span>
               <span>{format2(timeLeft.hours)}</span>
-              <span className="text-slate-400">:</span>
+              <span className="text-stone-500">:</span>
               <span>{format2(timeLeft.minutes)}</span>
-              <span className="text-slate-400">:</span>
-              <span className="text-amber-600">{format2(timeLeft.seconds)}</span>
+              <span className="text-stone-500">:</span>
+              <span className="text-[#ffd25d]">{format2(timeLeft.seconds)}</span>
             </div>
           </div>
 
@@ -128,16 +128,16 @@ export const DealsOfTheDaySection: React.FC<DealsOfTheDaySectionProps> = ({
             <button
               type="button"
               onClick={onExploreCatalog}
-              className="text-xs font-black uppercase tracking-wider text-slate-900 hover:text-black inline-flex items-center gap-1.5 transition-colors cursor-pointer self-start sm:self-auto group"
+              className="text-xs font-black uppercase tracking-wider text-stone-300 hover:text-white inline-flex items-center gap-1.5 transition-colors cursor-pointer self-start sm:self-auto group"
             >
               <span>View All Products</span>
-              <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+              <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1 text-[#ffd25d]" />
             </button>
           )}
 
         </div>
 
-        {/* 6 Product Cards Grid (Matching Reference Mockup 6-Card Row) */}
+        {/* 6 Product Cards Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
           {DEALS_DATA.map((item, idx) => (
             <motion.div
@@ -147,42 +147,22 @@ export const DealsOfTheDaySection: React.FC<DealsOfTheDaySectionProps> = ({
               viewport={{ once: true, margin: "-20px" }}
               transition={{ duration: 0.3, delay: idx * 0.04 }}
               onClick={onExploreCatalog}
-              className="group bg-white rounded-xl p-3 sm:p-4 flex flex-col justify-between shadow-2xs hover:shadow-md transition-all duration-300 border border-slate-200/80 hover:border-slate-300 text-center cursor-pointer"
+              className="group bg-[#121217] hover:bg-[#1a1a22] rounded-xl p-3 sm:p-4 flex flex-col justify-between shadow-md transition-all duration-300 border border-stone-800 hover:border-stone-600 text-center cursor-pointer"
             >
-              {/* Product Thumbnail inside Soft Well */}
-              <div className="w-full aspect-square rounded-lg bg-[#F8F9FA] p-2.5 mb-3 flex items-center justify-center overflow-hidden border border-slate-100 group-hover:scale-104 transition-transform duration-300">
+              <div className="w-full aspect-[4/3] rounded-lg bg-black/60 p-2 flex items-center justify-center overflow-hidden border border-stone-800 mb-2">
                 <img
                   src={item.image}
                   alt={item.title}
-                  className="w-full h-full object-contain filter drop-shadow-2xs"
                   loading="lazy"
-                  referrerPolicy="no-referrer"
-                  onError={(e) => {
-                    const target = e.currentTarget;
-                    if (!target.src.includes('luxury-rollup-banner-stand.jpg')) {
-                      target.src = '/luxury-rollup-banner-stand.jpg';
-                    }
-                  }}
+                  className="w-full h-full object-contain filter drop-shadow-sm group-hover:scale-105 transition-transform"
                 />
               </div>
-
-              {/* Product Title */}
-              <h3 className="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-black transition-colors truncate">
+              <h3 className="text-xs font-bold text-white group-hover:text-[#ffd25d] transition-colors truncate">
                 {item.title}
               </h3>
-
-              {/* Bold Pricing */}
-              <div className="mt-1 text-xs font-black text-slate-950 font-mono">
+              <div className="mt-1 text-[11px] font-extrabold text-[#ffd25d]">
                 {item.priceNgn}
               </div>
-
-              {/* 5 Gold Stars */}
-              <div className="mt-1.5 flex items-center justify-center text-[#f5be38] gap-0.5">
-                {[...Array(item.rating)].map((_, i) => (
-                  <Star key={i} className="w-3 h-3 fill-[#f5be38]" />
-                ))}
-              </div>
-
             </motion.div>
           ))}
         </div>

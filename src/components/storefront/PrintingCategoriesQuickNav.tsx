@@ -102,28 +102,22 @@ export const PrintingCategoriesQuickNav: React.FC<PrintingCategoriesQuickNavProp
   return (
     <section 
       aria-label="Commercial Production Gallery"
-      className="relative bg-[#FAF7F2] text-slate-900 py-10 sm:py-14 border-y border-[#ede4d8] overflow-hidden"
+      className="relative bg-[#070204] text-white py-10 sm:py-14 border-y border-stone-800/80 overflow-hidden"
       style={{ perspective: '1400px' }}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      {/* 1. Sand Dot Matrix Pattern on Cream White Canvas */}
+      {/* 1. Subtle Faded Grey Ambient Glow */}
       <div 
-        className="absolute inset-0 bg-[radial-gradient(#cbbba7_1.35px,transparent_1.35px)] [background-size:24px_24px] opacity-80 pointer-events-none" 
-        aria-hidden="true"
-      />
-      
-      {/* 2. Soft Ambient Radial Highlight */}
-      <div 
-        className="absolute inset-0 bg-radial-[circle_at_center] from-white/60 via-transparent to-[#FAF7F2]/60 pointer-events-none" 
+        className="absolute inset-0 bg-gradient-to-b from-[#121217] via-transparent to-[#070204] pointer-events-none" 
         aria-hidden="true"
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8 relative z-10">
         
-        {/* Section Header: Cleaned up without subtitle */}
+        {/* Section Header */}
         <div className="text-center space-y-2 max-w-2xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-950 tracking-tight font-display">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight font-display">
             Explore All Categories
           </h2>
           <div className="w-12 h-1 bg-[#f5be38] mx-auto rounded-full" />
@@ -137,7 +131,7 @@ export const PrintingCategoriesQuickNav: React.FC<PrintingCategoriesQuickNavProp
             type="button"
             onClick={handlePrev}
             aria-label="Previous warped card"
-            className="absolute left-2 sm:left-6 z-30 w-11 h-11 rounded-full bg-white hover:bg-stone-900 text-stone-900 hover:text-white shadow-[0_6px_20px_rgba(0,0,0,0.12)] border border-[#e2d8cb] flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer"
+            className="absolute left-2 sm:left-6 z-30 w-11 h-11 rounded-full bg-stone-900 hover:bg-stone-800 text-white shadow-lg border border-stone-700 flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4" />
           </button>
@@ -147,7 +141,7 @@ export const PrintingCategoriesQuickNav: React.FC<PrintingCategoriesQuickNavProp
             type="button"
             onClick={handleNext}
             aria-label="Next warped card"
-            className="absolute right-2 sm:right-6 z-30 w-11 h-11 rounded-full bg-stone-900 hover:bg-[#b8860b] text-white shadow-[0_6px_20px_rgba(0,0,0,0.18)] flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer"
+            className="absolute right-2 sm:right-6 z-30 w-11 h-11 rounded-full bg-stone-900 hover:bg-[#b8860b] text-white shadow-lg border border-stone-700 flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer"
           >
             <ArrowRight className="w-4 h-4" />
           </button>
@@ -191,20 +185,20 @@ export const PrintingCategoriesQuickNav: React.FC<PrintingCategoriesQuickNavProp
                   }}
                   className={`absolute w-[250px] sm:w-[290px] rounded-2xl p-5 sm:p-6 flex flex-col justify-between text-left cursor-pointer transition-all duration-300 ${
                     isActive
-                      ? 'bg-white border-2 border-[#c8a951] shadow-[0_20px_50px_rgba(180,140,80,0.22),0_8px_16px_rgba(0,0,0,0.06)] ring-4 ring-[#f5be38]/15'
-                      : 'bg-white/80 border border-[#e0d4c3] shadow-md hover:bg-white'
+                      ? 'bg-gradient-to-br from-[#1c1c22] via-[#121217] to-[#0a0a0e] border-2 border-[#f5be38] shadow-[0_20px_50px_rgba(0,0,0,0.8),0_8px_16px_rgba(245,190,56,0.15)] ring-4 ring-[#f5be38]/15 text-white'
+                      : 'bg-[#121217]/90 border border-stone-800 shadow-md hover:bg-[#1a1a20] text-stone-200'
                   }`}
                 >
                   {/* Top Warped Badge */}
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-extrabold tracking-[0.2em] text-[#b8860b] uppercase">
+                    <span className="text-[10px] font-extrabold tracking-[0.2em] text-[#ffd25d] uppercase">
                       Category 0{index + 1}
                     </span>
                     <span className="w-2 h-2 rounded-full bg-[#f5be38]" />
                   </div>
 
                   {/* Centered Warped Image Frame */}
-                  <div className="my-3 aspect-[4/3] rounded-xl bg-[#F7F4EE] p-3 flex items-center justify-center overflow-hidden border border-[#eae0d2]/85 shadow-inner group relative">
+                  <div className="my-3 aspect-[4/3] rounded-xl bg-black/60 p-3 flex items-center justify-center overflow-hidden border border-stone-800 shadow-inner group relative">
                     <img
                       src={item.image}
                       alt={item.title}
@@ -216,25 +210,25 @@ export const PrintingCategoriesQuickNav: React.FC<PrintingCategoriesQuickNavProp
                           target.src = '/custom-branded-pouch-packaging.jpg';
                         }
                       }}
-                      className="w-full h-full object-contain filter drop-shadow-sm group-hover:scale-108 transition-transform duration-500 ease-out"
+                      className="w-full h-full object-contain filter drop-shadow-md group-hover:scale-108 transition-transform duration-500 ease-out"
                     />
                   </div>
 
                   {/* Title & Subtitle */}
                   <div className="space-y-1">
-                    <h3 className="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-[#b8860b] transition-colors leading-tight">
+                    <h3 className="text-xs sm:text-sm font-bold text-white group-hover:text-[#ffd25d] transition-colors leading-tight">
                       {item.title}
                     </h3>
-                    <p className="text-[11px] text-stone-500 font-normal line-clamp-1">
+                    <p className="text-[11px] text-stone-400 font-normal line-clamp-1">
                       {item.subtitle}
                     </p>
                   </div>
 
                   {/* Action Footer */}
-                  <div className="mt-3 pt-3 border-t border-[#f0e7db] flex items-center justify-between text-[11.5px] font-extrabold text-stone-900">
-                    <span className="text-[#b8860b]">Explore Collection</span>
-                    <div className="w-6 h-6 rounded-full bg-stone-900 text-white flex items-center justify-center shadow-sm">
-                      <ArrowRight className="w-3 h-3 text-[#f5be38] stroke-[2.5]" />
+                  <div className="mt-3 pt-3 border-t border-stone-800 flex items-center justify-between text-[11.5px] font-extrabold text-white">
+                    <span className="text-[#ffd25d]">Explore Collection</span>
+                    <div className="w-6 h-6 rounded-full bg-stone-800 text-white flex items-center justify-center shadow-sm">
+                      <ArrowRight className="w-3 h-3 text-[#ffd25d] stroke-[2.5]" />
                     </div>
                   </div>
                 </motion.div>
@@ -244,7 +238,7 @@ export const PrintingCategoriesQuickNav: React.FC<PrintingCategoriesQuickNavProp
 
         </div>
 
-        {/* Thumbnail Dots Indicator & Browse Button brought closer up */}
+        {/* Thumbnail Dots Indicator & Browse Button */}
         <div className="flex flex-col items-center gap-3 pt-0">
           {/* Thumbnail Dots */}
           <div className="flex items-center justify-center gap-2">
@@ -255,7 +249,7 @@ export const PrintingCategoriesQuickNav: React.FC<PrintingCategoriesQuickNavProp
                 onClick={() => setActiveIndex(idx)}
                 aria-label={`Go to ${cat.title}`}
                 className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                  activeIndex === idx ? 'w-7 bg-[#b8860b]' : 'w-2 bg-[#dcd2c4] hover:bg-[#b8860b]/50'
+                  activeIndex === idx ? 'w-7 bg-[#ffd25d]' : 'w-2 bg-stone-700 hover:bg-stone-500'
                 }`}
               />
             ))}
@@ -266,10 +260,10 @@ export const PrintingCategoriesQuickNav: React.FC<PrintingCategoriesQuickNavProp
             <button
               type="button"
               onClick={onExploreCatalog}
-              className="h-10 sm:h-11 px-7 rounded-full bg-[#111116] hover:bg-[#000000] text-white font-extrabold text-xs tracking-[0.16em] uppercase inline-flex items-center gap-2 transition-all shadow-[0_6px_20px_rgba(0,0,0,0.18)] hover:shadow-[0_8px_24px_rgba(245,190,56,0.25)] border border-[#f5be38]/30 active:scale-95 cursor-pointer"
+              className="h-10 sm:h-11 px-7 rounded-full bg-gradient-to-r from-[#ffd25d] via-[#f5be38] to-[#e5af28] hover:from-[#f5be38] hover:to-[#d49f18] text-stone-950 font-extrabold text-xs tracking-[0.16em] uppercase inline-flex items-center gap-2 transition-all shadow-[0_6px_20px_rgba(245,190,56,0.25)] active:scale-95 cursor-pointer"
             >
               <span>Browse All Categories</span>
-              <ArrowRight className="w-3.5 h-3.5 text-[#f5be38] stroke-[2.5]" />
+              <ArrowRight className="w-3.5 h-3.5 text-stone-950 stroke-[2.5]" />
             </button>
           </div>
         </div>

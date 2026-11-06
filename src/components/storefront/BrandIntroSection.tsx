@@ -12,9 +12,9 @@ export const BrandIntroSection: React.FC<BrandIntroSectionProps> = ({ onExploreP
   const [imageSrc, setImageSrc] = useState(BRAND_PROMO_CDN_IMAGE);
 
   return (
-    <section className="bg-white text-stone-900 py-14 sm:py-20 border-b border-stone-200 relative overflow-hidden">
-      {/* Subtle radial dot pattern */}
-      <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:24px_24px] opacity-70 pointer-events-none" />
+    <section className="bg-[#070204] text-white py-14 sm:py-20 border-b border-stone-800/80 relative overflow-hidden">
+      {/* Subtle ambient highlight */}
+      <div className="absolute inset-0 bg-gradient-to-t from-[#121217] via-transparent to-[#070204] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
@@ -27,39 +27,39 @@ export const BrandIntroSection: React.FC<BrandIntroSectionProps> = ({ onExploreP
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-5 space-y-6"
           >
-            <div className="text-xs font-bold tracking-[0.2em] uppercase text-[#b8860b]">
+            <div className="text-xs font-bold tracking-[0.2em] text-[#ffd25d] uppercase">
               Full-Service Commercial Production
             </div>
 
-            <p className="text-stone-700 text-sm sm:text-[15.5px] leading-relaxed font-normal text-justify sm:text-left">
-              Order everything you need for your business, events or promotions at <strong className="font-bold text-stone-950">SILVER &amp; GOLD INKSHINE LTD</strong> and have them delivered nationwide in 3–5 business days! Send your print-ready artwork or hire our graphic experts to help you. We design and print quality roll-up banners, display stands, flyers, business cards, custom t-shirts, branded apparels, vehicle branding, signage, packaging labels, stickers, posters, promotional gifts and more.
+            <p className="text-stone-300 text-sm sm:text-[15.5px] leading-relaxed font-normal text-justify sm:text-left">
+              Order everything you need for your business, events or promotions at <strong className="font-bold text-white">SILVER &amp; GOLD INKSHINE LTD</strong> and have them delivered nationwide in 3–5 business days! Send your print-ready artwork or hire our graphic experts to help you. We design and print quality roll-up banners, display stands, flyers, business cards, custom t-shirts, branded apparels, vehicle branding, signage, packaging labels, stickers, posters, promotional gifts and more.
             </p>
 
             {/* Bullet Points */}
             <div className="space-y-3.5 pt-1">
               <div className="flex items-center gap-3">
-                <div className="w-6 h-6 rounded-full bg-stone-950 text-white flex items-center justify-center shrink-0 shadow-sm">
+                <div className="w-6 h-6 rounded-full bg-stone-800 text-[#ffd25d] flex items-center justify-center shrink-0 shadow-sm border border-stone-700">
                   <Check className="w-3.5 h-3.5 stroke-[3]" />
                 </div>
-                <span className="font-extrabold text-stone-950 text-sm sm:text-base">
+                <span className="font-extrabold text-white text-sm sm:text-base">
                   100% Quality Printing Services.
                 </span>
               </div>
 
               <div className="flex items-center gap-3">
-                <div className="w-6 h-6 rounded-full bg-stone-950 text-white flex items-center justify-center shrink-0 shadow-sm">
+                <div className="w-6 h-6 rounded-full bg-stone-800 text-[#ffd25d] flex items-center justify-center shrink-0 shadow-sm border border-stone-700">
                   <Check className="w-3.5 h-3.5 stroke-[3]" />
                 </div>
-                <span className="font-extrabold text-stone-950 text-sm sm:text-base">
+                <span className="font-extrabold text-white text-sm sm:text-base">
                   12% Discount on Bulk Orders.
                 </span>
               </div>
 
               <div className="flex items-center gap-3">
-                <div className="w-6 h-6 rounded-full bg-stone-950 text-white flex items-center justify-center shrink-0 shadow-sm">
+                <div className="w-6 h-6 rounded-full bg-stone-800 text-[#ffd25d] flex items-center justify-center shrink-0 shadow-sm border border-stone-700">
                   <Check className="w-3.5 h-3.5 stroke-[3]" />
                 </div>
-                <span className="font-extrabold text-stone-950 text-sm sm:text-base">
+                <span className="font-extrabold text-white text-sm sm:text-base">
                   Fast Delivery Nationwide.
                 </span>
               </div>
@@ -68,33 +68,43 @@ export const BrandIntroSection: React.FC<BrandIntroSectionProps> = ({ onExploreP
 
           {/* Right Column: Promotional Commercial Media Showcase Banner */}
           <motion.div 
-            initial={{ opacity: 0, scale: 0.96, y: 24 }}
-            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-7"
+            transition={{ duration: 0.6, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-7 relative flex justify-center items-center"
           >
-            <div 
-              onClick={onExploreProducts}
-              className={`relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl border border-stone-200 bg-white group transition-all duration-500 hover:border-stone-400 hover:shadow-2xl ${
-                onExploreProducts ? 'cursor-pointer' : ''
-              }`}
-            >
-              <div className="relative w-full aspect-[1492/1054] overflow-hidden bg-stone-100">
-                <img
-                  src={imageSrc}
-                  alt="SILVER & GOLD INKSHINE LTD Business & Commercial Printing Solutions"
-                  className="w-full h-full object-cover sm:object-contain group-hover:scale-[1.02] transition-transform duration-700"
-                  referrerPolicy="no-referrer"
-                  onError={() => {
-                    if (imageSrc !== '/brand-intro-promo.webp') {
-                      setImageSrc('/brand-intro-promo.webp');
-                    }
-                  }}
-                />
-                
-                {/* Clean hover light sheen effect */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] overflow-hidden rounded-3xl border border-stone-800 shadow-2xl bg-[#121217] group">
+              <img
+                src={imageSrc}
+                alt="SILVER & GOLD INKSHINE LTD Production Facility"
+                className="w-full h-full object-cover object-center transition-all duration-700 group-hover:scale-105"
+                referrerPolicy="no-referrer"
+                onError={() => {
+                  if (imageSrc !== '/trusted-company.webp') {
+                    setImageSrc('/trusted-company.webp');
+                  }
+                }}
+              />
+
+              {/* Dark subtle gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
+
+              <div className="absolute bottom-5 left-5 right-5 flex items-center justify-between z-10">
+                <div className="bg-black/80 backdrop-blur-md px-4 py-2 rounded-xl border border-stone-700 text-white shadow-lg">
+                  <div className="text-[11px] font-bold text-[#ffd25d]">State-of-the-Art Press Floor</div>
+                  <div className="text-xs sm:text-sm font-black">Bayelsa &amp; Nationwide Delivery</div>
+                </div>
+
+                {onExploreProducts && (
+                  <button
+                    type="button"
+                    onClick={onExploreProducts}
+                    className="h-10 px-5 rounded-xl bg-gradient-to-r from-[#ffd25d] via-[#f5be38] to-[#e5af28] text-stone-950 font-extrabold text-xs tracking-wide uppercase shadow-lg hover:scale-105 active:scale-95 transition-all cursor-pointer hidden sm:inline-flex items-center gap-2"
+                  >
+                    <span>View Catalog</span>
+                  </button>
+                )}
               </div>
             </div>
           </motion.div>

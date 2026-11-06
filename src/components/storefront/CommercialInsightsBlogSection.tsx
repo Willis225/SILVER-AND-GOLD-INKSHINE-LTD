@@ -1,4 +1,5 @@
 import React from 'react';
+import { ArrowRight } from 'lucide-react';
 
 interface BlogPostItem {
   id: string;
@@ -40,13 +41,13 @@ export const CommercialInsightsBlogSection: React.FC<CommercialInsightsBlogSecti
   return (
     <section 
       aria-label="Read Our Latest Blog Post"
-      className="relative bg-white text-slate-900 py-10 sm:py-14 border-b border-slate-200"
+      className="relative bg-[#070204] text-white py-10 sm:py-14 border-b border-stone-800/80"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         
-        {/* Section Header: Centered */}
+        {/* Section Header */}
         <div className="text-center space-y-1 max-w-2xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-950 tracking-tight">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight">
             Read Our Latest Blog Post
           </h2>
         </div>
@@ -57,27 +58,30 @@ export const CommercialInsightsBlogSection: React.FC<CommercialInsightsBlogSecti
             <article
               key={post.id}
               onClick={onExploreInsights}
-              className="bg-white rounded-2xl overflow-hidden border border-slate-200/90 shadow-2xs hover:shadow-md transition-all duration-300 flex flex-col group cursor-pointer"
+              className="bg-[#121217] hover:bg-[#1a1a22] rounded-2xl overflow-hidden border border-stone-800 hover:border-stone-600 shadow-md transition-all duration-300 flex flex-col group cursor-pointer"
             >
-              {/* Image Preview */}
-              <div className="relative aspect-[16/10] overflow-hidden bg-slate-100">
+              <div className="w-full aspect-[16/10] bg-black/60 overflow-hidden relative border-b border-stone-800">
                 <img
                   src={post.image}
                   alt={post.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   loading="lazy"
                   referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover group-hover:scale-104 transition-transform duration-300"
                 />
               </div>
 
-              {/* Content Box */}
-              <div className="p-5 flex-1 flex flex-col justify-between space-y-3">
-                <h3 className="text-sm sm:text-base font-bold text-slate-900 group-hover:text-black transition-colors leading-snug">
+              <div className="p-5 sm:p-6 flex flex-col justify-between flex-1 space-y-3">
+                <div className="text-xs text-stone-400 font-medium">
+                  {post.dateStr}
+                </div>
+
+                <h3 className="text-base sm:text-lg font-bold text-white group-hover:text-[#ffd25d] transition-colors leading-snug">
                   {post.title}
                 </h3>
 
-                <div className="text-xs font-medium text-slate-500">
-                  {post.dateStr}
+                <div className="pt-2 flex items-center gap-1.5 text-xs font-bold text-[#ffd25d]">
+                  <span>Read Article</span>
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </div>
               </div>
             </article>

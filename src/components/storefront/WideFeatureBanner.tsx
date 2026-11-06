@@ -18,8 +18,8 @@ export const WideFeatureBanner: React.FC<WideFeatureBannerProps> = ({
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Sleek, High-Contrast Dark Rounded Banner */}
-        <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#0d0e12] text-white p-7 sm:p-10 lg:p-12 shadow-xl border border-white/10">
+        {/* Sleek, High-Contrast Black & Faded Grey Rounded Banner */}
+        <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden bg-gradient-to-br from-[#1c1c22] via-[#0d0d12] to-[#050506] text-white p-7 sm:p-10 lg:p-12 shadow-xl border border-stone-700/60">
           
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             
@@ -56,7 +56,7 @@ export const WideFeatureBanner: React.FC<WideFeatureBannerProps> = ({
                   initial={{ rotate: -10, y: 0 }}
                   whileHover={{ rotate: -6, y: -4 }}
                   transition={{ duration: 0.3 }}
-                  className="absolute left-2 top-1 w-52 sm:w-60 aspect-[16/10] rounded-xl overflow-hidden shadow-2xl border border-white/20 bg-stone-900 -rotate-10 transform origin-bottom-left"
+                  className="absolute left-2 top-1 w-52 sm:w-60 aspect-[16/10] rounded-xl overflow-hidden shadow-2xl border border-stone-600/70 bg-stone-900 -rotate-10 transform origin-bottom-left"
                 >
                   <img
                     src="/brochures-event-programs-flyers.jpg"
@@ -71,7 +71,7 @@ export const WideFeatureBanner: React.FC<WideFeatureBannerProps> = ({
                   initial={{ rotate: 8, y: 0 }}
                   whileHover={{ rotate: 4, y: -4 }}
                   transition={{ duration: 0.3 }}
-                  className="absolute right-2 bottom-1 w-56 sm:w-64 aspect-[16/10] rounded-xl overflow-hidden shadow-2xl border border-white/30 bg-stone-900 rotate-8 transform origin-bottom-right"
+                  className="absolute right-2 bottom-1 w-56 sm:w-64 aspect-[16/10] rounded-xl overflow-hidden shadow-2xl border border-stone-600/70 bg-stone-900 rotate-8 transform origin-bottom-right"
                 >
                   <img
                     src="/premium-matte-business-cards.jpg"

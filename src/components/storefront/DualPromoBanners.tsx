@@ -23,11 +23,11 @@ export const DualPromoBanners: React.FC<DualPromoBannersProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
           
           {/* ========================================================================= */}
-          {/* PROMO CARD 1: PACKAGE DESIGN (Black & Filled Gold Theme)                  */}
+          {/* PROMO CARD 1: PACKAGE DESIGN (Black & Faded Grey Theme)                   */}
           {/* ========================================================================= */}
-          <div className="group relative rounded-2xl overflow-hidden bg-gradient-to-br from-[#141417] via-[#08080a] to-[#000000] text-white p-6 sm:p-8 flex flex-col justify-between shadow-lg border border-[#f5be38]/30">
-            {/* Subtle gold background glow */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[#f5be38]/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="group relative rounded-2xl overflow-hidden bg-gradient-to-br from-[#1c1c22] via-[#0d0d12] to-[#050508] text-white p-6 sm:p-8 flex flex-col justify-between shadow-xl border border-stone-700/60">
+            {/* Subtle faded grey background glow */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-stone-500/10 rounded-full blur-3xl pointer-events-none" />
 
             <div className="relative z-10 grid grid-cols-1 sm:grid-cols-12 gap-6 items-center">
               
@@ -39,7 +39,7 @@ export const DualPromoBanners: React.FC<DualPromoBannersProps> = ({
 
                 <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight leading-tight">
                   Package <br />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f5be38] to-amber-200">Design</span>
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-stone-200 via-slate-300 to-stone-400">Design</span>
                 </h3>
 
                 <p className="text-xs sm:text-sm text-stone-300 leading-relaxed max-w-xs">
@@ -50,7 +50,7 @@ export const DualPromoBanners: React.FC<DualPromoBannersProps> = ({
                   <button
                     type="button"
                     onClick={() => onSelectCategory('packaging_shipping_cartons')}
-                    className="h-10 px-5 rounded-full bg-[#f5be38] hover:bg-[#e5af28] text-stone-950 font-extrabold text-xs tracking-wide uppercase inline-flex items-center gap-2 transition-all shadow-md active:scale-95 border border-amber-300 cursor-pointer"
+                    className="h-10 px-5 rounded-full bg-stone-200 hover:bg-white text-stone-950 font-extrabold text-xs tracking-wide uppercase inline-flex items-center gap-2 transition-all shadow-md active:scale-95 border border-stone-300 cursor-pointer"
                   >
                     <span>Shop Now</span>
                     <ArrowRight className="w-3.5 h-3.5 text-stone-950" />
@@ -60,7 +60,7 @@ export const DualPromoBanners: React.FC<DualPromoBannersProps> = ({
 
               {/* Right mockup image cutout */}
               <div className="sm:col-span-5 flex justify-center sm:justify-end">
-                <div className="w-36 sm:w-44 aspect-square rounded-xl bg-black/60 p-2 border border-[#f5be38]/30 flex items-center justify-center overflow-hidden transition-transform duration-500 group-hover:scale-105 shadow-inner">
+                <div className="w-36 sm:w-44 aspect-square rounded-xl bg-black/70 p-2 border border-stone-700/80 flex items-center justify-center overflow-hidden transition-transform duration-500 group-hover:scale-105 shadow-inner">
                   <img
                     src="/custom-branded-pouch-packaging.jpg"
                     alt="Custom Package Design"
@@ -74,11 +74,11 @@ export const DualPromoBanners: React.FC<DualPromoBannersProps> = ({
           </div>
 
           {/* ========================================================================= */}
-          {/* PROMO CARD 2: T-SHIRT PRINTING (Black & Filled Grey Theme)                */}
+          {/* PROMO CARD 2: T-SHIRT PRINTING (Black & Faded Grey Theme)                 */}
           {/* ========================================================================= */}
-          <div className="group relative rounded-2xl overflow-hidden bg-gradient-to-br from-[#18181b] via-[#09090d] to-[#0f172a] text-white p-6 sm:p-8 flex flex-col justify-between shadow-lg border border-white/20">
-            {/* Subtle silver/grey background glow */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="group relative rounded-2xl overflow-hidden bg-gradient-to-br from-[#1c1c22] via-[#0d0d12] to-[#050508] text-white p-6 sm:p-8 flex flex-col justify-between shadow-xl border border-stone-700/60">
+            {/* Subtle faded grey background glow */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-stone-500/10 rounded-full blur-3xl pointer-events-none" />
 
             <div className="relative z-10 grid grid-cols-1 sm:grid-cols-12 gap-6 items-center">
               
@@ -111,7 +111,7 @@ export const DualPromoBanners: React.FC<DualPromoBannersProps> = ({
 
               {/* Right mockup image cutout */}
               <div className="sm:col-span-5 flex justify-center sm:justify-end">
-                <div className="w-40 sm:w-48 aspect-square rounded-xl bg-black/60 p-2 border border-white/20 flex items-center justify-center overflow-hidden transition-transform duration-500 group-hover:scale-105 shadow-inner">
+                <div className="w-40 sm:w-48 aspect-square rounded-xl bg-black/70 p-2 border border-stone-700/80 flex items-center justify-center overflow-hidden transition-transform duration-500 group-hover:scale-105 shadow-inner">
                   <img
                     src="/executive-embroidered-polo-shirts.jpg"
                     alt="Custom T-Shirt and Apparel Printing"
