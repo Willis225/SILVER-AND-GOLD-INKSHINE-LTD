@@ -901,6 +901,7 @@ export default function App() {
               subheadline={websiteContent.heroSubheadline}
               eyebrow={websiteContent.heroEyebrow}
               description={websiteContent.heroDescription}
+              estimatorSideBackgroundImage="/assets/aistudio/image_bb9a9b8c.png"
               backgroundImageUrl={
                 websiteContent.heroBackgroundImage &&
                 websiteContent.heroBackgroundImage !== '/homepage-bg.jpg' &&

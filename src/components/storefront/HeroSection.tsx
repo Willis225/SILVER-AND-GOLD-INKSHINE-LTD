@@ -22,6 +22,7 @@ interface HeroSectionProps {
   eyebrow?: string;
   description?: string;
   backgroundImageUrl?: string;
+  estimatorSideBackgroundImage?: string;
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({
@@ -36,9 +37,52 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   eyebrow = '#1 Online Printing & Branding in Bayelsa',
   description = 'Buy your custom products online and have them delivered across Bayelsa.',
   backgroundImageUrl = 'https://cdn.hstockplus.org/uploads/public/img-1790066633477-1b16a758309b0fff.webp',
+  estimatorSideBackgroundImage = '/assets/aistudio/image_bb9a9b8c.png',
 }) => {
   return (
     <section className="relative bg-transparent text-white overflow-hidden border-none selection:bg-[#f5be38] selection:text-black">
+      {/* Desktop: Right-Side Industrial Printing Machine Background seamlessly faded on the left with ultra-soft alpha mask */}
+      <div 
+        className="absolute inset-0 pointer-events-none select-none overflow-hidden z-0 hidden lg:block"
+        style={{
+          maskImage: 'linear-gradient(to right, transparent 0%, transparent 35%, rgba(0, 0, 0, 0.03) 48%, rgba(0, 0, 0, 0.18) 58%, rgba(0, 0, 0, 0.5) 70%, rgba(0, 0, 0, 0.85) 84%, black 98%)',
+          WebkitMaskImage: 'linear-gradient(to right, transparent 0%, transparent 35%, rgba(0, 0, 0, 0.03) 48%, rgba(0, 0, 0, 0.18) 58%, rgba(0, 0, 0, 0.5) 70%, rgba(0, 0, 0, 0.85) 84%, black 98%)',
+        }}
+        aria-hidden="true"
+      >
+        <div 
+          className="w-full h-full relative"
+          style={{
+            maskImage: 'linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%)',
+          }}
+        >
+          <img
+            src={estimatorSideBackgroundImage}
+            alt="Silver & Gold Industrial Printing Machine"
+            className="w-full h-full object-cover object-[75%_center] xl:object-[82%_center] opacity-85"
+          />
+          {/* Subtle vignette for high-end cinematic contrast */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20" />
+        </div>
+      </div>
+
+      {/* Mobile & Tablet: Seamless vertical fade behind estimator */}
+      <div 
+        className="absolute inset-x-0 bottom-0 top-[40%] pointer-events-none select-none overflow-hidden z-0 lg:hidden"
+        style={{
+          maskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.1) 15%, rgba(0,0,0,0.6) 35%, black 65%, transparent 100%)',
+          WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.1) 15%, rgba(0,0,0,0.6) 35%, black 65%, transparent 100%)',
+        }}
+        aria-hidden="true"
+      >
+        <img
+          src={estimatorSideBackgroundImage}
+          alt="Silver & Gold Industrial Printing Machine"
+          className="w-full h-full object-cover object-center opacity-70"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+      </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-12 sm:py-16 lg:py-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
@@ -116,7 +160,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-5 xl:col-span-5 w-full flex items-center justify-center lg:justify-end"
           >
-            <div id="hero-instant-estimator" className="w-full max-w-[420px]">
+            <div id="hero-instant-estimator" className="w-full max-w-[340px] sm:max-w-[360px]">
               <InstantPrintEstimator isFloating={false} />
             </div>
           </motion.div>
