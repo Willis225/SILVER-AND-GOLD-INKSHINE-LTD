@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Sparkles } from 'lucide-react';
 import { ProductCategory } from '../../types/schema';
 
 interface PrintingCategoriesQuickNavProps {
@@ -11,48 +11,57 @@ interface PrintingCategoriesQuickNavProps {
 interface CategoryCardItem {
   id: ProductCategory;
   title: string;
+  subtitle: string;
   image: string;
 }
 
 const CATEGORY_ITEMS: CategoryCardItem[] = [
   {
     id: 'gift_items_souvenirs',
-    title: 'Necklace Design',
+    title: 'Executive Gifts & Souvenirs',
+    subtitle: 'Vacuum flasks, corporate mugs & gift sets',
     image: '/vacuum-flask-coffee-mug-set.jpg',
   },
   {
     id: 'custom_apparels_caps',
-    title: 'Printed T-Shirt',
+    title: 'Branded Apparels & Polos',
+    subtitle: 'Embroidered polo shirts & custom t-shirts',
     image: '/executive-embroidered-polo-shirts.jpg',
   },
   {
     id: 'packaging_shipping_cartons',
-    title: 'Package Design',
+    title: 'Custom Packaging Boxes',
+    subtitle: 'Corrugated mailers & retail product cartons',
     image: '/corrugated-shipping-cartons-mailer-boxes.jpg',
   },
   {
     id: 'books_magazines',
-    title: 'Book Cover Design',
+    title: 'Books & Publications',
+    subtitle: 'Annual reports, catalogues & profile booklets',
     image: '/book-printing-lagos.jpg',
   },
   {
     id: 'advertising_materials',
-    title: 'Flyer & Brochure Design',
+    title: 'Flyers & Marketing Brochures',
+    subtitle: 'A5/A6 leaflets on premium gloss & matte paper',
     image: '/brochures-event-programs-flyers.jpg',
   },
   {
     id: 'stickers_labels',
-    title: 'Stickers & Labels',
+    title: 'Die-Cut Stickers & Labels',
+    subtitle: 'Waterproof vinyl, bottle & packaging labels',
     image: '/product-packaging-labels-stickers.jpg',
   },
   {
     id: 'banners_stands',
-    title: 'Rollup Banner Stands',
+    title: 'Rollup Banners & Displays',
+    subtitle: 'Teardrop base & standard aluminium pull-up stands',
     image: '/luxury-rollup-banner-stand.jpg',
   },
   {
     id: 'paper_bags_tags',
-    title: 'Carrier Bags',
+    title: 'Luxury Carrier Bags',
+    subtitle: 'Foil-stamped kraft & branded shopping bags',
     image: '/luxury-kraft-shopping-carrier-bags.jpg',
   },
 ];
@@ -61,126 +70,199 @@ export const PrintingCategoriesQuickNav: React.FC<PrintingCategoriesQuickNavProp
   onSelectCategory,
   onExploreCatalog,
 }) => {
-  const [startIndex, setStartIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const handlePrev = () => {
-    setStartIndex((prev) => (prev === 0 ? Math.max(0, CATEGORY_ITEMS.length - 4) : prev - 1));
+    setActiveIndex((prev) => (prev === 0 ? CATEGORY_ITEMS.length - 1 : prev - 1));
   };
 
   const handleNext = () => {
-    setStartIndex((prev) => (prev >= CATEGORY_ITEMS.length - 4 ? 0 : prev + 1));
+    setActiveIndex((prev) => (prev === CATEGORY_ITEMS.length - 1 ? 0 : prev + 1));
   };
 
-  const visibleItems = CATEGORY_ITEMS.slice(startIndex, startIndex + 4);
+  const getWarpedSequence = () => {
+    const items = [];
+    for (let i = -2; i <= 2; i++) {
+      const index = (activeIndex + i + CATEGORY_ITEMS.length) % CATEGORY_ITEMS.length;
+      items.push({ item: CATEGORY_ITEMS[index], offset: i, index });
+    }
+    return items;
+  };
 
   return (
     <section 
-      aria-label="Explore All Categories"
-      className="relative bg-white text-slate-900 py-12 sm:py-16 border-b border-slate-200"
+      aria-label="Warped Commercial Production Gallery"
+      className="relative bg-[#FAF7F2] text-slate-900 py-16 sm:py-24 border-y border-[#ede4d8] overflow-hidden"
+      style={{ perspective: '1400px' }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-10">
+      {/* 1. Sand Dot Matrix Pattern on Cream White Canvas */}
+      <div 
+        className="absolute inset-0 bg-[radial-gradient(#cbbba7_1.35px,transparent_1.35px)] [background-size:24px_24px] opacity-80 pointer-events-none" 
+        aria-hidden="true"
+      />
+      
+      {/* 2. Soft Ambient Radial Highlight */}
+      <div 
+        className="absolute inset-0 bg-radial-[circle_at_center] from-white/60 via-transparent to-[#FAF7F2]/60 pointer-events-none" 
+        aria-hidden="true"
+      />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 sm:space-y-14 relative z-10">
         
-        {/* Header: Centered Title with subtle gold accent line */}
-        <div className="text-center space-y-2">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-950 tracking-tight">
+        {/* Section Header */}
+        <div className="text-center space-y-3 max-w-2xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#f5be38]/15 border border-[#f5be38]/45 text-[#9a6f00] text-xs font-bold tracking-[0.2em] uppercase backdrop-blur-xs">
+            <Sparkles className="w-3.5 h-3.5 text-[#b8860b]" />
+            <span>Interactive Warped Gallery</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-black text-slate-950 tracking-tight font-display">
             Explore All Categories
           </h2>
           <div className="w-12 h-1 bg-[#f5be38] mx-auto rounded-full" />
+          <p className="text-xs sm:text-sm text-stone-600 font-normal">
+            Immersive 3D perspective view of our flagship print disciplines &amp; factory products
+          </p>
         </div>
 
-        {/* 4 Cards Container with Carousel Navigation Arrows */}
-        <div className="relative flex items-center">
+        {/* 3D Warped Perspective Carousel Stage */}
+        <div className="relative w-full py-8 flex items-center justify-center min-h-[420px] sm:min-h-[480px]">
           
           {/* Left Arrow Button */}
           <button
             type="button"
             onClick={handlePrev}
-            aria-label="Previous categories"
-            className="hidden sm:flex absolute -left-4 z-20 w-10 h-10 rounded-full bg-white hover:bg-slate-100 text-slate-900 shadow-lg border border-slate-200 items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer"
+            aria-label="Previous warped card"
+            className="absolute left-2 sm:left-8 z-30 w-12 h-12 rounded-full bg-white hover:bg-stone-900 text-stone-900 hover:text-white shadow-[0_8px_24px_rgba(0,0,0,0.12)] border border-[#e2d8cb] flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft className="w-5 h-5" />
           </button>
 
-          {/* 4 Category Cards: Soft light-gray background (#F8F9FA), 12px rounded corners, clean padding */}
-          <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-            {visibleItems.map((item) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.35 }}
-                onClick={() => onSelectCategory(item.id)}
-                className="group bg-[#F8F9FA] hover:bg-slate-100/80 border border-slate-200/80 hover:border-slate-300 rounded-[12px] p-4 sm:p-5 flex flex-col items-center justify-between text-center transition-all duration-300 cursor-pointer shadow-xs hover:shadow-md"
-              >
-                {/* Centered Product / Category Image Thumbnail */}
-                <div className="w-full aspect-[4/3] rounded-lg bg-white p-3 flex items-center justify-center overflow-hidden border border-slate-100 shadow-xs group-hover:scale-104 transition-transform duration-300">
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    loading="lazy"
-                    referrerPolicy="no-referrer"
-                    onError={(e) => {
-                      const target = e.currentTarget;
-                      if (!target.src.includes('custom-branded-pouch-packaging.jpg')) {
-                        target.src = '/custom-branded-pouch-packaging.jpg';
-                      }
-                    }}
-                    className="w-full h-full object-contain filter drop-shadow-sm"
-                  />
-                </div>
+          {/* Right Arrow Button */}
+          <button
+            type="button"
+            onClick={handleNext}
+            aria-label="Next warped card"
+            className="absolute right-2 sm:right-8 z-30 w-12 h-12 rounded-full bg-stone-900 hover:bg-[#b8860b] text-white shadow-[0_8px_24px_rgba(0,0,0,0.18)] flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer"
+          >
+            <ArrowRight className="w-5 h-5" />
+          </button>
 
-                {/* Centered Bold Title Underneath */}
-                <h3 className="mt-4 text-xs sm:text-sm font-bold text-slate-900 group-hover:text-black transition-colors truncate w-full">
-                  {item.title}
-                </h3>
-              </motion.div>
-            ))}
+          {/* Warped 3D Cylinder / Perspective Track */}
+          <div className="w-full max-w-5xl h-[380px] sm:h-[420px] flex items-center justify-center relative px-12 sm:px-20 overflow-hidden">
+            {getWarpedSequence().map(({ item, offset, index }) => {
+              const isActive = offset === 0;
+              const absOffset = Math.abs(offset);
+
+              const translateX = offset * 180;
+              const rotateY = offset * -22;
+              const scale = isActive ? 1 : Math.max(0.75, 1 - absOffset * 0.15);
+              const zIndex = 20 - absOffset * 5;
+              const opacity = isActive ? 1 : Math.max(0.35, 1 - absOffset * 0.35);
+              const filter = isActive ? 'blur(0px)' : `blur(${absOffset * 2.5}px)`;
+
+              return (
+                <motion.div
+                  key={item.id}
+                  style={{
+                    zIndex,
+                  }}
+                  animate={{
+                    x: translateX,
+                    rotateY,
+                    scale,
+                    opacity,
+                    filter,
+                  }}
+                  transition={{
+                    duration: 0.6,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
+                  onClick={() => {
+                    if (isActive) {
+                      onSelectCategory(item.id);
+                    } else {
+                      setActiveIndex(index);
+                    }
+                  }}
+                  className={`absolute w-[260px] sm:w-[310px] rounded-3xl p-6 sm:p-7 flex flex-col justify-between text-left cursor-pointer transition-all duration-300 ${
+                    isActive
+                      ? 'bg-white border-2 border-[#c8a951] shadow-[0_24px_60px_rgba(180,140,80,0.25),0_10px_20px_rgba(0,0,0,0.08)] ring-4 ring-[#f5be38]/15'
+                      : 'bg-white/80 border border-[#e0d4c3] shadow-lg hover:bg-white'
+                  }`}
+                >
+                  {/* Top Warped Badge */}
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-extrabold tracking-[0.2em] text-[#b8860b] uppercase">
+                      Category 0{index + 1}
+                    </span>
+                    <span className="w-2 h-2 rounded-full bg-[#f5be38]" />
+                  </div>
+
+                  {/* Centered Warped Image Frame */}
+                  <div className="my-4 aspect-[4/3] rounded-2xl bg-[#F7F4EE] p-4 flex items-center justify-center overflow-hidden border border-[#eae0d2]/80 shadow-inner group relative">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      loading="lazy"
+                      referrerPolicy="no-referrer"
+                      onError={(e) => {
+                        const target = e.currentTarget;
+                        if (!target.src.includes('custom-branded-pouch-packaging.jpg')) {
+                          target.src = '/custom-branded-pouch-packaging.jpg';
+                        }
+                      }}
+                      className="w-full h-full object-contain filter drop-shadow-md group-hover:scale-110 transition-transform duration-500 ease-out"
+                    />
+                  </div>
+
+                  {/* Title & Subtitle */}
+                  <div className="space-y-1.5">
+                    <h3 className="text-sm sm:text-base font-bold text-slate-900 group-hover:text-[#b8860b] transition-colors leading-tight">
+                      {item.title}
+                    </h3>
+                    <p className="text-[11.5px] text-stone-500 font-normal line-clamp-1">
+                      {item.subtitle}
+                    </p>
+                  </div>
+
+                  {/* Action Footer */}
+                  <div className="mt-4 pt-3.5 border-t border-[#f0e7db] flex items-center justify-between text-xs font-extrabold text-stone-900">
+                    <span className="text-[#b8860b]">Explore Collection</span>
+                    <div className="w-7 h-7 rounded-full bg-stone-900 text-white flex items-center justify-center shadow-sm">
+                      <ArrowRight className="w-3.5 h-3.5 text-[#f5be38] stroke-[2.5]" />
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
 
-          {/* Right Arrow Button (Tablet & Desktop) */}
-          <button
-            type="button"
-            onClick={handleNext}
-            aria-label="Next categories"
-            className="hidden sm:flex absolute -right-4 z-20 w-10 h-10 rounded-full bg-slate-950 hover:bg-slate-900 text-white shadow-lg items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer"
-          >
-            <ArrowRight className="w-4 h-4" />
-          </button>
-
         </div>
 
-        {/* Mobile Pagination Controls (Smartphone View) */}
-        <div className="flex sm:hidden items-center justify-center gap-4 pt-1">
-          <button
-            type="button"
-            onClick={handlePrev}
-            aria-label="Previous categories"
-            className="w-8.5 h-8.5 rounded-full bg-white border border-slate-200 shadow-xs flex items-center justify-center text-slate-800 active:scale-95 cursor-pointer"
-          >
-            <ArrowLeft className="w-4 h-4" />
-          </button>
-          <span className="text-[11px] font-semibold text-slate-500">
-            {startIndex + 1}–{Math.min(startIndex + 4, CATEGORY_ITEMS.length)} of {CATEGORY_ITEMS.length}
-          </span>
-          <button
-            type="button"
-            onClick={handleNext}
-            aria-label="Next categories"
-            className="w-8.5 h-8.5 rounded-full bg-slate-900 text-white shadow-xs flex items-center justify-center active:scale-95 cursor-pointer"
-          >
-            <ArrowRight className="w-4 h-4" />
-          </button>
+        {/* Thumbnail Dots Indicator */}
+        <div className="flex items-center justify-center gap-2 pt-2">
+          {CATEGORY_ITEMS.map((cat, idx) => (
+            <button
+              key={cat.id}
+              type="button"
+              onClick={() => setActiveIndex(idx)}
+              aria-label={`Go to ${cat.title}`}
+              className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                activeIndex === idx ? 'w-8 bg-[#b8860b]' : 'w-2 bg-[#dcd2c4] hover:bg-[#b8860b]/50'
+              }`}
+            />
+          ))}
         </div>
 
-        {/* Center Pill Button: BROWSE ALL CATEGORIES -> */}
-        <div className="text-center pt-2">
+        {/* Center Button: BROWSE ALL CATEGORIES */}
+        <div className="text-center pt-4">
           <button
             type="button"
             onClick={onExploreCatalog}
-            className="h-10 sm:h-11 px-7 rounded-full bg-black hover:bg-stone-900 text-white font-extrabold text-xs tracking-wider uppercase inline-flex items-center gap-2 transition-all shadow-md active:scale-95 cursor-pointer"
+            className="h-12 px-9 rounded-full bg-[#111116] hover:bg-[#000000] text-white font-extrabold text-xs tracking-[0.18em] uppercase inline-flex items-center gap-2.5 transition-all shadow-[0_8px_24px_rgba(0,0,0,0.2)] hover:shadow-[0_10px_30px_rgba(245,190,56,0.3)] border border-[#f5be38]/35 active:scale-95 cursor-pointer"
           >
             <span>Browse All Categories</span>
-            <ArrowRight className="w-3.5 h-3.5 text-[#f5be38]" />
+            <ArrowRight className="w-4 h-4 text-[#f5be38] stroke-[2.5]" />
           </button>
         </div>
 
